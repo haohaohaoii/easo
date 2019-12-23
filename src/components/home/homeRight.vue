@@ -1,9 +1,8 @@
 <template>
     <!--头部菜单-->
-
     <div class="header">
-        <!--头部右侧菜单-->
-        <div class="headerR">
+        <!--头部上右侧菜单-->
+        <div class="headerTop">
             <img src="../../assets/images/admin.png" alt />
 
             <img src="../../assets/images/msg.png" alt />
@@ -12,14 +11,15 @@
 
             <img src="../../assets/images/out.png" alt />
         </div>
-        <!--头部左侧菜单-->
+        <!--头部下导航栏菜单-->
         <el-menu
-            :default-active="activeIndex"
-            class="el-menu-demo headerL"
+            :default-active="activeIndex2"
+            class="el-menu-demo"
             mode="horizontal"
             @select="handleSelect"
-            text-color="#333333"
-            active-text-color="#5B8CFF"
+            background-color="#545c64"
+            text-color="#fff"
+            active-text-color="#ffd04b"
         >
             <el-menu-item index="1">数据查看</el-menu-item>
             <el-submenu index="2">
@@ -27,24 +27,22 @@
                 <el-menu-item index="2-1">选项1</el-menu-item>
                 <el-menu-item index="2-2">选项2</el-menu-item>
                 <el-menu-item index="2-3">选项3</el-menu-item>
-                <el-submenu index="2-4">
-                    <template slot="title">选项4</template>
-                    <el-menu-item index="2-4-1">选项1</el-menu-item>
-                    <el-menu-item index="2-4-2">选项2</el-menu-item>
-                    <el-menu-item index="2-4-3">选项3</el-menu-item>
-                </el-submenu>
             </el-submenu>
-            <el-menu-item index="3">权限管理</el-menu-item>
+            <el-menu-item index="3">{{msg}}</el-menu-item>
         </el-menu>
     </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
     data() {
         return {
-            activeIndex: "1"
+            activeIndex2: "1"
         };
+    },
+    computed: {
+        ...mapState(["msg"])
     },
     methods: {
         handleSelect() {}
@@ -54,25 +52,22 @@ export default {
 
 <style lang="scss" scoped>
 .header {
-    display: flex;
-    align-items: center;
-    .headerL {
-        width: 75%;
-    }
-    .headerR {
-        width: 25%;
-        display: flex;
-        justify-content: space-around;
+    height: 100px;
+    .headerTop {
+        height: 40px;
+        background: burlywood;
+        line-height: 40px;
+        z-index: 555;
         img {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
+            float: right;
+            padding-right: 20px;
+            padding-top: 11px;
         }
     }
+    .headerNav {
+        height: 59px;
+    }
 }
-// .header {
-//     .headerR {
-//         position: relative;
-//         right: 0;
-//     }
-// }
 </style>

@@ -1,25 +1,30 @@
 <template>
     <!--首页面-->
     <div class="home">
-        <!--左部导航栏组件-->
-        <left-nav class="contentL"></left-nav>
+        <!--左侧内容-->
+        <div class="homeLeft">
+            <!--左部导航栏组件-->
+            <home-leftNav></home-leftNav>
+        </div>
         <!--右侧内容-->
-        <div class="contentR">
+        <div class="homeRight">
             <!--头部导航组件-->
-            <head-nav></head-nav>
+            <home-headNav></home-headNav>
             <!--内容组件-->
-            <div class="home-content"></div>
+            <home-content></home-content>
         </div>
     </div>
 </template>
 
 <script>
-import head from "./head"; //引入头部组件
-import left from "./left";
+import head from "./homeRight"; //引入头部组件
+import left from "./homeLeft"; //引入左侧菜单组件
+import content from "./homeContent"; //引入右侧内容组件
 export default {
     components: {
-        headNav: head,
-        leftNav: left
+        homeHeadNav: head,
+        homeLeftNav: left,
+        homeContent: content
     },
     data() {
         return {};
@@ -31,17 +36,23 @@ export default {
 .home {
     width: 100%;
     height: 100%;
-    display: flex;
-    //左侧导航定宽
-    @media screen and (min-width: 500px) {
-        .contentL {
-            width: 300px;
-        }
-    }
+    position: relative;
+    left: 0;
+    top: 0;
 
-    //右侧内容定位
-    .contentR {
-        width: 72%;
+    //左侧内容
+    .homeLeft {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 240px;
+    }
+    //右侧内容
+    .homeRight {
+        height: 100%;
+        margin-left: 240px;
+        background: #ededed;
     }
 }
 </style>
