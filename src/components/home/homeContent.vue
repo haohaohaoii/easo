@@ -1,17 +1,17 @@
 <template>
     <div class="content">
         <bread></bread>
-        <time-data></time-data>
+        <history-data></history-data>
     </div>
 </template>
 
 <script>
 import bread from "../common/bread";
-import timeData from "../common/timeData";
+import historyData from "../common/historyData";
 export default {
     components: {
         bread,
-        timeData
+        historyData
     }
 };
 </script>
@@ -19,6 +19,8 @@ export default {
 <style lang="scss" scoped>
 .content {
     background: #ededed;
-    margin: 36px 13px 13px 13px;
+    height: 90%;
+    box-sizing: border-box;
+    padding: 2% 1% 1% 1%;
 }
 </style>

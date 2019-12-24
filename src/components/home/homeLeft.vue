@@ -67,11 +67,14 @@ export default {};
     background-color: #1f87e7 !important;
 }
 .userPic {
-    padding: 10px 0;
+    height: 24%;
+    justify-content: center;
+    border-bottom: 1px solid rgba(255,255,255,1);
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-bottom: 1px solid #ffff;
+    
     .titName {
         font-size: 26px;
         font-family: MF LiHei (Noncommercial);
@@ -93,5 +96,8 @@ export default {};
             color: rgba(255, 255, 255, 1);
         }
     }
+}
+.menuE{
+    height: 76%;
 }
 </style>
