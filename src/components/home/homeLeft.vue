@@ -1,56 +1,147 @@
 <template>
-    <div class="menuNav">
-        <div class="userPic">
+    <div class="menuNav" id="elmenu" ref="meu">
+        <div class="userPic" v-show="isShow">
             <p class="titName">环境管理后台系统</p>
             <div class="userLog">
                 <img src="../../assets/images/user.png" alt />
                 <p>用户admin</p>
             </div>
         </div>
+        <el-radio-group v-model="isCollapse" id="changeMenubtn">
+            <el-radio-button :label="false">展开</el-radio-button>
+            <el-radio-button :label="true">收起</el-radio-button>
+        </el-radio-group>
         <el-menu
-            class="el-menu-vertical-demo menuE"
+            default-active="1"
+            class="el-menu-vertical-demo"
             @open="handleOpen"
             @close="handleClose"
-            text-color="#fff"
-            active-text-color="#ffff"
+            :collapse="isCollapse"
+            text-color="rgba(255,255,255,1)"
+            active-text-color="rgba(255,255,255,1)"
         >
-            <el-submenu index="1" class="e">
-                <template slot="title">
-                    <span>导航一</span>
-                </template>
-                <el-menu-item-group>
-                    <template slot="title">分组一</template>
-                    <el-menu-item index="1-1">选项1</el-menu-item>
-                    <el-menu-item index="1-2">选项2</el-menu-item>
-                </el-menu-item-group>
-                <el-menu-item-group title="分组2">
-                    <el-menu-item index="1-3">选项3</el-menu-item>
-                </el-menu-item-group>
-                <el-submenu index="1-4">
-                    <template slot="title">选项4</template>
-                    <el-menu-item index="1-4-1">选项1</el-menu-item>
-                </el-submenu>
-            </el-submenu>
+            <el-menu-item index="1">
+                <i class="el-icon-menu"></i>
+                <span slot="title">导航一</span>
+            </el-menu-item>
             <el-menu-item index="2">
+                <i class="el-icon-menu"></i>
                 <span slot="title">导航二</span>
             </el-menu-item>
             <el-menu-item index="3">
+                <i class="el-icon-document"></i>
                 <span slot="title">导航三</span>
+            </el-menu-item>
+            <el-menu-item index="4">
+                <i class="el-icon-setting"></i>
+                <span slot="title">导航四</span>
             </el-menu-item>
         </el-menu>
     </div>
 </template>
 
 <script>
-export default {};
+import { mapState, mapMutations } from "vuex";
+export default {
+    data() {
+        return {
+            isCollapse: false, //控制是否折叠
+            isShow: true //
+        };
+    },
+    mounted() {
+        let elmenu = document.getElementById("elmenu");
+        let btnControl = document.getElementById("changeMenubtn");
+        elmenu.style.width = this.menuLeftwidth;
+        btnControl.style.left = this.menuLeftwidth;
+    },
+    computed: {
+        ...mapState(["menuLeftwidth"])
+    },
+    methods: {
+        handleOpen(key, keyPath) {
+            alert("123");
+        },
+        handleClose(key, keyPath) {
+            alert("456");
+        }
+    },
+    watch: {
+        isCollapse(val, oldval) {
+            if (!val) {
+                //展开
+                this.$store.commit("changeMenuleft", "240px");
+                this.isShow = true;
+            } else {
+                //折叠
+                this.$store.commit("changeMenuleft", "64px");
+                this.isShow = false;
+            }
+        },
+        menuLeftwidth(val, oldval) {
+            if (val != oldval) {
+                let elmenu = document.getElementById("elmenu");
+                let btnControl = document.getElementById("changeMenubtn");
+                btnControl.style.left = val;
+                elmenu.style.width = val;
+            }
+        }
+    }
+};
 </script>
 
 <style lang="scss" scoped>
-.menuNav {
+#elmenu {
     height: 100%;
     background: url("~@/assets/images/left.png") no-repeat;
     background-size: 100% 100%;
     -moz-background-size: 100% 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    #changeMenubtn {
+        position: fixed;
+        z-index: 55;
+        top: 50%;
+        width: 60px;
+        transition: transform;
+        transform: translateY(-50%);
+    }
+    i{
+        color: rgba(255,255,255,1)
+    }
+    .userPic {
+        height: 24%;
+        justify-content: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 1);
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .titName {
+            font-size: 26px;
+            font-family: MF LiHei (Noncommercial);
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+            line-height: 64px;
+        }
+        .userLog {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            img {
+                width: 68px;
+                height: 68px;
+            }
+            p {
+                font-family: Microsoft YaHei;
+                font-weight: 400;
+                color: rgba(255, 255, 255, 1);
+            }
+        }
+    }
 }
 //修改el-menu的背景颜色
 .menuNav >>> .el-menu {
@@ -66,38 +157,23 @@ export default {};
 .menuNav >>> .el-menu-item.is-active {
     background-color: #1f87e7 !important;
 }
-.userPic {
-    height: 24%;
-    justify-content: center;
-    border-bottom: 1px solid rgba(255,255,255,1);
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    
-    .titName {
-        font-size: 26px;
-        font-family: MF LiHei (Noncommercial);
-        font-weight: 400;
-        color: rgba(255, 255, 255, 1);
-        line-height: 64px;
-    }
-    .userLog {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        img {
-            width: 68px;
-            height: 68px;
-        }
-        p {
-            font-family: Microsoft YaHei;
-            font-weight: 400;
-            color: rgba(255, 255, 255, 1);
-        }
-    }
+//解决左侧菜单折叠卡顿的问题
+.menuNav >>> .collapse-transition {
+    -webkit-transition: 0s height, 0s padding-top, 0s padding-bottom;
+    transition: 0s height, 0s padding-top, 0s padding-bottom;
 }
-.menuE{
-    height: 76%;
+
+.menuNav >>> .horizontal-collapse-transition {
+    -webkit-transition: 0s width, 0s padding-left, 0s padding-right;
+    transition: 0s width, 0s padding-left, 0s padding-right;
+}
+
+.menuNav
+    >>> .horizontal-collapse-transition
+    .el-submenu__title
+    .el-submenu__icon-arrow {
+    -webkit-transition: 0s;
+    transition: 0s;
+    opacity: 0;
 }
 </style>

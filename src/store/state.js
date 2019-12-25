@@ -1,4 +1,5 @@
 
 export default ({
-    msg: '富铭环保'
+    msg: '权限管理',
+    menuLeftwidth:'240px'
 })
