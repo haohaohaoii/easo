@@ -183,7 +183,7 @@ export default {
         }
     }
     .tabE {
-        height: auto;
+        height: 62.5%;
         overflow-y: auto;
         margin-top: 1%;
         border: 1px solid rgba(235, 235, 235, 1);
