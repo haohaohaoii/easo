@@ -19,11 +19,11 @@ export default {
 <style lang="scss" scoped>
 .content {
     background: #ededed;
-    height: 88%;
+    height: 86%;
     box-sizing: border-box;
     position: relative;
     left: 1%;
-    top: 0;
+    top: 2%;
     width: 99;
     width: 98%;
 }
