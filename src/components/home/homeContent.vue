@@ -7,7 +7,7 @@
 
 <script>
 import bread from "../common/bread";
-import historyData from "../common/historyData";
+import historyData from "../historyData/historyData";
 export default {
     components: {
         bread,
