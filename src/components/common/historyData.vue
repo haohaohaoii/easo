@@ -14,7 +14,7 @@
                     <el-button type="primary" class="changeW">查询</el-button>
                 </div>
                 <div>
-                    <el-radio-group v-model="radio1">
+                    <el-radio-group v-model="radio1" @change="lzzChange">
                         <el-radio-button label="列表"></el-radio-button>
                         <el-radio-button label="折线"></el-radio-button>
                         <el-radio-button label="柱状"></el-radio-button>
@@ -22,53 +22,54 @@
                 </div>
             </div>
         </div>
-
-        <div class="tabE">
-            <el-table
-                :data="tableData"
-                stripe
-                style="width: 100%"
-                :header-cell-style="{background: 'rgba(237,237,237,1)'}"
-            >
-                <el-table-column align="center" prop="date" label="基站点"></el-table-column>
-                <el-table-column align="center" prop="name" label="企业名"></el-table-column>
-                <el-table-column
-                    align="center"
-                    prop="address"
-                    :render-header="renderHeader"
-                    label="COD(mg/L) 最大/最小/平均"
-                ></el-table-column>
-                <el-table-column
-                    align="center"
-                    prop="address"
-                    :render-header="renderHeader"
-                    label="NH3-N(mg/L) 最大/最小/平均"
-                ></el-table-column>
-                <el-table-column
-                    align="center"
-                    prop="address"
-                    :render-header="renderHeader"
-                    label="TN(mg/L) 最大/最小/平均"
-                    min-width="100"
-                ></el-table-column>
-                <el-table-column
-                    align="center"
-                    prop="address"
-                    :render-header="renderHeader"
-                    label="TP(mg/L) 最大/最小/平均"
-                ></el-table-column>
-                <el-table-column
-                    align="center"
-                    prop="address"
-                    :render-header="renderHeader"
-                    label="PH 最大/最小/平均"
-                ></el-table-column>
-                <el-table-column align="center" prop="address" label="更新时间"></el-table-column>
-            </el-table>
-        </div>
-        <div class="tabPage">
-            <p class="indic">注：红色字体代表超标数据，橙色字体代表异常数据。</p>
-            <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
+        <div v-show="whichLzz== '列表'">
+            <div class="tabE">
+                <el-table
+                    :data="tableData"
+                    stripe
+                    style="width: 100%"
+                    :header-cell-style="{background: 'rgba(237,237,237,1)'}"
+                >
+                    <el-table-column align="center" prop="date" label="基站点"></el-table-column>
+                    <el-table-column align="center" prop="name" label="企业名"></el-table-column>
+                    <el-table-column
+                        align="center"
+                        prop="address"
+                        :render-header="renderHeader"
+                        label="COD(mg/L) 最大/最小/平均"
+                    ></el-table-column>
+                    <el-table-column
+                        align="center"
+                        prop="address"
+                        :render-header="renderHeader"
+                        label="NH3-N(mg/L) 最大/最小/平均"
+                    ></el-table-column>
+                    <el-table-column
+                        align="center"
+                        prop="address"
+                        :render-header="renderHeader"
+                        label="TN(mg/L) 最大/最小/平均"
+                        min-width="100"
+                    ></el-table-column>
+                    <el-table-column
+                        align="center"
+                        prop="address"
+                        :render-header="renderHeader"
+                        label="TP(mg/L) 最大/最小/平均"
+                    ></el-table-column>
+                    <el-table-column
+                        align="center"
+                        prop="address"
+                        :render-header="renderHeader"
+                        label="PH 最大/最小/平均"
+                    ></el-table-column>
+                    <el-table-column align="center" prop="address" label="更新时间"></el-table-column>
+                </el-table>
+            </div>
+            <div class="tabPage">
+                <p class="indic">注：红色字体代表超标数据，橙色字体代表异常数据。</p>
+                <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
+            </div>
         </div>
     </div>
 </template>
@@ -78,6 +79,7 @@ export default {
     data() {
         return {
             radio1: "列表",
+            whichLzz:'列表',
             tableData: [
                 {
                     date: "2016-05-02",
@@ -137,8 +139,19 @@ export default {
         renderHeader(h, { column }) {
             let header = column.label.split(" ");
             return [h("p", [h("p", {}, header[0]), h("span", {}, header[1])])];
+        },
+        lzzChange(val) {
+            if (val == "折线") {
+                this.whichLzz ='折线'
+                //说明是折线图
+            } else if (val == "柱状") {
+                //说明是柱状图
+                this.whichLzz ='柱状'
+            }else if(val == '列表'){
+                this.whichLzz = '列表'
+            }
         }
-    }
+    },
 };
 </script>
 
