@@ -1,7 +1,10 @@
 export default ({
     //左侧导航栏宽度
-    changeMenuleft(state,msg){
-        state.menuLeftwidth = msg;
+    changeMenuleft(state,size){
+        state.menuLeftwidth = size;
+    },
+    //获取搜索时间区间[yyyy-MM-dd HH:00:00 ...... yyyy-MM-dd HH:00:00]
+    getHours(state,hourA){
+        state.hoursArr = hourA
     }
-
 })
