@@ -2,7 +2,7 @@
     <div class="zhexian">
         <div class="tabE" id="myCharts" ref="myCharts"></div>
         <div class="caozuo">
-            <div>
+            <div class="leftb">
                 <el-checkbox v-model="cod">COD</el-checkbox>
                 <el-checkbox v-model="andan">氨氮</el-checkbox>
                 <el-checkbox v-model="zolin">总磷</el-checkbox>
@@ -3244,19 +3244,24 @@ export default {
     .caozuo {
         height: 20%;
         display: flex;
-        justify-content: space-around;
+        margin: 0 auto;
+        width: 90%;
         align-items: center;
+        justify-content: space-between;
+        .leftb {
+            width: 44%;
+        }
         .shuoming {
             display: flex;
             justify-content: space-around;
-            width: 20%;
+            width: 40%;
             .cod {
                 display: flex;
                 align-items: center;
 
                 div {
-                    width:19px;
-                    height:11px;
+                    width: 19px;
+                    height: 11px;
                     background: rgba(95, 139, 254, 1);
                 }
             }
@@ -3264,8 +3269,8 @@ export default {
                 display: flex;
                 align-items: center;
                 div {
-                    width:19px;
-                    height:11px;
+                    width: 19px;
+                    height: 11px;
                     background: rgba(215, 140, 226, 1);
                 }
             }
@@ -3273,8 +3278,8 @@ export default {
                 display: flex;
                 align-items: center;
                 div {
-                    width:19px;
-                    height:11px;
+                    width: 19px;
+                    height: 11px;
                     background: rgba(113, 209, 75, 1);
                 }
             }
@@ -3282,8 +3287,8 @@ export default {
                 display: flex;
                 align-items: center;
                 div {
-                    width:19px;
-                    height:11px;
+                    width: 19px;
+                    height: 11px;
                     background: rgba(0, 0, 255, 1);
                 }
             }
@@ -3291,18 +3296,18 @@ export default {
                 display: flex;
                 align-items: center;
                 div {
-                    width:19px;
-                    height:11px;
+                    width: 19px;
+                    height: 11px;
                     background: rgba(188, 35, 82, 1);
                 }
             }
-            .liuliang{
+            .liuliang {
                 display: flex;
                 align-items: center;
                 div {
-                    width:19px;
-                    height:11px;
-                    background:rgba(228,139,0,1);
+                    width: 19px;
+                    height: 11px;
+                    background: rgba(228, 139, 0, 1);
                 }
             }
         }
