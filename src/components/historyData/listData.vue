@@ -6,6 +6,7 @@
                 stripe
                 style="width: 100%"
                 :header-cell-style="{background: 'rgba(237,237,237,1)'}"
+                class="tab"
             >
                 <el-table-column align="center" prop="date" label="基站点"></el-table-column>
                 <el-table-column align="center" prop="name" label="企业名"></el-table-column>
@@ -122,11 +123,16 @@ export default {
 
 <style lang="scss" scoped>
 .listData {
+    height: 62.5%;
+    
     .tabE {
-        height: 62.5%;
-        overflow-y: auto;
+        height: 99.5%;
         margin-top: 1%;
         border: 1px solid rgba(235, 235, 235, 1);
+        .tab{
+            height: 100%;
+            overflow-y: auto;
+        }
     }
     .tabPage {
         text-align: center;
