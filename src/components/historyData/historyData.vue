@@ -24,18 +24,21 @@
         </div>
         <list-data v-if="btnMsg=='列表'"></list-data>
         <line-data v-if="btnMsg=='折线'"></line-data>
+        <bar-data v-if="btnMsg=='柱状'"></bar-data>
     </div>
 </template>
 
 <script>
 import listData from './listData';  //引入列表组件
 import lineData from './lineData';  //引入折线组件
+import barData from './barData'
 import commonJs from '../common/common.js' //引入全局公共方法
 import {mapState,mapMutations} from 'vuex';
 export default {
     components:{
         listData,
-        lineData
+        lineData,
+        barData
     },
     
     data() {
@@ -59,7 +62,16 @@ export default {
                 }
             })
         }
-    }
+    },
+    watch: {
+        btnMsg(val){
+            if(val == '柱状'){
+                this.$store.commit('getWitchbtn',val)
+            }else if(val == '折线'){
+                this.$store.commit('getWitchbtn',val)
+            }
+        }
+    },
 };
 </script>
 
