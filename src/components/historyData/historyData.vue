@@ -9,8 +9,24 @@
                 <div class="searchL">
                     <el-select placeholder="选择企业" class="changeW"></el-select>
                     <el-select placeholder="选择基站" class="changeW"></el-select>
-                    <el-date-picker type="datetime" class="changeW" v-model="startTime" placeholder="开始时间" value-format="yyyy-MM-dd HH:00:00" format="yyyy-MM-dd HH:00:00" time-arrow-control></el-date-picker>
-                    <el-date-picker type="datetime" class="changeW" v-model="endTime" placeholder="结束时间" value-format="yyyy-MM-dd HH:00:00" format="yyyy-MM-dd HH:00:00" time-arrow-control></el-date-picker>
+                    <el-date-picker
+                        type="datetime"
+                        class="changeW"
+                        v-model="startTime"
+                        placeholder="开始时间"
+                        value-format="yyyy-MM-dd HH:00:00"
+                        format="yyyy-MM-dd HH:00:00"
+                        time-arrow-control
+                    ></el-date-picker>
+                    <el-date-picker
+                        type="datetime"
+                        class="changeW"
+                        v-model="endTime"
+                        placeholder="结束时间"
+                        value-format="yyyy-MM-dd HH:00:00"
+                        format="yyyy-MM-dd HH:00:00"
+                        time-arrow-control
+                    ></el-date-picker>
                     <el-button type="primary" class="changeW" @click="search">查询</el-button>
                 </div>
                 <div>
@@ -29,49 +45,42 @@
 </template>
 
 <script>
-import listData from './listData';  //引入列表组件
-import lineData from './lineData';  //引入折线组件
-import barData from './barData'
-import commonJs from '../common/common.js' //引入全局公共方法
-import {mapState,mapMutations} from 'vuex';
+import listData from "./listData"; //引入列表组件
+import lineData from "./lineData"; //引入折线组件
+import barData from "./barData";
+import commonJs from "../common/common.js"; //引入全局公共方法
+import { mapState, mapMutations } from "vuex";
 export default {
-    components:{
+    components: {
         listData,
         lineData,
         barData
     },
-    
+
     data() {
         return {
-            btnMsg:'列表',
-            startTime:'', //开始时间
-            endTime:'', //结束时间
+            btnMsg: "列表",
+            startTime: "", //开始时间
+            endTime: "" //结束时间
         };
     },
     computed: {
-        ...mapState(['searchHours'])
+        ...mapState(["searchHours"])
     },
-    methods:{
-        search(){
+    methods: {
+        search() {
             let _this = this;
-            commonJs.getHours(this.startTime,this.endTime).then(function(hoursArr){
-                if(hoursArr.length == 0){
-                    alert('查询条件有误')
-                }else{
-                    _this.$store.commit('getHours',hoursArr)
-                }
-            })
+            commonJs
+                .getHours(this.startTime, this.endTime)
+                .then(function(hoursArr) {
+                    if (hoursArr.length == 0) {
+                        alert("查询条件有误");
+                    } else {
+                        _this.$store.commit("getHours", hoursArr);
+                    }
+                });
         }
-    },
-    watch: {
-        btnMsg(val){
-            if(val == '柱状'){
-                this.$store.commit('getWitchbtn',val)
-            }else if(val == '折线'){
-                this.$store.commit('getWitchbtn',val)
-            }
-        }
-    },
+    }
 };
 </script>
 
