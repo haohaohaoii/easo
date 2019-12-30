@@ -2,29 +2,51 @@
     <!--头部菜单-->
     <div class="header">
         <el-menu
-            :default-active="activeIndex2"
+            :default-active="this.$route.path"
             class="el-menu-demo"
             mode="horizontal"
             @select="handleSelect"
+            background-color="#FFFFFF"
+            text-color="#333333"
             active-text-color="#5B8CFF"
+            router
         >
-            <el-menu-item index="1">
-                <i class="iconfont icon-shuju" style="font-size:20px"></i>
-                数据查看
-            </el-menu-item>
-            <el-submenu index="2">
+            <el-submenu v-for="item of firstMenu" :key="item.name" :index="item.path" class="upopt">
                 <template slot="title">
-                    <i class="el-icon-office-building"></i>
-                    企业管理
+                    <i class="iconfont icon-shuju" style="font-size:20px"></i>
+                    {{item.name}}
                 </template>
-                <el-menu-item index="2-1">选项1</el-menu-item>
-                <el-menu-item index="2-2">选项2</el-menu-item>
-                <el-menu-item index="2-3">选项3</el-menu-item>
+                <el-menu-item
+                    v-for="seciem of item.second"
+                    :key="seciem.path"
+                    :index="seciem.path"
+                    class="opt"
+                >{{seciem.name}}</el-menu-item>
             </el-submenu>
-            <el-menu-item index="3">
-                <i class="iconfont icon-quanxianguanli" style="font-size:20px"></i>
-                {{msg}}
-            </el-menu-item>
+            <el-submenu v-for="item of secondMenu" :key="item.name" :index="item.path">
+                <template slot="title">
+                    <i class="iconfont icon-shuju"></i>
+                    {{item.name}}
+                </template>
+                <el-menu-item
+                    v-for="seciem of item.second"
+                    :key="seciem.path"
+                    :index="seciem.path"
+                    class="opt"
+                >{{seciem.name}}</el-menu-item>
+            </el-submenu>
+            <el-submenu v-for="item of thirdMenu" :key="item.name" :index="item.path">
+                <template slot="title">
+                    <i class="iconfont icon-shuju"></i>
+                    {{item.name}}
+                </template>
+                <el-menu-item
+                    v-for="seciem of item.second"
+                    :key="seciem.path"
+                    :index="seciem.path"
+                    class="opt"
+                >{{seciem.name}}</el-menu-item>
+            </el-submenu>
         </el-menu>
         <div class="tubiao">
             <i class="el-icon-s-custom"></i>
@@ -40,14 +62,60 @@ import { mapState } from "vuex";
 export default {
     data() {
         return {
-            activeIndex2: "1"
+            firstMenu: [
+                {
+                    name: "数据查看",
+                    path: "/a",
+                    second: [
+                        { name: "历史数据", path: "/hisData" },
+                        { name: "实时数据", path: "/realData" }
+                    ]
+                }
+            ],
+            secondMenu: [
+                {
+                    name: "企业管理",
+                    path: "/b",
+                    second: [
+                        {
+                            name: "企业信息",
+                            path: "/enterMation"
+                        },
+                        {
+                            name: "留言管理",
+                            path: "/spam"
+                        },
+                        {
+                            name: "基站管理",
+                            path: "/baseManage"
+                        }
+                    ]
+                }
+            ],
+            thirdMenu: [
+                {
+                    name: "权限管理",
+                    path: "/c",
+                    second: [
+                        { name: "角色管理", path: "/roleManage" },
+                        { name: "用户管理", path: "/userManage" },
+                        { name: "部门管理", path: "/divManage" },
+                        {
+                            name: "菜单管理",
+                            path: "/menuManage"
+                        }
+                    ]
+                }
+            ]
         };
     },
     computed: {
         ...mapState(["msg"])
     },
     methods: {
-        handleSelect() {}
+        handleSelect(key, keyPath) {
+            console.log(key, keyPath);
+        }
     }
 };
 </script>
@@ -68,4 +136,19 @@ export default {
         }
     }
 }
+//多级菜单(第一级)移入
+.header >>> .el-submenu__title:hover {
+    background-color: #1f87e7 !important; //改变背景颜色
+    color: #ffffff !important; //改变字体颜色
+}
+//二级菜单移入的背景颜色
+.opt:hover {
+    background-color: #1f87e7 !important; //改变背景颜色
+    color: #ffffff !important; //改变字体颜色
+}
+//二级菜单选中的背景颜色--可以
+// .opt.is-active {
+//     background-color: #1f87e7 !important;
+//     color: #ffffff !important; //改变字体颜色
+// }
 </style>

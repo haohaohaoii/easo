@@ -1,7 +1,7 @@
 <template>
     <div class="content">
         <bread></bread>
-        <history-data></history-data>
+        <router-view></router-view>
     </div>
 </template>
 

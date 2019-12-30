@@ -108,8 +108,8 @@ export default {
         transition: transform;
         transform: translateY(-50%);
     }
-    i{
-        color: rgba(255,255,255,1)
+    i {
+        color: rgba(255, 255, 255, 1);
     }
     .userPic {
         height: 24%;
