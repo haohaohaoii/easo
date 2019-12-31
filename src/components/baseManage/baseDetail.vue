@@ -1,8 +1,8 @@
 <template>
-    <el-dialog :visible.sync="enterDialog" class="dialog" center @close='closeDialog'>
+    <el-dialog :visible.sync="baseDetail" class="dialog" center @close='closeDialog'>
         <div slot="title" class="tit">
             <div class="line"></div>
-            <p>查看详情</p>
+            <p>基站审核</p>
         </div>
         <el-table :data="tableData" border style="width: 100%" >
             <el-table-column prop="date" label="日期" width="180" align="right"></el-table-column>
@@ -24,35 +24,27 @@ export default {
             status: false, //控制表头不显示
             tableData: [
                 {
-                    date: "企业名称:",
-                    name: "郑州富铭科技股份有限公司"
+                    date: "基站名称",
+                    name: "基站一"
                 },
                 {
-                    date: "企业地址:",
-                    name: "郑州市金水区牛顿国际"
+                    date: "进出口:",
+                    name: "进口"
                 },
                 {
-                    date: "联系人:",
-                    name: "张冉冉"
+                    date: "MN:",
+                    name: "L1234964655646851"
                 },
                 {
-                    date: "联系电话:",
-                    name: `<img>`
+                    date: "因子:",
+                    name: "COD、氨氮、总磷、总氮、ph、流量"
                 },
                 {
-                    date: "用户名:",
-                    name: "张xx"
+                    date: "站点状态:",
+                    name: "未审核"
                 },
                 {
-                    date: "邮箱:",
-                    name: "123456789@163.com"
-                },
-                {
-                    date: "营业执照:",
-                    name: "123456789@163.com"
-                },
-                {
-                    date: "注册时间:",
+                    date: "更新时间:",
                     name: "19/12/16 16:40:20"
                 }
             ]
@@ -60,17 +52,17 @@ export default {
     },
     methods:{
         closeDialog(){
-            this.$store.commit('getDialogstatus',false)  //关闭dialog
+            this.$store.commit('baseDetail',false)  //关闭dialog
         },
         save(){
-            this.$store.commit('getDialogstatus',false) //关闭dialog
+            this.$store.commit('baseDetail',false) //关闭dialog
         },
         cancel(){
-            this.$store.commit('getDialogstatus',false) //关闭dialog
+            this.$store.commit('baseDetail',false) //关闭dialog
         }
     },
     computed: {
-        ...mapState(["enterDialog"])
+        ...mapState(["baseDetail"])
     }
 };
 </script>

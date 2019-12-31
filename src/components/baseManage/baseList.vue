@@ -1,5 +1,5 @@
 <template>
-    <div class="enterList">
+    <div class="baseList">
         <div class="tabE">
             <el-table
                 :data="tableData"
@@ -8,15 +8,23 @@
                 :header-cell-style="{background: 'rgba(237,237,237,1)'}"
                 class="tab"
             >
-                <el-table-column align="center" prop="date" label="奇特名称"></el-table-column>
-                <el-table-column align="center" prop="name" label="联系人"></el-table-column>
-                <el-table-column align="center" prop="address" label="联系电话"></el-table-column>
-                <el-table-column align="center" prop="address" label="企业地址"></el-table-column>
-                <el-table-column align="center" prop="address" label="审核状态" min-width="100"></el-table-column>
-                <el-table-column align="center" prop="address" label="注册时间"></el-table-column>
+                <el-table-column align="center" prop="date" label="基站名称"></el-table-column>
+                <el-table-column align="center" prop="name" label="进口/出口"></el-table-column>
+                <el-table-column align="center" prop="address" label="MN"></el-table-column>
+                <el-table-column align="center" prop="address" label="因子">
+                    <template slot-scope="scope">
+                        <el-popover placement="top-start" title width="200" trigger="hover">
+                            <p>{{scope.row.name}}</p>
+                            <p slot="reference">{{scope.row.name}}</p>
+                        </el-popover>
+                    </template>
+                </el-table-column>
+
+                <el-table-column align="center" prop="address" label="站点状态" min-width="100"></el-table-column>
+                <el-table-column align="center" prop="address" label="更新时间"></el-table-column>
                 <el-table-column label="操作" align="center">
                     <template slot-scope="scope">
-                        <el-button size="mini" @click="base(scope.$index, scope.row)">基站</el-button>
+                        <el-button size="mini" @click="audit(scope.$index, scope.row)">审核</el-button>
                         <el-button
                             size="mini"
                             type="primary"
@@ -99,25 +107,24 @@ export default {
         };
     },
     methods: {
-        //详情--跳转详情dialog
+        //详情--跳转详情dialog(detail)
         handleDetail(index, row) {
-            this.$router.push({ path: "/enterDialog" });
-            this.$store.commit("getDialogstatus", true);
+            this.$router.push({path:'/baseDetail'});
+            this.$store.commit('baseDetail',true)
         },
-        //点击编辑--跳转编辑dialog
+        //点击编辑--跳转编辑dialog （add）
         handleEdit(index, row) {
-            console.log(index, row);
-            this.$router.push({ path: "/ediDialog" });
-            this.$store.commit("setEditordialog",true)
+            this.$router.push({ path: "/baseAdd" });
+            this.$store.commit("baseAdd", true);
         },
-        //基站
-        base(index, row) {}
+        //审核
+        audit(index, row) {}
     }
 };
 </script>
 
 <style lang="scss" scoped>
-.enterList {
+.baseList {
     height: 62.5%;
 
     .tabE {

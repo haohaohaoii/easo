@@ -31,17 +31,41 @@ export default new Router({
                     component: resolve => (require(["@/components/enterMation/enterDialog"], resolve))
                 },
                 {
+                    path: 'ediDialog',     //企业信息--编辑
+                    name: 'ediDialog',
+                    component: resolve => (require(["@/components/enterMation/ediDialog"], resolve))
+                },
+                {
                     path: 'spam',     //留言管理
                     name: 'spam',
                     component: resolve => (require(["@/components/spam/spam"], resolve))
+                },
+                {
+                    path: 'spamReply',     //留言管理 ---留言回复
+                    name: 'spamReply',
+                    component: resolve => (require(["@/components/spam/spamReply"], resolve))
                 }, {
                     path: 'baseManage',     //基站管理
                     name: 'baseManage',
                     component: resolve => (require(["@/components/baseManage/baseManage"], resolve))
-                }, {
+                },{
+                    path: 'baseAdd',     //基站管理 --基站添加
+                    name: 'baseAdd',
+                    component: resolve => (require(["@/components/baseManage/baseAdd"], resolve))
+                },{
+                    path: 'baseDetail',     //基站管理 --基站详情
+                    name: 'baseDetail',
+                    component: resolve => (require(["@/components/baseManage/baseDetail"], resolve))
+                },
+                 {
                     path: 'roleManage',     //角色管理
                     name: 'roleManage',
                     component: resolve => (require(["@/components/roleManage/roleManage"], resolve))
+                },
+                {
+                    path: 'roleAdd',     //角色管理 -- 添加角色
+                    name: 'roleAdd',
+                    component: resolve => (require(["@/components/roleManage/roleDialog"], resolve))
                 }, {
                     path: 'userManage',     //用户管理
                     name: 'userManage',
