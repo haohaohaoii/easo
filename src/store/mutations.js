@@ -27,8 +27,20 @@ export default ({
     spamReply(state,spamDialog){
         state.spamReply = spamDialog;
     },
+    //权限管理下的角色管理添加角色 dialog状态
     roleAdd(state,addStatus){
         state.roleAdd = addStatus;
+    },
+    //权限管理下的用户管理添加用户 dialog状态
+    userAdd(state,status){
+        state.userAdd = status;
+    },
+    //权限管理下的用户管理添加用户 dialog状态
+    divAdd(state,divStatus){
+        state.divAdd = divStatus;
+    },
+    //权限管理下的菜单管理添加菜单 dialog状态
+    menuAdd(state,menuStatus){
+        state.menuAdd = menuStatus;
     }
-
 })

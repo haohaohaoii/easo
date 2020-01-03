@@ -65,19 +65,31 @@ export default new Router({
                 {
                     path: 'roleAdd',     //角色管理 -- 添加角色
                     name: 'roleAdd',
-                    component: resolve => (require(["@/components/roleManage/roleDialog"], resolve))
+                    component: resolve => (require(["@/components/roleManage/roleAdd"], resolve))
                 }, {
                     path: 'userManage',     //用户管理
                     name: 'userManage',
                     component: resolve => (require(["@/components/userManage/userManage"], resolve))
+                },{
+                    path: 'userAdd',     //用户管理 --添加用户
+                    name: 'userAdd',
+                    component: resolve => (require(["@/components/userManage/userAdd"], resolve))
                 }, {
                     path: 'divManage',     //部门管理
                     name: 'divManage',
                     component: resolve => (require(["@/components/divManage/divManage"], resolve))
+                },{
+                    path: 'divAdd',     //部门管理 --添加部门
+                    name: 'divAdd',
+                    component: resolve => (require(["@/components/divManage/divAdd"], resolve))
                 }, {
                     path: 'menuManage',     //菜单管理
                     name: 'menuManage',
                     component: resolve => (require(["@/components/menuManage/menuManage"], resolve))
+                },{
+                    path: 'menuAdd',     //菜单管理 --添加菜单
+                    name: 'menuAdd',
+                    component: resolve => (require(["@/components/menuManage/menuAdd"], resolve))
                 }
             ]
         },

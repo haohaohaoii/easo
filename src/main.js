@@ -8,8 +8,9 @@ import 'element-ui/lib/theme-chalk/index.css';
 import './element-variables.scss'
 import store from './store'
 import echarts from 'echarts'
+import api from './api' // 导入api接口
 
-
+Vue.prototype.$api = api; // 将api挂载到vue的原型上
 Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false;
 Vue.use(ElementUI)

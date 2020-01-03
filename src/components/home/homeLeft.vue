@@ -7,15 +7,16 @@
                 <p>用户admin</p>
             </div>
         </div>
-        <el-radio-group v-model="isCollapse" id="changeMenubtn">
+        <!-- <el-radio-group v-model="isCollapse" id="changeMenubtn">
             <el-radio-button :label="false">展开</el-radio-button>
             <el-radio-button :label="true">收起</el-radio-button>
-        </el-radio-group>
+        </el-radio-group> -->
+        <div  id="changeMenubtn">
+            <el-button type="primary" :icon="showSide" @click="sideBtn" circle></el-button>
+        </div>
         <el-menu
             default-active="1"
             class="el-menu-vertical-demo"
-            @open="handleOpen"
-            @close="handleClose"
             :collapse="isCollapse"
             text-color="rgba(255,255,255,1)"
             active-text-color="rgba(255,255,255,1)"
@@ -46,7 +47,8 @@ export default {
     data() {
         return {
             isCollapse: false, //控制是否折叠
-            isShow: true //
+            isShow: true, 
+            showSide:'el-icon-arrow-left'
         };
     },
     mounted() {
@@ -59,11 +61,13 @@ export default {
         ...mapState(["menuLeftwidth"])
     },
     methods: {
-        handleOpen(key, keyPath) {
-            alert("123");
-        },
-        handleClose(key, keyPath) {
-            alert("456");
+        sideBtn(){
+            this.isCollapse = !this.isCollapse;
+            if(this.isCollapse){
+                this.showSide = 'el-icon-arrow-right';
+            }else{
+                 this.showSide = 'el-icon-arrow-left';
+            }
         }
     },
     watch: {
@@ -122,7 +126,7 @@ export default {
 
         .titName {
             font-size: 26px;
-            font-family: MF LiHei (Noncommercial);
+            font-family:MFLiHei;
             font-weight: 400;
             color: rgba(255, 255, 255, 1);
             line-height: 64px;

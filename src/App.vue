@@ -13,6 +13,7 @@ export default {
 </script>
 
 <style>
+@import './assets/font/font.css';
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity 0.5s;

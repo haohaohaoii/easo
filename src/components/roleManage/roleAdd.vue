@@ -78,13 +78,13 @@ export default {
             console.log(this.$refs.tree.getCheckedNodes());
         },
         closeDialog() {
-            this.$store.commit("getDialogstatus", false); //关闭dialog
+            this.$store.commit("roleAdd", false); //关闭dialog
         },
         save() {
-            this.$store.commit("getDialogstatus", false); //关闭dialog
+            this.$store.commit("roleAdd", false); //关闭dialog
         },
         cancel() {
-            this.$store.commit("getDialogstatus", false); //关闭dialog
+            this.$store.commit("roleAdd", false); //关闭dialog
         }
     },
     computed: {
@@ -92,6 +92,7 @@ export default {
     }
 };
 </script>
+
 
 <style lang="scss" scoped>
 .dialog {

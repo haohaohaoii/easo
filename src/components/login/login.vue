@@ -23,17 +23,76 @@
 </template>
 
 <script>
+// import { showLoading, hideLoading } from '../../utils/loading' 
+const Base64 = require('js-base64').Base64
 export default {
     data() {
         return {
             userName: "", //用户名
             userPaw: "", //密码
-            isRemenber: true //记住密码
+            remenbVal: false //记住密码
         };
+    },
+    mounted(){
+        //判断用户上一次操作是否是记住密码
+        this.getPaw()
     },
     methods: {
         login() {
-            this.$router.push("/");
+           if(this.userName && this.userPaw){ //调用登陆接口
+                this.getAdminid();  
+           }else{
+                this.$message.error('注意：账号或密码不能为空');
+           }
+            
+        },
+
+        //调用登陆接口获取adminId
+        getAdminid(){
+            let params = {username:this.userName,password:this.userPaw};//获取参数
+            this.$api.login.login(params).then(res=>{
+                console.log(res)
+                if(res.data.code == 0){   //说明登陆成功
+                    if(this.remenbVal){  //说明是记住密码
+                        localStorage.setItem('userName',this.userName);  //存储账号
+                        localStorage.setItem('userPaw',Base64.encode(this.userPaw));  //存储密码(base64加密)
+                        localStorage.setItem('token',res.data.data[0].token) //存储token
+                    }
+                    sessionStorage.setItem( 'token', res.data.data[0].token)//储存token
+                    let adminId = res.data.data[0].id;  //获取adminId
+                    this.getMenu(adminId);  //调用获取菜单权限方法
+                }
+            }).catch(error=>{
+                console.log(error)
+            })
+        },
+
+        //用adminId获取菜单权限
+        getMenu(adminId){ 
+            let adminid = 1
+            this.$api.menu.getMenu(adminid).then(res=>{
+                console.log(res)
+                if(this.$route.query.redirect == router.currentRoute.fullPath){
+                    this.$router.go(-1)
+                }else{
+                    this.$router.push("/");
+                }
+               
+            }).catch(error=>{
+                console.log(erro);
+            })
+        },
+
+        //刚进页面的时候去获取用户名、密码、token
+        getPaw(){
+            let name = localStorage.getItem('userName');
+            let password = Base64.encode(localStorage.getItem('userPaw')); //获取密码(base64解密)
+            let token = localStorage.getItem('token');
+            if(name && password && token){  //说明上一次登陆是记住密码
+                this.userName = name;
+                this.userPaw = password;
+                this.remenbVal = true;
+            }
         }
     }
 };
@@ -54,8 +113,8 @@ export default {
     .loginContent{
         display: flex;
         margin: 0 auto;
-        width: 80%;
-        height: 75%;
+        width: 63%;
+        height: 66%;
         align-items: center;
         position: relative;
         top: 50%;
@@ -82,7 +141,7 @@ export default {
             .tit{
                 p{
                     font-size:54px;
-                    font-family:MF LiHei (Noncommercial);
+                    font-family:"MFLiHei";
                     font-weight:400;
                     color:rgba(255,255,255,1);
                 }
@@ -111,8 +170,9 @@ export default {
                 width: 60%;
             }
         }
-        .contentR >>>.el-input .el-input__clear{
-            color: red;
+        //记住密码的时候改变字体颜色
+        .contentR >>> .el-checkbox__input.is-checked+.el-checkbox__label{
+            color: white;
         }
     }
 }
