@@ -148,4 +148,14 @@ export default {
         }
     }
 }
+.listData >>>.el-table th, .el-table td{
+    padding: 0 !important;
+    height: 50px !important;
+}
+.listData >>> .el-table td, .el-table th{
+     padding: 0 !important;
+    height: 50px !important;
+    
+}
+
 </style>

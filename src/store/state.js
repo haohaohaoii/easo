@@ -13,4 +13,5 @@ export default ({
     userAdd :false,   //权限管理下的用户管理添加用户 dialog状态
     divAdd:false,    //权限管理下的部门管理添加部门 dialog状态
     menuAdd:false,    //权限管理下的菜单管理添加菜单 dialog状态
+    menuList:sessionStorage.getItem('menuRoutes') || []   //后台根据不同角色返回的不同菜单
  })

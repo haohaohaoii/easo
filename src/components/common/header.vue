@@ -65,7 +65,7 @@ export default {
             firstMenu: [
                 {
                     name: "数据查看",
-                    path: "/a",
+                    path: "/adataView",
                     second: [
                         { name: "历史数据", path: "/hisData" },
                         { name: "实时数据", path: "/realData" }
@@ -75,7 +75,7 @@ export default {
             secondMenu: [
                 {
                     name: "企业管理",
-                    path: "/b",
+                    path: "/busManage",
                     second: [
                         {
                             name: "企业信息",
@@ -95,7 +95,7 @@ export default {
             thirdMenu: [
                 {
                     name: "权限管理",
-                    path: "/c",
+                    path: "/authManage",
                     second: [
                         { name: "角色管理", path: "/roleManage" },
                         { name: "用户管理", path: "/userManage" },

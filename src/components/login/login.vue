@@ -23,7 +23,9 @@
 </template>
 
 <script>
-// import { showLoading, hideLoading } from '../../utils/loading' 
+import {mapMutations} from 'vuex';
+import filterRoutes from '../../utils/filterRoutes'
+import asyncRoutes from '../../utils/asyncRoutes.js'
 const Base64 = require('js-base64').Base64
 export default {
     data() {
@@ -62,31 +64,43 @@ export default {
                     let adminId = res.data.data[0].id;  //获取adminId
                     this.getMenu(adminId);  //调用获取菜单权限方法
                 }
-            }).catch(error=>{
-                console.log(error)
             })
         },
 
         //用adminId获取菜单权限
         getMenu(adminId){ 
             let adminid = 1
+            let _this = this
             this.$api.menu.getMenu(adminid).then(res=>{
                 console.log(res)
-                if(this.$route.query.redirect == router.currentRoute.fullPath){
-                    this.$router.go(-1)
+                if(res.status ==200){
+                    if(res.data.code ==0){
+                        debugger
+                        filterRoutes.filters(asyncRoutes,res.data.data).then(menuRoutes=>{
+                            console.log(menuRoutes)
+                            sessionStorage.setItem('menuRoutes',menuRoutes);  //避免刷新的时候菜单丢失
+                            _this.$store.commit('getMenulist',menuRoutes)
+                            // menuRoutes.forEach((route)=>{
+                            //     _this.$router.options.routes[1].children.push(route)
+                            // })
+                            // debugger
+                            // _this.$router.addRoutes(_this.$router.options.routes)
+                        })
+                    }
+                }
+                if(_this.$route.query.redirect){
+                     _this.$router.push(_this.$route.query.redirect)
                 }else{
-                    this.$router.push("/");
+                    _this.$router.push("/");
                 }
                
-            }).catch(error=>{
-                console.log(erro);
             })
         },
 
         //刚进页面的时候去获取用户名、密码、token
         getPaw(){
             let name = localStorage.getItem('userName');
-            let password = Base64.encode(localStorage.getItem('userPaw')); //获取密码(base64解密)
+            let password = Base64.decode(localStorage.getItem('userPaw')); //获取密码(base64解密)
             let token = localStorage.getItem('token');
             if(name && password && token){  //说明上一次登陆是记住密码
                 this.userName = name;

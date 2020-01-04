@@ -42,5 +42,8 @@ export default ({
     //权限管理下的菜单管理添加菜单 dialog状态
     menuAdd(state,menuStatus){
         state.menuAdd = menuStatus;
+    },
+    getMenulist(state,menuList){
+        state.menuList = menuList
     }
 })
