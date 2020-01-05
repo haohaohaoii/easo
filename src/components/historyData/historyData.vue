@@ -7,8 +7,8 @@
             </div>
             <div class="search">
                 <div class="searchL">
-                    <el-select placeholder="选择企业" class="changeW"></el-select>
-                    <el-select placeholder="选择基站" class="changeW"></el-select>
+                    <el-select placeholder="选择企业" class="changeW" v-model="qiye"></el-select>
+                    <el-select placeholder="选择基站" class="changeW" v-model="jizhan"></el-select>
                     <el-date-picker
                         type="datetime"
                         class="changeW"
@@ -60,6 +60,8 @@ export default {
     data() {
         return {
             btnMsg: "列表",
+            qiye:'',
+            jizhan:'',
             startTime: "", //开始时间
             endTime: "" //结束时间
         };

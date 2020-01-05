@@ -51,6 +51,7 @@ export default {
 
         //调用登陆接口获取adminId
         getAdminid(){
+            debugger
             let params = {username:this.userName,password:this.userPaw};//获取参数
             this.$api.login.login(params).then(res=>{
                 console.log(res)
@@ -58,9 +59,8 @@ export default {
                     if(this.remenbVal){  //说明是记住密码
                         localStorage.setItem('userName',this.userName);  //存储账号
                         localStorage.setItem('userPaw',Base64.encode(this.userPaw));  //存储密码(base64加密)
-                        localStorage.setItem('token',res.data.data[0].token) //存储token
                     }
-                    sessionStorage.setItem( 'token', res.data.data[0].token)//储存token
+                    localStorage.setItem('token',res.data.data[0].token) //存储token
                     let adminId = res.data.data[0].id;  //获取adminId
                     this.getMenu(adminId);  //调用获取菜单权限方法
                 }
@@ -76,22 +76,29 @@ export default {
                 if(res.status ==200){
                     if(res.data.code ==0){
                         debugger
+                        //获取路由表
                         filterRoutes.filters(asyncRoutes,res.data.data).then(menuRoutes=>{
                             console.log(menuRoutes)
-                            sessionStorage.setItem('menuRoutes',menuRoutes);  //避免刷新的时候菜单丢失
-                            _this.$store.commit('getMenulist',menuRoutes)
-                            // menuRoutes.forEach((route)=>{
-                            //     _this.$router.options.routes[1].children.push(route)
-                            // })
-                            // debugger
-                            // _this.$router.addRoutes(_this.$router.options.routes)
+                            localStorage.setItem('menuRoutes',menuRoutes);  //避免刷新的时候路由表
+                            //添加路由表
+                            menuRoutes.forEach((route)=>{
+                                _this.$router.options.routes[1].children.push(route)
+                            })
+                            _this.$router.addRoutes(_this.$router.options.routes)
+                            
+                        })
+                        //获取菜单表
+                        filterRoutes.getMenus(asyncRoutes,res.data.data).then(menuItems=>{
+                            console.log(menuItems);
+                            localStorage.setItem('menuPaths',menuItems); //避免刷新的时候菜单表丢失
+                            _this.$store.commit('getMenulist',menuItems) 
                         })
                     }
-                }
-                if(_this.$route.query.redirect){
-                     _this.$router.push(_this.$route.query.redirect)
-                }else{
-                    _this.$router.push("/");
+                    if(_this.$route.query.redirect){  //重定向过来的
+                        _this.$router.push(_this.$route.query.redirect)
+                    }else{
+                        _this.$router.push("/");
+                    }
                 }
                
             })

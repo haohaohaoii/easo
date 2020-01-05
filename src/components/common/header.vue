@@ -2,16 +2,29 @@
     <!--头部菜单-->
     <div class="header">
         <el-menu
-            :default-active="this.$route.path"
+            default-active="hisData"
             class="el-menu-demo"
             mode="horizontal"
             @select="handleSelect"
-            background-color="#FFFFFF"
-            text-color="#333333"
-            active-text-color="#5B8CFF"
-            router
+            @mouseenter.native="handleOpen"
         >
-            <el-submenu v-for="item of firstMenu" :key="item.name" :index="item.path" class="upopt">
+            <!-- <div v-for="(item,index) of createMenu" :key="index"> -->
+                <el-submenu v-if="item.two && item.two.length>=1" v-for="(item,index) of createMenu" :key="index" class="upopt" :index='item.one.id'>
+                    <template slot="title">
+                        <i class="iconfont icon-shuju" style="font-size:20px"></i>
+                        {{item.one.menuName}}
+                    </template>
+                    <el-menu-item
+                        v-for="seciem of item.two"
+                        :key="seciem.path"
+                        class="opt"
+                        :index="seciem.path"
+                    >{{seciem.menuName}}</el-menu-item>
+                </el-submenu>
+                <el-menu-item v-else :index="item.one.id">{{item.one.menuName}}</el-menu-item>
+            <!-- </div> -->
+            
+        <!-- <el-submenu v-for="item of firstMenu" :key="item.name" :index="item.path" class="upopt">
                 <template slot="title">
                     <i class="iconfont icon-shuju" style="font-size:20px"></i>
                     {{item.name}}
@@ -46,8 +59,11 @@
                     :index="seciem.path"
                     class="opt"
                 >{{seciem.name}}</el-menu-item>
-            </el-submenu>
+            </el-submenu> -->
+           
         </el-menu>
+
+
         <div class="tubiao">
             <i class="el-icon-s-custom"></i>
             <i class="el-icon-message-solid"></i>
@@ -62,32 +78,49 @@ import { mapState } from "vuex";
 export default {
     data() {
         return {
+            createMenu: [
+                {
+                    one: { id: "2", menuName: "数据查看"},
+                    two: [
+                        { id: "5", menuName: "实时数据", path:'realData'},
+                        { id: "6", menuName: "历史数据", path:'hisData'}
+                    ]
+                },
+                {
+                    one: { id: "3", menuName: "企业管理" },
+                    two: [
+                        { id: "7", menuName: "企业信息" ,path: "enterMation"},
+                        { id: "8", menuName: "留言管理",path: "spam" },
+                        { id: "9", menuName: "基站管理",path: "baseManage" }
+                    ]
+                }
+            ],
             firstMenu: [
                 {
                     name: "数据查看",
-                    path: "/adataView",
+                    path: "/a",
                     second: [
-                        { name: "历史数据", path: "/hisData" },
-                        { name: "实时数据", path: "/realData" }
+                        { name: "历史数据", path: "hisData" },
+                        { name: "实时数据", path: "realData" }
                     ]
                 }
             ],
             secondMenu: [
                 {
                     name: "企业管理",
-                    path: "/busManage",
+                    path: "/b",
                     second: [
                         {
                             name: "企业信息",
-                            path: "/enterMation"
+                            path: "enterMation"
                         },
                         {
                             name: "留言管理",
-                            path: "/spam"
+                            path: "spam"
                         },
                         {
                             name: "基站管理",
-                            path: "/baseManage"
+                            path: "baseManage"
                         }
                     ]
                 }
@@ -95,14 +128,14 @@ export default {
             thirdMenu: [
                 {
                     name: "权限管理",
-                    path: "/authManage",
+                    path: "/c",
                     second: [
-                        { name: "角色管理", path: "/roleManage" },
-                        { name: "用户管理", path: "/userManage" },
-                        { name: "部门管理", path: "/divManage" },
+                        { name: "角色管理", path: "roleManage" },
+                        { name: "用户管理", path: "userManage" },
+                        { name: "部门管理", path: "divManage" },
                         {
                             name: "菜单管理",
-                            path: "/menuManage"
+                            path: "menuManage"
                         }
                     ]
                 }
@@ -114,7 +147,11 @@ export default {
     },
     methods: {
         handleSelect(key, keyPath) {
-            console.log(key, keyPath);
+            this.$router.push({path:'/'+key})
+        },
+        handleOpen(){
+
+            this.$refs.menucolor='yellow'
         }
     }
 };
@@ -123,6 +160,9 @@ export default {
 <style lang="scss" scoped>
 .header {
     height: 10%;
+    .el-menu-demo{
+        display: flex;
+    }
     .tubiao {
         position: absolute;
         right: 0%;
@@ -137,18 +177,26 @@ export default {
     }
 }
 //多级菜单(第一级)移入
-.header >>> .el-submenu__title:hover {
+.header >>> .el-submenu__title:hover{
     background-color: #1f87e7 !important; //改变背景颜色
     color: #ffffff !important; //改变字体颜色
+    
 }
+// .header >>>.el-submenu__title i:hover {
+//         color: red !important;
+//     }
 //二级菜单移入的背景颜色
 .opt:hover {
     background-color: #1f87e7 !important; //改变背景颜色
     color: #ffffff !important; //改变字体颜色
 }
 //二级菜单选中的背景颜色--可以
-// .opt.is-active {
-//     background-color: #1f87e7 !important;
-//     color: #ffffff !important; //改变字体颜色
-// }
+.opt.is-active {
+    background-color: #1f87e7 !important;
+    color: #ffffff !important; //改变字体颜色
+}
+.header>>>.el-menu-item.is-active{
+    background-color: #1f87e7 !important;
+    color: #ffffff !important; //改变字体颜色
+}
 </style>

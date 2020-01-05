@@ -8,12 +8,29 @@
 
 <script>
 export default {
-    name: "App"
+    name: "App",
+    created() {
+        this.getRoutes();
+    },
+    methods: {
+        //注意，这个需要重新在添加吗？会不会重复?
+        getRoutes() {
+            debugger;
+            if (localStorage.getItem("menuRoutes")) {
+                //如果本地存储的有路由表，就重新设置路由表(避免刷新的时候路由表丢失)
+                let menuRoutes = localStorage.getItem(menuRoutes);
+                menuRoutes.forEach(route => {
+                    _this.$router.options.routes[1].children.push(route);
+                });
+                _this.$router.addRoutes(_this.$router.options.routes);
+            }
+        }
+    }
 };
 </script>
 
 <style>
-@import './assets/font/font.css';
+@import "./assets/font/font.css";
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity 0.5s;

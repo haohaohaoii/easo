@@ -43,7 +43,8 @@ export default ({
     menuAdd(state,menuStatus){
         state.menuAdd = menuStatus;
     },
-    getMenulist(state,menuList){
-        state.menuList = menuList
+    //获取实际路由表
+    getMenulist(state,menulist){
+        state.menulist = menulist
     }
 })

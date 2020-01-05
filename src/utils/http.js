@@ -40,6 +40,7 @@ const errorHandle = (status, message) => {
             break;
         case -2:
             Message.error(message);
+            break;
         default:
             console.log(message)
     }
@@ -55,7 +56,7 @@ instance.interceptors.request.use(
         showLoading()
         // 登录流程控制中，根据本地是否存在token判断用户的登录情况        
         // 但是即使token存在，也有可能token是过期的，所以在每次的请求头中携带token  
-        const token = sessionStorage.getItem('token')      
+        const token = localStorage.getItem('token')      
         // const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NzgxMDE0ODcsInVzZXJuYW1lIjoiYWRtaW4xIn0.Qz1MVonBD73y4qNAplWp6wCUiD32T7PrhHgTaK09U7Aasdasdasd'
         token && (config.headers.Authorization = token);
         return config;
