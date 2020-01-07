@@ -45,6 +45,12 @@ export default ({
     },
     //获取实际路由表
     getMenulist(state,menulist){
+        debugger
         state.menulist = menulist
+    },
+    //更改默认选中的菜单
+    changeDefaultmenu(state,menuMsg){
+        debugger
+        state.defaultMenu = menuMsg
     }
 })

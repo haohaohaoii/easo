@@ -2,14 +2,13 @@
     <!--头部菜单-->
     <div class="header">
         <el-menu
-            default-active="hisData"
+            :default-active="defaultMenu"
             class="el-menu-demo"
             mode="horizontal"
             @select="handleSelect"
-            @mouseenter.native="handleOpen"
         >
             <!-- <div v-for="(item,index) of createMenu" :key="index"> -->
-                <el-submenu v-if="item.two && item.two.length>=1" v-for="(item,index) of createMenu" :key="index" class="upopt" :index='item.one.id'>
+                <el-submenu v-if="item.two && item.two.length>=1" v-for="(item,index) of menulist" :key="index" class="upopt" :index='item.one.createTime'>
                     <template slot="title">
                         <i class="iconfont icon-shuju" style="font-size:20px"></i>
                         {{item.one.menuName}}
@@ -21,7 +20,7 @@
                         :index="seciem.path"
                     >{{seciem.menuName}}</el-menu-item>
                 </el-submenu>
-                <el-menu-item v-else :index="item.one.id">{{item.one.menuName}}</el-menu-item>
+                <el-menu-item v-else :index="item.one.path">{{item.one.menuName}}</el-menu-item>
             <!-- </div> -->
             
         <!-- <el-submenu v-for="item of firstMenu" :key="item.name" :index="item.path" class="upopt">
@@ -74,7 +73,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState,mapMutations } from "vuex";
 export default {
     data() {
         return {
@@ -143,15 +142,12 @@ export default {
         };
     },
     computed: {
-        ...mapState(["msg"])
+        ...mapState(["menulist","defaultMenu"])
     },
     methods: {
         handleSelect(key, keyPath) {
+            this.$store.commit('changeDefaultmenu',key)
             this.$router.push({path:'/'+key})
-        },
-        handleOpen(){
-
-            this.$refs.menucolor='yellow'
         }
     }
 };

@@ -1,11 +1,12 @@
 /**
  * 异步路由（本地完整路由）
  */
+import hisData from '../components/historyData/historyData'
 let asyncRoutes = [
     {
         path: 'hisData',     //历史数据
         name: '历史数据',
-        component: resolve => (require(["@/components/historyData/historyData"], resolve))
+        component: hisData
     }, {
         path: 'realData',     //实时数据
         name: '实时数据',

@@ -1,7 +1,7 @@
 let defaultMenu=[]
 try{
     if(localStorage.getItem('menuPaths')){
-        defaultMenu = localStorage.getItem('menuPaths')
+        defaultMenu = JSON.parse(localStorage.getItem('menuPaths'))
     }
 }catch(e){}
 
@@ -19,5 +19,6 @@ export default ({
     userAdd :false,   //权限管理下的用户管理添加用户 dialog状态
     divAdd:false,    //权限管理下的部门管理添加部门 dialog状态
     menuAdd:false,    //权限管理下的菜单管理添加菜单 dialog状态
-    menulist:defaultMenu  //后台根据不同角色返回的不同菜单表
+    menulist:defaultMenu,  //后台根据不同角色返回的不同菜单表
+    defaultMenu:'hisData'  //默认选中的是历史数据
  })
