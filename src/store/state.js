@@ -1,12 +1,13 @@
-let defaultMenu=[]
-try{
-    if(localStorage.getItem('menuPaths')){
-        defaultMenu = JSON.parse(localStorage.getItem('menuPaths'))
-    }
-}catch(e){}
+// let defaultMenu=[]
+// try{
+//     if(localStorage.getItem('menuPaths')){
+//         defaultMenu = JSON.parse(localStorage.getItem('menuPaths'))
+//     }
+// }catch(e){}
 
 export default ({
     token:'',  //用户的token
+    adminId:'', //用户登陆成功返回的用户id
     msg: '权限管理',
     menuLeftwidth: '240px', //右侧菜单初始宽度
     hoursArr: [], //x轴坐标
@@ -19,6 +20,50 @@ export default ({
     userAdd :false,   //权限管理下的用户管理添加用户 dialog状态
     divAdd:false,    //权限管理下的部门管理添加部门 dialog状态
     menuAdd:false,    //权限管理下的菜单管理添加菜单 dialog状态
-    menulist:defaultMenu,  //后台根据不同角色返回的不同菜单表
-    defaultMenu:'hisData'  //默认选中的是历史数据
+    menulist:[],  //由角色权限和本地完整路由结合生成的实际菜单表
+    defaultMenu:'hisData',  //默认选中的是历史数据
+    rolesRoutes:[],  //由角色权限和本地完整路由结合生成的实际角色路由
+    asyncRoutes :[   //异步路由，本地完整路由
+        {
+            path: 'hisData',     //历史数据
+            name: '历史数据',
+            component: resolve => (require(["@/components/historyData/historyData"], resolve))
+        }, {
+            path: 'realData',     //实时数据
+            name: '实时数据',
+            component: resolve => (require(["@/components/realData/realData"], resolve))
+        }, {
+            path: 'enterMation',     //企业信息
+            name: '企业信息',
+            component: resolve => (require(["@/components/enterMation/enterMation"], resolve))
+        },
+        {
+            path: 'spam',     //留言管理
+            name: '留言管理',
+            component: resolve => (require(["@/components/spam/spam"], resolve))
+        },
+         {
+            path: 'baseManage',     //基站管理
+            name: '基站管理',
+            component: resolve => (require(["@/components/baseManage/baseManage"], resolve))
+        },
+         {
+            path: 'roleManage',     //角色管理
+            name: '角色管理',
+            component: resolve => (require(["@/components/roleManage/roleManage"], resolve))
+        },
+        {
+            path: 'userManage',     //用户管理
+            name: '用户管理',
+            component: resolve => (require(["@/components/userManage/userManage"], resolve))
+        },{
+            path: 'divManage',     //部门管理
+            name: '部门管理',
+            component: resolve => (require(["@/components/divManage/divManage"], resolve))
+        }, {
+            path: 'menuManage',     //菜单管理
+            name: '菜单管理',
+            component: resolve => (require(["@/components/menuManage/menuManage"], resolve))
+        }
+    ]
  })

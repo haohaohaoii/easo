@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations,mapActions} from "vuex";
 import filterRoutes from "../../utils/filterRoutes";
 import asyncRoutes from "../../utils/asyncRoutes.js";
 const Base64 = require("js-base64").Base64;
@@ -55,10 +55,8 @@ export default {
                 .login(params)
                 .then(res => {
                     console.log(res);
-                    if (res.data.code == 0) {
-                        //说明登陆成功
-                        if (this.remenbVal) {
-                            //说明是记住密码
+                    if (res.data.code == 0) {  //登陆成功
+                        if (this.remenbVal) {  //记住密码
                             localStorage.setItem("userName", this.userName); //存储账号
                             localStorage.setItem(
                                 "userPaw",
@@ -67,7 +65,22 @@ export default {
                         }
                         localStorage.setItem("token", res.data.data[0].token); //存储token
                         let adminId = res.data.data[0].id; //获取adminId
-                        this.getMenu(adminId); //调用获取菜单权限方法
+                        this.$store.commit('getToken',res.data.data[0].token)
+                        this.$store.commit('getAdminid',res.data.data[0].id)
+                        this.$store.dispatch('getRoles',adminId).then(res=>{
+                            //跳转路由页面
+                            debugger
+                            if (this.$route.query.redirect) { //重定向过来的
+                                this.$router.push(_this.$route.query.redirect);
+                            } else {  //正常登陆的
+                            debugger
+                                this.$router.push("/");
+                            }
+                        }).catch(error=>{
+
+                        })
+                        
+                        // this.getMenu(adminId); //调用获取菜单权限方法
                     }
                 })
                 .catch(error => {
