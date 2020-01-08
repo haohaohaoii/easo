@@ -5,20 +5,20 @@ import store from '../store/index'
 
 Vue.use(Router)
 
-let router=new Router({
+let router = new Router({
     routes: [
         {
             path: '/login',
             name: 'login',
             component: resolve => (require(["@/components/login/login"], resolve)),
-            
+
         },
         {
             path: '/',
             name: 'home',
-            redirect:'/hisData',
+            redirect: '/hisData',
             component: resolve => (require(["@/components/home/home"], resolve)),
-            children:[]
+            children: []
         }
     ]
 })
@@ -123,41 +123,42 @@ let router=new Router({
 //     }
 // ]
 
-router.beforeEach((to,from,next)=>{
+router.beforeEach((to, from, next) => {
     debugger
-    if(store.state.token && store.state.adminId){  //用户已经登陆
-        debugger 
-        if(to.path == '/login'){
+    if (store.state.token && store.state.adminId) {  //用户已经登陆
+        debugger
+        if (to.path == '/login') {
             next('/')
-        }else{
-            if(store.state.rolesRoutes.length==0 && store.state.menulist.length==0){  //路由表和菜单表已同时生成
-                debugger
-                let menuRoutes = store.state.rolesRoutes
-                menuRoutes.forEach(route => {
-                   
-                    router.options.routes[1].children.push(
-                        route
-                    );
-                });
-                router.matcher = new Router({mode: 'history'}).matcher; 
-                  debugger
-                router.addRoutes(router.options.routes)
-                
-            }else{
-                if(store.getters.getRoles.length>0){
-                    // router.matcher = new Router({mode: 'history'}).matcher; 
-                    debugger
-                    router.addRoutes(store.getters.getRoles)
-                    next()
-                }
-            }
-           
-        }
-    }else{   //用户未登陆
-        if(to.path == '/login'){
+        } else {
             next()
-        }else{
-            next('/login');
+
+        }
+    } else {   //用户未登陆
+        if (to.path == '/login') {
+            next()
+        } else {
+            if (localStorage.getItem('token') && localStorage.getItem('adminId')) {
+                let adminId = localStorage.getItem('adminId')
+                store.dispatch('getRoles', adminId).then(res => {
+                    debugger
+                    store.commit("getToken", localStorage.getItem('token'));
+                    store.commit("getAdminid", adminId);
+                    let menuRoutes = store.state.rolesRoutes
+                    menuRoutes.forEach(route => {
+                        router.options.routes[1].children.push(
+                            route
+                        );
+                    });
+                    router.matcher = new Router({ mode: 'history' }).matcher;
+                    debugger
+                    router.addRoutes(router.options.routes)
+                    next({ ...to, replace: true })
+                })
+
+            } else {
+                next('/login');
+            }
+
         }
     }
 })

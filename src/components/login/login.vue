@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { mapMutations,mapActions} from "vuex";
+import { mapMutations, mapActions, mapState, getters, mapGetters } from "vuex";
 import filterRoutes from "../../utils/filterRoutes";
 import asyncRoutes from "../../utils/asyncRoutes.js";
 const Base64 = require("js-base64").Base64;
@@ -33,6 +33,10 @@ export default {
             userPaw: "", //密码
             remenbVal: false //记住密码
         };
+    },
+    computed: {
+        ...mapState(["rolesRoutes", "menulist"]),
+        ...mapGetters(["getRoles"])
     },
     mounted() {
         //判断用户上一次操作是否是记住密码
@@ -55,8 +59,10 @@ export default {
                 .login(params)
                 .then(res => {
                     console.log(res);
-                    if (res.data.code == 0) {  //登陆成功
-                        if (this.remenbVal) {  //记住密码
+                    if (res.data.code == 0) {
+                        //登陆成功
+                        if (this.remenbVal) {
+                            //记住密码
                             localStorage.setItem("userName", this.userName); //存储账号
                             localStorage.setItem(
                                 "userPaw",
@@ -65,21 +71,31 @@ export default {
                         }
                         localStorage.setItem("token", res.data.data[0].token); //存储token
                         let adminId = res.data.data[0].id; //获取adminId
-                        this.$store.commit('getToken',res.data.data[0].token)
-                        this.$store.commit('getAdminid',res.data.data[0].id)
-                        this.$store.dispatch('getRoles',adminId).then(res=>{
-                            //跳转路由页面
-                            debugger
-                            if (this.$route.query.redirect) { //重定向过来的
-                                this.$router.push(_this.$route.query.redirect);
-                            } else {  //正常登陆的
-                            debugger
-                                this.$router.push("/");
-                            }
-                        }).catch(error=>{
+                        localStorage.setItem("adminId", adminId);
+                        this.$store.commit("getToken", res.data.data[0].token);
+                        this.$store.commit("getAdminid", res.data.data[0].id);
+                        this.$store
+                            .dispatch("getRoles", adminId)
+                            .then(res => {
+                                //跳转路由页面
+                                debugger;
+                                if (this.getRoles.length > 0) {
+                                    debugger;
+                                    this.$router.addRoutes(this.getRoles);
+                                    if (this.$route.query.redirect) {
+                                        //重定向过来的
+                                        this.$router.push(
+                                            this.$route.query.redirect
+                                        );
+                                    } else {
+                                        //正常登陆的
+                                        debugger;
+                                        this.$router.push("/");
+                                    }
+                                }
+                            })
+                            .catch(error => {});
 
-                        })
-                        
                         // this.getMenu(adminId); //调用获取菜单权限方法
                     }
                 })
@@ -92,55 +108,62 @@ export default {
         getMenu(adminId) {
             let adminid = adminId;
             let _this = this;
-            this.$api.menu.getMenu(adminid).then(res => {
-                console.log(res);
-                if (res.status == 200) {
-                    if (res.data.code == 0) {
-                        //获取路由表
-                        filterRoutes
-                            .filters(asyncRoutes, res.data.data)
-                            .then(menuRoutes => {
-                                console.log(menuRoutes);
-                                localStorage.setItem(
-                                    "menuRoutes",
-                                    JSON.stringify(menuRoutes)
-                                ); //避免刷新的时候路由表
-                                //添加路由表
-                                menuRoutes.forEach(route => {
-                                    _this.$router.options.routes[1].children.push(
-                                        route
+            this.$api.menu
+                .getMenu(adminid)
+                .then(res => {
+                    console.log(res);
+                    if (res.status == 200) {
+                        if (res.data.code == 0) {
+                            //获取路由表
+                            filterRoutes
+                                .filters(asyncRoutes, res.data.data)
+                                .then(menuRoutes => {
+                                    console.log(menuRoutes);
+                                    localStorage.setItem(
+                                        "menuRoutes",
+                                        JSON.stringify(menuRoutes)
+                                    ); //避免刷新的时候路由表
+                                    //添加路由表
+                                    menuRoutes.forEach(route => {
+                                        _this.$router.options.routes[1].children.push(
+                                            route
+                                        );
+                                    });
+                                    _this.$router.addRoutes(
+                                        _this.$router.options.routes
                                     );
                                 });
-                                _this.$router.addRoutes(
-                                    _this.$router.options.routes
-                                );
-                            });
-                        //获取菜单表
-                        filterRoutes
-                            .getMenus(asyncRoutes, res.data.data)
-                            .then(menuItems => {
-                                console.log(menuItems);
-                                localStorage.setItem(
-                                    "menuPaths",
-                                    JSON.stringify(menuItems)
-                                ); //避免刷新的时候菜单表丢失
-                                _this.$store.commit("getMenulist", menuItems);
-                            });
+                            //获取菜单表
+                            filterRoutes
+                                .getMenus(asyncRoutes, res.data.data)
+                                .then(menuItems => {
+                                    console.log(menuItems);
+                                    localStorage.setItem(
+                                        "menuPaths",
+                                        JSON.stringify(menuItems)
+                                    ); //避免刷新的时候菜单表丢失
+                                    _this.$store.commit(
+                                        "getMenulist",
+                                        menuItems
+                                    );
+                                });
+                        }
+                        if (_this.$route.query.redirect) {
+                            //重定向过来的
+                            _this.$router.push(_this.$route.query.redirect);
+                        } else {
+                            _this.$router.push("/");
+                        }
                     }
-                    if (_this.$route.query.redirect) {
-                        //重定向过来的
-                        _this.$router.push(_this.$route.query.redirect);
-                    } else {
-                        _this.$router.push("/");
-                    }
-                }
-            }).catch(error=>{
-                console.log(error)
-            })
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         },
 
         //刚进页面的时候去获取用户名、密码、token
         getPaw() {
+            debugger;
             let name = localStorage.getItem("userName");
             let password = Base64.decode(localStorage.getItem("userPaw")); //获取密码(base64解密)
             let token = localStorage.getItem("token");
