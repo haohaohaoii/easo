@@ -11,21 +11,9 @@
                 </div>
 
                 <div class="loginFill">
-                    <el-input
-                        placeholder="用户名"
-                        v-model="userName"
-                        clearable
-                        class="iptv"
-                    ></el-input>
-                    <el-input
-                        placeholder="密码"
-                        v-model="userPaw"
-                        show-password
-                        class="iptv"
-                    ></el-input>
-                    <el-checkbox v-model="remenbVal" class="tip"
-                        >记住密码</el-checkbox
-                    >
+                    <el-input placeholder="用户名" v-model="userName" clearable class="iptv"></el-input>
+                    <el-input placeholder="密码" v-model="userPaw" show-password class="iptv"></el-input>
+                    <el-checkbox v-model="remenbVal" class="tip">记住密码</el-checkbox>
                 </div>
                 <el-button round class="btn" @click="login">登录</el-button>
             </div>
@@ -55,15 +43,36 @@ export default {
         this.getPaw();
     },
     methods: {
-        login() {
-            if (this.userName && this.userPaw) {
-                //调用登陆接口
-                this.getAdminid();
-            } else {
-                this.$message.error("注意：账号或密码不能为空");
-            }
+        // login() {
+        //     if (this.userName && this.userPaw) {
+        //         //调用登陆接口
+        //         this.getAdminid();
+        //     } else {
+        //         this.$message.error("注意：账号或密码不能为空");
+        //     }
+        // },
+        login(){
+            let adminId = 2
+            this.$store.dispatch("getRoles", adminId).then(res => {
+                //跳转路由页面
+                if (this.getRoles.length > 0) {
+                     this.$store.commit("getToken", 'asdasdas');
+                    this.$store.commit("getAdminid", 2);
+                    this.$router.addRoutes(this.getRoles);
+                    if (this.$route.query.redirect) {
+                        //重定向过来的
+                        this.$router.push(
+                            this.$route.query.redirect
+                        );
+                    } else {
+                        //正常登陆的
+                        this.$router.push("/");
+                    }
+                }
+            }).catch(error => {
+                alert('错误')
+            });
         },
-
         //调用登陆接口获取adminId
         getAdminid() {
             let params = { username: this.userName, password: this.userPaw }; //获取参数
@@ -86,24 +95,22 @@ export default {
                         localStorage.setItem("adminId", adminId);
                         this.$store.commit("getToken", res.data.data[0].token);
                         this.$store.commit("getAdminid", res.data.data[0].id);
-                        this.$store
-                            .dispatch("getRoles", adminId)
-                            .then(res => {
-                                //跳转路由页面
-                                if (this.getRoles.length > 0) {
-                                    this.$router.addRoutes(this.getRoles);
-                                    if (this.$route.query.redirect) {
-                                        //重定向过来的
-                                        this.$router.push(
-                                            this.$route.query.redirect
-                                        );
-                                    } else {
-                                        //正常登陆的
-                                        this.$router.push("/");
-                                    }
+                        this.$store.dispatch("getRoles", adminId).then(res => {
+                            //跳转路由页面
+                            if (this.getRoles.length > 0) {
+                                this.$router.addRoutes(this.getRoles);
+                                if (this.$route.query.redirect) {
+                                    //重定向过来的
+                                    this.$router.push(
+                                        this.$route.query.redirect
+                                    );
+                                } else {
+                                    //正常登陆的
+                                    this.$router.push("/");
                                 }
-                            })
-                            .catch(error => {});
+                            }
+                        })
+                        .catch(error => {});
                     }
                 })
                 .catch(error => {
