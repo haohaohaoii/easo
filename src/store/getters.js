@@ -20,7 +20,6 @@ export default ({
                 route
             );
         });
-        debugger
         return router.options.routes
     }
 })

@@ -43,7 +43,7 @@ export default ({
     menuAdd(state, menuStatus) {
         state.menuAdd = menuStatus;
     },
-    
+
     //更改默认选中的菜单
     changeDefaultmenu(state, menuMsg) {
         state.defaultMenu = menuMsg
@@ -58,24 +58,35 @@ export default ({
     },
     //根据返回的角色权限，生成路由表
     filters(state, roles) {
-        debugger
-        let menuTree = roles
-        let asyncRoutes = state.asyncRoutes
+        let menuTree = roles  //角色权限
+        let asyncRoutes = state.asyncRoutes //本地完整路由
         let res = []
         let childrenName = []
         for (let i = 0; i < menuTree.length; i++) {
-            if (menuTree[i].two) {
-                for (let j = 0; j < menuTree[i].two.length; j++) {
-                    childrenName.push(menuTree[i].two[j])
+            if (menuTree[i].subMenus) { //有二级菜单
+                for (let j = 0; j < menuTree[i].subMenus.length; j++) {
+                    menuTree[i].subMenus[j].meta = {}
+                    if (menuTree[i].subMenus[j].subMenus && menuTree[i].subMenus[j].subMenus.length > 0) { //有三级菜单(按钮管控)
+                        menuTree[i].subMenus[j].meta.btnPress = []
+                        for (let k = 0; k < menuTree[i].subMenus[j].subMenus.length; k++) {
+                            let name = menuTree[i].subMenus[j].subMenus[k].menuName
+                            menuTree[i].subMenus[j].meta.btnPress.push(name)
+                        }
+                        childrenName.push(menuTree[i].subMenus[j])
+                    } else {
+                        childrenName.push(menuTree[i].subMenus[j])
+                    }
                 }
-            } else {
-                childrenName.push(menuTree[i].one)
             }
         }
         asyncRoutes.forEach((route) => {
             let routeItem = route
             childrenName.forEach((item) => {
                 if (routeItem.name == item.menuName) {
+                    let metaArr = Object.keys(item.meta)
+                    if (metaArr.length > 0 && item.meta.btnPress && item.meta.btnPress.length > 0) {
+                        routeItem.meta = item.meta
+                    }
                     res.push(routeItem)
                 }
             })
@@ -84,36 +95,32 @@ export default ({
     },
     //根据返回的角色权限,生成菜单表
     getMenus(state, roles) {
-        debugger
         let menuTree = roles
         let asyncRoutes = state.asyncRoutes
         asyncRoutes.forEach((route) => {
             let routeItem = route
             menuTree.forEach((item) => {
 
-                if (routeItem.name == item.two.menuName) {
-                    iitem.two.path = routeItem.path
+                if (routeItem.name == item.subMenus.menuName) {
+                    iitem.subMenus.path = routeItem.path
                 }
             })
         })
-        for(let i=0; i<asyncRoutes.length; i++){
-            // debugger
-            for(let k=0; k<menuTree.length;k++){
-                if(menuTree[k].two && menuTree[k].two.length>=1){   //说明有二级菜单
-                    for(let j=0; j<menuTree[k].two.length; j++){
-                        // debugger
-                        if(asyncRoutes[i].name == menuTree[k].two[j].menuName){
-                            menuTree[k].two[j].path = asyncRoutes[i].path;
+        for (let i = 0; i < asyncRoutes.length; i++) {
+            for (let k = 0; k < menuTree.length; k++) {
+                if (menuTree[k].subMenus && menuTree[k].subMenus.length >= 1) {   //说明有二级菜单
+                    for (let j = 0; j < menuTree[k].subMenus.length; j++) {
+                        if (asyncRoutes[i].name == menuTree[k].subMenus[j].menuName) {
+                            menuTree[k].subMenus[j].path = asyncRoutes[i].path;
                         }
                     }
-                }else{
-                    if(asyncRoutes[i].name == menuTree[k].one.menuName){ //说明是一级菜单
-                        menuTree[k].one.path = asyncRoutes[i].path;
+                } else {
+                    if (asyncRoutes[i].name == menuTree[k].subMenus.menuName) { //说明是一级菜单
+                        menuTree[k].subMenus.path = asyncRoutes[i].path;
                     }
                 }
             }
         }
-        debugger
         state.menulist = menuTree
     }
 })

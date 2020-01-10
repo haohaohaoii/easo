@@ -1,5 +1,5 @@
 <template>
-    <div class="listData"  v-if="tableData">
+    <div class="listData" v-if="tableData">
         <div class="tabE">
             <el-table
                 :data="tableData"
@@ -13,41 +13,58 @@
                 <el-table-column align="center" prop="cod" label="COD(mg/L)">
                     <template slot-scope="scope">
                         <span v-if="scope.row.codOverflag==1" style="color: red">{{ scope.row.cod }}</span>
-                        <span v-else-if="scope.row.codExceptionFlag==1" style="color:#FFA247">{{ scope.row.cod }}</span>
+                        <span
+                            v-else-if="scope.row.codExceptionFlag==1"
+                            style="color:#FFA247"
+                        >{{ scope.row.cod }}</span>
                         <span v-else>{{ scope.row.cod}}</span>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="nh3n" label="NH3-N(mg/L)">
                     <template slot-scope="scope">
-                        <span v-if="scope.row.nh3nOverflag==1" style="color: red">{{ scope.row.nh3n }}</span>
-                        <span v-else-if="scope.row.nh3nExceptionFlag==1" style="color:#FFA247">{{ scope.row.nh3n }}</span>
+                        <span
+                            v-if="scope.row.nh3nOverflag==1"
+                            style="color: red"
+                        >{{ scope.row.nh3n }}</span>
+                        <span
+                            v-else-if="scope.row.nh3nExceptionFlag==1"
+                            style="color:#FFA247"
+                        >{{ scope.row.nh3n }}</span>
                         <span v-else>{{ scope.row.nh3n}}</span>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="tn" label="TN(mg/L)">
                     <template slot-scope="scope">
                         <span v-if="scope.row.tnOverflag==1" style="color: red">{{ scope.row.tn }}</span>
-                        <span v-else-if="scope.row.tnExceptionFlag==1" style="color:#FFA247">{{ scope.row.tn }}</span>
+                        <span
+                            v-else-if="scope.row.tnExceptionFlag==1"
+                            style="color:#FFA247"
+                        >{{ scope.row.tn }}</span>
                         <span v-else>{{ scope.row.tn}}</span>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="tp" label="TP(mg/L)">
                     <template slot-scope="scope">
                         <span v-if="scope.row.tpOverflag==1" style="color: red">{{ scope.row.tp }}</span>
-                        <span v-else-if="scope.row.tpExceptionFlag==1" style="color:#FFA247">{{ scope.row.tp }}</span>
+                        <span
+                            v-else-if="scope.row.tpExceptionFlag==1"
+                            style="color:#FFA247"
+                        >{{ scope.row.tp }}</span>
                         <span v-else>{{ scope.row.tp}}</span>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="ph" label="PH">
                     <template slot-scope="scope">
                         <span v-if="scope.row.phOverflag==1" style="color: red">{{ scope.row.ph }}</span>
-                        <span v-else-if="scope.row.phExceptionFlag==1" style="color:#FFA247">{{ scope.row.ph }}</span>
+                        <span
+                            v-else-if="scope.row.phExceptionFlag==1"
+                            style="color:#FFA247"
+                        >{{ scope.row.ph }}</span>
                         <span v-else>{{ scope.row.ph}}</span>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="createTime" label="更新时间"></el-table-column>
             </el-table>
-            
         </div>
         <slot></slot>
     </div>
@@ -141,9 +158,6 @@ export default {
             }
         }
     },
-    mounted(){
-        debugger
-    },
     methods: {
         //label表格头部换行函数
         // renderHeader(h, { column }) {
@@ -157,25 +171,25 @@ export default {
 <style lang="scss" scoped>
 .listData {
     height: 62.5%;
-    
+
     .tabE {
         height: 99.5%;
         margin-top: 1%;
         border: 1px solid rgba(235, 235, 235, 1);
-        .tab{
+        .tab {
             height: 100%;
             overflow-y: auto;
         }
     }
 }
-.listData >>>.el-table th, .el-table td{
+.listData >>> .el-table th,
+.el-table td {
     padding: 0 !important;
     height: 50px !important;
 }
-.listData >>> .el-table td, .el-table th{
-     padding: 0 !important;
+.listData >>> .el-table td,
+.el-table th {
+    padding: 0 !important;
     height: 50px !important;
-    
 }
-
 </style>

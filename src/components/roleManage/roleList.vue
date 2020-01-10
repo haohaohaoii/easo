@@ -2,10 +2,10 @@
     <div class="roleList">
         <div class="tabE">
             <el-table
-                :data="tableData"
+                :data="roleData"
                 stripe
                 style="width: 100%"
-                :header-cell-style="{background: 'rgba(237,237,237,1)'}"
+                :header-cell-style="{ background: 'rgba(237,237,237,1)' }"
                 class="tab"
             >
                 <el-table-column align="center" prop="roleName" label="角色名称"></el-table-column>
@@ -26,61 +26,41 @@
                 </el-table-column>
             </el-table>
         </div>
-        <div class="tabPage">
-            <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
-        </div>
+        <slot></slot>
     </div>
 </template>
 
 <script>
 import { mapMutations } from "vuex";
 export default {
+    props:{
+        rolelist:{
+            type:Array,
+            default: function() {
+                return [];
+            }
+        }
+    },
     data() {
         return {
-            tableData: [
-                {
-                    roleName: "郑州富铭环保科技有限公司",
-                    roleDate: "19/11/20 16:40:20",
-                },
-                {
-                    roleName: "郑州富铭环保科技有限公司",
-                    roleDate: "19/11/20 16:40:20",
-                },{
-                    roleName: "郑州富铭环保科技有限公司",
-                    roleDate: "19/11/20 16:40:20",
-                },{
-                    roleName: "郑州富铭环保科技有限公司",
-                    roleDate: "19/11/20 16:40:20",
-                },{
-                    roleName: "郑州富铭环保科技有限公司",
-                    roleDate: "19/11/20 16:40:20",
-                },{
-                    roleName: "郑州富铭环保科技有限公司",
-                    roleDate: "19/11/20 16:40:20",
-                },{
-                    roleName: "郑州富铭环保科技有限公司",
-                    roleDate: "19/11/20 16:40:20",
-                },{
-                    roleName: "郑州富铭环保科技有限公司",
-                    roleDate: "19/11/20 16:40:20",
-                },{
-                    roleName: "郑州富铭环保科技有限公司",
-                    roleDate: "19/11/20 16:40:20",
-                },{
-                    roleName: "郑州富铭环保科技有限公司",
-                    roleDate: "19/11/20 16:40:20",
-                },{
-                    roleName: "郑州富铭环保科技有限公司",
-                    roleDate: "19/11/20 16:40:20",
-                },{
-                    roleName: "郑州富铭环保科技有限公司",
-                    roleDate: "19/11/20 16:40:20",
-                },{
-                    roleName: "郑州富铭环保科技有限公司",
-                    roleDate: "19/11/20 16:40:20",
-                }
-            ]
+           
         };
+    },
+    computed:{
+        roleData(){
+            if(this.rolelist && this.rolelist.length>0){
+                let roleArr = [];
+                for(let i=0; i<this.rolelist.length; i++){
+                    let obj={
+                        roleName:this.rolelist[i].roleShow,  //角色名称
+                        roleDate:this.rolelist[i].createTime,
+                        id:this.rolelist[i].id
+                    }
+                    roleArr.push(obj)
+                }
+                return roleArr
+            }
+        }
     },
     methods: {
         //点击删除
@@ -105,9 +85,15 @@ export default {
         },
         //点击编辑
         roleEditor(index, row) {
+            debugger
             console.log(index, row);
-            this.$router.push({ path: "/spamReply" });
-            this.$store.commit("spamReply", true);
+            let roleId = row.id;  //获取角色id
+            this.$api.roles.getRolemsg(roleId).then(res=>{
+                debugger
+                console.log(res)
+            }).catch(error=>{
+
+            })
         }
     }
 };
@@ -125,10 +111,6 @@ export default {
             height: 100%;
             overflow-y: auto;
         }
-    }
-    .tabPage {
-        text-align: center;
-        padding-top: 4%;
     }
 }
 </style>

@@ -11,9 +11,21 @@
                 </div>
 
                 <div class="loginFill">
-                    <el-input placeholder="用户名" v-model="userName" clearable class="iptv"></el-input>
-                    <el-input placeholder="密码" v-model="userPaw" show-password class="iptv"></el-input>
-                    <el-checkbox v-model="remenbVal" class="tip">记住密码</el-checkbox>
+                    <el-input
+                        placeholder="用户名"
+                        v-model="userName"
+                        clearable
+                        class="iptv"
+                    ></el-input>
+                    <el-input
+                        placeholder="密码"
+                        v-model="userPaw"
+                        show-password
+                        class="iptv"
+                    ></el-input>
+                    <el-checkbox v-model="remenbVal" class="tip"
+                        >记住密码</el-checkbox
+                    >
                 </div>
                 <el-button round class="btn" @click="login">登录</el-button>
             </div>
@@ -78,9 +90,7 @@ export default {
                             .dispatch("getRoles", adminId)
                             .then(res => {
                                 //跳转路由页面
-                                debugger;
                                 if (this.getRoles.length > 0) {
-                                    debugger;
                                     this.$router.addRoutes(this.getRoles);
                                     if (this.$route.query.redirect) {
                                         //重定向过来的
@@ -89,71 +99,11 @@ export default {
                                         );
                                     } else {
                                         //正常登陆的
-                                        debugger;
                                         this.$router.push("/");
                                     }
                                 }
                             })
                             .catch(error => {});
-
-                        // this.getMenu(adminId); //调用获取菜单权限方法
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-        },
-
-        //用adminId获取菜单权限
-        getMenu(adminId) {
-            let adminid = adminId;
-            let _this = this;
-            this.$api.menu
-                .getMenu(adminid)
-                .then(res => {
-                    console.log(res);
-                    if (res.status == 200) {
-                        if (res.data.code == 0) {
-                            //获取路由表
-                            filterRoutes
-                                .filters(asyncRoutes, res.data.data)
-                                .then(menuRoutes => {
-                                    console.log(menuRoutes);
-                                    localStorage.setItem(
-                                        "menuRoutes",
-                                        JSON.stringify(menuRoutes)
-                                    ); //避免刷新的时候路由表
-                                    //添加路由表
-                                    menuRoutes.forEach(route => {
-                                        _this.$router.options.routes[1].children.push(
-                                            route
-                                        );
-                                    });
-                                    _this.$router.addRoutes(
-                                        _this.$router.options.routes
-                                    );
-                                });
-                            //获取菜单表
-                            filterRoutes
-                                .getMenus(asyncRoutes, res.data.data)
-                                .then(menuItems => {
-                                    console.log(menuItems);
-                                    localStorage.setItem(
-                                        "menuPaths",
-                                        JSON.stringify(menuItems)
-                                    ); //避免刷新的时候菜单表丢失
-                                    _this.$store.commit(
-                                        "getMenulist",
-                                        menuItems
-                                    );
-                                });
-                        }
-                        if (_this.$route.query.redirect) {
-                            //重定向过来的
-                            _this.$router.push(_this.$route.query.redirect);
-                        } else {
-                            _this.$router.push("/");
-                        }
                     }
                 })
                 .catch(error => {
@@ -163,9 +113,10 @@ export default {
 
         //刚进页面的时候去获取用户名、密码、token
         getPaw() {
-            debugger;
             let name = localStorage.getItem("userName");
-            let password = Base64.decode(localStorage.getItem("userPaw")); //获取密码(base64解密)
+            if (localStorage.getItem("userPaw")) {
+                let password = Base64.decode(localStorage.getItem("userPaw")); //获取密码(base64解密)
+            }
             let token = localStorage.getItem("token");
             if (name && password && token) {
                 //说明上一次登陆是记住密码

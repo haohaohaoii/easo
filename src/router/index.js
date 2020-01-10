@@ -124,12 +124,13 @@ let router = new Router({
 // ]
 
 router.beforeEach((to, from, next) => {
-    debugger
     if (store.state.token && store.state.adminId) {  //用户已经登陆
-        debugger
+
         if (to.path == '/login') {
             next('/')
         } else {
+            let defaultVal = to.path.substr(1)
+            store.commit('changeDefaultmenu', defaultVal)
             next()
 
         }
@@ -140,7 +141,7 @@ router.beforeEach((to, from, next) => {
             if (localStorage.getItem('token') && localStorage.getItem('adminId')) {
                 let adminId = localStorage.getItem('adminId')
                 store.dispatch('getRoles', adminId).then(res => {
-                    debugger
+
                     store.commit("getToken", localStorage.getItem('token'));
                     store.commit("getAdminid", adminId);
                     let menuRoutes = store.state.rolesRoutes
@@ -150,7 +151,7 @@ router.beforeEach((to, from, next) => {
                         );
                     });
                     router.matcher = new Router({ mode: 'history' }).matcher;
-                    debugger
+
                     router.addRoutes(router.options.routes)
                     next({ ...to, replace: true })
                 })

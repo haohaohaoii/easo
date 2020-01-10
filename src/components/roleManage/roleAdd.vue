@@ -15,14 +15,14 @@
             <div class="tree">
                 <p class="left">分配权限:</p>
                 <el-tree
-                    :data="dataTree"
+                    :data="roleTree"
                     show-checkbox
-                    default-expand-all
                     node-key="id"
                     ref="tree"
                     highlight-current
                     class="right"
-                    @check-change="handleCheckChange"
+                    @getHalfCheckedKeys="test"
+                    :default-expanded-keys="firstTree"
                 ></el-tree>
             </div>
         </div>
@@ -38,57 +38,86 @@ import { mapState, mapMutations } from "vuex";
 export default {
     data() {
         return {
-            status: false, //控制表头不显示
             form: {
-                roleName: "" //角色名称
+                roleName: "",//角色名称
+               
             },
-            dataTree: [
-                {
-                    id: 1,
-                    label: "数据查看",
-                    children: [
-                        { id: 7, label: "实时数据" },
-                        { id: 8, label: "历史数据" }
-                    ]
-                },
-                {
-                    id: 2,
-                    label: "企业管理",
-                    children: [
-                        { id: 5, label: "企业信息" },
-                        { id: 6, label: "留言管理" },
-                        { id: 4, label: "基站管理" }
-                    ]
-                },
-                {
-                    id: 3,
-                    label: "权限管理",
-                    children: [
-                        { id: 9, label: "角色管理." },
-                        { id: 10, label: "用户管理" },
-                        { id: 11, label: "部门管理" },
-                        { id: 12, label: "菜单管理" }
-                    ]
-                }
-            ]
+             firstTree:[], //默认展开第一层
         };
     },
+    computed:{
+        ...mapState(["roleAdd","menulist"]),
+        //得到tree树形结构数据
+        roleTree(){
+            if(this.menulist.length>0){
+                let menuArr = []
+                for(let i=0; i<this.menulist.length;i++){
+                    let faObj={}
+                    faObj.id= this.menulist[i].id,
+                    this.firstTree.push(this.menulist[i].id)  //默认展开第一层
+                    faObj.label = this.menulist[i].menuName  
+                    if(this.menulist[i].subMenus && this.menulist[i].subMenus.length>0){
+                        faObj.children=[]
+                        for(let k=0; k<this.menulist[i].subMenus.length; k++){
+                            let childObj ={
+                                id:this.menulist[i].subMenus[k].id,
+                                label:this.menulist[i].subMenus[k].menuName
+                            }
+                            faObj.children.push(childObj)
+                            if(this.menulist[i].subMenus[k].subMenus && this.menulist[i].subMenus[k].subMenus.length>0){
+                                childObj.children =[]
+                                for(let j=0; j< this.menulist[i].subMenus[k].subMenus.length; j++){
+                                    let btnObj = {
+                                        id:this.menulist[i].subMenus[k].subMenus[j].id,
+                                        label:this.menulist[i].subMenus[k].subMenus[j].menuName
+                                    }
+                                   childObj.children.push(btnObj)
+                                }
+                            }
+                        }
+                    }
+                    menuArr.push(faObj)
+                }
+                return menuArr
+            }
+        }
+    },
     methods: {
-        handleCheckChange() {
-            console.log(this.$refs.tree.getCheckedNodes());
-        },
+        //点击右上角x号
         closeDialog() {
             this.$store.commit("roleAdd", false); //关闭dialog
         },
-        save() {
-            this.$store.commit("roleAdd", false); //关闭dialog
+        test(){
+
         },
+        //点击保存
+        save() {
+           console.log(this.$refs.tree.getCheckedKeys());  
+           let checkedArr = this.$refs.tree.getCheckedKeys();
+           let name = this.form.roleName
+           if(name && checkedArr){
+               let params={roleShow:name,menus:checkedArr}
+               this.$api.roles.addRole(params).then(res=>{
+                    if(res.data.code ==0){
+                        console.log(res)
+                        this.$message({
+                                message: '添加角色成功',
+                                type: 'success'
+                            });
+                        this.$refs.tree.setCheckedKeys([]);
+                        this.$store.commit("roleAdd", false); //关闭dialog
+                    }
+                })
+           }else{
+               this.$message.error("注意：请添加或选取后菜单再保存！");
+           }
+           
+        },
+        //点击取消
         cancel() {
+            this.$refs.tree.setCheckedKeys([]);
             this.$store.commit("roleAdd", false); //关闭dialog
         }
-    },
-    computed: {
-        ...mapState(["roleAdd"])
     }
 };
 </script>
@@ -114,20 +143,21 @@ export default {
         display: flex;
         .left {
             margin-left: 1.5%;
-           
         }
         .right {
             margin-left: 2.5%;
-            background: #EBF1FD;
+            background: #ebf1fd;
             width: 75%;
+            height: 312px;
+            overflow: auto;
         }
     }
 }
 .dialog >>> .el-dialog {
     margin-top: 0 !important;
-    position: relative;
-    margin: 0 auto;
-
+    position: absolute;
+    left: 38%;
+    width: 40% !important;
     top: 50%;
     transition: transform;
     transform: translateY(-50%);
@@ -135,7 +165,7 @@ export default {
 }
 
 //输入框的背景颜色
-.dialog >>> .el-input__inner{
-     background: #EBF1FD;
+.dialog >>> .el-input__inner {
+    background: #ebf1fd;
 }
 </style>

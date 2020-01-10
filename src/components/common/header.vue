@@ -8,22 +8,28 @@
             @select="handleSelect"
         >
             <!-- <div v-for="(item,index) of createMenu" :key="index"> -->
-                <el-submenu v-if="item.two && item.two.length>=1" v-for="(item,index) of menulist" :key="index" class="upopt" :index='item.one.createTime'>
-                    <template slot="title">
-                        <i class="iconfont icon-shuju" style="font-size:20px"></i>
-                        {{item.one.menuName}}
-                    </template>
-                    <el-menu-item
-                        v-for="seciem of item.two"
-                        :key="seciem.path"
-                        class="opt"
-                        :index="seciem.path"
-                    >{{seciem.menuName}}</el-menu-item>
-                </el-submenu>
-                <el-menu-item v-else :index="item.one.path">{{item.one.menuName}}</el-menu-item>
+            <el-submenu
+                v-if="item.subMenus && item.subMenus.length>=1"
+                v-for="(item,index) of menulist"
+                :key="index"
+                class="upopt"
+                :index="item.createTime"
+            >
+                <template slot="title">
+                    <i class="iconfont icon-shuju" style="font-size:20px"></i>
+                    {{item.menuName}}
+                </template>
+                <el-menu-item
+                    v-for="seciem of item.subMenus"
+                    :key="seciem.path"
+                    class="opt"
+                    :index="seciem.path"
+                >{{seciem.menuName}}</el-menu-item>
+            </el-submenu>
+            <!-- <el-menu-item v-else :index="item.one.path">{{item.one.menuName}}</el-menu-item> -->
             <!-- </div> -->
-            
-        <!-- <el-submenu v-for="item of firstMenu" :key="item.name" :index="item.path" class="upopt">
+
+            <!-- <el-submenu v-for="item of firstMenu" :key="item.name" :index="item.path" class="upopt">
                 <template slot="title">
                     <i class="iconfont icon-shuju" style="font-size:20px"></i>
                     {{item.name}}
@@ -58,10 +64,8 @@
                     :index="seciem.path"
                     class="opt"
                 >{{seciem.name}}</el-menu-item>
-            </el-submenu> -->
-           
+            </el-submenu>-->
         </el-menu>
-
 
         <div class="tubiao">
             <i class="el-icon-s-custom"></i>
@@ -156,7 +160,7 @@ export default {
 <style lang="scss" scoped>
 .header {
     height: 10%;
-    .el-menu-demo{
+    .el-menu-demo {
         display: flex;
     }
     .tubiao {
@@ -173,10 +177,9 @@ export default {
     }
 }
 //多级菜单(第一级)移入
-.header >>> .el-submenu__title:hover{
+.header >>> .el-submenu__title:hover {
     background-color: #1f87e7 !important; //改变背景颜色
     color: #ffffff !important; //改变字体颜色
-    
 }
 // .header >>>.el-submenu__title i:hover {
 //         color: red !important;
@@ -191,7 +194,7 @@ export default {
     background-color: #1f87e7 !important;
     color: #ffffff !important; //改变字体颜色
 }
-.header>>>.el-menu-item.is-active{
+.header >>> .el-menu-item.is-active {
     background-color: #1f87e7 !important;
     color: #ffffff !important; //改变字体颜色
 }

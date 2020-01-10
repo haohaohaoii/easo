@@ -7,7 +7,14 @@
             </div>
             <div class="search">
                 <div class="searchL">
-                    <el-select placeholder="选择企业" class="changeW" v-model="companyValue" filterable clearable @change = "changeVal">
+                    <el-select
+                        placeholder="选择企业"
+                        class="changeW"
+                        v-model="companyValue"
+                        filterable
+                        clearable
+                        @change="changeVal"
+                    >
                         <el-option
                             v-for="item of companyLit"
                             :key="item.value"
@@ -16,7 +23,7 @@
                         ></el-option>
                     </el-select>
                     <el-select placeholder="选择基站" class="changeW" filterable v-model="baseValue">
-                         <el-option
+                        <el-option
                             v-for="item of baseArr"
                             :key="item.value"
                             :label="item.label"
@@ -56,7 +63,8 @@
             <!--插槽-->
             <div class="tabPage">
                 <p class="indic">注：红色字体代表超标数据，橙色字体代表异常数据。</p>
-                <el-pagination background
+                <el-pagination
+                    background
                     layout="prev, pager, next"
                     :total="totalLength"
                     @current-change="handleCurrentChange"
@@ -65,9 +73,8 @@
                 ></el-pagination>
             </div>
         </list-data>
-        <line-data v-if="btnMsg=='折线'"  :datalist="hisDatalist"></line-data>
+        <line-data v-if="btnMsg=='折线'" :datalist="hisDatalist"></line-data>
         <bar-data v-if="btnMsg=='柱状'"></bar-data>
-        
     </div>
 </template>
 
@@ -129,7 +136,7 @@ export default {
                 let pageSize = this.pagesize;
                 this.$api.data.historyData({params: {pageNum: pageNum,pageSize:pageSize,start:startTime,end:endTime}})
                 .then(res=>{
-                    debugger
+  
                     console.log(res)
                     if(res.data.code ==0){
                         if(res.data.pageInfo.list && res.data.pageInfo.list.length>=1){  //说明有数据

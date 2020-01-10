@@ -21,11 +21,13 @@
                             size="mini"
                             type="primary"
                             @click="handleEdit(scope.$index, scope.row)"
+                            v-has="'编辑s'"
                         >编辑</el-button>
                         <el-button
                             size="mini"
                             type="danger"
                             @click="handleDetail(scope.$index, scope.row)"
+                            v-has="'详情'"
                         >详情</el-button>
                     </template>
                 </el-table-column>

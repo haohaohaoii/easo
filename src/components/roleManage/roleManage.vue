@@ -1,5 +1,7 @@
 <template>
+    <!--角色管理-->
     <div class="roleManage">
+        <role-add></role-add>
         <div class="roleTop">
             <div class="markMsg">
                 <div></div>
@@ -13,27 +15,78 @@
                 >添加角色</el-button>
             </div>
         </div>
-        <role-list></role-list>
+        <!--角色列表插槽-->
+        <role-list v-show="roleList.length" :rolelist="roleList">
+            <div class="tabPage">
+                <el-pagination
+                    background
+                    layout="prev, pager, next"
+                    :total="totalLength"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    :page-size="pagesize"
+                ></el-pagination>
+            </div>
+        </role-list>
+        <no-data v-show="!roleList.length"></no-data>
     </div>
 </template>
 
 <script>
-import roleList from './roleList';
-import {mapMutations} from 'vuex';
+import roleAdd from "./roleAdd"
+import noData from "../common/noData";
+import roleList from "./roleList";
+import { mapMutations} from "vuex";
 export default {
-    components:{
-        roleList
+    components: {
+        roleList,
+        noData,
+        roleAdd
     },
     data() {
-        return {};
+        return {
+            totalLength: 0, //总共多少条数据
+            currentPage: 1, //初始页码
+            pagesize: 10, //一页多少条数据
+            roleList: [], //所有角色数组
+        };
     },
-    methods:{
+    created() {
+         let pageNum = this.currentPage;
+        this.getRoles(pageNum);
+    },
+    methods: {
+        //获取角色数据
+        getRoles(pageNum) {
+            let pageSize = this.pagesize;
+            this.$api.roles
+                .getAllroles({
+                    params: {
+                        pageNum: pageNum,
+                        pageSize: pageSize,
+                    }
+                })
+                .then(res => {
+     
+                    console.log(res)
+                    if(res.data.code ==0){
+                        this.totalLength = res.data.pageInfo.total  //获取总条数
+                        this.roleList = res.data.pageInfo.list  //获取数据
+                    }else{}
+                    
+                })
+                .catch(error => {});
+        },
         //添加角色
-        addRole(){
-            this.$router.push({path:'/roleAdd'})
-            this.$store.commit('roleAdd',true)
+        addRole() {
+            this.$store.commit("roleAdd", true);
+        },
+        //点击页码的时候
+        handleCurrentChange(currentPage) {
+            this.currentPage = currentPage;
+            let pageNum = this.currentPage;
+            this.getRoles(pageNum)
         }
-        
     }
 };
 </script>
@@ -70,6 +123,10 @@ export default {
                 right: 4%;
             }
         }
+    }
+    .tabPage {
+        text-align: center;
+        padding-top: 4%;
     }
 }
 </style>

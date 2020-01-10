@@ -9,6 +9,7 @@ import './element-variables.scss'
 import store from './store'
 import echarts from 'echarts'
 import api from './api' // 导入api接口
+import has from './utils/direct.js';
 
 Vue.prototype.$api = api; // 将api挂载到vue的原型上
 Vue.prototype.$echarts = echarts

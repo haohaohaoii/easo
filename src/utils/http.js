@@ -6,7 +6,7 @@ import axios from 'axios';
 import router from '../router';
 import store from '../store/index';
 import { Message } from 'element-ui';
-import { showLoading, hideLoading } from './loading' 
+import { showLoading, hideLoading } from './loading'
 
 
 // 创建axios实例
@@ -56,7 +56,7 @@ instance.interceptors.request.use(
         showLoading()
         // 登录流程控制中，根据本地是否存在token判断用户的登录情况        
         // 但是即使token存在，也有可能token是过期的，所以在每次的请求头中携带token  
-        const token = localStorage.getItem('token')      
+        const token = localStorage.getItem('token')
         // const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NzgxMDE0ODcsInVzZXJuYW1lIjoiYWRtaW4xIn0.Qz1MVonBD73y4qNAplWp6wCUiD32T7PrhHgTaK09U7Aasdasdasd'
         token && (config.headers.Authorization = token);
         return config;
@@ -67,13 +67,13 @@ instance.interceptors.request.use(
 // 响应拦截器
 instance.interceptors.response.use(
     // //请求成功
-    function(res) {
+    function (res) {
         hideLoading()
         if (res.status == 200) {
-            if(res.data.code == -1){   //token校验错误
-                errorHandle(res.data.code,res.data.message);
-            }else if(res.data.code == -2){ //其他错误
-                errorHandle(res.data.code,res.data.message);
+            if (res.data.code == -1) {   //token校验错误
+                errorHandle(res.data.code, res.data.message);
+            } else if (res.data.code == -2) { //其他错误
+                errorHandle(res.data.code, res.data.message);
             }
             return Promise.resolve(res)
         } else {
@@ -86,6 +86,7 @@ instance.interceptors.response.use(
         hideLoading()
         const { response } = error;
         if (response) {
+            Message.error(response.data.message);
             return Promise.reject(response);
         }
     });
