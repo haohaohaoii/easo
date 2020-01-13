@@ -173,9 +173,9 @@ export default {
     height: 62.5%;
 
     .tabE {
-        height: 99.5%;
+        // height: 99.5%;
         margin-top: 1%;
-        border: 1px solid rgba(235, 235, 235, 1);
+        // border: 1px solid rgba(235, 235, 235, 1);
         .tab {
             height: 100%;
             overflow-y: auto;
@@ -191,5 +191,11 @@ export default {
 .el-table th {
     padding: 0 !important;
     height: 50px !important;
+}
+.listData >>> .el-table::before {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 0;
 }
 </style>

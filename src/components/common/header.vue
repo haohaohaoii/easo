@@ -68,6 +68,7 @@
         </el-menu>
 
         <div class="tubiao">
+            <theme-picker></theme-picker>
             <i class="el-icon-s-custom"></i>
             <i class="el-icon-message-solid"></i>
             <i class="el-icon-unlock"></i>
@@ -77,8 +78,12 @@
 </template>
 
 <script>
+import ThemePicker from './ThemePicker'
 import { mapState,mapMutations } from "vuex";
 export default {
+    components:{
+        ThemePicker
+    },
     data() {
         return {
             createMenu: [

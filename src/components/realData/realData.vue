@@ -8,7 +8,13 @@
             </div>
             <div class="search">
                 <div class="searchL">
-                    <el-select v-model="enterValue" filterable clearable placeholder="选择企业" @change = "changeVal">
+                    <el-select
+                        v-model="enterValue"
+                        filterable
+                        clearable
+                        placeholder="选择企业"
+                        @change="changeVal"
+                    >
                         <el-option
                             v-for="item of enterprise"
                             :key="item.value"
@@ -29,8 +35,8 @@
             </div>
         </div>
         <!--有列表数据-->
-        <div class="dataS" v-if='isShow'>
-            <real-list :datalist = 'dataList'></real-list>
+        <div class="dataS" v-if="isShow">
+            <real-list :datalist="dataList"></real-list>
             <div class="tabPage">
                 <p class="indic">注：红色字体代表超标数据，橙色字体代表异常数据。</p>
                 <el-pagination
@@ -62,7 +68,7 @@ export default {
     data() {
         return {
             currentPage: 1, //初始页
-            pagesize: 1, //每页显示多少条
+            pagesize: 10, //每页显示多少条
             totalLength: 0, //总共多少条数据
             isShow:false,   //控制dataList有没有数据
             dataList:[],  //实时数据

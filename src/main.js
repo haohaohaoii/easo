@@ -5,11 +5,11 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-import './element-variables.scss'
 import store from './store'
 import echarts from 'echarts'
 import api from './api' // 导入api接口
 import has from './utils/direct.js';
+import '../theme/index.css'
 
 Vue.prototype.$api = api; // 将api挂载到vue的原型上
 Vue.prototype.$echarts = echarts
