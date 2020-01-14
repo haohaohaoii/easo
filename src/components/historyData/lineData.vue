@@ -43,14 +43,6 @@
 <script>
 import { mapState } from "vuex";
 export default {
-    props:{
-        datalist:{  //校验历史数据
-            type:Array,
-            default: function() {
-                return [];
-            }
-        }
-    },
     data() {
         return {
             cod: true, //cod
@@ -112,7 +104,7 @@ export default {
                     {
                         name: "", //坐标轴名称
                         type: "value", //数值轴
-                        max: 90 //坐标轴最大刻度
+                        max: 500 //坐标轴最大刻度
                     }
                 ],
                 series: [
@@ -177,12 +169,7 @@ export default {
     },
     computed: {
         //hoursArr为x轴坐标区间[.....]
-        ...mapState(["hoursArr"]),
-        // getAxis(){
-        //     if(this.datalist && this.datalist.length>=1){
-        //         debugger
-        //     }
-        // }
+        ...mapState(["hoursArr"])
     },
     mounted() {
         this.getZx();
@@ -191,7 +178,6 @@ export default {
     methods: {
         //折线图方法
         getZx() {
-            debugger
             let myCharts = this.$echarts.init(this.$refs.myCharts);
             myCharts.showLoading(); //加载动画
 
