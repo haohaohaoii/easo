@@ -35,10 +35,7 @@ export default {
     box-sizing: border-box;
     padding: 1%;
     .enmationTop {
-        height: 16.5%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
+        height: 3%;
         .markMsg {
             display: flex;
             div {

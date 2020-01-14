@@ -10,12 +10,13 @@ import echarts from 'echarts'
 import api from './api' // 导入api接口
 import has from './utils/direct.js';
 import '../theme/index.css'
+import animate from 'animate.css'
 
 Vue.prototype.$api = api; // 将api挂载到vue的原型上
 Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false;
 Vue.use(ElementUI)
-
+Vue.use(animate)
 /* eslint-disable no-new */
 new Vue({
     el: '#app',

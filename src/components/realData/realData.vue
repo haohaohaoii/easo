@@ -176,7 +176,7 @@ export default {
     box-sizing: border-box;
     padding: 1%;
     .realTop {
-        height: 16.5%;
+        height: 13.5%;
         display: flex;
         flex-direction: column;
         justify-content: space-around;

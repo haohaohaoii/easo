@@ -142,10 +142,10 @@ export default {
 
 <style lang="scss" scoped>
 .spamList {
-    height: 62.5%;
+    height: 72.5%;
 
     .tabE {
-        height: 99.5%;
+        height: 100%;
         margin-top: 1%;
         border: 1px solid rgba(235, 235, 235, 1);
         .tab {

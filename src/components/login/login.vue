@@ -43,35 +43,13 @@ export default {
         this.getPaw();
     },
     methods: {
-        // login() {
-        //     if (this.userName && this.userPaw) {
-        //         //调用登陆接口
-        //         this.getAdminid();
-        //     } else {
-        //         this.$message.error("注意：账号或密码不能为空");
-        //     }
-        // },
-        login(){
-            let adminId = 2
-            this.$store.dispatch("getRoles", adminId).then(res => {
-                //跳转路由页面
-                if (this.getRoles.length > 0) {
-                     this.$store.commit("getToken", 'asdasdas');
-                    this.$store.commit("getAdminid", 2);
-                    this.$router.addRoutes(this.getRoles);
-                    if (this.$route.query.redirect) {
-                        //重定向过来的
-                        this.$router.push(
-                            this.$route.query.redirect
-                        );
-                    } else {
-                        //正常登陆的
-                        this.$router.push("/");
-                    }
-                }
-            }).catch(error => {
-                alert('错误')
-            });
+        login() {
+            if (this.userName && this.userPaw) {
+                //调用登陆接口
+                this.getAdminid();
+            } else {
+                this.$message.error("注意：账号或密码不能为空");
+            }
         },
         //调用登陆接口获取adminId
         getAdminid() {

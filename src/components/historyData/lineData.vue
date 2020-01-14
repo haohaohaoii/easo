@@ -180,18 +180,18 @@ export default {
         ...mapState(["hoursArr"]),
         getAxis(){
             if(this.datalist && this.datalist.length>=1){
-
+                debugger
             }
         }
     },
     mounted() {
-        debugger
         this.getZx();
     },
 
     methods: {
         //折线图方法
         getZx() {
+            debugger
             let myCharts = this.$echarts.init(this.$refs.myCharts);
             myCharts.showLoading(); //加载动画
 

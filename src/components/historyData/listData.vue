@@ -170,12 +170,8 @@ export default {
 
 <style lang="scss" scoped>
 .listData {
-    height: 62.5%;
-
     .tabE {
-        // height: 99.5%;
         margin-top: 1%;
-        // border: 1px solid rgba(235, 235, 235, 1);
         .tab {
             height: 100%;
             overflow-y: auto;

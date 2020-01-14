@@ -73,6 +73,7 @@
                 ></el-pagination>
             </div>
         </list-data>
+
         <line-data v-if="btnMsg=='折线'" :datalist="hisDatalist"></line-data>
         <bar-data v-if="btnMsg=='柱状'"></bar-data>
     </div>
@@ -214,7 +215,7 @@ export default {
     box-sizing: border-box;
     padding: 1%;
     .historyTop {
-        height: 16.5%;
+        height: 13.5%;
         display: flex;
         flex-direction: column;
         justify-content: space-around;

@@ -28,10 +28,7 @@ export default {
     box-sizing: border-box;
     padding: 1%;
     .spamTop {
-        height: 16.5%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
+        height: 3%;
         .markMsg {
             display: flex;
             div {
@@ -41,7 +38,6 @@ export default {
                 right: 1%;
                 top: 10%;
             }
-            
         }
     }
 }

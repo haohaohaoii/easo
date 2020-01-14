@@ -13,8 +13,6 @@ export default {};
 .noData {
     text-align: center;
     position: relative;
-    top: 35%;
-    transition: transform;
-    transform: translateY(-50%);
+    top: 200px;
 }
 </style>
