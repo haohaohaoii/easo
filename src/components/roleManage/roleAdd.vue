@@ -15,7 +15,7 @@
             <div class="tree">
                 <p class="left">分配权限:</p>
                 <el-tree
-                    :data="roleTree"
+                    :data="treeList"
                     show-checkbox
                     node-key="id"
                     ref="tree"
@@ -46,30 +46,30 @@ export default {
         };
     },
     computed:{
-        ...mapState(["roleAdd","menulist"]),
+        ...mapState(["roleAdd","roleTree"]),
         //得到tree树形结构数据
-        roleTree(){
-            if(this.menulist.length>0){
+        treeList(){
+            if(this.roleTree.length>0){
                 let menuArr = []
-                for(let i=0; i<this.menulist.length;i++){
+                for(let i=0; i<this.roleTree.length;i++){
                     let faObj={}
-                    faObj.id= this.menulist[i].id,
-                    this.firstTree.push(this.menulist[i].id)  //默认展开第一层
-                    faObj.label = this.menulist[i].menuName  
-                    if(this.menulist[i].subMenus && this.menulist[i].subMenus.length>0){
+                    faObj.id= this.roleTree[i].id,
+                    this.firstTree.push(this.roleTree[i].id)  //默认展开第一层
+                    faObj.label = this.roleTree[i].menuName  
+                    if(this.roleTree[i].subMenus && this.roleTree[i].subMenus.length>0){
                         faObj.children=[]
-                        for(let k=0; k<this.menulist[i].subMenus.length; k++){
+                        for(let k=0; k<this.roleTree[i].subMenus.length; k++){
                             let childObj ={
-                                id:this.menulist[i].subMenus[k].id,
-                                label:this.menulist[i].subMenus[k].menuName
+                                id:this.roleTree[i].subMenus[k].id,
+                                label:this.roleTree[i].subMenus[k].menuName
                             }
                             faObj.children.push(childObj)
-                            if(this.menulist[i].subMenus[k].subMenus && this.menulist[i].subMenus[k].subMenus.length>0){
+                            if(this.roleTree[i].subMenus[k].subMenus && this.roleTree[i].subMenus[k].subMenus.length>0){
                                 childObj.children =[]
-                                for(let j=0; j< this.menulist[i].subMenus[k].subMenus.length; j++){
+                                for(let j=0; j< this.roleTree[i].subMenus[k].subMenus.length; j++){
                                     let btnObj = {
-                                        id:this.menulist[i].subMenus[k].subMenus[j].id,
-                                        label:this.menulist[i].subMenus[k].subMenus[j].menuName
+                                        id:this.roleTree[i].subMenus[k].subMenus[j].id,
+                                        label:this.roleTree[i].subMenus[k].subMenus[j].menuName
                                     }
                                    childObj.children.push(btnObj)
                                 }
@@ -85,7 +85,11 @@ export default {
     methods: {
         //点击右上角x号
         closeDialog() {
-            this.$store.commit("roleAdd", false); //关闭dialog
+            let obj = {
+                isTrue:false,
+                type:'close'
+            }
+            this.$store.commit("roleAdd", obj); //关闭dialog
         },
         test(){
 
@@ -105,7 +109,11 @@ export default {
                                 type: 'success'
                             });
                         this.$refs.tree.setCheckedKeys([]);
-                        this.$store.commit("roleAdd", false); //关闭dialog
+                        let obj = {
+                            isTrue:false,
+                            type:'close'
+                        }
+                        this.$store.commit("roleAdd", obj); //关闭dialog
                     }
                 })
            }else{
@@ -116,7 +124,11 @@ export default {
         //点击取消
         cancel() {
             this.$refs.tree.setCheckedKeys([]);
-            this.$store.commit("roleAdd", false); //关闭dialog
+            let obj = {
+                isTrue:false,
+                type:'close'
+            }
+            this.$store.commit("roleAdd", obj); //关闭dialog
         }
     }
 };

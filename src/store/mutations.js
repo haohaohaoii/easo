@@ -27,9 +27,31 @@ export default ({
     spamReply(state, spamDialog) {
         state.spamReply = spamDialog;
     },
-    //权限管理下的角色管理添加角色 dialog状态
-    roleAdd(state, addStatus) {
-        state.roleAdd = addStatus;
+    //权限管理下的角色管理添加角色 dialog状态,并获取全部菜单
+    roleAdd(state, pdObj) {
+        if (pdObj.type == 'add') {  //添加角色
+            state.roleAdd = pdObj.isTrue;
+            state.roleTree = pdObj.arr
+        } else if (pdObj.type == 'close') {   //关闭弹窗
+            state.roleAdd = pdObj.isTrue;
+        }
+
+    },
+    //权限管理下的角色管理修改角色权限 dialog状态
+    roleEdit(state, editorObj) {
+        if (editorObj.type == 'editor') {  //编辑角色
+            state.roleTree = editorObj.arr
+            state.roleEditor = editorObj.isTrue
+            state.roleName = editorObj.name
+            state.roleId = editorObj.roleId
+        } else if (editorObj.type == 'close') {   //关闭弹窗
+            state.roleEditor = editorObj.isTrue;
+        }
+
+    },
+    //获取单个角色id对应的角色权限
+    getRoleitem(state, itemArr) {
+        state.roleItem = itemArr
     },
     //权限管理下的用户管理添加用户 dialog状态
     userAdd(state, status) {

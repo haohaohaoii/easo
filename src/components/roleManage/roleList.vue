@@ -1,5 +1,6 @@
 <template>
     <div class="roleList">
+        <role-editor></role-editor>
         <div class="tabE">
             <el-table
                 :data="roleData"
@@ -15,7 +16,7 @@
                         <el-button
                             size="mini"
                             type="primary"
-                            @click="roleEditor(scope.$index, scope.row)"
+                            @click="editor(scope.$index, scope.row)"
                         >编辑</el-button>
                         <el-button
                             size="mini"
@@ -32,7 +33,12 @@
 
 <script>
 import { mapMutations } from "vuex";
+import roleEditor from './roleEditor'
+import { resolve, reject } from 'q';
 export default {
+    components:{
+        roleEditor
+    },
     props:{
         rolelist:{
             type:Array,
@@ -65,16 +71,22 @@ export default {
     methods: {
         //点击删除
         roleDelete(index, row) {
-            this.$confirm("此操作将永久删除该条角色, 是否继续?", "提示", {
+            this.$confirm("此操作将永久删除该条角色, 是否继续?", "注意", {
                 confirmButtonText: "确定",
                 cancelButtonText: "取消",
                 type: "warning"
             })
                 .then(() => {
-                    this.$message({
-                        type: "success",
-                        message: "删除成功!"
-                    });
+                     let roleId = row.id;  //获取角色id
+                     this.delete(roleId).then(res=>{
+                         if(res == 'success'){
+                            this.$message({
+                                type: "success",
+                                message: "删除成功"
+                            });
+                         }
+                     })
+                    
                 })
                 .catch(() => {
                     this.$message({
@@ -83,17 +95,23 @@ export default {
                     });
                 });
         },
+        delete(roleId){
+            return new Promise((resolve,reject)=>{
+                this.$api.roles.deleteRoles(roleId).then(res=>{
+                    if(res.data.code == 0){
+                        resolve('success')
+                    }
+                }).catch(error=>{
+                    reject(error)
+                })
+            })
+        },
         //点击编辑
-        roleEditor(index, row) {
-            debugger
+        editor(index, row) {
             console.log(index, row);
             let roleId = row.id;  //获取角色id
-            this.$api.roles.getRolemsg(roleId).then(res=>{
-                debugger
-                console.log(res)
-            }).catch(error=>{
-
-            })
+            this.$store.dispatch('rolesMana',roleId)
+            
         }
     }
 };

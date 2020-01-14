@@ -17,5 +17,35 @@ export default ({
                 reject(error)
             })
         })
+    },
+    //权限管理模块下的角色管理，编辑
+    rolesMana(context, roleId) {
+        api.menu.getAllmenu().then(mennuArr => {
+            if (mennuArr.data.code == 0) {
+
+                api.roles.getRolemsg(roleId).then(res => {  //获取角色对应的菜单
+                    console.log(res)
+                    if (res.data.code == 0) {
+                        let itemArr = res.data.data[0].sysMenus
+                        context.commit("getRoleitem", itemArr);
+                        let obj = {
+                            isTrue: true,
+                            type: 'editor',
+                            arr: mennuArr.data.data,
+                            name: res.data.data[0].roleShow,
+                            roleId: roleId,
+                        }
+                        context.commit("roleEdit", obj);  //获取全部角色菜单权限
+                    }
+
+
+                }).catch(error => {
+
+                })
+            }
+        }).catch(error => {
+
+        })
+
     }
 })

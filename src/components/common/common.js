@@ -1,5 +1,5 @@
 let commonJs = {
-    //获取小时的方法,然后计算横坐标数组
+    //获取小时的方法,然后计算横坐标数组(测试用)
     getHours(startTime, endTime) {
         return new Promise(function (reslove) {
             console.log(startTime)
@@ -31,6 +31,24 @@ let commonJs = {
         })
     },
 
+    getXz(hisData) {
+        let xArr = []  //x轴
+        let codData = []  //cod
+        let nh3nData = []  //nh3n
+        let phData = []  //ph
+        for (let i = 0; i < hisData.length; i++) {
+            xArr.push(hisData[i].createTime)
+            for (let k = 0; k < hisData[i].dataInfoList.length; k++) {
+                if (hisData[i].dataInfoList[k].factorCode == 'cod') {
+                    codData.push(hisData[i].dataInfoList[k].factorValue)
+                } else if (hisData[i].dataInfoList[k].factorCode == "nh3n") {
+                    nh3nData.push(hisData[i].dataInfoList[k].factorValue)
+                } else if (hisData[i].dataInfoList[k].factorCode == "ph") {
+                    phData.push(hisData[i].dataInfoList[k].factorValue)
+                }
+            }
+        }
+    }
 }
 //日期补零函数
 function addZero(num) {

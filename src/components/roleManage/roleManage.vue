@@ -79,7 +79,19 @@ export default {
         },
         //添加角色
         addRole() {
-            this.$store.commit("roleAdd", true);
+            this.$api.menu.getAllmenu().then(res=>{
+                debugger
+                if(res.data.code == 0){
+                    let obj ={
+                        isTrue:true,
+                        type:'add',
+                        arr:res.data.data
+                    }
+                    this.$store.commit("roleAdd", obj);
+                }
+                console.log(res)
+            })
+            
         },
         //点击页码的时候
         handleCurrentChange(currentPage) {

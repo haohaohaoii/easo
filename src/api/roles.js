@@ -12,12 +12,19 @@ const roles = {
     },
     //添加角色
     addRole(params) {
-        qs.stringify(params)
         return axios.post(`${base.localUrl}/admin/role`, qs.stringify(params))
+    },
+    //修改角色
+    editorRole(params, roleId) {
+        return axios.put(`${base.localUrl}/admin/role/${roleId}`, qs.stringify(params))
     },
     //根据角色id查看角色信息
     getRolemsg(roleId) {
         return axios.get(`${base.localUrl}/admin/role/${roleId}`)
+    },
+    //删除角色
+    deleteRoles(roleId) {
+        return axios.delete(`${base.localUrl}/admin/role/${roleId}`)
     }
 }
 

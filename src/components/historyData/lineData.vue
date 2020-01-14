@@ -178,11 +178,11 @@ export default {
     computed: {
         //hoursArr为x轴坐标区间[.....]
         ...mapState(["hoursArr"]),
-        getAxis(){
-            if(this.datalist && this.datalist.length>=1){
-                debugger
-            }
-        }
+        // getAxis(){
+        //     if(this.datalist && this.datalist.length>=1){
+        //         debugger
+        //     }
+        // }
     },
     mounted() {
         this.getZx();

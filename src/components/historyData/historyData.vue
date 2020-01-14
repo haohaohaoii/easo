@@ -105,6 +105,7 @@ export default {
             totalLength:0, //总共多少条数据
             currentPage:1, //初始页
             pagesize: 10, //每页显示多少条
+            userId:'', //选中的企业id
         };
     },
     mounted(){
@@ -121,6 +122,19 @@ export default {
             this.currentPage = 1
             let pageNum = this.currentPage
             this.sendAxios(pageNum)
+            this.oldData()
+        },
+        oldData(){
+            let _this = this;
+            commonJs
+                .getHours(this.startTime, this.endTime)
+                .then(function(hoursArr) {
+                    if (hoursArr.length == 0) {
+                        alert("查询条件有误");
+                    } else {
+                        _this.$store.commit("getHours", hoursArr);
+                    }
+                });
         },
         //点击第几页
         handleCurrentChange(currentPage){
@@ -129,13 +143,15 @@ export default {
           
             this.sendAxios(pageNum)
         },
-       //发送数据请求
+       //发送数据请求(分页)
         sendAxios(pageNum){
             if(this.startTime!='' && this.endTime!=''){
                 let startTime = this.startTime;
                 let endTime = this.endTime;
                 let pageSize = this.pagesize;
-                this.$api.data.historyData({params: {pageNum: pageNum,pageSize:pageSize,start:startTime,end:endTime}})
+                let userId = this.companyValue
+                let mn = this.baseValue
+                this.$api.data.historyData({params: {pageNum:pageNum,pageSize:pageSize,start:startTime,end:endTime,userId:userId,mn:mn}})
                 .then(res=>{
   
                     console.log(res)
@@ -155,6 +171,32 @@ export default {
                 this.$message.error("注意：开始时间和结束时间为必选项");
             }
         },
+        // //不分页
+        //   sendAxios(){
+        //     if(this.startTime!='' && this.endTime!=''){
+        //         let startTime = this.startTime;
+        //         let endTime = this.endTime;
+        //         this.$api.data.historyData({params: {start:startTime,end:endTime}})
+        //         .then(res=>{
+  
+        //             console.log(res)
+        //             if(res.data.code ==0){
+        //                 if(res.data.pageInfo.list && res.data.pageInfo.list.length>=1){  //说明有数据
+        //                 debugger
+        //                     this.hisDatalist= res.data.pageInfo.list
+        //                     this.totalLength = res.data.pageInfo.total  //获取总条数
+        //                 }else{  //说明没有数据
+        //                     this.hisDatalist = [];
+        //                 }
+        //             }
+        //         }).catch(error=>{
+
+        //         })
+
+        //     }else{
+        //         this.$message.error("注意：开始时间和结束时间为必选项");
+        //     }
+        // },
         //获取企业下拉数组
         getCompany(){
             this.$api.company.companyAll().then(res=>{
