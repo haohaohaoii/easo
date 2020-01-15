@@ -6,7 +6,7 @@ import base from './base'; // 导入接口域名列表
 import axios from '@/utils/http'; // 导入http中创建的axios实例
 import qs from 'qs'; // 根据需求是否导入qs模块
 const roles = {
-    //获取全部角色
+    //获取全部角色(分页)
     getAllroles(params) {
         return axios.get(`${base.localUrl}/admin/role`, params)
     },
@@ -25,7 +25,11 @@ const roles = {
     //删除角色
     deleteRoles(roleId) {
         return axios.delete(`${base.localUrl}/admin/role/${roleId}`)
-    }
+    },
+    //获取全部角色(不分页)
+    getRoles() {
+        return axios.get(`${base.localUrl}/admin/role/list`)
+    },
 }
 
 

@@ -14,6 +14,9 @@
             <el-form-item label="登陆名:" prop="loginName">
                 <el-input v-model="ruleForm.loginName"></el-input>
             </el-form-item>
+            <el-form-item label="密码:" prop="password">
+                <el-input v-model="ruleForm.password" type="password"></el-input>
+            </el-form-item>
             <el-form-item label="真实姓名:" prop="realName">
                 <el-input v-model="ruleForm.realName"></el-input>
             </el-form-item>
@@ -21,15 +24,34 @@
                 <el-input v-model="ruleForm.phone"></el-input>
             </el-form-item>
             <el-form-item label="用户部门:" prop="userDepart">
-                <el-select v-model="ruleForm.userDepart" placeholder="请选择用户部门">
-                    <el-option label="区域一" value="shanghai"></el-option>
-                    <el-option label="区域二" value="beijing"></el-option>
+                <el-select
+                    v-model="ruleForm.userDepart"
+                    placeholder="请选择用户部门"
+                    @visible-change="departChange"
+                    clearable
+                >
+                    <el-option
+                        v-for="item of departArr"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                    ></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="用户角色:" prop="userrole">
-                <el-select v-model="ruleForm.userrole" placeholder="请选择用户角色">
-                    <el-option label="区域一" value="jiaose1"></el-option>
-                    <el-option label="区域二" value="jiaose2"></el-option>
+                <el-select
+                    v-model="ruleForm.userrole"
+                    placeholder="请选择用户角色"
+                    @visible-change="roleChange"
+                    clearable
+                    multiple
+                >
+                    <el-option
+                        v-for="item of roleArr"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                    ></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="邮箱:" prop="email">
@@ -49,12 +71,15 @@ export default {
     data() {
         return {
             status: false, //控制表头不显示
+            departArr:[],  //用户部门数组集合
+            roleArr:[], //用户角色数组集合
             ruleForm: {
                 loginName: "", //登陆ming
                 realName: "", //真实姓名
+                password:"", //密码
                 phone: "", //电话
                 userDepart: "", //用户部门
-                userrole: "", //用户角色
+                userrole: [ ], //用户角色
                 email: "" //邮箱
             },
             rules: {
@@ -62,6 +87,13 @@ export default {
                     {
                         required: true,
                         message: "请输入登录名",
+                        trigger: "blur"
+                    }
+                ],
+                password:[
+                    {
+                        required: true,
+                        message: "请输入密码",
                         trigger: "blur"
                     }
                 ],
@@ -92,31 +124,110 @@ export default {
                         message: "请选择用户角色",
                         trigger: "change"
                     }
-                ],
-                email: [
-                    {
-                        required: true,
-                        message: "请输入邮箱",
-                        trigger: "blur"
-                    }
                 ]
             }
         };
     },
-    methods: {
-        closeDialog() {
-            this.$store.commit("userAdd", false); //关闭dialog
-        },
-        save() {
-            this.$store.commit("userAdd", false); //关闭dialog
-        },
-        cancel() {
-            this.$store.commit("userAdd", false); //关闭dialog
-        }
-    },
     computed: {
         ...mapState(["userAdd"])
+    },
+    methods: {
+        //点击部门 获取部门列表
+        departChange(val){
+            if(val == true){  //获取所有部门
+                this.$api.depart.getDept().then(res=>{
+                    if(res.data.code == 0){
+                        if(res.data.data && res.data.data.length>0){
+                            let itemArr = []
+                            for(let i=0; i<res.data.data.length; i++){
+                                let departItem={
+                                    label:res.data.data[i].deptName,
+                                    value:res.data.data[i].id
+                                }
+                                itemArr.push(departItem)
+                            }
+                            this.departArr=itemArr
+                        }
+                    }
+                })
+            }
+        },
+        //点击用户角色 获取角色列表
+        roleChange(val){
+            if(val == true){
+                this.$api.roles.getRoles().then(res=>{
+
+                    if(res.data.code == 0){
+                        if(res.data.data && res.data.data.length>0){
+                            let itemArr = []
+                            for(let i=0; i<res.data.data.length; i++){
+                                let roleItem={
+                                    label:res.data.data[i].roleShow,
+                                    value:res.data.data[i].id
+                                }
+                                itemArr.push(roleItem)
+                            }
+                            this.roleArr=itemArr
+                        }
+                    }
+                })
+            }
+        },
+        //提交
+        save() {
+            let username = this.ruleForm.loginName
+            let password = this.ruleForm.password
+            let realName = this.ruleForm.realName
+            let phone = this.ruleForm.phone
+            let deptId = this.ruleForm.userDepart
+            let roles = this.ruleForm.userrole
+            let email = this.ruleForm.email
+            if(username && password && realName && phone && deptId && roles.length>0){
+                let params={
+                    username:username,
+                    password:password,
+                    realName:realName,
+                    phone:phone,
+                    deptId:deptId,
+                    roles:roles,
+                    email:email
+                }
+                let _this = this
+                this.$api.user.addUser(params).then(res=>{
+                    if(res.data.code == 0){
+                        _this.$message({
+                            message: '用户添加成功',
+                            type: 'success'
+                        });
+                       _this.clearForm()
+                    }
+                }).catch(error=>{
+
+                })
+            }else{
+                this.$message({
+                    type: "warning",
+                    message: "请将必填项填写完毕后再提交"
+                });
+            }
+        },
+        //清除表单内容
+        clearForm(){
+            this.$nextTick(() => {
+                this.$refs['ruleForm'].resetFields()
+            })
+            this.$store.commit("changeUserAdd", false); //关闭dialog
+        },
+        //取消
+        cancel() {
+            this.clearForm()
+        },
+        //点击x号关闭
+        closeDialog() {
+            this.clearForm()
+        },
     }
+    
 };
 </script>
 
@@ -142,7 +253,7 @@ export default {
     margin-top: 0 !important;
     position: relative;
     margin: 0 auto;
-    
+    width: 35%;
     top: 50%;
     transition: transform;
     transform: translateY(-50%);

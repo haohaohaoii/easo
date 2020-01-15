@@ -140,7 +140,7 @@ router.beforeEach((to, from, next) => {
         } else {
             if (localStorage.getItem('token') && localStorage.getItem('adminId')) {
                 let adminId = localStorage.getItem('adminId')
-                store.dispatch('getRoles', adminId).then(res => {
+                store.dispatch('getRole', adminId).then(res => {
 
                     store.commit("getToken", localStorage.getItem('token'));
                     store.commit("getAdminid", adminId);

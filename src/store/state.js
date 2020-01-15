@@ -19,6 +19,10 @@ export default ({
     roleAdd: false,     //权限管理下的角色管理添加角色 dialog状态
     roleEditor: false,   //权限管理下的角色管理修改角色 dialog状态
     userAdd: false,   //权限管理下的用户管理添加用户 dialog状态
+    userEditor: false, //权限管理下的用户管理编辑用户 dialog状态
+    userItem: '',  //权限管理下的用户管理编辑用户 所需要的行数据
+    deparArr: [],  //权限管理下的用户管理编辑用户 所需的部门数据下拉框数组
+    roleList: [],   //权限管理下的用户管理编辑用户 所需的角色数据下拉框数组
     divAdd: false,    //权限管理下的部门管理添加部门 dialog状态
     menuAdd: false,    //权限管理下的菜单管理添加菜单 dialog状态
     roleTree: [],     //角色管理中的树状结构数组(所有的)

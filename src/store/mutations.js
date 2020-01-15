@@ -54,8 +54,24 @@ export default ({
         state.roleItem = itemArr
     },
     //权限管理下的用户管理添加用户 dialog状态
-    userAdd(state, status) {
+    changeUserAdd(state, status) {
         state.userAdd = status;
+    },
+    //权限管理下的用户管理编辑用户 dialog状态
+    changeUseredit(state, status) {
+        state.userEditor = status
+    },
+    //权限管理下的用户管理编辑用户 所需的行数据信息
+    userItemdetail(state, itemDetail) {
+        state.userItem = itemDetail;
+    },
+    //权限管理下的用户管理编辑用户 所需的部门数据
+    userDepar(state, deparArr) {
+        state.deparArr = deparArr
+    },
+    //权限管理下的用户管理编辑用户 所需的角色数据
+    userroles(state, roleArr) {
+        state.roleList = roleArr
     },
     //权限管理下的用户管理添加用户 dialog状态
     divAdd(state, divStatus) {
@@ -80,6 +96,7 @@ export default ({
     },
     //根据返回的角色权限，生成路由表
     filters(state, roles) {
+        debugger
         let menuTree = roles  //角色权限
         let asyncRoutes = state.asyncRoutes //本地完整路由
         let res = []
@@ -117,6 +134,7 @@ export default ({
     },
     //根据返回的角色权限,生成菜单表
     getMenus(state, roles) {
+        debugger
         let menuTree = roles
         let asyncRoutes = state.asyncRoutes
         asyncRoutes.forEach((route) => {

@@ -8,11 +8,15 @@ import data from '@/api/data';  // 数据模块
 import company from '@/api/company';  // 企业相关
 import site from '@/api/site';  // 基站相关
 import roles from '@/api/roles'; //角色相关
+import user from '@/api/user.js'  //用户相关
+import depart from '@/api/depart.js' //部门相关
 export default {
     login,
     menu,
     data,
     company,
     site,
-    roles
+    roles,
+    user,
+    depart
 }

@@ -73,9 +73,11 @@ export default {
                         localStorage.setItem("adminId", adminId);
                         this.$store.commit("getToken", res.data.data[0].token);
                         this.$store.commit("getAdminid", res.data.data[0].id);
-                        this.$store.dispatch("getRoles", adminId).then(res => {
+                        this.$store.dispatch("getRole", adminId).then(res => {
                             //跳转路由页面
+                             debugger
                             if (this.getRoles.length > 0) {
+                               
                                 this.$router.addRoutes(this.getRoles);
                                 if (this.$route.query.redirect) {
                                     //重定向过来的

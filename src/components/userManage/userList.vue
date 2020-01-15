@@ -31,133 +31,70 @@
                 </el-table-column>
             </el-table>
         </div>
-        <div class="tabPage">
-            <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
-        </div>
+        <user-editor></user-editor>
+        <slot></slot>
     </div>
 </template>
 
 <script>
+import userEditor from './userEditor';
 import { mapMutations } from "vuex";
 export default {
+    components:{
+        userEditor
+    },
+    props:{
+        userarr:{
+            type:Array,
+            default: function() {
+                return [];
+            }
+        }
+    },
     data() {
-        return {
-            tableData: [
-                {
-                    userName: "郑州富铭环保科技有限公司",
-                    realName: "张冉冉",
-                    linkPhone: "1314567891",
-                    userMail: "641882555@qq.com",
-                    userSection: "研发部",
-                    userPart: "超级管理员",
-                    roleDate: "19/11/20 16:40:20"
-                },
-                {
-                    userName: "郑州富铭环保科技有限公司",
-                    realName: "张冉冉",
-                    linkPhone: "1314567891",
-                    userMail: "641882555@qq.com",
-                    userSection: "研发部",
-                    userPart: "超级管理员",
-                    roleDate: "19/11/20 16:40:20"
-                },
-                {
-                    userName: "郑州富铭环保科技有限公司",
-                    realName: "张冉冉",
-                    linkPhone: "1314567891",
-                    userMail: "641882555@qq.com",
-                    userSection: "研发部",
-                    userPart: "超级管理员",
-                    roleDate: "19/11/20 16:40:20"
-                },
-                {
-                    userName: "郑州富铭环保科技有限公司",
-                    realName: "张冉冉",
-                    linkPhone: "1314567891",
-                    userMail: "641882555@qq.com",
-                    userSection: "研发部",
-                    userPart: "超级管理员",
-                    roleDate: "19/11/20 16:40:20"
-                },
-                {
-                    userName: "郑州富铭环保科技有限公司",
-                    realName: "张冉冉",
-                    linkPhone: "1314567891",
-                    userMail: "641882555@qq.com",
-                    userSection: "研发部",
-                    userPart: "超级管理员",
-                    roleDate: "19/11/20 16:40:20"
-                },
-                {
-                    userName: "郑州富铭环保科技有限公司",
-                    realName: "张冉冉",
-                    linkPhone: "1314567891",
-                    userMail: "641882555@qq.com",
-                    userSection: "研发部",
-                    userPart: "超级管理员",
-                    roleDate: "19/11/20 16:40:20"
-                },
-                {
-                    userName: "郑州富铭环保科技有限公司",
-                    realName: "张冉冉",
-                    linkPhone: "1314567891",
-                    userMail: "641882555@qq.com",
-                    userSection: "研发部",
-                    userPart: "超级管理员",
-                    roleDate: "19/11/20 16:40:20"
-                },
-                {
-                    userName: "郑州富铭环保科技有限公司",
-                    realName: "张冉冉",
-                    linkPhone: "1314567891",
-                    userMail: "641882555@qq.com",
-                    userSection: "研发部",
-                    userPart: "超级管理员",
-                    roleDate: "19/11/20 16:40:20"
-                },
-                {
-                    userName: "郑州富铭环保科技有限公司",
-                    realName: "张冉冉",
-                    linkPhone: "1314567891",
-                    userMail: "641882555@qq.com",
-                    userSection: "研发部",
-                    userPart: "超级管理员",
-                    roleDate: "19/11/20 16:40:20"
-                },
-                {
-                    userName: "郑州富铭环保科技有限公司",
-                    realName: "张冉冉",
-                    linkPhone: "1314567891",
-                    userMail: "641882555@qq.com",
-                    userSection: "研发部",
-                    userPart: "超级管理员",
-                    roleDate: "19/11/20 16:40:20"
-                },
-                {
-                    userName: "郑州富铭环保科技有限公司",
-                    realName: "张冉冉",
-                    linkPhone: "1314567891",
-                    userMail: "641882555@qq.com",
-                    userSection: "研发部",
-                    userPart: "超级管理员",
-                    roleDate: "19/11/20 16:40:20"
+        return {};
+    },
+    computed:{
+        tableData(){
+            if(this.userarr && this.userarr.length>0){
+                let userArr = [];
+                for(let i=0; i<this.userarr.length; i++){
+                    // if(this.userarr[i].)
+                    let obj={
+                        userName:this.userarr[i].username,  //用户名
+                        realName:this.userarr[i].realName,  //真实名称
+                        linkPhone:this.userarr[i].phone,  //联系电话
+                        userMail:this.userarr[i].email,  //邮箱
+                        userSection:this.userarr[i].sysDept.deptName, //所属部门
+                        userPart:this.userarr[i].realName, //用户角色
+                        turnTime:this.userarr[i].createTime, //更新时间
+                        id:this.userarr[i].id //用户id
+                    }
+                    userArr.push(obj)
                 }
-            ]
-        };
+                return userArr
+            }
+        }
     },
     methods: {
         //点击删除
         roleDelete(index, row) {
+            let id = row.id
             this.$confirm("此操作将永久删除该条角色, 是否继续?", "提示", {
                 confirmButtonText: "确定",
                 cancelButtonText: "取消",
                 type: "warning"
             })
                 .then(() => {
-                    this.$message({
-                        type: "success",
-                        message: "删除成功!"
-                    });
+                    this.delete(id).then(res=>{
+                        if(res =='success'){
+                            this.$message({
+                                type: "success",
+                                message: "删除成功!"
+                            });
+                        }
+                    })
+                   
                 })
                 .catch(() => {
                     this.$message({
@@ -166,11 +103,23 @@ export default {
                     });
                 });
         },
+        delete(roleId){
+            return new Promise((resolve,reject)=>{
+                this.$api.user.deleteUseritem(roleId).then(res=>{
+                    debugger
+                    if(res.data.code == 0){
+                        resolve('success')
+                    }
+                }).catch(error=>{
+                    reject(error)
+                })
+            })
+        },
         //点击编辑
         roleEditor(index, row) {
             console.log(index, row);
-            this.$router.push({ path: "/userAdd" });
-            this.$store.commit("userAdd", true);
+            let id = row.id
+            this.$store.dispatch('userEdit',id)
         }
     }
 };

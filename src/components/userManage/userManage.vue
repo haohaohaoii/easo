@@ -9,28 +9,74 @@
                     icon="el-icon-circle-plus-outline"
                     size="mini"
                     class="add"
-                    @click="addRole"
+                    @click="addUser"
                 >添加用户</el-button>
             </div>
+            <user-add></user-add>
         </div>
-        <user-list></user-list>
+        <user-list :userarr="userArr">
+            <div class="tabPage">
+                <el-pagination
+                    background
+                    layout="prev, pager, next"
+                    :total="totalLength"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    :page-size="pagesize"
+                ></el-pagination>
+            </div>
+        </user-list>
     </div>
 </template>
 
 <script>
 import userList from './userList'
+import userAdd from './userAdd'
 export default {
     components:{
-        userList
+        userList,
+        userAdd
     },
     data() {
-        return {};
+        return {
+            totalLength: 0, //总共多少条数据
+            currentPage: 1, //初始页码
+            pagesize: 1, //一页多少条数据
+            userArr: [], //所有角色数组
+        };
+    },
+    created(){
+        let pageNum = this.currentPage;
+        this.getUserlist(pageNum)
     },
     methods:{
+        getUserlist(pageNum){
+            let pageSize = this.pagesize;
+            this.$api.user
+                .getUser({
+                    params: {
+                        pageNum: pageNum,
+                        pageSize: pageSize,
+                    }
+                })
+                .then(res => {
+                    console.log(res)
+                    if(res.data.code ==0){
+                        this.totalLength = res.data.pageInfo.total  //获取总条数
+                        this.userArr = res.data.pageInfo.list  //获取数据
+                    }
+                })
+                .catch(error => {});
+        },
         //添加角色
-        addRole(){
-            this.$router.push({path:'/userAdd'});
-            this.$store.commit('userAdd',true);
+        addUser(){
+            this.$store.commit('changeUserAdd',true);
+        },
+        //点击页码的时候
+        handleCurrentChange(currentPage) {
+            this.currentPage = currentPage;
+            let pageNum = this.currentPage;
+            this.getUserlist(pageNum)
         }
         
     }
