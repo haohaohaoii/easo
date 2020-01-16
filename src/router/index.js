@@ -15,7 +15,7 @@ let router = new Router({
         },
         {
             path: '/',
-            name: 'home',
+            name: '首页',
             redirect: '/hisData',
             component: resolve => (require(["@/components/home/home"], resolve)),
             children: []
@@ -129,7 +129,9 @@ router.beforeEach((to, from, next) => {
         if (to.path == '/login') {
             next('/')
         } else {
+
             let defaultVal = to.path.substr(1)
+            store.commit('getBreadlist', to)
             store.commit('changeDefaultmenu', defaultVal)
             next()
 

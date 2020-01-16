@@ -96,10 +96,11 @@ export default {
         },
         //点击保存
         save() {
+            debugger
            console.log(this.$refs.tree.getCheckedKeys());  
            let checkedArr = this.$refs.tree.getCheckedKeys();
            let name = this.form.roleName
-           if(name && checkedArr){
+           if(name && checkedArr.length>0){
                let params={roleShow:name,menus:checkedArr}
                this.$api.roles.addRole(params).then(res=>{
                     if(res.data.code ==0){

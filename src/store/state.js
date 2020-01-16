@@ -10,6 +10,7 @@ export default ({
     adminId: '', //用户登陆成功返回的用户id
     msg: '权限管理',
     menuLeftwidth: '240px', //右侧菜单初始宽度
+    breadArr: localStorage.breadArr ? JSON.parse(localStorage.breadArr) : [],  //动态面包屑
     hoursArr: [], //x轴坐标
     enterDialog: false, //企业管理下的企业信息中的详情 dialog状态
     editorDialog: false,  //企业管理下的企业信息中的编辑 dialog状态

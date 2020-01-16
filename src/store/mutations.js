@@ -3,6 +3,37 @@ export default ({
     changeMenuleft(state, size) {
         state.menuLeftwidth = size;
     },
+    getBreadlist(state, toObj) {
+        let obj = {
+            name: toObj.name,
+            path: toObj.path
+        }
+        let arr = state.breadArr
+        if (arr && arr.length > 0) {
+            let flag = false
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i].name == obj.name) {
+                    arr.splice(i + 1, arr.length - 1)
+                    flag = true
+                    break
+                } else if (obj.name == '历史数据' && arr[i].name == '当前位置') {
+                    arr.splice(i + 1, arr.length - 1)
+                } else {
+                    if (i == arr.length - 1 && !flag) {
+                        arr.push(obj)
+                        break
+                    }
+                }
+            }
+        } else {
+            let home = {
+                path: '/',     //历史数据
+                name: '当前位置',
+            }
+            arr.push(home)
+        }
+        localStorage.breadArr = JSON.stringify(arr)
+    },
     //获取搜索时间区间[yyyy-MM-dd HH:00:00 ...... yyyy-MM-dd HH:00:00]
     getHours(state, hourA) {
         state.hoursArr = hourA;

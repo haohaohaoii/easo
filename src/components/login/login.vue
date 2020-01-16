@@ -75,7 +75,6 @@ export default {
                         this.$store.commit("getAdminid", res.data.data[0].id);
                         this.$store.dispatch("getRole", adminId).then(res => {
                             //跳转路由页面
-                             debugger
                             if (this.getRoles.length > 0) {
                                
                                 this.$router.addRoutes(this.getRoles);
