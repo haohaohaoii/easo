@@ -122,7 +122,7 @@ export default {
             this.currentPage = 1
             let pageNum = this.currentPage
             this.sendAxios(pageNum)
-            this.oldData()
+            // this.oldData()
         },
         oldData(){
             let _this = this;

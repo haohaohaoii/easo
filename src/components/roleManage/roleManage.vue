@@ -111,7 +111,8 @@ export default {
     box-sizing: border-box;
     padding: 1%;
     .roleTop {
-        height: 16.5%;
+        margin-top: 1%;
+        margin-bottom: 2%;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
@@ -138,7 +139,7 @@ export default {
     }
     .tabPage {
         text-align: center;
-        padding-top: 4%;
+        padding: 20px;
     }
 }
 </style>

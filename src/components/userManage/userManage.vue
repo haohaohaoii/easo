@@ -41,7 +41,7 @@ export default {
         return {
             totalLength: 0, //总共多少条数据
             currentPage: 1, //初始页码
-            pagesize: 1, //一页多少条数据
+            pagesize: 10, //一页多少条数据
             userArr: [], //所有角色数组
         };
     },
@@ -91,7 +91,8 @@ export default {
     box-sizing: border-box;
     padding: 1%;
     .userTop {
-        height: 16.5%;
+        margin-top: 1%;
+        margin-bottom: 2%;
         display: flex;
         flex-direction: column;
         justify-content: space-around;

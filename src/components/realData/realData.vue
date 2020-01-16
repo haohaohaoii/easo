@@ -198,18 +198,16 @@ export default {
         }
     }
     .dataS {
-        height: 62.5%;
         .tabPage {
             text-align: center;
-            padding-top: 4%;
+            padding: 20px;
 
             .indic {
                 position: absolute;
-                right: 5%;
-                bottom: 15%;
+                right: 2%;
                 font-family: Microsoft YaHei;
                 font-weight: 400;
-                color: rgba(255, 0, 0, 1);
+                color: red;
             }
         }
     }

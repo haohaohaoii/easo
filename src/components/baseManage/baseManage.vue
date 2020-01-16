@@ -1,5 +1,6 @@
 <template>
     <div class="baseMation">
+        <base-add></base-add>
         <div class="baseTop">
             <div class="markMsg">
                 <div></div>
@@ -18,11 +19,13 @@
 </template>
 
 <script>
+import baseAdd from './baseAdd'
 import baseList from './baseList';
 import {mapMutations} from 'vuex';
 export default {
     components:{
-        baseList
+        baseList,
+        baseAdd
     },
     data() {
         return {
@@ -32,7 +35,7 @@ export default {
     methods:{
         //点击基站添加
         baseAdd(){
-            this.$router.push({path:'/baseAdd'})
+            // this.$router.push({path:'/baseAdd'})
             this.$store.commit('baseAdd',true)
         }
     }
@@ -46,7 +49,8 @@ export default {
     box-sizing: border-box;
     padding: 1%;
     .baseTop {
-        height: 3%;
+        margin-top: 1%;
+        margin-bottom: 2%;
         .markMsg {
             display: flex;
             div {

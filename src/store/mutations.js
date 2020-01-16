@@ -96,7 +96,6 @@ export default ({
     },
     //根据返回的角色权限，生成路由表
     filters(state, roles) {
-        debugger
         let menuTree = roles  //角色权限
         let asyncRoutes = state.asyncRoutes //本地完整路由
         let res = []
@@ -134,7 +133,6 @@ export default ({
     },
     //根据返回的角色权限,生成菜单表
     getMenus(state, roles) {
-        debugger
         let menuTree = roles
         let asyncRoutes = state.asyncRoutes
         asyncRoutes.forEach((route) => {

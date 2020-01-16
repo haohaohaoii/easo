@@ -99,25 +99,7 @@ export default {
                     menuAddress: "index.html",
                     menuLevel: "一级菜单",
                     menuTime: "19/11/20 16:40:20"
-                },
-                {
-                    menuName: "数据",
-                    menuAddress: "index.html",
-                    menuLevel: "一级菜单",
-                    menuTime: "19/11/20 16:40:20"
-                },
-                {
-                    menuName: "数据",
-                    menuAddress: "index.html",
-                    menuLevel: "一级菜单",
-                    menuTime: "19/11/20 16:40:20"
-                },
-                {
-                    menuName: "数据",
-                    menuAddress: "index.html",
-                    menuLevel: "一级菜单",
-                    menuTime: "19/11/20 16:40:20"
-                },
+                }
             ]
         };
     },
@@ -154,12 +136,8 @@ export default {
 
 <style lang="scss" scoped>
 .menuList {
-    height: 62.5%;
-
     .tabE {
-        height: 99.5%;
         margin-top: 1%;
-        border: 1px solid rgba(235, 235, 235, 1);
         .tab {
             height: 100%;
             overflow-y: auto;
@@ -167,7 +145,7 @@ export default {
     }
     .tabPage {
         text-align: center;
-        padding-top: 4%;
+        padding-top: 20px;
     }
 }
 </style>

@@ -99,12 +99,6 @@ export default {
                     firmName: "郑州富铭环保科技有限公司",
                     spamDate: "19/11/20 16:40:20",
                     spamStatus: "已回复"
-                },
-                {
-                    spamTitle: "留言标题",
-                    firmName: "郑州富铭环保科技有限公司",
-                    spamDate: "19/11/20 16:40:20",
-                    spamStatus: "已回复"
                 }
             ]
         };
@@ -142,12 +136,8 @@ export default {
 
 <style lang="scss" scoped>
 .spamList {
-    height: 72.5%;
-
     .tabE {
-        height: 100%;
         margin-top: 1%;
-        border: 1px solid rgba(235, 235, 235, 1);
         .tab {
             height: 100%;
             overflow-y: auto;
@@ -155,7 +145,7 @@ export default {
     }
     .tabPage {
         text-align: center;
-        padding-top: 4%;
+        padding-top: 20px;
     }
 }
 </style>

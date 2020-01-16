@@ -120,11 +120,8 @@ export default {
 
 <style lang="scss" scoped>
 .enterList {
-    height: 72.5%;
     .tabE {
-        height: 100%;
         margin-top: 1%;
-        border: 1px solid rgba(235, 235, 235, 1);
         .tab {
             height: 100%;
             overflow-y: auto;
@@ -132,7 +129,7 @@ export default {
     }
     .tabPage {
         text-align: center;
-        padding-top: 4%;
+        padding-top: 20px;
     }
 }
 </style>

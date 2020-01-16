@@ -45,7 +45,8 @@ export default {
     box-sizing: border-box;
     padding: 1%;
     .divTop {
-        height: 16.5%;
+        margin-top: 1%;
+        margin-bottom: 2%;
         display: flex;
         flex-direction: column;
         justify-content: space-around;

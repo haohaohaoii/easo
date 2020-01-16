@@ -103,7 +103,7 @@ export default {
                     if(realData[i].dataInfoList && realData[i].dataInfoList.length){
                         for(let k=0; k<realData[i].dataInfoList.length; k++){
                             let flag = false
-                            if(realData[i].dataInfoList[k].factorCode == 'cod'){
+                            if(realData[i].dataInfoList[k].factorCode == '011'){
                                 flag = true
                                 obj.cod = realData[i].dataInfoList[k].factorValue
                                 obj.codOverflag = realData[i].dataInfoList[k].overFlag  //cod超标字段 0是正常  1是超标
@@ -113,7 +113,7 @@ export default {
                                     obj.cod = '/'
                                 }
                             }
-                            if(realData[i].dataInfoList[k].factorCode == 'nh3n'){
+                            if(realData[i].dataInfoList[k].factorCode == '101'){
                                 flag =true
                                 obj.nh3n = realData[i].dataInfoList[k].factorValue
                                 obj.nh3nOverflag = realData[i].dataInfoList[k].overFlag  //nh3n超标字段
@@ -123,7 +123,7 @@ export default {
                                     obj.nh3n = '/'
                                 }
                             }
-                            if(realData[i].dataInfoList[k].factorCode == 'tn'){
+                            if(realData[i].dataInfoList[k].factorCode == '065'){
                                 obj.tn = realData[i].dataInfoList[k].factorValue
                                 obj.tnOverflag =realData[i].dataInfoList[k].overFlag  //tn超标字段
                                 obj.tnExceptionFlag= realData[i].dataInfoList[k].exceptionFlag //tn异常字段
@@ -132,7 +132,7 @@ export default {
                                     obj.tn = '/'
                                 }
                             }
-                            if(realData[i].dataInfoList[k].factorCode == 'tp'){
+                            if(realData[i].dataInfoList[k].factorCode == '060'){
                                 obj.tp = realData[i].dataInfoList[k].factorValue
                                 obj.tpOverflag = realData[i].dataInfoList[k].overFlag  //tp超标字段
                                 obj.tpExceptionFlag= realData[i].dataInfoList[k].exceptionFlag //tp异常字段
@@ -141,7 +141,7 @@ export default {
                                     obj.tp = '/'
                                 }
                             }
-                            if(realData[i].dataInfoList[k].factorCode == 'ph'){
+                            if(realData[i].dataInfoList[k].factorCode == '001'){
                                 obj.ph = realData[i].dataInfoList[k].factorValue
                                 obj.phOverflag = realData[i].dataInfoList[k].overFlag  //ph超标字段
                                 obj.phExceptionFlag= realData[i].dataInfoList[k].exceptionFlag //ph异常字段

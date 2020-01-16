@@ -110,14 +110,7 @@ export default {
                     linkPhone: "1314567891",
                     divPeople: "李雪",
                     divTime: "19/11/20 16:40:20"
-                },
-                {
-                    divName: "郑州富铭环保科技有限公司",
-                    divAddress: "郑州市金水区杨金路",
-                    linkPhone: "1314567891",
-                    divPeople: "李雪",
-                    divTime: "19/11/20 16:40:20"
-                },
+                }
               
             ]
         };
@@ -155,12 +148,8 @@ export default {
 
 <style lang="scss" scoped>
 .divList {
-    height: 62.5%;
-
     .tabE {
-        height: 99.5%;
         margin-top: 1%;
-        border: 1px solid rgba(235, 235, 235, 1);
         .tab {
             height: 100%;
             overflow-y: auto;
@@ -168,7 +157,7 @@ export default {
     }
     .tabPage {
         text-align: center;
-        padding-top: 4%;
+        padding: 20px;
     }
 }
 </style>
