@@ -80,7 +80,6 @@ export default {
         //添加角色
         addRole() {
             this.$api.menu.getAllmenu().then(res=>{
-                debugger
                 if(res.data.code == 0){
                     let obj ={
                         isTrue:true,

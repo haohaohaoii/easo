@@ -28,80 +28,50 @@
                 </el-table-column>
             </el-table>
         </div>
-        <div class="tabPage">
-            <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
-        </div>
+        <slot></slot>
     </div>
 </template>
 
 <script>
 import { mapMutations } from "vuex";
 export default {
+    props:{
+        munuList:{
+            type:Array,
+            default: function() {
+                return [];
+            }
+        }
+    },  
     data() {
         return {
-            tableData: [
-                {
-                    menuName: "数据",
-                    menuAddress: "index.html",
-                    menuLevel: "一级菜单",
-                    menuTime: "19/11/20 16:40:20"
-                },
-                {
-                    menuName: "数据",
-                    menuAddress: "index.html",
-                    menuLevel: "一级菜单",
-                    menuTime: "19/11/20 16:40:20"
-                },
-                {
-                    menuName: "数据",
-                    menuAddress: "index.html",
-                    menuLevel: "一级菜单",
-                    menuTime: "19/11/20 16:40:20"
-                },
-                {
-                    menuName: "数据",
-                    menuAddress: "index.html",
-                    menuLevel: "一级菜单",
-                    menuTime: "19/11/20 16:40:20"
-                },
-                {
-                    menuName: "数据",
-                    menuAddress: "index.html",
-                    menuLevel: "一级菜单",
-                    menuTime: "19/11/20 16:40:20"
-                },
-                {
-                    menuName: "数据",
-                    menuAddress: "index.html",
-                    menuLevel: "一级菜单",
-                    menuTime: "19/11/20 16:40:20"
-                },
-                {
-                    menuName: "数据",
-                    menuAddress: "index.html",
-                    menuLevel: "一级菜单",
-                    menuTime: "19/11/20 16:40:20"
-                },
-                {
-                    menuName: "数据",
-                    menuAddress: "index.html",
-                    menuLevel: "一级菜单",
-                    menuTime: "19/11/20 16:40:20"
-                },
-                {
-                    menuName: "数据",
-                    menuAddress: "index.html",
-                    menuLevel: "一级菜单",
-                    menuTime: "19/11/20 16:40:20"
-                },
-                {
-                    menuName: "数据",
-                    menuAddress: "index.html",
-                    menuLevel: "一级菜单",
-                    menuTime: "19/11/20 16:40:20"
-                }
-            ]
         };
+    },
+    computed:{
+        tableData(){
+             if(this.munuList && this.munuList.length>0){
+                let menuArr = [];
+                for(let i=0; i<this.munuList.length; i++){
+                    let menuWitch = ''
+                    console.log(this.munuList[i].menuType)
+                    if(this.munuList[i].menuType == 0){
+                        menuWitch= '一级菜单'
+                    }else if(this.munuList[i].menuType == 1){
+                            menuWitch= '二级菜单'
+                    }
+                    let obj={
+                        menuName:this.munuList[i].menuName,  //菜单名称
+                        menuAddress:this.munuList[i].url,  //菜单地址
+                        menuLevel:menuWitch,  //菜单级别
+                        menuTime:this.munuList[i].createTime, //更新时间
+                        id:this.munuList[i].id //菜单id
+                    }
+
+                    menuArr.push(obj)
+                }
+                return menuArr
+            }
+        }
     },
     methods: {
         //点击删除

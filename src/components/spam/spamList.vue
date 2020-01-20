@@ -1,5 +1,6 @@
 <template>
     <div class="spamList">
+        <spam-reply></spam-reply>
         <div class="tabE">
             <el-table
                 :data="tableData"
@@ -28,94 +29,74 @@
                 </el-table-column>
             </el-table>
         </div>
-        <div class="tabPage">
-            <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
-        </div>
+        <slot></slot>
     </div>
 </template>
 
 <script>
 import { mapMutations } from "vuex";
+import spamReply from './spamReply'
 export default {
+    components:{
+        spamReply
+    },
+    props:{
+        spamAll:{
+            type:Array,
+            default: function() {
+                return [];
+            }
+        }
+    },
     data() {
-        return {
-            tableData: [
-                {
-                    spamTitle: "留言标题",
-                    firmName: "郑州富铭环保科技有限公司",
-                    spamDate: "19/11/20 16:40:20",
-                    spamStatus: "已回复"
-                },
-                {
-                    spamTitle: "留言标题",
-                    firmName: "郑州富铭环保科技有限公司",
-                    spamDate: "19/11/20 16:40:20",
-                    spamStatus: "已回复"
-                },
-                {
-                    spamTitle: "留言标题",
-                    firmName: "郑州富铭环保科技有限公司",
-                    spamDate: "19/11/20 16:40:20",
-                    spamStatus: "已回复"
-                },
-                {
-                    spamTitle: "留言标题",
-                    firmName: "郑州富铭环保科技有限公司",
-                    spamDate: "19/11/20 16:40:20",
-                    spamStatus: "已回复"
-                },
-                {
-                    spamTitle: "留言标题",
-                    firmName: "郑州富铭环保科技有限公司",
-                    spamDate: "19/11/20 16:40:20",
-                    spamStatus: "已回复"
-                },
-                {
-                    spamTitle: "留言标题",
-                    firmName: "郑州富铭环保科技有限公司",
-                    spamDate: "19/11/20 16:40:20",
-                    spamStatus: "已回复"
-                },
-                {
-                    spamTitle: "留言标题",
-                    firmName: "郑州富铭环保科技有限公司",
-                    spamDate: "19/11/20 16:40:20",
-                    spamStatus: "已回复"
-                },
-                {
-                    spamTitle: "留言标题",
-                    firmName: "郑州富铭环保科技有限公司",
-                    spamDate: "19/11/20 16:40:20",
-                    spamStatus: "已回复"
-                },
-                {
-                    spamTitle: "留言标题",
-                    firmName: "郑州富铭环保科技有限公司",
-                    spamDate: "19/11/20 16:40:20",
-                    spamStatus: "已回复"
-                },
-                {
-                    spamTitle: "留言标题",
-                    firmName: "郑州富铭环保科技有限公司",
-                    spamDate: "19/11/20 16:40:20",
-                    spamStatus: "已回复"
+        return {};
+    },
+    computed:{
+        tableData(){
+            if(this.spamAll && this.spamAll.length>0){
+                let spamList = [];
+                for(let i=0; i<this.spamAll.length; i++){
+                    let stateMsg = ''
+                    if(this.spamAll[i].state == 0){
+                        stateMsg = '未读'
+                    }else if(this.spamAll[i].state == 1){
+                        stateMsg = '已读'
+                    }else if(this.spamAll[i].state == 2){
+                        stateMsg = '已回复'
+                    }
+                    let obj={
+                        spamTitle:this.spamAll[i].title,  //留言标题
+                        firmName:this.spamAll[i].erpName,  //企业名称
+                        spamDate:this.spamAll[i].createTime, //留言时间
+                        spamStatus:stateMsg,
+                        id:this.spamAll[i].id //用户id
+                    }
+                    spamList.push(obj)
                 }
-            ]
-        };
+                return spamList
+            }
+        }
     },
     methods: {
         //点击删除
         handleDelete(index, row) {
+            let id = row.id
             this.$confirm("此操作将永久删除该条留言, 是否继续?", "提示", {
                 confirmButtonText: "确定",
                 cancelButtonText: "取消",
                 type: "warning"
             })
                 .then(() => {
-                    this.$message({
-                        type: "success",
-                        message: "删除成功!"
-                    });
+                    this.delete(id).then(res=>{
+                        if(res =='success'){
+                            this.$message({
+                                type: "success",
+                                message: "删除成功!"
+                            });
+                        }
+                    }).catch(error=>{
+                        this.$message.error('删除失败');
+                    })
                 })
                 .catch(() => {
                     this.$message({
@@ -124,11 +105,22 @@ export default {
                     });
                 });
         },
+        delete(messageId){
+            return new Promise((resolve,reject)=>{
+                this.$api.spam.spamDelete(messageId).then(res=>{
+                    if(res.data.code == 0){
+                        resolve('success')
+                    }
+                }).catch(error=>{
+                    reject(error)
+                })
+            })
+        },
         //点击回复
         handleReply(index, row) {
             console.log(index, row);
-            this.$router.push({ path: "/spamReply" });
-            this.$store.commit("spamReply", true);
+            let id = row.id
+            this.$store.dispatch('spamDetail',id)
         }
     }
 };

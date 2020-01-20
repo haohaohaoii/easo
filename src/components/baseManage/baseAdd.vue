@@ -4,43 +4,46 @@
             <div class="line"></div>
             <p>基站添加</p>
         </div>
-        <el-form ref="form" :model="form"  label-width="100px">
-            <el-form-item label="基站名称:">
-                <el-input v-model="form.baseName"></el-input>
+        <el-form ref="form" :model="form" label-width="100px">
+            <el-form-item label="基站名称:" prop="siteName">
+                <el-input v-model="form.siteName"></el-input>
             </el-form-item>
-            <el-form-item label="进出口:">
-                <el-select v-model="form.export" placeholder="请选择进出口">
-                    <el-option label="进口" value="jinkou"></el-option>
-                    <el-option label="出口" value="chukou"></el-option>
+            <el-form-item label="进出口:" prop="ioType">
+                <el-select v-model="form.ioType" placeholder="请选择进出口">
+                    <el-option
+                        v-for="(item,index) of jcType"
+                        :key="index"
+                        :label="item.label"
+                        :value="item.value"
+                    ></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="MN:">
-                <el-input v-model="form.mnVal"></el-input>
+            <el-form-item label="MN:" prop="mn">
+                <el-input v-model="form.mn"></el-input>
             </el-form-item>
-            <el-form-item label="托管设备:">
-                <el-checkbox-group v-model="form.type">
-                    <el-checkbox label="COD" name="type"></el-checkbox>
-                    <el-checkbox label="氨氮" name="type"></el-checkbox>
-                    <el-checkbox label="总磷" name="type"></el-checkbox>
-                    <el-checkbox label="总氮" name="type"></el-checkbox>
-                    <el-checkbox label="PH" name="type"></el-checkbox>
-                    <el-checkbox label="流量" name="type"></el-checkbox>
+            <el-form-item label="企业选择" prop="erpId">
+                <el-select v-model="form.erpId" @visible-change="companyChoose" clearable>
+                    <el-option
+                        v-for="item of companyArr"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
+
+            <el-form-item label="托管设备:" prop="factors">
+                <el-checkbox-group v-model="form.factors">
+                    <el-checkbox
+                        v-for="item of Equilist"
+                        :key="item.id"
+                        :label="item.value"
+                    >{{item.name}}</el-checkbox>
                 </el-checkbox-group>
-            </el-form-item>
-            <el-form-item label="联系电话:">
-                <el-input v-model="form.linkPhone"></el-input>
-            </el-form-item>
-            <el-form-item label="验证码:">
-                <el-col :span="14">
-                    <el-input v-model="form.veriCode" style="width:100%"></el-input>
-                </el-col>
-                <el-col :span="4" :offset="6">
-                    <el-button type="primary" @click="getCode"  style="width:100%">获取验证码</el-button>
-                </el-col>
             </el-form-item>
         </el-form>
         <div slot="footer" class="footer">
-            <el-button type="primary" size="mini" @click="add">添加</el-button>
+            <el-button type="primary" size="mini" @click="addBase">添加</el-button>
             <el-button size="mini" @click="cancel">取消</el-button>
         </div>
     </el-dialog>
@@ -52,36 +55,99 @@ export default {
     data() {
         return {
             status: false, //控制表头不显示
+            jcType:[
+                {label:'进口',value:0},
+                {label:'出口',value:1}
+            ],
             form:{
-                baseName:'',  //基站名称
-                export:'',  //选择的是哪个进出口值
-                mnVal:'', //mn
-                type:[], //托管设备
-                linkPhone:'', //联系电话
-                veriCode:'' //验证码
-            }
+                siteName:'',  //基站名称
+                ioType:' ',  //选择的是哪个进出口值
+                mn:'', //mn
+                factors:[], //托管设备
+                erpId:''
+            },
+            stateType:false,  //这一步是为了分别0和空字符串相等的问题
+            companyArr:[]
         };
     },
-    methods: {
-        //点击x号关闭外层dialog
-        closeDialog() {
-            this.$store.commit("baseAdd", false); //关闭dialog
-        },
-        //点击添加基站
-        add() {
-            this.$store.commit("baseAdd", false); //关闭dialog
-        },
-        //点击取消
-        cancel() {
-            this.$store.commit("baseAdd", false); //关闭dialog
-        },
-        //获取验证码
-        getCode(){
-
-        }
-    },
     computed: {
-        ...mapState(["baseAdd"])
+        ...mapState(["baseAdd","Equilist"])
+    },
+    methods: {
+        companyChoose(val){
+            if(val == true){
+                this.$api.company.companyAll().then(res=>{
+                    if(res.data.code == 0){
+                        if(res.data.data && res.data.data.length>0){
+                            let itemArr = []
+                            for(let i=0; i<res.data.data.length; i++){
+                                let roleItem={
+                                    label:res.data.data[i].erpName,
+                                    value:res.data.data[i].id
+                                }
+                                itemArr.push(roleItem)
+                            }
+                            this.companyArr=itemArr
+                        }
+                    }
+                })
+            }
+        },
+        //添加基站
+        addBase() {
+            let siteName = this.form.siteName  //基站名称
+            let ioType = this.form.ioType  //基站状态
+            let erpId = this.form.erpId  //企业选择
+            if(ioType ===0){
+                this.stateType = true
+            }
+            if(ioType ===1){
+                this.stateType = true
+            }
+            let mn = this.form.mn  //mn号
+            let factors = this.form.factors
+            if(siteName && this.stateType && mn && erpId && factors.length>0){
+                let params={
+                    siteName:siteName,
+                    ioType:ioType,
+                    mn:mn,
+                    factors:factors,
+                    erpId:erpId
+                }
+                let _this = this
+                this.$api.site.addSite(params).then(res=>{
+                    if(res.data.code == 0){
+                        _this.$message({
+                            message: '基站添加成功',
+                            type: 'success'
+                        });
+                       _this.clearForm()
+                    }
+                }).catch(error=>{
+
+                })
+            }else{
+                this.$message({
+                    type: "warning",
+                    message: "请将必填项填写完毕后再提交"
+                });
+            }
+        },
+        //清除表单内容
+        clearForm(){
+            this.$nextTick(() => {
+                this.$refs['form'].resetFields()
+            })
+            this.$store.commit("baseAdd", false); //关闭dialog
+        },
+        //取消
+        cancel() {
+            this.clearForm()
+        },
+        //点击x号关闭
+        closeDialog() {
+            this.clearForm()
+        },
     }
 };
 </script>
@@ -107,7 +173,7 @@ export default {
     margin-top: 0 !important;
     position: relative;
     margin: 0 auto;
-
+    width: 32% !important;
     top: 50%;
     transition: transform;
     transform: translateY(-50%);

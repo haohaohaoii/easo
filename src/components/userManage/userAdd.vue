@@ -135,7 +135,7 @@ export default {
         //点击部门 获取部门列表
         departChange(val){
             if(val == true){  //获取所有部门
-                this.$api.depart.getDept().then(res=>{
+                this.$api.depart.getDeptlist().then(res=>{
                     if(res.data.code == 0){
                         if(res.data.data && res.data.data.length>0){
                             let itemArr = []

@@ -120,8 +120,7 @@ export default {
 
         },
         //点击保存
-        save() {
-            debugger
+        save() { 
            console.log(this.$refs.tree.getCheckedKeys());  
            let checkedArr = this.$refs.tree.getCheckedKeys();
            let name = this.form.roleName
@@ -129,7 +128,6 @@ export default {
                let params={roleShow:name,menus:checkedArr}
                let roleId=this.roleId
                this.$api.roles.editorRole(params,roleId).then(res=>{
-                   debugger
                     if(res.data.code ==0){
                         console.log(res)
                         this.$message({

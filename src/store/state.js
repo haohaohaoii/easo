@@ -13,10 +13,19 @@ export default ({
     breadArr: localStorage.breadArr ? JSON.parse(localStorage.breadArr) : [],  //动态面包屑
     hoursArr: [], //x轴坐标
     enterDialog: false, //企业管理下的企业信息中的详情 dialog状态
+    enterAdd: false,   //企业管理下 企业信息  添加企业
     editorDialog: false,  //企业管理下的企业信息中的编辑 dialog状态
     baseAdd: false,  //企业管理下的基站管理中的添加基站 dialog状态
+    Equilist: [],  //企业管理下的基站管理中的添加基站  所需的托管设备数组
     baseDetail: false,    //企业管理下的基站管理中的基站详情  dialog状态
+    siteRowlist: '',    //企业管理下的基站管理 点击基站详情  row
+    baseEditor: false,    //企业管理下的基站管理中的编辑  dialog状态
+    baseAudit: false,   //企业管理下的基站管理中 点击审核 dialog状态
+    siteRowmn: '',     //企业管理下的 基站管理  审核  mn参数
+    companyArr: [],       //企业管理中的基站管理中的编辑 所需的全部企业
+    baseItemlist: '',   //企业管理下的基站管理中的编辑 所需的信息
     spamReply: false,   //企业管理下的留言回复
+    spamItemlist: [],    //企业管理写的 留言回复  单个留言id对应的内容
     roleAdd: false,     //权限管理下的角色管理添加角色 dialog状态
     roleEditor: false,   //权限管理下的角色管理修改角色 dialog状态
     userAdd: false,   //权限管理下的用户管理添加用户 dialog状态
@@ -25,6 +34,8 @@ export default ({
     deparArr: [],  //权限管理下的用户管理编辑用户 所需的部门数据下拉框数组
     roleList: [],   //权限管理下的用户管理编辑用户 所需的角色数据下拉框数组
     divAdd: false,    //权限管理下的部门管理添加部门 dialog状态
+    divEditor: false,  //权限管理下的部门管理编辑部门 dialog状态
+    divItem: [],  //权限管理下的部门管理编辑部门  所需的部门信息
     menuAdd: false,    //权限管理下的菜单管理添加菜单 dialog状态
     roleTree: [],     //角色管理中的树状结构数组(所有的)
     roleItem: [],   //单个的角色对应的权限

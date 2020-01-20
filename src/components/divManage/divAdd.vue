@@ -11,18 +11,15 @@
             label-width="100px"
             class="demo-ruleForm"
         >
-            <el-form-item label="部门名称:" prop="divName">
-                <el-input v-model="ruleForm.divName"></el-input>
+            <el-form-item label="部门名称:" prop="deptName">
+                <el-input v-model="ruleForm.deptName"></el-input>
             </el-form-item>
-            <el-form-item label="部门地址:" prop="divAddress">
-                <el-input v-model="ruleForm.divAddress"></el-input>
+            <el-form-item label="联系电话:" prop="contactPhone">
+                <el-input v-model="ruleForm.contactPhone"></el-input>
             </el-form-item>
-            <el-form-item label="联系电话:" prop="linkPhone">
-                <el-input v-model="ruleForm.linkPhone"></el-input>
-            </el-form-item>
-           
-            <el-form-item label="部门联系人:" prop="divPeople">
-                <el-input v-model="ruleForm.divPeople"></el-input>
+
+            <el-form-item label="部门联系人:" prop="contactName">
+                <el-input v-model="ruleForm.contactName"></el-input>
             </el-form-item>
         </el-form>
         <div slot="footer" class="footer">
@@ -39,13 +36,12 @@ export default {
         return {
             status: false, //控制表头不显示
             ruleForm: {
-                divName: "", //部门名称
-                divAddress: "", //部门地址
-                linkPhone: "", //联系电话
-                divPeople: "", //部门联系人
+                deptName: "", //部门名称
+                contactPhone: "", //联系电话
+                contactName: "", //部门联系人
             },
             rules: {
-                divName: [
+                deptName: [
                     {
                         required: true,
                         message: "请输入部门名称",
@@ -53,21 +49,14 @@ export default {
                     },
                     
                 ],
-                divAddress: [
-                    {
-                        required: true,
-                        message: "请输入部门地址",
-                        trigger: "blur"
-                    }
-                ],
-                linkPhone: [
+                contactPhone: [
                     {
                         required: true,
                         message: "请输入联系电话",
                         trigger: "blur"
                     }
                 ],
-                divPeople: [
+                contactName: [
                     {
                         required: true,
                         message: "请输入部门联系人",
@@ -77,20 +66,57 @@ export default {
             }
         };
     },
-    methods: {
-        closeDialog() {
-            this.$store.commit("divAdd", false); //关闭dialog
-        },
-        save() {
-            this.$store.commit("divAdd", false); //关闭dialog
-        },
-        cancel() {
-            this.$store.commit("divAdd", false); //关闭dialog
-        }
-    },
     computed: {
         ...mapState(["divAdd"])
+    },
+    methods: {
+        //提交
+        save() {
+            let deptName = this.ruleForm.deptName
+            let contactName = this.ruleForm.contactName
+            let contactPhone = this.ruleForm.contactPhone
+            if(deptName &&　contactName　&& contactPhone){
+                let params={
+                    deptName:deptName,
+                    contactName:contactName,
+                    contactPhone:contactPhone,
+                }
+                let _this = this
+                this.$api.depart.addDept(params).then(res=>{
+                    if(res.data.code == 0){
+                        _this.$message({
+                            message: '用户添加成功',
+                            type: 'success'
+                        });
+                       _this.clearForm()
+                    }
+                }).catch(error=>{
+
+                })
+            }else{
+                this.$message({
+                    type: "warning",
+                    message: "请填写完成后再提交"
+                });
+            }
+        },
+        //清除表单内容,并关闭弹出框
+        clearForm(){
+            this.$nextTick(() => {
+                this.$refs['ruleForm'].resetFields()
+            })
+            this.$store.commit("divAddstatus", false); //关闭dialog
+        },
+        //取消
+        cancel() {
+            this.clearForm()
+        },
+        //点击x号关闭
+        closeDialog() {
+            this.clearForm()
+        },
     }
+    
 };
 </script>
 
@@ -116,7 +142,7 @@ export default {
     margin-top: 0 !important;
     position: relative;
     margin: 0 auto;
-    
+    width: 30%;
     top: 50%;
     transition: transform;
     transform: translateY(-50%);

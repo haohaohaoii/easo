@@ -9,15 +9,14 @@ export default ({
             path: toObj.path
         }
         let arr = state.breadArr
+
+        let flag = false
         if (arr && arr.length > 0) {
-            let flag = false
             for (let i = 0; i < arr.length; i++) {
                 if (arr[i].name == obj.name) {
                     arr.splice(i + 1, arr.length - 1)
                     flag = true
                     break
-                } else if (obj.name == '历史数据' && arr[i].name == '当前位置') {
-                    arr.splice(i + 1, arr.length - 1)
                 } else {
                     if (i == arr.length - 1 && !flag) {
                         arr.push(obj)
@@ -26,12 +25,10 @@ export default ({
                 }
             }
         } else {
-            let home = {
-                path: '/',     //历史数据
-                name: '当前位置',
-            }
-            arr.push(home)
+            arr.push(obj)
         }
+
+
         localStorage.breadArr = JSON.stringify(arr)
     },
     //获取搜索时间区间[yyyy-MM-dd HH:00:00 ...... yyyy-MM-dd HH:00:00]
@@ -42,6 +39,10 @@ export default ({
     getDialogstatus(state, dialogStatus) {
         state.enterDialog = dialogStatus;
     },
+    //企业管理  企业信息  添加企业  dialog状态
+    changeEnterAdd(state, status) {
+        state.enterAdd = status
+    },
     //获取企业管理下的企业信息中的编辑dialog状态
     setEditordialog(state, editorDialogstatus) {
         state.editorDialog = editorDialogstatus;
@@ -50,13 +51,45 @@ export default ({
     baseAdd(state, dialogStatus) {
         state.baseAdd = dialogStatus;
     },
+    //企业管理下的 企业基站管理 添加和编辑中都需要的托管设备信息
+    getEqui(state, equiArr) {
+        state.Equilist = equiArr
+    },
+    //企业管理下的 企业基站管理 编辑 dialog状态
+    baseEditor(state, status) {
+        state.baseEditor = status
+    },
+    //企业管理下的 企业基站管理 编辑 中所需的全部企业
+    getCompanyall(state, companyArr) {
+        state.companyArr = companyArr
+    },
+    //企业管理下的 企业基站管理 编辑中需要的row信息
+    getBaseitemList(state, itemList) {
+        state.baseItemlist = itemList
+    },
     //企业管理下的企业基站管理下的详情（审核）dialog状态
     baseDetail(state, detailDialog) {
         state.baseDetail = detailDialog;
     },
+    //企业管理下的企业基站管理 点击审核  dialog状态
+    siteRowstatus(state, status) {
+        state.baseAudit = status
+    },
+    //企业管理下的 企业基站管理 点击详情  获取row
+    getSiterowList(state, rowMsg) {
+        state.siteRowlist = rowMsg
+    },
+    //企业管理下的 企业基站管理  点击审核 需要 mn
+    getSiterowMn(state, mn) {
+        state.siteRowmn = mn
+    },
     //企业管理下的留言回复 dialog状态
     spamReply(state, spamDialog) {
         state.spamReply = spamDialog;
+    },
+    //企业管理下的留言回复 单个留言id对应的内容
+    getspamDetail(state, content) {
+        state.spamItemlist = content
     },
     //权限管理下的角色管理添加角色 dialog状态,并获取全部菜单
     roleAdd(state, pdObj) {
@@ -105,8 +138,16 @@ export default ({
         state.roleList = roleArr
     },
     //权限管理下的用户管理添加用户 dialog状态
-    divAdd(state, divStatus) {
+    divAddstatus(state, divStatus) {
         state.divAdd = divStatus;
+    },
+    //权限管理下的用户管理编辑用户 dialog状态
+    changeStatusdiv(state, status) {
+        state.divEditor = status
+    },
+    //权限管理下的用户管理编辑用户  所需的对应id的数据
+    getEditordiv(state, divArr) {
+        state.divItem = divArr
     },
     //权限管理下的菜单管理添加菜单 dialog状态
     menuAdd(state, menuStatus) {

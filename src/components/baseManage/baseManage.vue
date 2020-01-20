@@ -1,6 +1,9 @@
 <template>
     <div class="baseMation">
         <base-add></base-add>
+        <base-editor></base-editor>
+        <base-detail></base-detail>
+        <base-audit></base-audit>
         <div class="baseTop">
             <div class="markMsg">
                 <div></div>
@@ -14,30 +17,80 @@
                 >添加基站</el-button>
             </div>
         </div>
-        <base-list></base-list>
+        <base-list :baseAll="baseArr">
+            <div class="tabPage">
+                <el-pagination
+                    background
+                    layout="prev, pager, next"
+                    :total="totalLength"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    :page-size="pagesize"
+                ></el-pagination>
+            </div>
+        </base-list>
     </div>
 </template>
 
 <script>
-import baseAdd from './baseAdd'
+import baseAdd from './baseAdd';
+import baseAudit from './baseAudit'
+import baseDetail from './baseDetail'
+import baseEditor from './baseEditor';
 import baseList from './baseList';
 import {mapMutations} from 'vuex';
 export default {
     components:{
         baseList,
-        baseAdd
+        baseAdd,
+        baseEditor,
+        baseDetail,
+        baseAudit
     },
     data() {
         return {
-            
+            totalLength: 0, //总共多少条数据
+            currentPage: 1, //初始页码
+            pagesize: 10, //一页多少条数据
+            baseArr: [], //所有基站数组
         };
     },
-    methods:{
-        //点击基站添加
+    created(){
+        let pageNum = this.currentPage;
+        this.getBaselist(pageNum)
+    },
+    methods:{   
+        getBaselist(pageNum){
+            let pageSize = this.pagesize;
+            this.$api.site
+                .getSiteall({
+                    params: {
+                        pageNum: pageNum,
+                        pageSize: pageSize,
+                    }
+                })
+                .then(res => {
+                    
+                    console.log(res)
+                    if(res.data.code ==0){
+                        this.totalLength = res.data.pageInfo.total  //获取总条数
+                        this.baseArr = res.data.pageInfo.list  //获取数据
+                    }
+                })
+                .catch(error => {});
+        },
+        //添加基站
         baseAdd(){
-            // this.$router.push({path:'/baseAdd'})
-            this.$store.commit('baseAdd',true)
+            this.$store.dispatch('getEquilist')
+            
+        },
+        //点击页码的时候
+        handleCurrentChange(currentPage) {
+            this.currentPage = currentPage;
+            let pageNum = this.currentPage;
+            this.getBaselist(pageNum)
         }
+        
     }
 };
 </script>

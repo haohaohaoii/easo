@@ -9,11 +9,22 @@
                     icon="el-icon-circle-plus-outline"
                     size="mini"
                     class="add"
-                    @click="menuManage"
+                    @click="menuClick"
                 >添加菜单</el-button>
             </div>
         </div>
-        <menu-list></menu-list>
+        <menu-list :munuList="menuArr">
+            <div class="tabPage">
+                <el-pagination
+                    background
+                    layout="prev, pager, next"
+                    :total="totalLength"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    :page-size="pagesize"
+                ></el-pagination>
+            </div>
+        </menu-list>
     </div>
 </template>
 
@@ -24,13 +35,45 @@ export default {
         menuList
     },
     data() {
-        return {};
+         return {
+            totalLength: 0, //总共多少条数据
+            currentPage: 1, //初始页码
+            pagesize: 10, //一页多少条数据
+            menuArr: [], //所有角色数组
+        };
+    },
+    created(){
+        let pageNum = this.currentPage;
+        this.getUserlist(pageNum)
     },
     methods:{
+        getUserlist(pageNum){
+            let pageSize = this.pagesize;
+            this.$api.menu
+                .getFymenu({
+                    params: {
+                        pageNum: pageNum,
+                        pageSize: pageSize,
+                    }
+                })
+                .then(res => {
+                    console.log(res)
+                    if(res.data.code ==0){
+                        this.totalLength = res.data.pageInfo.total  //获取总条数
+                        this.menuArr = res.data.pageInfo.list  //获取数据
+                    }
+                })
+                .catch(error => {});
+        },
         //添加角色
-        menuManage(){
-            this.$router.push({path:'/menuAdd'});
-            this.$store.commit('menuAdd',true);
+        menuClick(){
+            this.$store.commit('changeUserAdd',true);
+        },
+        //点击页码的时候
+        handleCurrentChange(currentPage) {
+            this.currentPage = currentPage;
+            let pageNum = this.currentPage;
+            this.getUserlist(pageNum)
         }
         
     }

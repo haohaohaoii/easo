@@ -95,8 +95,7 @@ export default {
 
         },
         //点击保存
-        save() {
-            debugger
+        save() {            
            console.log(this.$refs.tree.getCheckedKeys());  
            let checkedArr = this.$refs.tree.getCheckedKeys();
            let name = this.form.roleName

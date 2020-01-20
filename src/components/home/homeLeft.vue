@@ -10,8 +10,8 @@
         <!-- <el-radio-group v-model="isCollapse" id="changeMenubtn">
             <el-radio-button :label="false">展开</el-radio-button>
             <el-radio-button :label="true">收起</el-radio-button>
-        </el-radio-group> -->
-        <div  id="changeMenubtn">
+        </el-radio-group>-->
+        <div id="changeMenubtn">
             <el-button type="primary" :icon="showSide" @click="sideBtn" circle></el-button>
         </div>
         <el-menu
@@ -126,7 +126,7 @@ export default {
 
         .titName {
             font-size: 26px;
-            font-family:MFLiHei;
+            font-family: MFLiHei;
             font-weight: 400;
             color: rgba(255, 255, 255, 1);
             line-height: 64px;

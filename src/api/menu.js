@@ -12,6 +12,9 @@ const menu = {
     },
     getAllmenu() {   //获取所有菜单
         return axios.get(`${base.localUrl}/admin/menu/menus`)
+    },
+    getFymenu(params) {  //分页获取所有菜单
+        return axios.get(`${base.localUrl}/admin/menu`, params)
     }
 }
 

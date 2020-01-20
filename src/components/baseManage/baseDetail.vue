@@ -1,16 +1,15 @@
 <template>
-    <el-dialog :visible.sync="baseDetail" class="dialog" center @close='closeDialog'>
+    <el-dialog :visible.sync="baseDetail" class="dialog" center @close="closeDialog">
         <div slot="title" class="tit">
             <div class="line"></div>
             <p>基站审核</p>
         </div>
-        <el-table :data="tableData" border style="width: 100%" >
-            <el-table-column prop="date" label="日期" width="180" align="right"></el-table-column>
-            <el-table-column prop="name" label="姓名" align="left"></el-table-column>
-           
+        <el-table :data="tableData" border style="width: 100%" :show-header="false">
+            <el-table-column prop="date" width="180" align="right"></el-table-column>
+            <el-table-column prop="name" align="left"></el-table-column>
         </el-table>
         <div slot="footer" class="footer">
-            <el-button type="primary" size="mini" @click="save">保存</el-button>
+            <el-button type="primary" size="mini" @click="save">确定</el-button>
             <el-button size="mini" @click="cancel">取消</el-button>
         </div>
     </el-dialog>
@@ -21,48 +20,70 @@ import { mapState,mapMutations} from "vuex";
 export default {
     data() {
         return {
-            status: false, //控制表头不显示
-            tableData: [
-                {
-                    date: "基站名称",
-                    name: "基站一"
-                },
-                {
-                    date: "进出口:",
-                    name: "进口"
-                },
-                {
-                    date: "MN:",
-                    name: "L1234964655646851"
-                },
-                {
-                    date: "因子:",
-                    name: "COD、氨氮、总磷、总氮、ph、流量"
-                },
-                {
-                    date: "站点状态:",
-                    name: "未审核"
-                },
-                {
-                    date: "更新时间:",
-                    name: "19/12/16 16:40:20"
-                }
-            ]
+            tableData: []
         };
     },
+    computed: {
+        ...mapState(["baseDetail","siteRowlist"])
+    },
     methods:{
-        closeDialog(){
-            this.$store.commit('baseDetail',false)  //关闭dialog
+        clearForm(){
+            this.$store.commit('getSiterowList', '')
+            this.tableData = []
+            this.$store.commit("baseDetail", false); //关闭dialog
+          
         },
+        //取消
+        cancel() {
+            this.clearForm()
+        },
+        //点击x号关闭
+        closeDialog() {
+            this.clearForm()
+        },
+        //点击保存
         save(){
-            this.$store.commit('baseDetail',false) //关闭dialog
-        },
-        cancel(){
-            this.$store.commit('baseDetail',false) //关闭dialog
+            this.clearForm()
         }
     },
-    computed: {
-        ...mapState(["baseDetail"])
+    watch:{
+        siteRowlist(val){
+            if(val.siteName){
+                let obj = {
+                    date:'基站名称:',
+                    name:val.siteName
+                }
+                this.tableData.push(obj)
+            }
+            if(val.ioType){
+                let obj = {
+                    date:'进出口:',
+                    name:val.ioType
+                }
+                this.tableData.push(obj)
+            }
+            if (val.yinZ){
+                let obj = {
+                    date:'因子:',
+                    name:val.yinZ
+                }
+                this.tableData.push(obj)
+            }
+            if(val.stateMsg){
+                let obj = {
+                    date:'站点状态:',
+                    name:val.stateMsg
+                }
+                this.tableData.push(obj)
+            }
+            if(val.updateTime){
+                let obj = {
+                    date:'更新时间:',
+                    name:val.updateTime
+                }
+                this.tableData.push(obj)
+            }
+        }
     }
 };
 </script>
@@ -84,14 +105,20 @@ export default {
         }
     }
 }
-.dialog >>> .el-dialog{
+.dialog >>> .el-dialog {
     margin-top: 0 !important;
     position: relative;
     margin: 0 auto;
-
+    width: 35%;
     top: 50%;
     transition: transform;
     transform: translateY(-50%);
-    border: 1px solid #EBEEF5
+    border: 1px solid #ebeef5;
+}
+.dialog >>> .el-table td.is-right {
+    background: #ebf2fb;
+}
+.dialog >>> .el-table th.is-right {
+    background: #ebf2fb;
 }
 </style>

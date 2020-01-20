@@ -1,5 +1,6 @@
 <template>
     <div class="divManage">
+        <div-add></div-add>
         <div class="divTop">
             <div class="markMsg">
                 <div></div>
@@ -13,24 +14,73 @@
                 >添加部门</el-button>
             </div>
         </div>
-        <div-list></div-list>
+        <div-list :divManas="divManaArr">
+            <div class="tabPage">
+                <el-pagination
+                    background
+                    layout="prev, pager, next"
+                    :total="totalLength"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    :page-size="pagesize"
+                ></el-pagination>
+            </div>
+        </div-list>
     </div>
 </template>
 
 <script>
 import divList from './divList'
+import {mapMutations} from 'vuex'
+import divAdd from './divAdd'
 export default {
     components:{
-        divList
+        divList,
+        divAdd
     },
     data() {
-        return {};
+        return {
+            totalLength: 0, //总共多少条数据
+            currentPage: 1, //初始页码
+            pagesize: 10, //一页多少条数据
+            divManaArr: [], //所有角色数组
+        };
+    },
+    created(){
+        let pageNum = this.currentPage;
+        this.getdivMana(pageNum)
     },
     methods:{
-        //添加角色
         addManage(){
-            this.$router.push({path:'/divAdd'});
-            this.$store.commit('divAdd',true);
+            this.$store.commit('divAddstatus',true)
+        },
+        getdivMana(pageNum){
+            let pageSize = this.pagesize;
+            this.$api.depart
+                .getDept({
+                    params: {
+                        pageNum: pageNum,
+                        pageSize: pageSize,
+                    }
+                })
+                .then(res => {
+                    console.log(res)
+                    if(res.data.code ==0){
+                        this.totalLength = res.data.pageInfo.total  //获取总条数
+                        this.divManaArr = res.data.pageInfo.list  //获取数据
+                    }
+                })
+                .catch(error => {});
+        },
+        //添加角色
+        addUser(){
+            this.$store.commit('changeUserAdd',true);
+        },
+        //点击页码的时候
+        handleCurrentChange(currentPage) {
+            this.currentPage = currentPage;
+            let pageNum = this.currentPage;
+            this.getdivMana(pageNum)
         }
         
     }

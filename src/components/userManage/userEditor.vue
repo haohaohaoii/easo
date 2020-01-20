@@ -113,6 +113,7 @@ export default {
     methods: {
         //提交
         save() {
+            debugger
             let username = this.ruleForm.loginName
             let realName = this.ruleForm.realName
             let phone = this.ruleForm.phone
@@ -153,7 +154,7 @@ export default {
             this.$nextTick(() => {
                 this.$refs['ruleForm'].resetFields()
             })
-            this.$store.commit("changeUseredit", false); //关闭dialog
+            // this.$store.commit("changeUseredit", false); //关闭dialog
         },
         //取消
         cancel() {
@@ -167,7 +168,6 @@ export default {
     watch: {
         userItem(val){
             let arr = Object.keys(val);
-           
             if(arr && arr.length>0){
                 this.ruleForm.loginName = val.username  //登陆名
                 this.ruleForm.realName = val.realName  //真实名称

@@ -1,5 +1,6 @@
 <template>
     <div class="enterMation">
+        <enter-add></enter-add>
         <enter-dialog></enter-dialog>
         <div class="enmationTop">
             <div class="markMsg">
@@ -14,26 +15,75 @@
                 >添加企业</el-button>
             </div>
         </div>
-        <enter-list></enter-list>
+        <enter-list :companyList="companyArr">
+            <div class="tabPage">
+                <el-pagination
+                    background
+                    layout="prev, pager, next"
+                    :total="totalLength"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    :page-size="pagesize"
+                ></el-pagination>
+            </div>
+        </enter-list>
     </div>
 </template>
 
 <script>
 import enterList from "./enterList";
 import {mapMutations} from 'vuex'
+import enterAdd from './enterAdd'
 import enterDialog from './enterDialog'
 export default {
     components: {
         enterList,
-        enterDialog
+        enterDialog,
+        enterAdd
     },
     data() {
-        return {};
+        return {
+            totalLength: 0, //总共多少条数据
+            currentPage: 1, //初始页码
+            pagesize: 10, //一页多少条数据
+            companyArr: [], //所有角色数组
+        };
+    },
+     created(){
+        let pageNum = this.currentPage;
+        this.getUserlist(pageNum)
     },
     methods:{
+        getUserlist(pageNum){
+            let pageSize = this.pagesize;
+            this.$api.company
+                .companyFyall({
+                    params: {
+                        pageNum: pageNum,
+                        pageSize: pageSize,
+                    }
+                })
+
+                .then(res => {
+                    console.log(res)
+                    if(res.data.code ==0){
+                        this.totalLength = res.data.pageInfo.total  //获取总条数
+                        this.companyArr = res.data.pageInfo.list  //获取数据
+                    }
+                })
+                .catch(error => {});
+        },
+        //添加企业
         addQy(){
-            this.$store.commit('getDialogstatus',true)
+            this.$store.commit('changeEnterAdd',true);
+        },
+        //点击页码的时候
+        handleCurrentChange(currentPage) {
+            this.currentPage = currentPage;
+            let pageNum = this.currentPage;
+            this.getUserlist(pageNum)
         }
+        
     }
 };
 </script>

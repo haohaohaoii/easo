@@ -8,97 +8,72 @@
                 :header-cell-style="{background: 'rgba(237,237,237,1)'}"
                 class="tab"
             >
-                <el-table-column align="center" prop="date" label="奇特名称"></el-table-column>
-                <el-table-column align="center" prop="name" label="联系人"></el-table-column>
-                <el-table-column align="center" prop="address" label="联系电话"></el-table-column>
-                <el-table-column align="center" prop="address" label="企业地址"></el-table-column>
-                <el-table-column align="center" prop="address" label="审核状态" min-width="100"></el-table-column>
-                <el-table-column align="center" prop="address" label="注册时间"></el-table-column>
-                <el-table-column label="操作" align="center">
+                <el-table-column align="center" prop="erpName" label="企业名称" width="280"></el-table-column>
+                <el-table-column align="center" prop="erpLinkMan" label="联系人"></el-table-column>
+                <el-table-column align="center" prop="erpLinkTel" label="联系电话"></el-table-column>
+                <el-table-column align="center" prop="erpAddr" label="企业地址" width="280"></el-table-column>
+                <el-table-column align="center" prop="userSection" label="审核状态" min-width="100">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.userSection==0">审核中</span>
+                        <span v-else-if="scope.row.userSection==1">审核通过</span>
+                        <span v-else-if="scope.row.userSection==2">审核未通过</span>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="turnTime" label="注册时间"></el-table-column>
+                <el-table-column label="操作" align="center" width="220">
                     <template slot-scope="scope">
                         <el-button size="mini" @click="base(scope.$index, scope.row)">基站</el-button>
                         <el-button
                             size="mini"
                             type="primary"
                             @click="handleEdit(scope.$index, scope.row)"
-                            v-has="'编辑s'"
                         >编辑</el-button>
                         <el-button
                             size="mini"
                             type="danger"
                             @click="handleDetail(scope.$index, scope.row)"
-                            v-has="'详情'"
                         >详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
         </div>
-        <div class="tabPage">
-            <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
-        </div>
+        <slot></slot>
     </div>
 </template>
 
 <script>
 import { mapMutations } from "vuex";
 export default {
+    props:{
+        companyList:{
+            type:Array,
+            default: function() {
+                return [];
+            }
+        }
+    },
     data() {
-        return {
-            radio1: "列表",
-            whichLzz: "列表",
-            tableData: [
-                {
-                    date: "2016-05-02",
-                    name: "王小虎",
-                    address: "上海市普陀区金沙江路 1518 弄"
-                },
-                {
-                    date: "2016-05-04",
-                    name: "王小虎",
-                    address: "上海市普陀区金沙江路 1517 弄"
-                },
-                {
-                    date: "2016-05-01",
-                    name: "王小虎",
-                    address: "上海市普陀区金沙江路 1519 弄"
-                },
-                {
-                    date: "2016-05-03",
-                    name: "王小虎",
-                    address: "上海市普陀区金沙江路 1516 弄"
-                },
-                {
-                    date: "2016-05-02",
-                    name: "王小虎",
-                    address: "上海市普陀区金沙江路 1518 弄"
-                },
-                {
-                    date: "2016-05-04",
-                    name: "王小虎",
-                    address: "上海市普陀区金沙江路 1517 弄"
-                },
-                {
-                    date: "2016-05-01",
-                    name: "王小虎",
-                    address: "上海市普陀区金沙江路 1519 弄"
-                },
-                {
-                    date: "2016-05-03",
-                    name: "王小虎",
-                    address: "上海市普陀区金沙江路 1516 弄"
-                },
-                {
-                    date: "2016-05-02",
-                    name: "王小虎",
-                    address: "上海市普陀区金沙江路 1518 弄"
-                },
-                {
-                    date: "2016-05-02",
-                    name: "王小虎",
-                    address: "上海市普陀区金沙江路 1518 弄"
+        return {};
+    },
+    computed:{
+        tableData(){
+            if(this.companyList && this.companyList.length>0){
+                let companyArr = [];
+                for(let i=0; i<this.companyList.length; i++){
+                    let obj={
+                        erpName:this.companyList[i].erpName,  //企业名称
+                        erpLinkMan:this.companyList[i].erpLinkMan,  //联系人
+                        erpLinkTel:this.companyList[i].erpLinkTel,  //联系电话
+                        erpAddr:this.companyList[i].erpAddr,  //企业地址
+                        userSection:this.companyList[i].auditState, //审核状态
+                        turnTime:this.companyList[i].createTime, //更新时间
+                        id:this.companyList[i].id //企业id
+                    }
+                    companyArr.push(obj)
                 }
-            ]
-        };
+                return companyArr
+            }
+        }
     },
     methods: {
         //详情--跳转详情dialog

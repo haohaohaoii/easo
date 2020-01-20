@@ -6,7 +6,18 @@
                 <p>留言管理</p>
             </div>
         </div>
-        <spam-list></spam-list>
+        <spam-list :spamAll="spamArr">
+            <div class="tabPage">
+                <el-pagination
+                    background
+                    layout="prev, pager, next"
+                    :total="totalLength"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    :page-size="pagesize"
+                ></el-pagination>
+            </div>
+        </spam-list>
     </div>
 </template>
 <script>
@@ -15,8 +26,45 @@ export default {
     components:{
         spamList
     },  
+
     data() {
-        return {};
+        return {
+            totalLength: 0, //总共多少条数据
+            currentPage: 1, //初始页码
+            pagesize: 10, //一页多少条数据
+            spamArr: [], //所有角色数组
+        };
+    },
+    created(){
+        let pageNum = this.currentPage;
+        this.getSpam(pageNum)
+    },
+    methods:{
+        getSpam(pageNum){
+            let pageSize = this.pagesize;
+            this.$api.spam
+                .getSpamlist({
+                    params: {
+                        pageNum: pageNum,
+                        pageSize: pageSize,
+                    }
+                })
+                .then(res => {
+                    console.log(res)
+                    if(res.data.code ==0){
+                        this.totalLength = res.data.pageInfo.total  //获取总条数
+                        this.spamArr = res.data.pageInfo.list  //获取数据
+                    }
+                })
+                .catch(error => {});
+        },
+        //点击页码的时候
+        handleCurrentChange(currentPage) {
+            this.currentPage = currentPage;
+            let pageNum = this.currentPage;
+            this.getSpam(pageNum)
+        }
+        
     }
 };
 </script>
