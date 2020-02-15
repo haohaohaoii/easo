@@ -10,7 +10,7 @@ import { showLoading, hideLoading } from './loading'
 
 
 // 创建axios实例
-var instance = axios.create({ timeout: 1000 * 12 });
+var instance = axios.create({ timeout: 1000 * 15 });
 
 // 设置post请求头
 instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -88,6 +88,8 @@ instance.interceptors.response.use(
         if (response) {
             Message.error(response.data.message);
             return Promise.reject(response);
+        } else {
+            Message.error('注意：请求已超时,请重新请求！');
         }
     });
 
