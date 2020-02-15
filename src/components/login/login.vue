@@ -43,15 +43,37 @@ export default {
         this.getPaw();
     },
     methods: {
+        // login() {
+        //     if (this.userName && this.userPaw) {
+        //         //调用登陆接口
+        //         this.getAdminid();
+        //     } else {
+        //         this.$message.error("注意：账号或密码不能为空");
+        //     }
+        // },
         login() {
-            if (this.userName && this.userPaw) {
-                //调用登陆接口
-                this.getAdminid();
-            } else {
-                this.$message.error("注意：账号或密码不能为空");
-            }
+            let adminId = 2;
+            this.$store
+                .dispatch("getRole", adminId)
+                .then(res => {
+                    //跳转路由页面
+                    if (this.getRoles.length > 0) {
+                        this.$store.commit("getToken", "asdasdas");
+                        this.$store.commit("getAdminid", 2);
+                        this.$router.addRoutes(this.getRoles);
+                        if (this.$route.query.redirect) {
+                            //重定向过来的
+                            this.$router.push(this.$route.query.redirect);
+                        } else {
+                            //正常登陆的
+                            this.$router.push("/");
+                        }
+                    }
+                })
+                .catch(error => {
+                    alert("错误");
+                });
         },
-        //调用登陆接口获取adminId
         getAdminid() {
             let params = { username: this.userName, password: this.userPaw }; //获取参数
             this.$api.login
@@ -73,29 +95,76 @@ export default {
                         localStorage.setItem("adminId", adminId);
                         this.$store.commit("getToken", res.data.data[0].token);
                         this.$store.commit("getAdminid", res.data.data[0].id);
-                        this.$store.dispatch("getRole", adminId).then(res => {
-                            //跳转路由页面
-                            if (this.getRoles.length > 0) {
-                               
-                                this.$router.addRoutes(this.getRoles);
-                                if (this.$route.query.redirect) {
-                                    //重定向过来的
-                                    this.$router.push(
-                                        this.$route.query.redirect
-                                    );
-                                } else {
-                                    //正常登陆的
-                                    this.$router.push("/");
+                        this.$store
+                            .dispatch("getRoles", adminId)
+                            .then(res => {
+                                //跳转路由页面
+                                if (this.getRoles.length > 0) {
+                                    this.$router.addRoutes(this.getRoles);
+                                    if (this.$route.query.redirect) {
+                                        //重定向过来的
+                                        this.$router.push(
+                                            this.$route.query.redirect
+                                        );
+                                    } else {
+                                        //正常登陆的
+                                        this.$router.push("/");
+                                    }
                                 }
-                            }
-                        })
-                        .catch(error => {});
+                            })
+                            .catch(error => {});
                     }
                 })
                 .catch(error => {
                     console.log(error);
                 });
         },
+
+        // //调用登陆接口获取adminId
+        // getAdminid() {
+        //     let params = { username: this.userName, password: this.userPaw }; //获取参数
+        //     this.$api.login
+        //         .login(params)
+        //         .then(res => {
+        //             console.log(res);
+        //             if (res.data.code == 0) {
+        //                 //登陆成功
+        //                 if (this.remenbVal) {
+        //                     //记住密码
+        //                     localStorage.setItem("userName", this.userName); //存储账号
+        //                     localStorage.setItem(
+        //                         "userPaw",
+        //                         Base64.encode(this.userPaw)
+        //                     ); //存储密码(base64加密)
+        //                 }
+        //                 localStorage.setItem("token", res.data.data[0].token); //存储token
+        //                 let adminId = res.data.data[0].id; //获取adminId
+        //                 localStorage.setItem("adminId", adminId);
+        //                 this.$store.commit("getToken", res.data.data[0].token);
+        //                 this.$store.commit("getAdminid", res.data.data[0].id);
+        //                 this.$store.dispatch("getRole", adminId).then(res => {
+        //                     //跳转路由页面
+        //                     if (this.getRoles.length > 0) {
+
+        //                         this.$router.addRoutes(this.getRoles);
+        //                         if (this.$route.query.redirect) {
+        //                             //重定向过来的
+        //                             this.$router.push(
+        //                                 this.$route.query.redirect
+        //                             );
+        //                         } else {
+        //                             //正常登陆的
+        //                             this.$router.push("/");
+        //                         }
+        //                     }
+        //                 })
+        //                 .catch(error => {});
+        //             }
+        //         })
+        //         .catch(error => {
+        //             console.log(error);
+        //         });
+        // },
 
         //刚进页面的时候去获取用户名、密码、token
         getPaw() {
