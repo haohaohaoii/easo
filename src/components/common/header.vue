@@ -69,37 +69,43 @@
 
         <div class="tubiao">
             <theme-picker></theme-picker>
-            <i class="el-icon-s-custom"></i>
-            <i class="el-icon-message-solid"></i>
-            <i class="el-icon-unlock"></i>
-            <i class="el-icon-switch-button"></i>
+            <i class="el-icon-s-custom ic"></i>
+            <el-badge :value="12" class="item">
+                <i class="el-icon-message-solid ic"></i>
+            </el-badge>
+            <!-- <i class="el-icon-message-solid">
+                <el-badge :value="8"></el-badge>
+            </i>-->
+
+            <i class="el-icon-unlock ic"></i>
+            <i class="el-icon-switch-button ic"></i>
         </div>
     </div>
 </template>
 
 <script>
-import ThemePicker from './ThemePicker'
-import { mapState,mapMutations } from "vuex";
+import ThemePicker from "./ThemePicker";
+import { mapState, mapMutations } from "vuex";
 export default {
-    components:{
+    components: {
         ThemePicker
     },
     data() {
         return {
             createMenu: [
                 {
-                    one: { id: "2", menuName: "数据查看"},
+                    one: { id: "2", menuName: "数据查看" },
                     two: [
-                        { id: "5", menuName: "实时数据", path:'realData'},
-                        { id: "6", menuName: "历史数据", path:'hisData'}
+                        { id: "5", menuName: "实时数据", path: "realData" },
+                        { id: "6", menuName: "历史数据", path: "hisData" }
                     ]
                 },
                 {
                     one: { id: "3", menuName: "企业管理" },
                     two: [
-                        { id: "7", menuName: "企业信息" ,path: "enterMation"},
-                        { id: "8", menuName: "留言管理",path: "spam" },
-                        { id: "9", menuName: "基站管理",path: "baseManage" }
+                        { id: "7", menuName: "企业信息", path: "enterMation" },
+                        { id: "8", menuName: "留言管理", path: "spam" },
+                        { id: "9", menuName: "基站管理", path: "baseManage" }
                     ]
                 }
             ],
@@ -151,12 +157,12 @@ export default {
         };
     },
     computed: {
-        ...mapState(["menulist","defaultMenu"])
+        ...mapState(["menulist", "defaultMenu"])
     },
     methods: {
         handleSelect(key, keyPath) {
-            this.$store.commit('changeDefaultmenu',key)
-            this.$router.push({path:'/'+key})
+            this.$store.commit("changeDefaultmenu", key);
+            this.$router.push({ path: "/" + key });
         }
     }
 };
@@ -171,13 +177,15 @@ export default {
     .tubiao {
         position: absolute;
         right: 0%;
-        top: 1.5%;
-        width: 20%;
-        text-align: end;
-        i {
-            padding-right: 7%;
+        top: 15px;
+        width: 17%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        .ic {
             font-size: 22px;
             color: #6d99f9;
+            font-weight: bolder;
         }
     }
 }

@@ -3,7 +3,7 @@
         class="theme-picker"
         popper-class="theme-picker-dropdown"
         v-model="theme"
-        :size="size"
+        size="mini"
     ></el-color-picker>
 </template>
 
