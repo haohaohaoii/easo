@@ -38,7 +38,7 @@ export default {
             ruleForm: {
                 deptName: "", //部门名称
                 contactPhone: "", //联系电话
-                contactName: "", //部门联系人
+                contactName: "" //部门联系人
             },
             rules: {
                 deptName: [
@@ -46,8 +46,7 @@ export default {
                         required: true,
                         message: "请输入部门名称",
                         trigger: "blur"
-                    },
-                    
+                    }
                 ],
                 contactPhone: [
                     {
@@ -72,28 +71,29 @@ export default {
     methods: {
         //提交
         save() {
-            let deptName = this.ruleForm.deptName
-            let contactName = this.ruleForm.contactName
-            let contactPhone = this.ruleForm.contactPhone
-            if(deptName &&　contactName　&& contactPhone){
-                let params={
-                    deptName:deptName,
-                    contactName:contactName,
-                    contactPhone:contactPhone,
-                }
-                let _this = this
-                this.$api.depart.addDept(params).then(res=>{
-                    if(res.data.code == 0){
-                        _this.$message({
-                            message: '用户添加成功',
-                            type: 'success'
-                        });
-                       _this.clearForm()
-                    }
-                }).catch(error=>{
-
-                })
-            }else{
+            let deptName = this.ruleForm.deptName;
+            let contactName = this.ruleForm.contactName;
+            let contactPhone = this.ruleForm.contactPhone;
+            if (deptName && contactName && contactPhone) {
+                let params = {
+                    deptName: deptName,
+                    contactName: contactName,
+                    contactPhone: contactPhone
+                };
+                let _this = this;
+                this.$api.depart
+                    .addDept(params)
+                    .then(res => {
+                        if (res.data.code == 0) {
+                            _this.$message({
+                                message: "用户添加成功",
+                                type: "success"
+                            });
+                            _this.clearForm();
+                        }
+                    })
+                    .catch(error => {});
+            } else {
                 this.$message({
                     type: "warning",
                     message: "请填写完成后再提交"
@@ -101,22 +101,21 @@ export default {
             }
         },
         //清除表单内容,并关闭弹出框
-        clearForm(){
+        clearForm() {
             this.$nextTick(() => {
-                this.$refs['ruleForm'].resetFields()
-            })
+                this.$refs["ruleForm"].resetFields();
+            });
             this.$store.commit("divAddstatus", false); //关闭dialog
         },
         //取消
         cancel() {
-            this.clearForm()
+            this.clearForm();
         },
         //点击x号关闭
         closeDialog() {
-            this.clearForm()
-        },
+            this.clearForm();
+        }
     }
-    
 };
 </script>
 

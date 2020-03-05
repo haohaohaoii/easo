@@ -35,6 +35,10 @@ export default ({
     getHours(state, hourA) {
         state.hoursArr = hourA;
     },
+    //头部右侧 修改密码 dialog状态
+    pwdDialog(state, status) {
+        state.pwdDialog = status
+    },
     //获取企业管理下的企业信息中的详情dialog状态
     getDialogstatus(state, dialogStatus) {
         state.enterDialog = dialogStatus;
@@ -197,7 +201,12 @@ export default ({
                     if (metaArr.length > 0 && item.meta.btnPress && item.meta.btnPress.length > 0) {
                         routeItem.meta = item.meta
                     }
+
                     res.push(routeItem)
+                } else {
+                    if (routeItem.name == '消息') {
+                        res.push(routeItem)
+                    }
                 }
             })
         })
