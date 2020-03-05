@@ -1,7 +1,7 @@
 <template>
     <div id="app">
-        <transition enter-active-class="animated rollIn" leave-active-class="animated rollOut">
-            <router-view />
+        <transition enter-active-class="animated zoomInUp">
+            <router-view></router-view>
         </transition>
     </div>
 </template>

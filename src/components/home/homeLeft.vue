@@ -47,8 +47,8 @@ export default {
     data() {
         return {
             isCollapse: false, //控制是否折叠
-            isShow: true, 
-            showSide:'el-icon-arrow-left'
+            isShow: true,
+            showSide: "el-icon-arrow-left"
         };
     },
     mounted() {
@@ -61,12 +61,12 @@ export default {
         ...mapState(["menuLeftwidth"])
     },
     methods: {
-        sideBtn(){
+        sideBtn() {
             this.isCollapse = !this.isCollapse;
-            if(this.isCollapse){
-                this.showSide = 'el-icon-arrow-right';
-            }else{
-                 this.showSide = 'el-icon-arrow-left';
+            if (this.isCollapse) {
+                this.showSide = "el-icon-arrow-right";
+            } else {
+                this.showSide = "el-icon-arrow-left";
             }
         }
     },

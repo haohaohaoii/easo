@@ -4,7 +4,7 @@
         <!--左部导航栏组件-->
         <home-left></home-left>
         <!--右侧内容-->
-        <div class="homeRight" ref="rig">
+        <div class="homeRight loading-area" ref="rig">
             <headert></headert>
             <div class="content">
                 <bread></bread>

@@ -232,12 +232,12 @@ export default {
                     color: rgba(255, 255, 255, 1);
                 }
                 div {
-                    width: 10%;
-                    height: 2%;
-                    position: relative;
-                    left: 46%;
-                    top: 11%;
-                    background: rgba(255, 255, 255, 1);
+                    width: 9%;
+                    height: 1%;
+                    position: absolute;
+                    left: 79%;
+                    top: 19%;
+                    background: #fff;
                 }
             }
             /**登陆框中间部分 */
