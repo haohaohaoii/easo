@@ -154,7 +154,7 @@ export default {
             this.$nextTick(() => {
                 this.$refs['ruleForm'].resetFields()
             })
-            // this.$store.commit("changeUseredit", false); //关闭dialog
+            this.$store.commit("changeUseredit", false); //关闭dialog
         },
         //取消
         cancel() {
@@ -175,6 +175,7 @@ export default {
                 this.ruleForm.email = val.email  //邮箱
                 this.ruleForm.userDepart = val.sysDept.id //部门
                 if(val.sysRoleList && val.sysRoleList.length>0){
+                    this.ruleForm.userrole = []
                     for(let i=0; i<val.sysRoleList.length; i++){
                         this.ruleForm.userrole.push(val.sysRoleList[i].id)
                     }

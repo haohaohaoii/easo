@@ -37,13 +37,18 @@
                 </el-table-column>
             </el-table>
         </div>
+        <edi-dialog></edi-dialog>
         <slot></slot>
     </div>
 </template>
 
 <script>
 import { mapMutations } from "vuex";
+import ediDialog from './ediDialog'
 export default {
+    components:{
+        ediDialog
+    },
     props:{
         companyList:{
             type:Array,
@@ -67,7 +72,7 @@ export default {
                         erpAddr:this.companyList[i].erpAddr,  //企业地址
                         userSection:this.companyList[i].auditState, //审核状态
                         turnTime:this.companyList[i].createTime, //更新时间
-                        id:this.companyList[i].id //企业id
+                        id:this.companyList[i].id//企业id
                     }
                     companyArr.push(obj)
                 }
@@ -78,17 +83,19 @@ export default {
     methods: {
         //详情--跳转详情dialog
         handleDetail(index, row) {
-            this.$router.push({ path: "/enterDialog" });
+ 
             this.$store.commit("getDialogstatus", true);
         },
         //点击编辑--跳转编辑dialog
         handleEdit(index, row) {
             console.log(index, row);
-            this.$router.push({ path: "/ediDialog" });
-            this.$store.commit("setEditordialog",true)
+            let erpId = row.id
+            this.$store.dispatch('getEnteritem',erpId)
         },
-        //基站
-        base(index, row) {}
+        //跳转基站
+        base() {
+            this.$router.push('/baseManage')
+        }
     }
 };
 </script>

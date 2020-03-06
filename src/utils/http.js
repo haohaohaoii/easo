@@ -5,7 +5,7 @@
 import axios from 'axios';
 import router from '../router';
 import store from '../store/index';
-import { Message } from 'element-ui';
+import { Message, MessageBox } from 'element-ui';
 import { showLoading, hideLoading } from './loading'
 
 
@@ -19,13 +19,22 @@ instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlenco
  * 跳转登录页
  * 携带当前页面路由，以期在登录页面完成登录后返回当前页面
  */
-const toLogin = () => {
-    router.replace({
-        path: '/login',
-        query: {
-            redirect: router.currentRoute.fullPath
-        }
-    });
+const toLogin = (message) => {
+
+    MessageBox.confirm(message + ',请重新登陆！', '注意', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+    }).then(() => {
+        store.commit("getToken", '');
+        store.commit("getAdminid", '');
+        router.replace({
+            path: '/login',
+            query: {
+                redirect: router.currentRoute.fullPath
+            }
+        });
+    })
 }
 
 /** 
@@ -36,7 +45,7 @@ const errorHandle = (status, message) => {
     // 状态码判断
     switch (status) {
         case -1:
-            toLogin();
+            toLogin(message);
             break;
         case -2:
             Message.error(message);

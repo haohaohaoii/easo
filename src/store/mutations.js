@@ -43,6 +43,10 @@ export default ({
     getDialogstatus(state, dialogStatus) {
         state.enterDialog = dialogStatus;
     },
+    //获取企业管理下的 行详情数据
+    getEnterrow(state, item) {
+        state.enterRow = item
+    },
     //企业管理  企业信息  添加企业  dialog状态
     changeEnterAdd(state, status) {
         state.enterAdd = status

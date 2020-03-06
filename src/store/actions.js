@@ -2,31 +2,31 @@
 import api from '../api' // 导入api接口
 export default ({
     getRole(context, adminId) {   //获取角色权限
-        // return new Promise((resolve, reject) => {
-        //     api.menu.getMenu(adminId).then(res => {
-        //         if (res.data.code == 0) { //获取路由表
-        //             let roles = res.data.data
-        //             sessionStorage.setItem('opt', JSON.stringify(roles))
-        //             context.commit('filters', roles)
-        //             context.commit('getMenus', roles)
-        //         }
-        //         resolve()
-        //     }).catch(error => {
-        //         reject(error)
-        //     })
-        // })
         return new Promise((resolve, reject) => {
-            let roles = [{ "id": 2, "parentId": null, "menuName": "数据查看", "url": "/data", "menuType": 0, "perms": null, "icon": null, "orderNum": 0, "createTime": "2019-12-20 06:17:48", "subMenus": [{ "id": 5, "parentId": 2, "menuName": "实时数据", "url": "/data/current", "menuType": 1, "perms": null, "icon": null, "orderNum": 0, "createTime": "2019-12-20 06:24:36", "subMenus": [] }, { "id": 6, "parentId": 2, "menuName": "历史数据", "url": "/data/history", "menuType": 1, "perms": null, "icon": null, "orderNum": 1, "createTime": "2019-12-20 06:24:38", "subMenus": [] }] }, { "id": 3, "parentId": null, "menuName": "企业管理", "url": "/company", "menuType": 0, "perms": null, "icon": null, "orderNum": 1, "createTime": "2019-12-20 06:18:21", "subMenus": [{ "id": 7, "parentId": 3, "menuName": "企业信息", "url": "/company/detail", "menuType": 1, "perms": null, "icon": null, "orderNum": 0, "createTime": "2019-12-20 06:31:37", "subMenus": [{ "id": 32, "parentId": 7, "menuName": "添加企业", "url": "/company/detail", "menuType": 2, "perms": "company:detail:add", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:49:14", "subMenus": null }, { "id": 34, "parentId": 7, "menuName": "编辑", "url": "/company/detail", "menuType": 2, "perms": "company:detail:update", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:49:16", "subMenus": null }, { "id": 35, "parentId": 7, "menuName": "基站", "url": "/company/detail", "menuType": 1, "perms": "", "icon": null, "orderNum": 0, "createTime": "2020-01-10 01:34:15", "subMenus": null }, { "id": 36, "parentId": 7, "menuName": "详情", "url": "/company/detail", "menuType": 1, "perms": "company:detail:view", "icon": null, "orderNum": 0, "createTime": "2020-01-10 01:34:18", "subMenus": null }] }, { "id": 8, "parentId": 3, "menuName": "留言管理", "url": "/company/board", "menuType": 1, "perms": null, "icon": null, "orderNum": 1, "createTime": "2019-12-20 06:31:38", "subMenus": [{ "id": 30, "parentId": 8, "menuName": "删除", "url": "/company/board", "menuType": 2, "perms": "company:board:delete", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:47:57", "subMenus": null }, { "id": 37, "parentId": 8, "menuName": "回复", "url": "/company/board", "menuType": 1, "perms": "company:board:reply", "icon": null, "orderNum": 0, "createTime": "2020-01-10 01:36:39", "subMenus": null }] }, { "id": 9, "parentId": 3, "menuName": "基站管理", "url": "/company/site", "menuType": 1, "perms": null, "icon": null, "orderNum": 2, "createTime": "2019-12-20 06:31:40", "subMenus": [{ "id": 26, "parentId": 9, "menuName": "添加基站", "url": "/company/site", "menuType": 2, "perms": "company:site:add", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:46:25", "subMenus": null }, { "id": 28, "parentId": 9, "menuName": "编辑", "url": "/company/site", "menuType": 2, "perms": "company:site:update", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:46:27", "subMenus": null }, { "id": 38, "parentId": 9, "menuName": "详情", "url": "/company/site", "menuType": 1, "perms": "company:site:view", "icon": null, "orderNum": 0, "createTime": "2020-01-10 01:43:09", "subMenus": null }, { "id": 39, "parentId": 9, "menuName": "审核", "url": "/company/site", "menuType": 1, "perms": "company:site:audit", "icon": null, "orderNum": 0, "createTime": "2020-01-10 01:43:11", "subMenus": null }] }] }, { "id": 4, "parentId": null, "menuName": "权限管理", "url": "/perm", "menuType": 0, "perms": null, "icon": null, "orderNum": 2, "createTime": "2019-12-20 06:18:43", "subMenus": [{ "id": 10, "parentId": 4, "menuName": "角色管理", "url": "/perm/role", "menuType": 1, "perms": null, "icon": null, "orderNum": 0, "createTime": "2019-12-20 06:36:49", "subMenus": [{ "id": 17, "parentId": 10, "menuName": "添加角色", "url": "/perm/role", "menuType": 2, "perms": "perm:role:add", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:37:55", "subMenus": null }, { "id": 18, "parentId": 10, "menuName": "删除", "url": "/perm/role", "menuType": 2, "perms": "perm:role:delete", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:37:57", "subMenus": null }, { "id": 19, "parentId": 10, "menuName": "编辑", "url": "/perm/role", "menuType": 2, "perms": "perm:role:update", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:37:58", "subMenus": null }] }, { "id": 11, "parentId": 4, "menuName": "用户管理", "url": "/perm/admin", "menuType": 1, "perms": null, "icon": null, "orderNum": 1, "createTime": "2019-12-20 06:36:51", "subMenus": [{ "id": 23, "parentId": 11, "menuName": "添加用户", "url": "/perm/admin", "menuType": 2, "perms": "perm:admin:add", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:44:21", "subMenus": null }, { "id": 24, "parentId": 11, "menuName": "删除", "url": "/perm/admin", "menuType": 2, "perms": "perm:admin:delete", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:44:23", "subMenus": null }, { "id": 25, "parentId": 11, "menuName": "编辑", "url": "/perm/admin", "menuType": 2, "perms": "perm:admin:update", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:44:24", "subMenus": null }] }, { "id": 12, "parentId": 4, "menuName": "部门管理", "url": "/perm/dept", "menuType": 1, "perms": null, "icon": null, "orderNum": 2, "createTime": "2019-12-20 06:36:53", "subMenus": [{ "id": 20, "parentId": 12, "menuName": "添加部门", "url": "/perm/dept", "menuType": 2, "perms": "perm:dept:add", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:41:14", "subMenus": null }, { "id": 21, "parentId": 12, "menuName": "编辑", "url": "/perm/dept", "menuType": 2, "perms": "perm:dept:delete", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:41:16", "subMenus": null }, { "id": 22, "parentId": 12, "menuName": "删除", "url": "/perm/dept", "menuType": 2, "perms": "perm:dept:update", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:41:18", "subMenus": null }] }, { "id": 13, "parentId": 4, "menuName": "菜单管理", "url": "/perm/menu", "menuType": 1, "perms": null, "icon": null, "orderNum": 3, "createTime": "2019-12-20 06:36:54", "subMenus": [{ "id": 14, "parentId": 13, "menuName": "菜单添加", "url": "/perm/menu", "menuType": 2, "perms": "perm:menu:add", "icon": null, "orderNum": 0, "createTime": "2019-12-26 05:51:35", "subMenus": null }, { "id": 15, "parentId": 13, "menuName": "删除", "url": "/perm/menu", "menuType": 2, "perms": "perm:menu:delete", "icon": null, "orderNum": 1, "createTime": "2019-12-26 05:51:37", "subMenus": null }, { "id": 16, "parentId": 13, "menuName": "编辑", "url": "/perm/menu", "menuType": 2, "perms": "perm:menu:update", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:34:57", "subMenus": null }] }] }]
-
-            if (roles) {
-                resolve(roles)
-                context.commit('filters', roles)
-                context.commit('getMenus', roles)
-            } else {
-                reject('错误')
-            }
-
+            api.menu.getMenu(adminId).then(res => {
+                if (res.data.code == 0) { //获取路由表
+                    let roles = res.data.data
+                    sessionStorage.setItem('opt', JSON.stringify(roles))
+                    context.commit('filters', roles)
+                    context.commit('getMenus', roles)
+                }
+                resolve()
+            }).catch(error => {
+                reject(error)
+            })
         })
+        // return new Promise((resolve, reject) => {
+        //     let roles = [{ "id": 2, "parentId": null, "menuName": "数据查看", "url": "/data", "menuType": 0, "perms": null, "icon": null, "orderNum": 0, "createTime": "2019-12-20 06:17:48", "subMenus": [{ "id": 5, "parentId": 2, "menuName": "实时数据", "url": "/data/current", "menuType": 1, "perms": null, "icon": null, "orderNum": 0, "createTime": "2019-12-20 06:24:36", "subMenus": [] }, { "id": 6, "parentId": 2, "menuName": "历史数据", "url": "/data/history", "menuType": 1, "perms": null, "icon": null, "orderNum": 1, "createTime": "2019-12-20 06:24:38", "subMenus": [] }] }, { "id": 3, "parentId": null, "menuName": "企业管理", "url": "/company", "menuType": 0, "perms": null, "icon": null, "orderNum": 1, "createTime": "2019-12-20 06:18:21", "subMenus": [{ "id": 7, "parentId": 3, "menuName": "企业信息", "url": "/company/detail", "menuType": 1, "perms": null, "icon": null, "orderNum": 0, "createTime": "2019-12-20 06:31:37", "subMenus": [{ "id": 32, "parentId": 7, "menuName": "添加企业", "url": "/company/detail", "menuType": 2, "perms": "company:detail:add", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:49:14", "subMenus": null }, { "id": 34, "parentId": 7, "menuName": "编辑", "url": "/company/detail", "menuType": 2, "perms": "company:detail:update", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:49:16", "subMenus": null }, { "id": 35, "parentId": 7, "menuName": "基站", "url": "/company/detail", "menuType": 1, "perms": "", "icon": null, "orderNum": 0, "createTime": "2020-01-10 01:34:15", "subMenus": null }, { "id": 36, "parentId": 7, "menuName": "详情", "url": "/company/detail", "menuType": 1, "perms": "company:detail:view", "icon": null, "orderNum": 0, "createTime": "2020-01-10 01:34:18", "subMenus": null }] }, { "id": 8, "parentId": 3, "menuName": "留言管理", "url": "/company/board", "menuType": 1, "perms": null, "icon": null, "orderNum": 1, "createTime": "2019-12-20 06:31:38", "subMenus": [{ "id": 30, "parentId": 8, "menuName": "删除", "url": "/company/board", "menuType": 2, "perms": "company:board:delete", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:47:57", "subMenus": null }, { "id": 37, "parentId": 8, "menuName": "回复", "url": "/company/board", "menuType": 1, "perms": "company:board:reply", "icon": null, "orderNum": 0, "createTime": "2020-01-10 01:36:39", "subMenus": null }] }, { "id": 9, "parentId": 3, "menuName": "基站管理", "url": "/company/site", "menuType": 1, "perms": null, "icon": null, "orderNum": 2, "createTime": "2019-12-20 06:31:40", "subMenus": [{ "id": 26, "parentId": 9, "menuName": "添加基站", "url": "/company/site", "menuType": 2, "perms": "company:site:add", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:46:25", "subMenus": null }, { "id": 28, "parentId": 9, "menuName": "编辑", "url": "/company/site", "menuType": 2, "perms": "company:site:update", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:46:27", "subMenus": null }, { "id": 38, "parentId": 9, "menuName": "详情", "url": "/company/site", "menuType": 1, "perms": "company:site:view", "icon": null, "orderNum": 0, "createTime": "2020-01-10 01:43:09", "subMenus": null }, { "id": 39, "parentId": 9, "menuName": "审核", "url": "/company/site", "menuType": 1, "perms": "company:site:audit", "icon": null, "orderNum": 0, "createTime": "2020-01-10 01:43:11", "subMenus": null }] }] }, { "id": 4, "parentId": null, "menuName": "权限管理", "url": "/perm", "menuType": 0, "perms": null, "icon": null, "orderNum": 2, "createTime": "2019-12-20 06:18:43", "subMenus": [{ "id": 10, "parentId": 4, "menuName": "角色管理", "url": "/perm/role", "menuType": 1, "perms": null, "icon": null, "orderNum": 0, "createTime": "2019-12-20 06:36:49", "subMenus": [{ "id": 17, "parentId": 10, "menuName": "添加角色", "url": "/perm/role", "menuType": 2, "perms": "perm:role:add", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:37:55", "subMenus": null }, { "id": 18, "parentId": 10, "menuName": "删除", "url": "/perm/role", "menuType": 2, "perms": "perm:role:delete", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:37:57", "subMenus": null }, { "id": 19, "parentId": 10, "menuName": "编辑", "url": "/perm/role", "menuType": 2, "perms": "perm:role:update", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:37:58", "subMenus": null }] }, { "id": 11, "parentId": 4, "menuName": "用户管理", "url": "/perm/admin", "menuType": 1, "perms": null, "icon": null, "orderNum": 1, "createTime": "2019-12-20 06:36:51", "subMenus": [{ "id": 23, "parentId": 11, "menuName": "添加用户", "url": "/perm/admin", "menuType": 2, "perms": "perm:admin:add", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:44:21", "subMenus": null }, { "id": 24, "parentId": 11, "menuName": "删除", "url": "/perm/admin", "menuType": 2, "perms": "perm:admin:delete", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:44:23", "subMenus": null }, { "id": 25, "parentId": 11, "menuName": "编辑", "url": "/perm/admin", "menuType": 2, "perms": "perm:admin:update", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:44:24", "subMenus": null }] }, { "id": 12, "parentId": 4, "menuName": "部门管理", "url": "/perm/dept", "menuType": 1, "perms": null, "icon": null, "orderNum": 2, "createTime": "2019-12-20 06:36:53", "subMenus": [{ "id": 20, "parentId": 12, "menuName": "添加部门", "url": "/perm/dept", "menuType": 2, "perms": "perm:dept:add", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:41:14", "subMenus": null }, { "id": 21, "parentId": 12, "menuName": "编辑", "url": "/perm/dept", "menuType": 2, "perms": "perm:dept:delete", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:41:16", "subMenus": null }, { "id": 22, "parentId": 12, "menuName": "删除", "url": "/perm/dept", "menuType": 2, "perms": "perm:dept:update", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:41:18", "subMenus": null }] }, { "id": 13, "parentId": 4, "menuName": "菜单管理", "url": "/perm/menu", "menuType": 1, "perms": null, "icon": null, "orderNum": 3, "createTime": "2019-12-20 06:36:54", "subMenus": [{ "id": 14, "parentId": 13, "menuName": "菜单添加", "url": "/perm/menu", "menuType": 2, "perms": "perm:menu:add", "icon": null, "orderNum": 0, "createTime": "2019-12-26 05:51:35", "subMenus": null }, { "id": 15, "parentId": 13, "menuName": "删除", "url": "/perm/menu", "menuType": 2, "perms": "perm:menu:delete", "icon": null, "orderNum": 1, "createTime": "2019-12-26 05:51:37", "subMenus": null }, { "id": 16, "parentId": 13, "menuName": "编辑", "url": "/perm/menu", "menuType": 2, "perms": "perm:menu:update", "icon": null, "orderNum": 0, "createTime": "2020-01-09 06:34:57", "subMenus": null }] }] }]
+
+        //     if (roles) {
+        //         resolve(roles)
+        //         context.commit('filters', roles)
+        //         context.commit('getMenus', roles)
+        //     } else {
+        //         reject('错误')
+        //     }
+
+        // })
     },
     //权限管理模块下的角色管理，编辑
     rolesMana(context, roleId) {
@@ -234,6 +234,22 @@ export default ({
     changeSitestatus(context, mn) {
         context.commit('siteRowstatus', true)   //改变dialog状态
         context.commit('getSiterowMn', mn)  //获取行数据信息
-    }
+    },
+    //企业信息(编辑 dialog状态)  详情也可以用
+    getEnteritem(context, erpId) {
+        api.company.companyDetail(erpId).then(res => {  //获取托管设备数组
+            console.log(res)
+            if (res.data.code == 0) {
+                debugger
+                let rowObj = res.data.data[0]
+                context.commit("setEditordialog", true) //改变dialog状态
+                context.commit('getEnterrow', rowObj)  //获取行数据信息
+            }
 
+
+        }).catch(error => {
+
+        })
+
+    }
 })

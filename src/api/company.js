@@ -11,8 +11,13 @@ const company = {
     },
     companyFyall(params) {   //所有企业信息接口(分页)
         return axios.get(`${base.localUrl}/admin/company`, params)
+    },
+    companyDetail(erpId) {    //企业行数据详情
+        return axios.get(`${base.localUrl}/admin/company/${erpId}`)
+    },
+    companyEditor(erpId) {    //企业行数据详情
+        return axios.put(`${base.localUrl}/admin/company/${erpId}`)
     }
-
 }
 
 

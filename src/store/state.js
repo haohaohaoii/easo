@@ -14,6 +14,7 @@ export default ({
     hoursArr: [], //x轴坐标
     pwdDialog: false,  //头部右侧修改密码 dialog状态
     enterDialog: false, //企业管理下的企业信息中的详情 dialog状态
+    enterRow: '',     //企业管理下的 当行详情数据
     enterAdd: false,   //企业管理下 企业信息  添加企业
     editorDialog: false,  //企业管理下的企业信息中的编辑 dialog状态
     baseAdd: false,  //企业管理下的基站管理中的添加基站 dialog状态
