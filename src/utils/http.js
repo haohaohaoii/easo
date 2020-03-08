@@ -86,6 +86,7 @@ instance.interceptors.response.use(
             }
             return Promise.resolve(res)
         } else {
+
             return Promise.reject(res)
         }
     },
@@ -95,10 +96,18 @@ instance.interceptors.response.use(
         hideLoading()
         const { response } = error;
         if (response) {
+            // 请求已发出，但是不在2xx的范围 
             Message.error(response.data.message);
             return Promise.reject(response);
+
         } else {
-            Message.error('注意：请求已超时,请重新请求！');
+            //请求超时
+            //断网处理
+            if (!window.navigator.onLine) {
+                Message.error('本地未联网,请联网后再登录!');
+            } else {
+                Message.error('服务器请求超时,请稍后再试');
+            }
         }
     });
 

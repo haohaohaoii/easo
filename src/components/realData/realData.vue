@@ -58,8 +58,8 @@
 
 <script>
 import realList from "./realList"; //引入子组件
-import noData from "../common/noData"
-import axios from 'axios';
+import noData from "../common/noData";
+import axios from "axios";
 export default {
     components: {
         realList,
@@ -70,102 +70,118 @@ export default {
             currentPage: 1, //初始页
             pagesize: 10, //每页显示多少条
             totalLength: 0, //总共多少条数据
-            isShow:false,   //控制dataList有没有数据
-            dataList:[],  //实时数据
-            enterprise: [],  //企业
-            baseArr: [],  //基站
+            isShow: false, //控制dataList有没有数据
+            dataList: [], //实时数据
+            enterprise: [], //企业
+            baseArr: [], //基站
             enterValue: "", //选择企业双向数据绑定值
             baseValue: "" //选择基站双向数据绑定值
         };
     },
     mounted() {
-        this.getCompany()
+        this.getCompany();
     },
     methods: {
         //点击第几页
-        handleCurrentChange(currentPage){
+        handleCurrentChange(currentPage) {
             //重新赋值，重新请求
-            this.currentPage = currentPage
+            this.currentPage = currentPage;
             let pageNum = this.currentPage;
-            this.sendAxios(pageNum)
+            this.sendAxios(pageNum);
         },
-        search() { //点击搜索
-            this.currentPage = 1   //每次点击搜索的时候，从第一页开始
+        search() {
+            //点击搜索
+            this.currentPage = 1; //每次点击搜索的时候，从第一页开始
             let pageNum = this.currentPage;
-            this.sendAxios(pageNum)
+            this.sendAxios(pageNum);
         },
         //发送数据请求
-        sendAxios(pageNum){
+        sendAxios(pageNum) {
             let pageSize = this.pagesize;
             let userId = this.enterValue;
-            let mn = this.baseValue
+            let mn = this.baseValue;
             this.$api.data
-            .realData({params: {pageNum: pageNum,pageSize:pageSize,userId:userId,mn:mn}})
-            .then(res => {
-                console.log(res);
-                if(res.data.code ==0){
-
-                    if(res.data.pageInfo.list && res.data.pageInfo.list.length>=1){  //说明有数据
-                        this.isShow = true;
-                        this.dataList= res.data.pageInfo.list
-                        this.totalLength = res.data.pageInfo.total  //获取总条数
-                    }else{  //说明没有数据
-                        this.isShow = false
+                .realData({
+                    params: {
+                        pageNum: pageNum,
+                        pageSize: pageSize,
+                        userId: userId,
+                        mn: mn
                     }
-                }
-            })
-            .catch(error => {});
+                })
+                .then(res => {
+                    console.log(res);
+                    if (res.data.code == 0) {
+                        if (
+                            res.data.pageInfo.list &&
+                            res.data.pageInfo.list.length >= 1
+                        ) {
+                            //说明有数据
+                            this.isShow = true;
+                            this.dataList = res.data.pageInfo.list;
+                            this.totalLength = res.data.pageInfo.total; //获取总条数
+                        } else {
+                            //说明没有数据
+                            this.isShow = false;
+                        }
+                    }
+                })
+                .catch(error => {});
         },
         //获取企业相关数据
-        getCompany(){
-            this.$api.company.companyAll().then(res=>{
-                console.log(res)
-                if(res.data.code ==0){
-                    let companyList = res.data.data
-                    let listArr = [];
-                    for(let i =0; i<companyList.length; i++){
-                        let obj = {
-                            label:companyList[i].username,
-                            value:companyList[i].id
+        getCompany() {
+            this.$api.company
+                .companyAll()
+                .then(res => {
+                    console.log(res);
+                    if (res.data.code == 0) {
+                        let companyList = res.data.data;
+                        let listArr = [];
+                        for (let i = 0; i < companyList.length; i++) {
+                            let obj = {
+                                label: companyList[i].erpName,
+                                value: companyList[i].id
+                            };
+                            listArr.push(obj);
                         }
-                        listArr.push(obj)
+                        this.enterprise = listArr;
                     }
-                    this.enterprise = listArr;
-                }
-            }).catch(error=>{
-
-            })
+                })
+                .catch(error => {});
         },
         //根据企业获取对应基站相关数据
-        getComsite(companyId){
-            this.$api.site.formComsite(companyId).then(res=>{
-                console.log(res);
-                if(res.data.code ==0){
-                    let siteList = res.data.data
-                    let siteArr = []
-                    for(let k=0; k<siteList.length; k++){
-                        let item = {
-                            label:siteList[k].siteName,
-                            value:siteList[k].mn
+        getComsite(companyId) {
+            this.$api.site
+                .formComsite(companyId)
+                .then(res => {
+                    console.log(res);
+                    if (res.data.code == 0) {
+                        let siteList = res.data.data;
+                        let siteArr = [];
+                        for (let k = 0; k < siteList.length; k++) {
+                            let item = {
+                                label: siteList[k].siteName,
+                                value: siteList[k].mn
+                            };
+                            siteArr.push(item);
                         }
-                        siteArr.push(item)
+                        this.baseArr = siteArr;
                     }
-                    this.baseArr = siteArr
-                }
-            }).catch(error=>{
-
-            })
+                })
+                .catch(error => {});
         },
         //选中企业事件
-        changeVal(val){
-            this.baseValue = ''  //每次点击都要把之前选中的基站置空
-            if(val){  //这个判断为了防止删除的时候，val的值为空
-                this.getComsite(val)
-            }else{   //这个逻辑防止企业选择框删除的时候,基站的下拉框中还有值
-                this.baseArr = []
+        changeVal(val) {
+            this.baseValue = ""; //每次点击都要把之前选中的基站置空
+            if (val) {
+                //这个判断为了防止删除的时候，val的值为空
+                this.getComsite(val);
+            } else {
+                //这个逻辑防止企业选择框删除的时候,基站的下拉框中还有值
+                this.baseArr = [];
             }
         }
-    },
+    }
 };
 </script>
 

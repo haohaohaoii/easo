@@ -94,37 +94,36 @@ export default {
 
     data() {
         return {
-            companyLit:[],  //选择企业下拉数组
-            baseArr:[],  //选择基站下拉数组
-            hisDatalist:[],  //历史数据
-            btnMsg: "列表",  //默认以列表形式展示数据
-            companyValue:'',  //选中的企业值
-            baseValue:'',    //选中的基站值
+            companyLit: [], //选择企业下拉数组
+            baseArr: [], //选择基站下拉数组
+            hisDatalist: [], //历史数据
+            btnMsg: "列表", //默认以列表形式展示数据
+            companyValue: "", //选中的企业值
+            baseValue: "", //选中的基站值
             startTime: "", //开始时间
             endTime: "", //结束时间
-            totalLength:0, //总共多少条数据
-            currentPage:1, //初始页
+            totalLength: 0, //总共多少条数据
+            currentPage: 1, //初始页
             pagesize: 10, //每页显示多少条
-            userId:'', //选中的企业id
+            userId: "" //选中的企业id
         };
     },
-    mounted(){
-        this.getCompany()
+    mounted() {
+        this.getCompany();
     },
     computed: {
         ...mapState(["searchHours"])
     },
     methods: {
-
         //点击查询
         search() {
             //必传参数 开始时间和结束时间
-            this.currentPage = 1
-            let pageNum = this.currentPage
-            this.sendAxios(pageNum)
+            this.currentPage = 1;
+            let pageNum = this.currentPage;
+            this.sendAxios(pageNum);
             // this.oldData()
         },
-        oldData(){
+        oldData() {
             let _this = this;
             commonJs
                 .getHours(this.startTime, this.endTime)
@@ -137,37 +136,49 @@ export default {
                 });
         },
         //点击第几页
-        handleCurrentChange(currentPage){
-            this.currentPage = currentPage
+        handleCurrentChange(currentPage) {
+            this.currentPage = currentPage;
             let pageNum = this.currentPage;
-          
-            this.sendAxios(pageNum)
+
+            this.sendAxios(pageNum);
         },
-       //发送数据请求(分页)
-        sendAxios(pageNum){
-            if(this.startTime!='' && this.endTime!=''){
+        //发送数据请求(分页)
+        sendAxios(pageNum) {
+            if (this.startTime != "" && this.endTime != "") {
                 let startTime = this.startTime;
                 let endTime = this.endTime;
                 let pageSize = this.pagesize;
-                let userId = this.companyValue
-                let mn = this.baseValue
-                this.$api.data.historyData({params: {pageNum:pageNum,pageSize:pageSize,start:startTime,end:endTime,userId:userId,mn:mn}})
-                .then(res=>{
-  
-                    console.log(res)
-                    if(res.data.code ==0){
-                        if(res.data.pageInfo.list && res.data.pageInfo.list.length>=1){  //说明有数据
-                            this.hisDatalist= res.data.pageInfo.list
-                            this.totalLength = res.data.pageInfo.total  //获取总条数
-                        }else{  //说明没有数据
-                            this.hisDatalist = [];
+                let userId = this.companyValue;
+                let mn = this.baseValue;
+                this.$api.data
+                    .historyData({
+                        params: {
+                            pageNum: pageNum,
+                            pageSize: pageSize,
+                            start: startTime,
+                            end: endTime,
+                            userId: userId,
+                            mn: mn
                         }
-                    }
-                }).catch(error=>{
-
-                })
-
-            }else{
+                    })
+                    .then(res => {
+                        console.log(res);
+                        if (res.data.code == 0) {
+                            if (
+                                res.data.pageInfo.list &&
+                                res.data.pageInfo.list.length >= 1
+                            ) {
+                                //说明有数据
+                                this.hisDatalist = res.data.pageInfo.list;
+                                this.totalLength = res.data.pageInfo.total; //获取总条数
+                            } else {
+                                //说明没有数据
+                                this.hisDatalist = [];
+                            }
+                        }
+                    })
+                    .catch(error => {});
+            } else {
                 this.$message.error("注意：开始时间和结束时间为必选项");
             }
         },
@@ -178,7 +189,7 @@ export default {
         //         let endTime = this.endTime;
         //         this.$api.data.historyData({params: {start:startTime,end:endTime}})
         //         .then(res=>{
-  
+
         //             console.log(res)
         //             if(res.data.code ==0){
         //                 if(res.data.pageInfo.list && res.data.pageInfo.list.length>=1){  //说明有数据
@@ -198,53 +209,57 @@ export default {
         //     }
         // },
         //获取企业下拉数组
-        getCompany(){
-            this.$api.company.companyAll().then(res=>{
-                console.log(res)
-                if(res.data.code ==0){
-                    let companyList = res.data.data
-                    let listArr = [];
-                    for(let i =0; i<companyList.length; i++){
-                        let obj = {
-                            label:companyList[i].username,
-                            value:companyList[i].id
+        getCompany() {
+            this.$api.company
+                .companyAll()
+                .then(res => {
+                    console.log(res);
+                    if (res.data.code == 0) {
+                        let companyList = res.data.data;
+                        let listArr = [];
+                        for (let i = 0; i < companyList.length; i++) {
+                            let obj = {
+                                label: companyList[i].erpName,
+                                value: companyList[i].id
+                            };
+                            listArr.push(obj);
                         }
-                        listArr.push(obj)
+                        this.companyLit = listArr;
                     }
-                    this.companyLit = listArr;
-                }
-            }).catch(error=>{
-
-            })
+                })
+                .catch(error => {});
         },
         //选中企业事件
-        changeVal(val){
-            this.baseValue = ''  //每次点击都要把之前选中的基站置空
-            if(val){  //这个判断为了防止删除的时候，val的值为空
-                this.getComsite(val)
-            }else{   //这个逻辑防止企业选择框删除的时候,基站的下拉框中还有值
-                this.baseArr = []
+        changeVal(val) {
+            this.baseValue = ""; //每次点击都要把之前选中的基站置空
+            if (val) {
+                //这个判断为了防止删除的时候，val的值为空
+                this.getComsite(val);
+            } else {
+                //这个逻辑防止企业选择框删除的时候,基站的下拉框中还有值
+                this.baseArr = [];
             }
         },
         //根据企业获取对应基站相关数据
-        getComsite(companyId){
-            this.$api.site.formComsite(companyId).then(res=>{
-                console.log(res);
-                if(res.data.code ==0){
-                    let siteList = res.data.data
-                    let siteArr = []
-                    for(let k=0; k<siteList.length; k++){
-                        let item = {
-                            label:siteList[k].siteName,
-                            value:siteList[k].mn
+        getComsite(companyId) {
+            this.$api.site
+                .formComsite(companyId)
+                .then(res => {
+                    console.log(res);
+                    if (res.data.code == 0) {
+                        let siteList = res.data.data;
+                        let siteArr = [];
+                        for (let k = 0; k < siteList.length; k++) {
+                            let item = {
+                                label: siteList[k].siteName,
+                                value: siteList[k].mn
+                            };
+                            siteArr.push(item);
                         }
-                        siteArr.push(item)
+                        this.baseArr = siteArr;
                     }
-                    this.baseArr = siteArr
-                }
-            }).catch(error=>{
-
-            })
+                })
+                .catch(error => {});
         }
     }
 };

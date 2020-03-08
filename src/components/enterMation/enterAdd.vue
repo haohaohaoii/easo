@@ -1,5 +1,11 @@
 <template>
-    <el-dialog :visible.sync="enterAdd" class="dialog" center @close="closeDialog">
+    <el-dialog
+        :visible.sync="enterAdd"
+        class="dialog"
+        center
+        :close-on-click-modal="false"
+        @close="closeDialog"
+    >
         <div slot="title" class="tit">
             <div class="line"></div>
             <p>编辑企业信息</p>
@@ -8,33 +14,38 @@
             :model="ruleForm"
             :rules="rules"
             ref="ruleForm"
-            label-width="100px"
+            label-width="110px"
             class="demo-ruleForm"
             status-icon
+            size="mini"
+            label-position="right "
         >
-            <el-form-item label="企业名称:" prop="erpName">
-                <el-input v-model="ruleForm.erpName"></el-input>
+            <el-form-item label="企业名称:" prop="firmName">
+                <el-input v-model="ruleForm.firmName"></el-input>
             </el-form-item>
-            <el-form-item label="企业地址:" prop="erpAddr">
-                <el-input v-model="ruleForm.erpAddr"></el-input>
+            <el-form-item label="企业地址:" prop="firmAddress">
+                <el-input v-model="ruleForm.firmAddress"></el-input>
             </el-form-item>
-            <el-form-item label="联系人:" prop="erpLinkMan">
-                <el-input v-model="ruleForm.erpLinkMan"></el-input>
+            <el-form-item label="联系人:" prop="linkman">
+                <el-input v-model="ruleForm.linkman"></el-input>
             </el-form-item>
-            <el-form-item label="联系电话:" prop="erpLinkTel">
-                <el-input v-model="ruleForm.erpLinkTel"></el-input>
+            <el-form-item label="联系电话:" prop="linkPhone">
+                <el-input v-model="ruleForm.linkPhone"></el-input>
             </el-form-item>
-
-            <el-form-item label="邮箱:" prop="erpMail">
-                <el-input v-model="ruleForm.erpMail"></el-input>
+            <el-form-item label="用户名:" prop="userName">
+                <el-input v-model="ruleForm.userName"></el-input>
             </el-form-item>
-            <el-form-item label="上传营业执照">
+            <el-form-item label="邮箱:" prop="mail">
+                <el-input v-model="ruleForm.mail"></el-input>
+            </el-form-item>
+            <el-form-item label="上传营业执照" prop="upload" ref="pic">
                 <el-upload
                     action="#"
-                    :http-request="httpRequest"
+                    :on-change="getFile"
                     list-type="picture-card"
                     :on-preview="handlePictureCardPreview"
                     :on-remove="handleRemove"
+                    :auto-upload="false"
                 >
                     <i class="el-icon-plus"></i>
                 </el-upload>
@@ -54,18 +65,23 @@ export default {
         return {
             imageUrl: [], //上传图片的url地址
             ruleForm: {
-                erpName: "", //企业名称
-                erpAddr: "", //企业地址
-                erpLinkMan: "", //联系人
-                erpLinkTel: "", //联系电话
+                firmName: "", //企业名称
+                firmAddress: "", //企业地址
+                linkman: "", //联系人
+                linkPhone: "", //联系电话
                 userName: "", //用户名
-                erpMail: "", //邮箱
+                mail: "" //邮箱
             },
             rules: {
                 firmName: [
                     {
                         required: true,
                         message: "请输入企业名称",
+                        trigger: "change"
+                    },
+                    {
+                        pattern: "^[\u4E00-\u9FA5]+$",
+                        message: "企业名称不能为特殊的字符串或数字",
                         trigger: "blur"
                     }
                 ],
@@ -81,6 +97,11 @@ export default {
                         required: true,
                         message: "请输入联系人",
                         trigger: "change"
+                    },
+                    {
+                        pattern: "^[\u4E00-\u9FA5]+$",
+                        message: "联系人不能为特殊的字符串或数字",
+                        trigger: "blur"
                     }
                 ],
                 linkPhone: [
@@ -88,6 +109,13 @@ export default {
                         required: true,
                         message: "请输入联系电话",
                         trigger: "change"
+                    },
+                    {
+                        pattern:
+                            /^(0|86|17951)?(13[0-9]|15[012356789]|17[01678]|18[0-9]|14[57])[0-9]{8}$/ ||
+                            /^(0[0-9]{2,3}\-)([2-9][0-9]{6,7})+(\-[0-9]{1,4})?$/,
+                        message: "目前只支持中国大陆的手机号码",
+                        trigger: "blur"
                     }
                 ],
                 userName: [
@@ -102,6 +130,18 @@ export default {
                         required: true,
                         message: "请输入邮箱",
                         trigger: "change"
+                    },
+                    {
+                        pattern: /^[0-9a-zA-Z_.-]+[@][0-9a-zA-Z_.-]+([.][a-zA-Z]+){1,2}$/,
+                        message: "请填写正确的邮箱格式",
+                        trigger: "blur"
+                    }
+                ],
+                upload: [
+                    {
+                        required: true,
+                        message: "请上传营业执照",
+                        trigger: "change"
                     }
                 ]
             }
@@ -111,59 +151,111 @@ export default {
         ...mapState(["enterAdd"])
     },
     methods: {
-        //将url转为base64病存储起来
-        httpRequest(data) {
+        //图片上传成功
+        // picS() {
+        //     debugger;
+        //     this.$refs.pic.clearValidate();
+        // },
+        //获取照片的base64
+        getFile(file, fileList) {
             let _this = this;
-            let rd = new FileReader(); // 创建文件读取对象
-            let file = data.file;
-            let name = data.file.name;
-            rd.readAsDataURL(file); // 文件读取装换为base64类型
-            rd.onloadend = function(e) {
-                let obj = {
-                    name: name,
-                    url: this.result
-                };
-                _this.imageUrl.push(obj);
-            };
+            this.getBase64(file.raw)
+                .then(res => {
+                    console.log(res);
+                    // _this.$refs["pic"].clearValidate();
+
+                    _this.imageUrl.push(res);
+                })
+                .catch(error => {
+                    this.$message.error("图片上传失败");
+                });
         },
-        //关闭外层dialog
-        closeDialog() {
-            this.$store.commit("setEditordialog", false);
+
+        //转base64
+        getBase64(file) {
+            return new Promise(function(resolve, reject) {
+                let reader = new FileReader();
+                let imgResult = "";
+                reader.readAsDataURL(file);
+                reader.onload = function() {
+                    imgResult = reader.result;
+                };
+                reader.onerror = function(error) {
+                    reject(error);
+                };
+                reader.onloadend = function() {
+                    resolve(imgResult);
+                };
+            });
         },
         //点击删除上传的图片
         handleRemove(file, fileList) {
-            for (let i = 0; i < this.imageUrl.length; i++) {
-                if (this.imageUrl[i].name == file.name) {
-                    this.imageUrl.splice(i, 1);
-                    break;
+            let _this = this;
+            this.getBase64(file.raw).then(res => {
+                console.log(res);
+                for (let i = 0; i < _this.imageUrl.length; i++) {
+                    if (_this.imageUrl[i] == res) {
+                        _this.imageUrl.splice(i, 1);
+                        break;
+                    }
                 }
-            }
+            });
         },
         //点击每个url放大的方法
         handlePictureCardPreview(file) {
-            for (let i = 0; i < this.imageUrl.length; i++) {
-                if (this.imageUrl[i].name == file.name) {
-                    this.$alert(
-                        "<img src=" +
-                            this.imageUrl[i].url +
-                            ' alt / width="100%">',
-                        {
-                            dangerouslyUseHTMLString: true
-                        }
-                    );
-                    break;
+            let _this = this;
+            this.getBase64(file.raw).then(res => {
+                console.log(res);
+                for (let i = 0; i < _this.imageUrl.length; i++) {
+                    if (_this.imageUrl[i] == res) {
+                        _this.$alert(
+                            "<img src=" +
+                                _this.imageUrl[i] +
+                                ' alt / width="100%">',
+                            {
+                                dangerouslyUseHTMLString: true,
+                                showConfirmButton: false
+                            }
+                        );
+                        break;
+                    }
                 }
-            }
+            });
         },
-        //获取验证码
-        getCode() {},
+        //关闭外层dialog
+        closeDialog() {
+            this.$store.commit("changeEnterAdd", false);
+        },
         //确定编辑  --关闭dialog
-        sureEditor(){
-            this.$store.commit('changeEnterAdd',false)
+        sureEditor() {
+            debugger;
+            if (this.imageUrl.length > 0) {
+                let field = this.$refs.ruleForm.fields;
+                field.map(i => {
+                    if (i.prop === "upload") {
+                        //通过prop属性值相同来判断是哪个输入框，比如：要移除prop为'user'
+                        i.resetField();
+                        return false;
+                    }
+                });
+
+                this.$refs.ruleForm.clearValidate("upload");
+            }
+            this.$refs["ruleForm"].validate(valid => {
+                if (valid) {
+                    debugger;
+                    // 表单验证通过之后的操作
+                } else {
+                    debugger;
+                    console.log("error submit!!");
+                    return false;
+                }
+            });
+            // this.closeDialog();
         },
         //取消编辑  --关闭dialog
-        cancelEditor(){
-            this.$store.commit('changeEnterAdd',false)
+        cancelEditor() {
+            this.closeDialog();
         }
     }
 };
