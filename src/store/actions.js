@@ -237,13 +237,25 @@ export default ({
     },
     //企业信息(编辑 dialog状态)  详情也可以用
     getEnteritem(context, erpId) {
-        api.company.companyDetail(erpId).then(res => {  //获取托管设备数组
+        api.company.companyDetail(erpId).then(res => {
             console.log(res)
             if (res.data.code == 0) {
-                debugger
-                let rowObj = res.data.data[0]
-                context.commit("setEditordialog", true) //改变dialog状态
-                context.commit('getEnterrow', rowObj)  //获取行数据信息
+                api.company.getCompanytypes().then(types => {
+                    let rowObj = res.data.data[0]
+                    let arr = types.data.data
+                    rowObj.companyType = []
+                    for (let i = 0; i < arr.length; i++) {
+                        let obj = {
+                            label: arr[i].name,
+                            value: arr[i].value
+                        }
+                        rowObj.companyType.push(obj)
+                    }
+                    // context.commit('getCompanytypes', companyType)  //获取企业类型
+                    context.commit("setEditordialog", true) //改变dialog状态
+                    context.commit('getEnterrow', rowObj)  //获取行数据信息
+                })
+
             }
 
 

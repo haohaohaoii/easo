@@ -8,7 +8,7 @@
     >
         <div slot="title" class="tit">
             <div class="line"></div>
-            <p>编辑企业信息</p>
+            <p>添加企业</p>
         </div>
         <el-form
             :model="ruleForm"
@@ -23,6 +23,20 @@
             <el-form-item label="企业名称:" prop="firmName">
                 <el-input v-model="ruleForm.firmName"></el-input>
             </el-form-item>
+            <el-form-item label="企业类型:" prop="firmType">
+                <el-select
+                    v-model="ruleForm.firmType"
+                    placeholder="请选择企业类型"
+                    @click.native="getTypes"
+                >
+                    <el-option
+                        v-for="item in types"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
             <el-form-item label="企业地址:" prop="firmAddress">
                 <el-input v-model="ruleForm.firmAddress"></el-input>
             </el-form-item>
@@ -32,14 +46,12 @@
             <el-form-item label="联系电话:" prop="linkPhone">
                 <el-input v-model="ruleForm.linkPhone"></el-input>
             </el-form-item>
-            <el-form-item label="用户名:" prop="userName">
-                <el-input v-model="ruleForm.userName"></el-input>
-            </el-form-item>
             <el-form-item label="邮箱:" prop="mail">
                 <el-input v-model="ruleForm.mail"></el-input>
             </el-form-item>
-            <el-form-item label="上传营业执照" prop="upload" ref="pic">
+            <el-form-item label="上传营业执照" prop="upload">
                 <el-upload
+                    ref="pic"
                     action="#"
                     :on-change="getFile"
                     list-type="picture-card"
@@ -59,18 +71,29 @@
 </template>
 
 <script>
+
+            
 import { mapState, mapMutations } from "vuex";
 export default {
     data() {
+        var valiIcon = (rule, value, callback) => { // 图片验证
+            if (!this.imageUrl.length>0) {
+                callback(new Error('请上传图片'));
+            } else {
+                callback();
+            }
+        }
         return {
+            
+            types:[],   //企业类型集合
             imageUrl: [], //上传图片的url地址
             ruleForm: {
                 firmName: "", //企业名称
                 firmAddress: "", //企业地址
                 linkman: "", //联系人
                 linkPhone: "", //联系电话
-                userName: "", //用户名
-                mail: "" //邮箱
+                firmType: "", //企业类型
+                mail: ""//邮箱
             },
             rules: {
                 firmName: [
@@ -82,7 +105,7 @@ export default {
                     {
                         pattern: "^[\u4E00-\u9FA5]+$",
                         message: "企业名称不能为特殊的字符串或数字",
-                        trigger: "blur"
+                        trigger: "change"
                     }
                 ],
                 firmAddress: [
@@ -93,6 +116,7 @@ export default {
                     }
                 ],
                 linkman: [
+                    
                     {
                         required: true,
                         message: "请输入联系人",
@@ -101,7 +125,7 @@ export default {
                     {
                         pattern: "^[\u4E00-\u9FA5]+$",
                         message: "联系人不能为特殊的字符串或数字",
-                        trigger: "blur"
+                        trigger: "change"
                     }
                 ],
                 linkPhone: [
@@ -115,13 +139,13 @@ export default {
                             /^(0|86|17951)?(13[0-9]|15[012356789]|17[01678]|18[0-9]|14[57])[0-9]{8}$/ ||
                             /^(0[0-9]{2,3}\-)([2-9][0-9]{6,7})+(\-[0-9]{1,4})?$/,
                         message: "目前只支持中国大陆的手机号码",
-                        trigger: "blur"
+                        trigger: "change"
                     }
                 ],
-                userName: [
+                firmType: [
                     {
                         required: true,
-                        message: "请输入用户名",
+                        message: "请选择企业类型",
                         trigger: "change"
                     }
                 ],
@@ -134,15 +158,11 @@ export default {
                     {
                         pattern: /^[0-9a-zA-Z_.-]+[@][0-9a-zA-Z_.-]+([.][a-zA-Z]+){1,2}$/,
                         message: "请填写正确的邮箱格式",
-                        trigger: "blur"
+                        trigger: "change"
                     }
                 ],
                 upload: [
-                    {
-                        required: true,
-                        message: "请上传营业执照",
-                        trigger: "change"
-                    }
+                    {required:true, validator: valiIcon, trigger: 'change' } 
                 ]
             }
         };
@@ -151,20 +171,34 @@ export default {
         ...mapState(["enterAdd"])
     },
     methods: {
-        //图片上传成功
-        // picS() {
-        //     debugger;
-        //     this.$refs.pic.clearValidate();
-        // },
+        //获取企业类型
+        getTypes(){
+            this.types=[]  //每次都先清空
+            this.$api.company.getCompanytypes().then(res=>{
+                if(res.data.code == 0){
+                    let arr =res.data.data
+                    for(let i=0; i<arr.length; i++){
+                        let obj = {
+                            label:arr[i].name,
+                            value:arr[i].value
+                        }
+                        this.types.push(obj)
+                    }
+                }
+            })
+        },
         //获取照片的base64
         getFile(file, fileList) {
+   
             let _this = this;
+
             this.getBase64(file.raw)
                 .then(res => {
-                    console.log(res);
-                    // _this.$refs["pic"].clearValidate();
 
-                    _this.imageUrl.push(res);
+                                        
+                    let str = res.substring(res.indexOf(",")+1);
+
+                    _this.imageUrl.push(str);
                 })
                 .catch(error => {
                     this.$message.error("图片上传失败");
@@ -193,9 +227,12 @@ export default {
             let _this = this;
             this.getBase64(file.raw).then(res => {
                 console.log(res);
+                   let str = res.substring(res.indexOf(",")+1);
+
                 for (let i = 0; i < _this.imageUrl.length; i++) {
-                    if (_this.imageUrl[i] == res) {
+                    if (_this.imageUrl[i] == str) {
                         _this.imageUrl.splice(i, 1);
+                       console.log( _this.imageUrl)
                         break;
                     }
                 }
@@ -224,32 +261,43 @@ export default {
         },
         //关闭外层dialog
         closeDialog() {
-            this.$store.commit("changeEnterAdd", false);
+            this.$store.commit("changeEnterAdd", false);  //修改dialog窗口
+            this.$refs.pic.clearFiles(); //清空文件
+            this.imageUrl = []  //清空base64数组
+            this.$refs.ruleForm.resetFields();  //重置from和rules
         },
         //确定编辑  --关闭dialog
         sureEditor() {
-            debugger;
-            if (this.imageUrl.length > 0) {
-                let field = this.$refs.ruleForm.fields;
-                field.map(i => {
-                    if (i.prop === "upload") {
-                        //通过prop属性值相同来判断是哪个输入框，比如：要移除prop为'user'
-                        i.resetField();
-                        return false;
-                    }
-                });
-
-                this.$refs.ruleForm.clearValidate("upload");
-            }
+            debugger
             this.$refs["ruleForm"].validate(valid => {
                 if (valid) {
-                    debugger;
+  
                     // 表单验证通过之后的操作
+                    let params={
+                        erpName:this.ruleForm.firmName,  //企业名称
+                        erpAddr:this.ruleForm.firmAddress,  //企业地址
+                        erpLinkMan:this.ruleForm.linkman,  //联系人
+                        erpLinkTel:this.ruleForm.linkPhone, //联系电话
+                        erpMail:this.ruleForm.mail,  //邮箱
+                        images:this.imageUrl,  //图片base64数组
+                        erpType:this.ruleForm.firmType  //企业类型
+                    }
+                    let _this = this
+                    this.$api.company.addCompany(params).then(res=>{
+                        if(res.data.code ==0){
+                            console.log(res)
+                            _this.$message({
+                                    message: '企业添加成功',
+                                    type: 'success'
+                                });
+                            _this.closeDialog()
+                        }
+                    })
                 } else {
-                    debugger;
-                    console.log("error submit!!");
+                    this.$message.error("表单校验失败，请重新填写后提交!");
                     return false;
                 }
+                 
             });
             // this.closeDialog();
         },

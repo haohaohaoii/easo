@@ -55,6 +55,10 @@ export default ({
     setEditordialog(state, editorDialogstatus) {
         state.editorDialog = editorDialogstatus;
     },
+    //获取企业管理下的企业信息中的编辑中的企业类型数组
+    // getCompanytypes(state, companyTypes) {
+    //     state.companyType = companyTypes
+    // },
     //企业管理下的企业基站管理中的添加（编辑）dialog状态
     baseAdd(state, dialogStatus) {
         state.baseAdd = dialogStatus;

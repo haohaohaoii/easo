@@ -17,6 +17,7 @@ export default ({
     enterRow: '',     //企业管理下的 当行详情数据
     enterAdd: false,   //企业管理下 企业信息  添加企业
     editorDialog: false,  //企业管理下的企业信息中的编辑 dialog状态
+    // companyType: [],   //企业管理下的企业信息 编辑中需要获取企业类型
     baseAdd: false,  //企业管理下的基站管理中的添加基站 dialog状态
     Equilist: [],  //企业管理下的基站管理中的添加基站  所需的托管设备数组
     baseDetail: false,    //企业管理下的基站管理中的基站详情  dialog状态
