@@ -1,7 +1,7 @@
 <template>
     <!--角色管理-->
     <div class="roleManage">
-        <role-add></role-add>
+        <role-add @addSuccsss="addSuccsss"></role-add>
         <div class="roleTop">
             <div class="markMsg">
                 <div></div>
@@ -16,7 +16,7 @@
             </div>
         </div>
         <!--角色列表插槽-->
-        <role-list v-show="roleList.length" :rolelist="roleList">
+        <role-list v-show="roleList.length" :rolelist="roleList" @delSuccess="delSuccess">
             <div class="tabPage">
                 <el-pagination
                     background
@@ -33,10 +33,10 @@
 </template>
 
 <script>
-import roleAdd from "./roleAdd"
+import roleAdd from "./roleAdd";
 import noData from "../common/noData";
 import roleList from "./roleList";
-import { mapMutations} from "vuex";
+import { mapMutations } from "vuex";
 export default {
     components: {
         roleList,
@@ -48,14 +48,30 @@ export default {
             totalLength: 0, //总共多少条数据
             currentPage: 1, //初始页码
             pagesize: 10, //一页多少条数据
-            roleList: [], //所有角色数组
+            roleList: [] //所有角色数组
         };
     },
     created() {
-         let pageNum = this.currentPage;
+        let pageNum = this.currentPage;
         this.getRoles(pageNum);
     },
     methods: {
+        //父组件监听，子组件添加成功
+        addSuccsss(status) {
+            if (status == true) {
+                //重新请求数据
+                let pageNum = this.currentPage;
+                this.getRoles(pageNum);
+            }
+        },
+        //父组件监听，子组件删除成功
+        delSuccess(status) {
+            if (status == true) {
+                //重新请求数据
+                let pageNum = this.currentPage;
+                this.getRoles(pageNum);
+            }
+        },
         //获取角色数据
         getRoles(pageNum) {
             let pageSize = this.pagesize;
@@ -63,40 +79,38 @@ export default {
                 .getAllroles({
                     params: {
                         pageNum: pageNum,
-                        pageSize: pageSize,
+                        pageSize: pageSize
                     }
                 })
                 .then(res => {
-     
-                    console.log(res)
-                    if(res.data.code ==0){
-                        this.totalLength = res.data.pageInfo.total  //获取总条数
-                        this.roleList = res.data.pageInfo.list  //获取数据
-                    }else{}
-                    
+                    console.log(res);
+                    if (res.data.code == 0) {
+                        this.totalLength = res.data.pageInfo.total; //获取总条数
+                        this.roleList = res.data.pageInfo.list; //获取数据
+                    } else {
+                    }
                 })
                 .catch(error => {});
         },
         //添加角色
         addRole() {
-            this.$api.menu.getAllmenu().then(res=>{
-                if(res.data.code == 0){
-                    let obj ={
-                        isTrue:true,
-                        type:'add',
-                        arr:res.data.data
-                    }
+            this.$api.menu.getAllmenu().then(res => {
+                if (res.data.code == 0) {
+                    let obj = {
+                        isTrue: true,
+                        type: "add",
+                        arr: res.data.data
+                    };
                     this.$store.commit("roleAdd", obj);
                 }
-                console.log(res)
-            })
-            
+                console.log(res);
+            });
         },
         //点击页码的时候
         handleCurrentChange(currentPage) {
             this.currentPage = currentPage;
             let pageNum = this.currentPage;
-            this.getRoles(pageNum)
+            this.getRoles(pageNum);
         }
     }
 };

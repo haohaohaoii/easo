@@ -33,6 +33,7 @@ export default ({
     },
     //获取搜索时间区间[yyyy-MM-dd HH:00:00 ...... yyyy-MM-dd HH:00:00]
     getHours(state, hourA) {
+
         state.hoursArr = hourA;
     },
     //头部右侧 修改密码 dialog状态
@@ -248,6 +249,7 @@ export default ({
                 }
             }
         }
+
         state.menulist = menuTree
     }
 })

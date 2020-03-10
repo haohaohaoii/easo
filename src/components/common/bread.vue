@@ -24,6 +24,6 @@ export default {
 <style lang="scss" scoped>
 .bread {
     position: absolute;
-    top: 10%;
+    top: 67.5px;
 }
 </style>

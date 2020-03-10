@@ -4,12 +4,16 @@
             <el-table
                 :data="tableData"
                 stripe
-                style="width: 100%"
-                :header-cell-style="{background: 'rgba(237,237,237,1)'}"
+                style="width: 100%;"
                 class="tab"
+                :height="tableHeight"
+                :row-style="iRowStyle"
+                :cell-style="iCellStyle"
+                :header-row-style="iHeaderRowStyle"
+                :header-cell-style="iHeaderCellStyle"
             >
                 <el-table-column align="center" prop="siteName" label="基站点"></el-table-column>
-                <el-table-column align="center" prop="erpName" label="企业名"></el-table-column>
+                <el-table-column align="center" prop="erpName" width="180" label="企业名"></el-table-column>
                 <el-table-column align="center" prop="cod" label="COD(mg/L)">
                     <template slot-scope="scope">
                         <span v-if="scope.row.codOverflag==1" style="color: red">{{ scope.row.cod }}</span>
@@ -63,10 +67,11 @@
                         <span v-else>{{ scope.row.ph}}</span>
                     </template>
                 </el-table-column>
-                <el-table-column align="center" prop="createTime" label="更新时间"></el-table-column>
+                <el-table-column align="center" prop="createTime" label="更新时间" width="auto"></el-table-column>
             </el-table>
+            <slot></slot>
         </div>
-        <slot></slot>
+        
     </div>
     <no-data v-else></no-data>
 </template>
@@ -86,9 +91,31 @@ export default {
         }
     },
     data() {
-        return {};
+        return {
+            tableHeight:window.innerHeight -270
+        };
     },
     computed:{
+        // tableHeight(){
+        //  debugger
+        //     if(this.tableData && this.tableData.length>9){
+        //         return window.innerHeight * 0.6
+        //     }else{
+        //         return 
+        //     }
+        // },
+        iRowStyle:function ({row, rowIndex}) {
+            return {height:'30px'};
+        },
+        iHeaderRowStyle:function ({row, rowIndex}) {
+            return {height:'30px'};
+        },
+        iCellStyle:function ({row, column, rowIndex, columnIndex}) {
+            return {padding:'0'};
+        },
+        iHeaderCellStyle:function ({row, column, rowIndex, columnIndex}) {
+            return {padding:'0px',background:'rgba(237,237,237,1)'}
+        },
         tableData(){
             if(this.datalist && this.datalist.length>=1){
                 let arrlist = []
@@ -171,22 +198,31 @@ export default {
 <style lang="scss" scoped>
 .listData {
     .tabE {
-        margin-top: 1%;
-        .tab {
-            height: 100%;
-            overflow-y: auto;
-        }
+        padding-top: 15px;
+        
     }
 }
-.listData >>> .el-table th,
-.el-table td {
+// .listData >>> .el-table th,
+// .el-table td {
+//     padding: 0 !important;
+//     height: 40px !important;
+// }
+// .listData >>> .el-table td
+//  {
+//     padding: 0 !important;
+//     height: 40px !important;
+// }
+.listData >>> .el-table__header tr,
+  .el-table__header th {
     padding: 0 !important;
-    height: 50px !important;
+    height: 40px !important;
+    line-height: 40px;
 }
-.listData >>> .el-table td,
-.el-table th {
+.listData >>> .el-table__body tr,
+  .el-table__body td {
     padding: 0 !important;
-    height: 50px !important;
+    height: 40px !important;
+    line-height: 40px;
 }
 .listData >>> .el-table::before {
     left: 0;

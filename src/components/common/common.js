@@ -1,6 +1,7 @@
 let commonJs = {
-    //获取小时的方法,然后计算横坐标数组(测试用)
+    //获 取小时的方法,然后计算横坐标数组(测试用)
     getHours(startTime, endTime) {
+
         return new Promise(function (reslove) {
             console.log(startTime)
             let stime = new Date(startTime).getTime();
@@ -23,7 +24,7 @@ let commonJs = {
                     let oTime = oYear + '-' + addZero(oMonth) + '-' + addZero(oDay) + ' ' + addZero(oHour) + ':' +
                         addZero(oMin) + ':' + addZero(oSen);
                     dataTimearr.push(oTime);
-                    console.log(dataTimearr);
+
                 }
                 reslove(dataTimearr)
             }

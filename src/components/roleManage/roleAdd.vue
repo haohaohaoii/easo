@@ -39,46 +39,63 @@ export default {
     data() {
         return {
             form: {
-                roleName: "",//角色名称
-               
+                roleName: "" //角色名称
             },
-             firstTree:[], //默认展开第一层
+            firstTree: [] //默认展开第一层
         };
     },
-    computed:{
-        ...mapState(["roleAdd","roleTree"]),
+    computed: {
+        ...mapState(["roleAdd", "roleTree"]),
         //得到tree树形结构数据
-        treeList(){
-            if(this.roleTree.length>0){
-                let menuArr = []
-                for(let i=0; i<this.roleTree.length;i++){
-                    let faObj={}
-                    faObj.id= this.roleTree[i].id,
-                    this.firstTree.push(this.roleTree[i].id)  //默认展开第一层
-                    faObj.label = this.roleTree[i].menuName  
-                    if(this.roleTree[i].subMenus && this.roleTree[i].subMenus.length>0){
-                        faObj.children=[]
-                        for(let k=0; k<this.roleTree[i].subMenus.length; k++){
-                            let childObj ={
-                                id:this.roleTree[i].subMenus[k].id,
-                                label:this.roleTree[i].subMenus[k].menuName
-                            }
-                            faObj.children.push(childObj)
-                            if(this.roleTree[i].subMenus[k].subMenus && this.roleTree[i].subMenus[k].subMenus.length>0){
-                                childObj.children =[]
-                                for(let j=0; j< this.roleTree[i].subMenus[k].subMenus.length; j++){
+        treeList() {
+            if (this.roleTree.length > 0) {
+                let menuArr = [];
+                for (let i = 0; i < this.roleTree.length; i++) {
+                    let faObj = {};
+                    (faObj.id = this.roleTree[i].id),
+                        this.firstTree.push(this.roleTree[i].id); //默认展开第一层
+                    faObj.label = this.roleTree[i].menuName;
+                    if (
+                        this.roleTree[i].subMenus &&
+                        this.roleTree[i].subMenus.length > 0
+                    ) {
+                        faObj.children = [];
+                        for (
+                            let k = 0;
+                            k < this.roleTree[i].subMenus.length;
+                            k++
+                        ) {
+                            let childObj = {
+                                id: this.roleTree[i].subMenus[k].id,
+                                label: this.roleTree[i].subMenus[k].menuName
+                            };
+                            faObj.children.push(childObj);
+                            if (
+                                this.roleTree[i].subMenus[k].subMenus &&
+                                this.roleTree[i].subMenus[k].subMenus.length > 0
+                            ) {
+                                childObj.children = [];
+                                for (
+                                    let j = 0;
+                                    j <
+                                    this.roleTree[i].subMenus[k].subMenus
+                                        .length;
+                                    j++
+                                ) {
                                     let btnObj = {
-                                        id:this.roleTree[i].subMenus[k].subMenus[j].id,
-                                        label:this.roleTree[i].subMenus[k].subMenus[j].menuName
-                                    }
-                                   childObj.children.push(btnObj)
+                                        id: this.roleTree[i].subMenus[k]
+                                            .subMenus[j].id,
+                                        label: this.roleTree[i].subMenus[k]
+                                            .subMenus[j].menuName
+                                    };
+                                    childObj.children.push(btnObj);
                                 }
                             }
                         }
                     }
-                    menuArr.push(faObj)
+                    menuArr.push(faObj);
                 }
-                return menuArr
+                return menuArr;
             }
         }
     },
@@ -86,48 +103,46 @@ export default {
         //点击右上角x号
         closeDialog() {
             let obj = {
-                isTrue:false,
-                type:'close'
-            }
+                isTrue: false,
+                type: "close"
+            };
             this.$store.commit("roleAdd", obj); //关闭dialog
         },
-        test(){
-
-        },
+        test() {},
         //点击保存
-        save() {            
-           console.log(this.$refs.tree.getCheckedKeys());  
-           let checkedArr = this.$refs.tree.getCheckedKeys();
-           let name = this.form.roleName
-           if(name && checkedArr.length>0){
-               let params={roleShow:name,menus:checkedArr}
-               this.$api.roles.addRole(params).then(res=>{
-                    if(res.data.code ==0){
-                        console.log(res)
+        save() {
+            console.log(this.$refs.tree.getCheckedKeys());
+            let checkedArr = this.$refs.tree.getCheckedKeys();
+            let name = this.form.roleName;
+            if (name && checkedArr.length > 0) {
+                let params = { roleShow: name, menus: checkedArr };
+                this.$api.roles.addRole(params).then(res => {
+                    if (res.data.code == 0) {
+                        console.log(res);
                         this.$message({
-                                message: '添加角色成功',
-                                type: 'success'
-                            });
+                            message: "添加角色成功",
+                            type: "success"
+                        });
                         this.$refs.tree.setCheckedKeys([]);
                         let obj = {
-                            isTrue:false,
-                            type:'close'
-                        }
+                            isTrue: false,
+                            type: "close"
+                        };
+                        this.$emit("addSuccsss", true);
                         this.$store.commit("roleAdd", obj); //关闭dialog
                     }
-                })
-           }else{
-               this.$message.error("注意：请添加或选取后菜单再保存！");
-           }
-           
+                });
+            } else {
+                this.$message.error("注意：请添加或选取后菜单再保存！");
+            }
         },
         //点击取消
         cancel() {
             this.$refs.tree.setCheckedKeys([]);
             let obj = {
-                isTrue:false,
-                type:'close'
-            }
+                isTrue: false,
+                type: "close"
+            };
             this.$store.commit("roleAdd", obj); //关闭dialog
         }
     }

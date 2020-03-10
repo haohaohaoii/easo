@@ -33,38 +33,36 @@
 
 <script>
 import { mapMutations } from "vuex";
-import roleEditor from './roleEditor'
-import { resolve, reject } from 'q';
+import roleEditor from "./roleEditor";
+import { resolve, reject } from "q";
 export default {
-    components:{
+    components: {
         roleEditor
     },
-    props:{
-        rolelist:{
-            type:Array,
+    props: {
+        rolelist: {
+            type: Array,
             default: function() {
                 return [];
             }
         }
     },
     data() {
-        return {
-           
-        };
+        return {};
     },
-    computed:{
-        roleData(){
-            if(this.rolelist && this.rolelist.length>0){
+    computed: {
+        roleData() {
+            if (this.rolelist && this.rolelist.length > 0) {
                 let roleArr = [];
-                for(let i=0; i<this.rolelist.length; i++){
-                    let obj={
-                        roleName:this.rolelist[i].roleShow,  //角色名称
-                        roleDate:this.rolelist[i].createTime,
-                        id:this.rolelist[i].id
-                    }
-                    roleArr.push(obj)
+                for (let i = 0; i < this.rolelist.length; i++) {
+                    let obj = {
+                        roleName: this.rolelist[i].roleShow, //角色名称
+                        roleDate: this.rolelist[i].createTime,
+                        id: this.rolelist[i].id
+                    };
+                    roleArr.push(obj);
                 }
-                return roleArr
+                return roleArr;
             }
         }
     },
@@ -77,16 +75,16 @@ export default {
                 type: "warning"
             })
                 .then(() => {
-                     let roleId = row.id;  //获取角色id
-                     this.delete(roleId).then(res=>{
-                         if(res == 'success'){
+                    let roleId = row.id; //获取角色id
+                    this.delete(roleId).then(res => {
+                        if (res == "success") {
+                            this.$emit("delSuccess", true);
                             this.$message({
                                 type: "success",
                                 message: "删除成功"
                             });
-                         }
-                     })
-                    
+                        }
+                    });
                 })
                 .catch(() => {
                     this.$message({
@@ -95,23 +93,25 @@ export default {
                     });
                 });
         },
-        delete(roleId){
-            return new Promise((resolve,reject)=>{
-                this.$api.roles.deleteRoles(roleId).then(res=>{
-                    if(res.data.code == 0){
-                        resolve('success')
-                    }
-                }).catch(error=>{
-                    reject(error)
-                })
-            })
+        delete(roleId) {
+            return new Promise((resolve, reject) => {
+                this.$api.roles
+                    .deleteRoles(roleId)
+                    .then(res => {
+                        if (res.data.code == 0) {
+                            resolve("success");
+                        }
+                    })
+                    .catch(error => {
+                        reject(error);
+                    });
+            });
         },
         //点击编辑
         editor(index, row) {
             console.log(index, row);
-            let roleId = row.id;  //获取角色id
-            this.$store.dispatch('rolesMana',roleId)
-            
+            let roleId = row.id; //获取角色id
+            this.$store.dispatch("rolesMana", roleId);
         }
     }
 };

@@ -15,8 +15,8 @@ const company = {
     companyDetail(erpId) {    //企业行数据详情
         return axios.get(`${base.localUrl}/admin/company/${erpId}`)
     },
-    companyEditor(erpId) {    //企业行数据详情
-        return axios.put(`${base.localUrl}/admin/company/${erpId}`)
+    companyEditor(erpId, params) {    //企业编辑
+        return axios.put(`${base.localUrl}/admin/company/${erpId}`, qs.stringify(params))
     },
     addCompany(params) {   //添加企业
         return axios.post(`${base.localUrl}/admin/company`, qs.stringify(params))

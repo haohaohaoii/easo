@@ -76,20 +76,19 @@
 import { mapState, mapMutations } from "vuex";
 export default {
     data() {
-        debugger
-       
-        var valiIcon = (rule, value, callback) => { // 图片验证
-            if (!this.imageUrl.length>0 &&　!this.localUrl.length>0) {
-                callback(new Error('请上传图片'));
+        var valiIcon = (rule, value, callback) => {
+            // 图片验证
+            if (!this.imageUrl.length > 0 && !this.localUrl.length > 0) {
+                callback(new Error("请上传图片"));
             } else {
                 callback();
             }
-        }
+        };
         return {
-            id:'',
+            id: "",
             imageUrl: [], //上传图片的url地址
-            localUrl:[],
-            types:[],  //企业类型
+            localUrl: [],
+            types: [], //企业类型
             ruleForm: {
                 firmName: "", //企业名称
                 firmAddress: "", //企业地址
@@ -171,65 +170,50 @@ export default {
                     }
                 ],
                 upload: [
-                    {required:true, validator: valiIcon, trigger: 'change' } 
+                    { required: true, validator: valiIcon, trigger: "change" }
                 ]
             }
         };
     },
     computed: {
-        ...mapState(["editorDialog",'enterRow'])
+        ...mapState(["editorDialog", "enterRow"])
     },
     methods: {
-        handleChange (file, fileList) {
-            let obj={url:file.url}
-            this.localUrl.push(obj)
-
-            // this.getBase64(file.raw).then(res => {
-            //     console.log(res);
-            // });
+        handleChange(file, fileList) {
+            let obj = { url: file.url };
+            this.localUrl.push(obj);
         },
         //服务器图片地址转base64
-        getBase64Image(img) {
-            return new Promise((resolve, reject) => {
-            var canvas = document.createElement("canvas");   //创建canvas DOM元素
+        getBase64Image(image, i, len) {
+            var canvas = document.createElement("canvas");
             var ctx = canvas.getContext("2d");
-            var img = new Image;
-            img.crossOrigin = 'Anonymous';
-            img.src = img;
-            img.onload = ()=> {
-                canvas.height = 200; //指定画板的高度,自定义
-                canvas.width = 250; //指定画板的宽度，自定义
-                ctx.drawImage(img, 0, 0, 200, 250); //参数可自定义
-                var dataURL = canvas.toDataURL("image/" + ext);
-                var base64 = dataURL.split(',')[1]
-                debugger
-               console.log(base64)
-                // canvas = null;
-                resolve (base64)
+            let imgObj = new Image();
+            // 先设置图片跨域属性
+            imgObj.setAttribute("crossOrigin", "anonymous");
+            // 再给image赋值src属性，先后顺序不能颠倒
+            imgObj.src = image[i].url;
+            // 当图片加载完成后，绘制图片到canvas
+            let _this = this;
+            imgObj.onload = function() {
+                // 设置canvas宽高等于图片实际宽高
+                canvas.width = imgObj.width;
+                canvas.height = imgObj.height;
+                ctx.drawImage(imgObj, 0, 0);
+                // 将图片转成base64格式
+                var img = canvas.toDataURL("image/jpeg", 0.5);
+                console.log("触发" + i + "次", img);
+                i = i + 1;
+                if (i < len) {
+                    _this.getBase64Image(image, i, len);
+                }
             };
-                
-            })
-            
+            console.log("内外部");
         },
-        //将url转为base64病存储起来
-        // httpRequest(data) {    
-        //     debugger
-        //     let _this = this;
-        //     let rd = new FileReader(); // 创建文件读取对象
-        //     let file = data.file;
-        //     let name = data.file.name;
-        //     rd.readAsDataURL(file); // 文件读取装换为base64类型
-        //     rd.onloadend = function(e) {
-        //         let obj = {
-        //             name: name,
-        //             url: this.result
-        //         };
-        //         _this.imageUrl.push(obj);
-        //     };
-        // },
         //关闭外层dialog
         closeDialog() {
             this.$store.commit("setEditordialog", false);
+
+            this.$refs.ruleForm.resetFields(); //重置from和rules
         },
         //点击删除上传的图片
         handleRemove(file, fileList) {
@@ -259,82 +243,113 @@ export default {
         //获取验证码
         getCode() {},
         //确定编辑  --关闭dialog
-        sureEditor(){
+        sureEditor() {
             this.$refs["ruleForm"].validate(valid => {
                 if (valid) {
-                    // 表单验证通过之后的操作
-                    let base64Arr = this.imageUrl.concat(this.localUrl); //合并数组
-                    for(let i=0; i<base64Arr.length; i++){
-                        debugger
-                        this.getBase64Image(base64Arr[i].url).then(itemBase64=>{
-                            debugger
-                            console.log(itemBase64)
-                        })
-                    }
-                    debugger
-                    let params={
-                        erpName:this.ruleForm.firmName,  //企业名称
-                        erpAddr:this.ruleForm.firmAddress,  //企业地址
-                        erpLinkMan:this.ruleForm.linkman,  //联系人
-                        erpLinkTel:this.ruleForm.linkPhone, //联系电话
-                        erpMail:this.ruleForm.mail,  //邮箱
-                        images:this.imageUrl,  //图片base64数组
-                        erpType:this.ruleForm.firmType  //企业类型
-                    }
-                    let _this = this
-                    this.$api.company.addCompany(params).then(res=>{
-                        if(res.data.code ==0){
-                            console.log(res)
-                            _this.$message({
-                                    message: '企业添加成功',
-                                    type: 'success'
-                                });
-                            _this.closeDialog()
+                    // // 表单验证通过之后的操作
+                    let urlArr = this.imageUrl.concat(this.localUrl); //合并
+                    let base64Arr = [];
+                    let _this = this;
+                    async function a() {
+                        for (let i = 0; i < urlArr.length; i++) {
+                            var canvas = document.createElement("canvas");
+                            var ctx = canvas.getContext("2d");
+                            let imgObj = new Image();
+                            // 先设置图片跨域属性
+                            imgObj.setAttribute("crossOrigin", "anonymous");
+                            // 再给image赋值src属性，先后顺序不能颠倒
+                            imgObj.src = urlArr[i].url;
+                            // 当图片加载完成后，绘制图片到canvas
+                            var promise = new Promise(reslove => {
+                                imgObj.onload = async function() {
+                                    // 设置canvas宽高等于图片实际宽高
+                                    canvas.width = imgObj.width;
+                                    canvas.height = imgObj.height;
+                                    ctx.drawImage(imgObj, 0, 0);
+                                    // 将图片转成base64格式
+                                    var img = canvas.toDataURL(
+                                        "image/jpeg",
+                                        0.5
+                                    );
+                                    console.log("触发" + i + "次", img);
+                                    base64Arr.push(img);
+                                    reslove();
+                                };
+                            });
+                            await promise;
                         }
-                    })
+                        console.log(base64Arr);
+                        debugger;
+                        let params = {
+                            erpName: _this.ruleForm.firmName, //企业名称
+                            erpAddr: _this.ruleForm.firmAddress, //企业地址
+                            erpLinkMan: _this.ruleForm.linkman, //联系人
+                            erpLinkTel: _this.ruleForm.linkPhone, //联系电话
+                            erpMail: _this.ruleForm.mail, //邮箱
+                            images: base64Arr, //图片base64数组
+                            erpType: _this.ruleForm.firmType //企业类型
+                        };
+                        let erpId = _this.id;
+
+                        _this.$api.company
+                            .companyEditor(erpId, params)
+                            .then(res => {
+                                if (res.data.code == 0) {
+                                    console.log(res);
+                                    _this.$message({
+                                        message: "企业信息修改成功",
+                                        type: "success"
+                                    });
+                                    _this.closeDialog();
+                                }
+                            });
+                    }
+                    a();
                 } else {
                     this.$message.error("表单校验失败，请重新填写后提交!");
                     return false;
                 }
-                 
             });
         },
         //取消编辑  --关闭dialog
-        cancelEditor(){
-            this.closeDialog()
-        },
+        cancelEditor() {
+            this.closeDialog();
+        }
     },
-    watch:{
-        enterRow(val){
-            this.types = val.companyType
-            this.id = val.id
-            this.ruleForm.firmName = val.erpName //企业名称
-            this.ruleForm.firmAddress = val.erpAddr //企业地址
-            this.ruleForm.linkman = val.erpLinkMan  //联系人
-            this.ruleForm.linkPhone = val.erpLinkTel  //联系电话
-            this.ruleForm.userName = ''  //没有这个参数，暂时写空值
-            this.ruleForm.mail = val.erpMail  //邮箱
-            let str = val.erpLicense
-            str = str.substring(0, str.lastIndexOf(','));
-            let imgArr = str.split(',')
-            if(imgArr &&　imgArr.length>0){    //获取图片地址数组
-                let imgOa = []
-                for(let i=0; i<imgArr.length; i++){
-                    let obj={
-                        url:imgArr[i]
-                    }
-                    imgOa.push(obj)
+    watch: {
+        enterRow(val) {
+            this.types = val.companyType;
+            this.id = val.id;
+            this.ruleForm.firmName = val.erpName; //企业名称
+            this.ruleForm.firmAddress = val.erpAddr; //企业地址
+            this.ruleForm.linkman = val.erpLinkMan; //联系人
+            this.ruleForm.linkPhone = val.erpLinkTel; //联系电话
+            this.ruleForm.userName = ""; //没有这个参数，暂时写空值
+            this.ruleForm.mail = val.erpMail; //邮箱
+            let str = val.erpLicense;
+            str = str.substring(0, str.lastIndexOf(","));
+            let imgArr = str.split(",");
+            if (imgArr && imgArr.length > 0) {
+                //获取图片地址数组
+                let imgOa = [];
+                for (let i = 0; i < imgArr.length; i++) {
+                    let obj = {
+                        url: imgArr[i]
+                    };
+                    imgOa.push(obj);
                 }
-                 this.imageUrl = imgOa
+                this.imageUrl = imgOa;
             }
-           if(val.companyType && val.companyType.length>0){   //获取企业类型数组
-           
-               for(let i=0; i<val.companyType.length; i++){
-                   if(val.companyType[i].value == val.erpType){   //说明选中的是哪一项
-                        this.ruleForm.firmType = val.companyType[i].value
-                   }
-               }
-           }
+            if (val.companyType && val.companyType.length > 0) {
+                //获取企业类型数组
+
+                for (let i = 0; i < val.companyType.length; i++) {
+                    if (val.companyType[i].value == val.erpType) {
+                        //说明选中的是哪一项
+                        this.ruleForm.firmType = val.companyType[i].value;
+                    }
+                }
+            }
         }
     }
 };

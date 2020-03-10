@@ -5,7 +5,9 @@ export default ({
         return new Promise((resolve, reject) => {
             api.menu.getMenu(adminId).then(res => {
                 if (res && res.data.code == 0) { //获取路由表
+
                     let roles = res.data.data
+                    console.log(roles)
                     sessionStorage.setItem('opt', JSON.stringify(roles))
                     context.commit('filters', roles)
                     context.commit('getMenus', roles)
@@ -263,5 +265,35 @@ export default ({
 
         })
 
+    },
+    //获取到历史数据中的总数据
+    getAllhisData(obj) {
+        api.data
+            .hisAlldata(obj)
+            .then(res => {
+                console.log(res);
+                if (res.data.code == 0) {
+                    debugger
+                    let arr = res.data.pageInfo.list
+                    let obj = {}
+                    obj.xData = []  //x轴数据
+                    obj.yDatacod = []  //cod数据
+                    obj.yDataandan = []  //氨氮数据
+                    obj.yDatazolin = []  //总磷数据
+                    obj.yDataph = []  //ph数据
+                    obj.yDatazodan = []  //总氮数据
+                    obj.yDatall = []  //流量数据
+                    if (arr && arr.length > 0) {
+                        for (let i = 0; i < arr.length; i++) {
+                            obj.xData.push(arr[i].createTime)
+                            for (let j = 0; j < arr[i].dataInfoList.length; j++) {
+                                obj.yDatacod.push(arr[i].dataInfoList[j].factorValue)
+
+                            }
+                        }
+                    }
+                }
+            })
+            .catch(error => { });
     }
 })

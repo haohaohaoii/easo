@@ -1,5 +1,5 @@
 <template>
-    <div class="content">
+    <div class="content" >
         <bread></bread>
         <router-view></router-view>
     </div>
@@ -12,15 +12,15 @@ export default {
     components: {
         bread,
         historyData
+    },
+    data(){
+        return{
+            
+        }
     }
 };
 </script>
 
 <style lang="scss" scoped>
-.content {
-    background: #ededed;
-    height: 90%;
-    box-sizing: border-box;
-    padding: 2% 1% 1% 1%;
-}
+
 </style>

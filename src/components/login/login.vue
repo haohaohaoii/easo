@@ -52,7 +52,7 @@ export default {
             }
         },
         // login() {
-        //     let adminId = 2;
+        //     let adminId = 3;
         //     this.$store
         //         .dispatch("getRole", adminId)
         //         .then(res => {
@@ -120,7 +120,7 @@ export default {
         //         });
         // },
 
-        // //调用登陆接口获取adminId
+        //调用登陆接口获取adminId
         getAdminid() {
             let params = { username: this.userName, password: this.userPaw }; //获取参数
             this.$api.login

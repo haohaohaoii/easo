@@ -4,6 +4,7 @@
         class="dialog"
         center
         :close-on-click-modal="false"
+        append-to-body
         @close="closeDialog"
     >
         <div slot="title" class="tit">

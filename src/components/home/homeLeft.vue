@@ -150,7 +150,10 @@ export default {
 //修改el-menu的背景颜色
 .menuNav >>> .el-menu {
     border-right: 0;
-    background-color: unset !important;
+    background-color: transparent !important;
+}
+menuNav >>> .el-menu-item{
+    background-color: red !important
 }
 .menuNav >>> .el-menu-item:hover {
     background-color: #1f87e7 !important;

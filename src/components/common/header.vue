@@ -284,7 +284,7 @@ export default {
 
 <style lang="scss" scoped>
 .header {
-    height: 10%;
+    height: 60px;
     .el-menu-demo {
         display: flex;
     }

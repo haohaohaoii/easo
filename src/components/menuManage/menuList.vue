@@ -58,6 +58,8 @@ export default {
                         menuWitch= '一级菜单'
                     }else if(this.munuList[i].menuType == 1){
                             menuWitch= '二级菜单'
+                    }else if(this.munuList[i].menuType == 2){
+                        menuWitch= '三级菜单'
                     }
                     let obj={
                         menuName:this.munuList[i].menuName,  //菜单名称

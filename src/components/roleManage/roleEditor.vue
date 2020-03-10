@@ -40,57 +40,104 @@ export default {
     data() {
         return {
             form: {
-                roleName: "",//角色名称
-               
+                roleName: "" //角色名称
             },
-            firstTree:[], //默认展开第一层
-            checkedArr:[]   //默认选中的id数组集合
+            firstTree: [], //默认展开第一层
+            checkedArr: [] //默认选中的id数组集合
         };
     },
-    computed:{
-        ...mapState(["roleEditor","roleTree","roleItem","roleName","roleId"]),
+    computed: {
+        ...mapState([
+            "roleEditor",
+            "roleTree",
+            "roleItem",
+            "roleName",
+            "roleId"
+        ]),
         //得到tree树形结构数据
-        treeList(){
-            if(this.roleTree.length>0){
-                let menuArr = []
-                for(let i=0; i<this.roleTree.length;i++){
-                    let faObj={}
-                    faObj.id= this.roleTree[i].id,
-                    this.firstTree.push(this.roleTree[i].id)  //默认展开第一层
-                    faObj.label = this.roleTree[i].menuName  
-                    if(this.roleTree[i].subMenus && this.roleTree[i].subMenus.length>0){
-                        faObj.children=[]
-                        for(let k=0; k<this.roleTree[i].subMenus.length; k++){
-                            let childObj ={
-                                id:this.roleTree[i].subMenus[k].id,
-                                label:this.roleTree[i].subMenus[k].menuName
-                            }
-                            faObj.children.push(childObj)
-                            if(this.roleTree[i].subMenus[k].subMenus && this.roleTree[i].subMenus[k].subMenus.length>0){
-                                childObj.children =[]
-                                for(let j=0; j< this.roleTree[i].subMenus[k].subMenus.length; j++){
+        treeList() {
+            if (this.roleTree.length > 0) {
+                let menuArr = [];
+                for (let i = 0; i < this.roleTree.length; i++) {
+                    let faObj = {};
+                    (faObj.id = this.roleTree[i].id),
+                        this.firstTree.push(this.roleTree[i].id); //默认展开第一层
+                    faObj.label = this.roleTree[i].menuName;
+                    if (
+                        this.roleTree[i].subMenus &&
+                        this.roleTree[i].subMenus.length > 0
+                    ) {
+                        faObj.children = [];
+                        for (
+                            let k = 0;
+                            k < this.roleTree[i].subMenus.length;
+                            k++
+                        ) {
+                            let childObj = {
+                                id: this.roleTree[i].subMenus[k].id,
+                                label: this.roleTree[i].subMenus[k].menuName
+                            };
+                            faObj.children.push(childObj);
+                            if (
+                                this.roleTree[i].subMenus[k].subMenus &&
+                                this.roleTree[i].subMenus[k].subMenus.length > 0
+                            ) {
+                                childObj.children = [];
+                                for (
+                                    let j = 0;
+                                    j <
+                                    this.roleTree[i].subMenus[k].subMenus
+                                        .length;
+                                    j++
+                                ) {
                                     let btnObj = {
-                                        id:this.roleTree[i].subMenus[k].subMenus[j].id,
-                                        label:this.roleTree[i].subMenus[k].subMenus[j].menuName
-                                    }
-                                   childObj.children.push(btnObj)
+                                        id: this.roleTree[i].subMenus[k]
+                                            .subMenus[j].id,
+                                        label: this.roleTree[i].subMenus[k]
+                                            .subMenus[j].menuName
+                                    };
+                                    childObj.children.push(btnObj);
                                 }
                             }
                         }
                     }
-                    menuArr.push(faObj)
+                    menuArr.push(faObj);
                 }
-                if(this.roleItem &&　this.roleItem.length>0){
-                    let arrId = []
-                    for(let i =0; i<this.roleItem.length; i++){  //第一层
-                        if(this.roleItem[i].subMenus && this.roleItem[i].subMenus.length>0){ //第二层有数据取第二层的id
-                            for(let k=0; k<this.roleItem[i].subMenus.length; k++){
-                                if(this.roleItem[i].subMenus[k].subMenus && this.roleItem[i].subMenus[k].subMenus.length>0){ //第三层有数据取第三层的id
-                                    for(let j=0; j<this.roleItem[i].subMenus[k].subMenus.length;j++){
-                                        arrId.push(this.roleItem[i].subMenus[k].subMenus[j].id)
+                if (this.roleItem && this.roleItem.length > 0) {
+                    let arrId = [];
+                    for (let i = 0; i < this.roleItem.length; i++) {
+                        //第一层
+                        if (
+                            this.roleItem[i].subMenus &&
+                            this.roleItem[i].subMenus.length > 0
+                        ) {
+                            //第二层有数据取第二层的id
+                            for (
+                                let k = 0;
+                                k < this.roleItem[i].subMenus.length;
+                                k++
+                            ) {
+                                if (
+                                    this.roleItem[i].subMenus[k].subMenus &&
+                                    this.roleItem[i].subMenus[k].subMenus
+                                        .length > 0
+                                ) {
+                                    //第三层有数据取第三层的id
+                                    for (
+                                        let j = 0;
+                                        j <
+                                        this.roleItem[i].subMenus[k].subMenus
+                                            .length;
+                                        j++
+                                    ) {
+                                        arrId.push(
+                                            this.roleItem[i].subMenus[k]
+                                                .subMenus[j].id
+                                        );
                                     }
-                                }else{ //取第二层的id
-                                    arrId.push(this.roleItem[i].subMenus[k].id)
+                                } else {
+                                    //取第二层的id
+                                    arrId.push(this.roleItem[i].subMenus[k].id);
                                 }
                             }
                         }
@@ -98,12 +145,12 @@ export default {
                         //     arrId.push(this.roleItem[i].id)
                         // }
                     }
-                    this.checkedArr = arrId
+                    this.checkedArr = arrId;
                 }
-                if(this.roleName!=''){
-                    this.form.roleName = this.roleName
+                if (this.roleName != "") {
+                    this.form.roleName = this.roleName;
                 }
-                return menuArr
+                return menuArr;
             }
         }
     },
@@ -111,49 +158,46 @@ export default {
         //点击右上角x号
         closeDialog() {
             let obj = {
-                isTrue:false,
-                type:'close'
-            }
+                isTrue: false,
+                type: "close"
+            };
             this.$store.commit("roleEdit", obj); //关闭dialog
         },
-        test(){
-
-        },
+        test() {},
         //点击保存
-        save() { 
-           console.log(this.$refs.tree.getCheckedKeys());  
-           let checkedArr = this.$refs.tree.getCheckedKeys();
-           let name = this.form.roleName
-           if(name && checkedArr){
-               let params={roleShow:name,menus:checkedArr}
-               let roleId=this.roleId
-               this.$api.roles.editorRole(params,roleId).then(res=>{
-                    if(res.data.code ==0){
-                        console.log(res)
+        save() {
+            console.log(this.$refs.tree.getCheckedKeys());
+            let checkedArr = this.$refs.tree.getCheckedKeys();
+            let name = this.form.roleName;
+            if (name && checkedArr) {
+                let params = { roleShow: name, menus: checkedArr };
+                let roleId = this.roleId;
+                this.$api.roles.editorRole(params, roleId).then(res => {
+                    if (res.data.code == 0) {
+                        console.log(res);
                         this.$message({
-                                message: '修改角色成功',
-                                type: 'success'
-                            });
+                            message: "修改角色成功",
+                            type: "success"
+                        });
                         this.$refs.tree.setCheckedKeys([]);
                         let obj = {
-                            isTrue:false,
-                            type:'close'
-                        }
+                            isTrue: false,
+                            type: "close"
+                        };
                         this.$store.commit("roleEdit", obj); //关闭dialog
                     }
-                })
-           }else{
-               this.$message.error("注意：请添加或选取后菜单再保存！");
-           }
-           
+                });
+            } else {
+                this.$message.error("注意：请添加或选取后菜单再保存！");
+            }
         },
         //点击取消
         cancel() {
             this.$refs.tree.setCheckedKeys([]);
             let obj = {
-                isTrue:false,
-                type:'close'
-            }
+                isTrue: false,
+                type: "close"
+            };
             this.$store.commit("roleEdit", obj); //关闭dialog
         }
     }

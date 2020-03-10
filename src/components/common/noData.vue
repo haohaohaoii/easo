@@ -11,8 +11,11 @@ export default {};
 
 <style lang="scss" scoped>
 .noData {
-    text-align: center;
+        text-align: center;
     position: relative;
-    top: 200px;
+    top: 40%;
+    
+    transition: transfotm;
+    transform: translateY(-50%);
 }
 </style>

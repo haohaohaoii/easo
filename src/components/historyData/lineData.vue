@@ -43,6 +43,7 @@
 <script>
 import { mapState } from "vuex";
 export default {
+    props:['hisDatalist'],
     data() {
         return {
             cod: true, //cod
@@ -55,6 +56,8 @@ export default {
                 grid: {
                     bottom: 80
                 },
+               
+
                 toolbox: {
                     //工具栏
                     feature: {
@@ -117,7 +120,7 @@ export default {
                             width: 2,
                             color: "rgba(255,0,0,1)"
                         },
-                        data: [220, 122, 191, 294, 390, 330, 310]
+                        data: [{name:'cod',value:355},{name:'cod2',value:355},{name:'cod3',value:56},{name:'cod4',value:255},{name:'cod5',value:455},{name:'cod6',value:95},{name:'cod',value:305},{name:'cod',value:395},{name:'cod',value:35}]
                     },
                     {
                         name: "总氮",

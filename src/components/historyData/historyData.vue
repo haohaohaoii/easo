@@ -118,22 +118,44 @@ export default {
         //点击查询
         search() {
             //必传参数 开始时间和结束时间
-            this.currentPage = 1;
-            let pageNum = this.currentPage;
-            this.sendAxios(pageNum);
-            // this.oldData()
+            
+            if(this.btnMsg == '折线' ||this.btnMsg == '柱状'){
+                this.oldData()
+                this.getAlldata()
+            }else{
+                this.currentPage = 1;
+                let pageNum = this.currentPage;
+                this.sendAxios(pageNum);
+            }
+            
         },
+        //得到小时数
         oldData() {
             let _this = this;
             commonJs
                 .getHours(this.startTime, this.endTime)
                 .then(function(hoursArr) {
+                    debugger
                     if (hoursArr.length == 0) {
                         alert("查询条件有误");
                     } else {
                         _this.$store.commit("getHours", hoursArr);
                     }
                 });
+        },
+        //得到总条数数据
+        getAlldata(){
+            let startTime = this.startTime;
+            let endTime = this.endTime;
+            let userId = this.companyValue;
+            let mn = this.baseValue;
+            let  params= {
+                            start: startTime,
+                            end: endTime,
+                            userId: userId,
+                            mn: mn
+                        }
+            this.$store.dispatch('getAllhisData',params)
         },
         //点击第几页
         handleCurrentChange(currentPage) {
@@ -268,11 +290,11 @@ export default {
 <style lang="scss" scoped>
 .historyD {
     height: 100%;
-    background: #ffff;
+    background: rgb(255,255,255);
     box-sizing: border-box;
-    padding: 1%;
+    padding: 15px;
     .historyTop {
-        height: 13.5%;
+        height: 85px;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
@@ -293,6 +315,7 @@ export default {
             }
         }
         .search {
+            padding-top: 15px;
             display: flex;
             justify-content: space-between;
             .searchL {
@@ -301,18 +324,18 @@ export default {
                 justify-content: space-between;
             }
             .changeW {
-                width: 18%;
+                margin-right: 2%;
             }
         }
     }
     .tabPage {
         text-align: center;
-        padding: 20px;
+        padding-top: 8px;
 
         .indic {
             position: absolute;
             right: 2%;
-
+            font-size: 12px;
             font-family: Microsoft YaHei;
             font-weight: 400;
             color: rgba(255, 0, 0, 1);

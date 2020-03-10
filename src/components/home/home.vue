@@ -6,7 +6,7 @@
         <!--右侧内容-->
         <div class="homeRight loading-area" ref="rig">
             <headert></headert>
-            <div class="content">
+            <div class="content" ref="heig">
                 <bread></bread>
                 <transition enter-active-class="animated zoomInUp">
                     <router-view></router-view>
@@ -30,11 +30,14 @@ export default {
         homeLeft: left
     },
     data() {
-        return {};
+        return {
+            
+        };
     },
     mounted() {
         console.log(this.$refs.rig);
         this.$refs.rig.style.marginLeft = this.menuLeftwidth;
+        this.$refs.heig.style.height = (window.innerHeight-60)+'px'  //获取content的高度
     },
     computed: {
         ...mapState(["menuLeftwidth"])
@@ -62,9 +65,9 @@ export default {
         background: #ededed;
         .content {
             background: #ededed;
-            height: 90%;
+
             box-sizing: border-box;
-            padding: 2% 1% 1% 1%;
+            padding: 30px 15px 15px 15px;
         }
     }
 }

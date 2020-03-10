@@ -34,6 +34,8 @@ const toLogin = (message) => {
                 redirect: router.currentRoute.fullPath
             }
         });
+    }).catch(() => {
+        Message.error('您无法使用此系统，请重新登陆');
     })
 }
 
