@@ -266,15 +266,14 @@ export default ({
         })
 
     },
-    //获取到历史数据中的总数据
-    getAllhisData(obj) {
+    //获取到历史数据中的总数据(折线和柱状需要)
+    getAllhisData(content, params) {
         api.data
-            .hisAlldata(obj)
+            .hisAlldata({ params })
             .then(res => {
                 console.log(res);
                 if (res.data.code == 0) {
-                    debugger
-                    let arr = res.data.pageInfo.list
+                    let arr = res.data.data
                     let obj = {}
                     obj.xData = []  //x轴数据
                     obj.yDatacod = []  //cod数据
@@ -287,11 +286,24 @@ export default ({
                         for (let i = 0; i < arr.length; i++) {
                             obj.xData.push(arr[i].createTime)
                             for (let j = 0; j < arr[i].dataInfoList.length; j++) {
-                                obj.yDatacod.push(arr[i].dataInfoList[j].factorValue)
-
+                                if (arr[i].dataInfoList[j].factorCode == '011') {   //cod
+                                    obj.yDatacod.push(arr[i].dataInfoList[j].factorValue)
+                                } else if (arr[i].dataInfoList[j].factorCode == '101') {   //氨氮
+                                    obj.yDataandan.push(arr[i].dataInfoList[j].factorValue)
+                                } else if (arr[i].dataInfoList[j].factorCode == '065') {//总氮
+                                    obj.yDatazodan.push(arr[i].dataInfoList[j].factorValue)
+                                } else if (arr[i].dataInfoList[j].factorCode == '060') {//总磷
+                                    obj.yDatazolin.push(arr[i].dataInfoList[j].factorValue)
+                                } else if (arr[i].dataInfoList[j].factorCode == '001') {//ph
+                                    obj.yDataph.push(arr[i].dataInfoList[j].factorValue)
+                                } else if (arr[i].dataInfoList[j].factorCode == 'B01') {//流量
+                                    obj.yDatall.push(arr[i].dataInfoList[j].factorValue)
+                                }
                             }
                         }
                     }
+                    console.log(obj)
+                    content.commit('getHisdataAll', obj)  //获取到历史数据--折线图用
                 }
             })
             .catch(error => { });

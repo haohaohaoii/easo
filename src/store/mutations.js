@@ -36,6 +36,10 @@ export default ({
 
         state.hoursArr = hourA;
     },
+    //获取历史数据--折线图用
+    getHisdataAll(state, objHis) {
+        state.hisDataall = objHis
+    },
     //头部右侧 修改密码 dialog状态
     pwdDialog(state, status) {
         state.pwdDialog = status
@@ -219,6 +223,7 @@ export default ({
                 }
             })
         })
+        console.log(res)
         state.rolesRoutes = res
     },
     //根据返回的角色权限,生成菜单表

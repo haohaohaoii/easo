@@ -120,7 +120,7 @@ export default {
             //必传参数 开始时间和结束时间
             
             if(this.btnMsg == '折线' ||this.btnMsg == '柱状'){
-                this.oldData()
+                // this.oldData()
                 this.getAlldata()
             }else{
                 this.currentPage = 1;
@@ -135,7 +135,6 @@ export default {
             commonJs
                 .getHours(this.startTime, this.endTime)
                 .then(function(hoursArr) {
-                    debugger
                     if (hoursArr.length == 0) {
                         alert("查询条件有误");
                     } else {
@@ -149,13 +148,18 @@ export default {
             let endTime = this.endTime;
             let userId = this.companyValue;
             let mn = this.baseValue;
-            let  params= {
+            if(startTime!="" && endTime!="" && userId!="" && mn!=""){
+                let  params= {
                             start: startTime,
                             end: endTime,
                             userId: userId,
                             mn: mn
                         }
             this.$store.dispatch('getAllhisData',params)
+            }else {
+                this.$message.error("注意选择查询条件");
+            }
+            
         },
         //点击第几页
         handleCurrentChange(currentPage) {
@@ -204,32 +208,6 @@ export default {
                 this.$message.error("注意：开始时间和结束时间为必选项");
             }
         },
-        // //不分页
-        //   sendAxios(){
-        //     if(this.startTime!='' && this.endTime!=''){
-        //         let startTime = this.startTime;
-        //         let endTime = this.endTime;
-        //         this.$api.data.historyData({params: {start:startTime,end:endTime}})
-        //         .then(res=>{
-
-        //             console.log(res)
-        //             if(res.data.code ==0){
-        //                 if(res.data.pageInfo.list && res.data.pageInfo.list.length>=1){  //说明有数据
-        //                 debugger
-        //                     this.hisDatalist= res.data.pageInfo.list
-        //                     this.totalLength = res.data.pageInfo.total  //获取总条数
-        //                 }else{  //说明没有数据
-        //                     this.hisDatalist = [];
-        //                 }
-        //             }
-        //         }).catch(error=>{
-
-        //         })
-
-        //     }else{
-        //         this.$message.error("注意：开始时间和结束时间为必选项");
-        //     }
-        // },
         //获取企业下拉数组
         getCompany() {
             this.$api.company
@@ -283,6 +261,13 @@ export default {
                 })
                 .catch(error => {});
         }
+    },
+    watch:{
+        btnMsg(val){
+            if(this.btnMsg == '折线' ||this.btnMsg == '柱状'){
+                this.getAlldata()
+            }
+        }
     }
 };
 </script>
@@ -290,7 +275,7 @@ export default {
 <style lang="scss" scoped>
 .historyD {
     height: 100%;
-    background: rgb(255,255,255);
+    background: rgb(255, 255, 255);
     box-sizing: border-box;
     padding: 15px;
     .historyTop {

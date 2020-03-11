@@ -83,14 +83,15 @@ export default {
                     {
                         show: true,
                         realtime: true,
-                        start: 0,
+                        start: 98,
                         end: 100
                     },
+                    //内容能不能拉
                     {
                         type: "inside",
                         realtime: true,
-                        start: 65,
-                        end: 85
+                        start: 0,
+                        end: 0
                     }
                 ],
                 xAxis: [
@@ -108,7 +109,7 @@ export default {
                     {
                         name: "", //坐标轴名称
                         type: "value", //数值轴
-                        max: 500 //坐标轴最大刻度
+                        max: 100 //坐标轴最大刻度
                     }
                 ],
                 series: [
@@ -120,7 +121,7 @@ export default {
                         lineStyle: {
                             color: "rgba(255,0,0,1)"
                         },
-                        data: [220, 122, 191, 294, 390, 330, 310]
+                        data: []
                     },
                     {
                         name: "总氮",
@@ -130,45 +131,15 @@ export default {
                         lineStyle: {
                             color: "rgba(0,0,255,1)" //总氮的颜色
                         },
-                        data: [129, 321, 191, 234, 190, 230, 110]
+                        data: []
                     }
-                    // {
-                    //     name: "氨氮",
-                    //     type: "bar", //柱状
-                    //     animation: true, //是否开启动画
-                    //     barWidth: 20, //柱状图的大小
-                    //     lineStyle: {
-                    //         color: "rgba(241,225,0,1)"
-                    //     },
-                    //     data: [150, 52, 201, 154, 190, 330, 410]
-                    // },
-                    // {
-                    //     name: "总磷",
-                    //     type: "bar", //柱状
-                    //     animation: true, //是否开启动画
-                    //     barWidth: 20, //柱状图的大小
-                    //     lineStyle: {
-                    //         color: "rgba(113,209,75,1)"
-                    //     },
-                    //     data: [320, 332, 81, 334, 90, 480, 320]
-                    // },
-                    // {
-                    //     name: "PH",
-                    //     type: "bar", //柱状
-                    //     animation: true, //是否开启动画
-                    //     barWidth: 20, //柱状图的大小
-                    //     lineStyle: {
-                    //         color: "rgba(255,1,255,1)"
-                    //     },
-                    //     data: [20, 332, 101, 234, 1290, 133, 432]
-                    // }
                 ]
             }
         };
     },
     computed: {
         //hoursArr为x轴坐标区间[.....]
-        ...mapState(["hoursArr"])
+        ...mapState(["hisDataall"])
     },
     mounted() {
         this.getZx();
@@ -179,8 +150,25 @@ export default {
         getZx() {
             let myCharts = this.$echarts.init(this.$refs.myCharts);
             myCharts.showLoading(); //加载动画
-
-            this.options.xAxis[0].data = this.hoursArr; //设置x轴坐标
+            this.options.xAxis[0].data = this.hisDataall.xData; //设置x轴坐标
+            let dataArr = this.options.series;
+            if(dataArr && dataArr.length>0){
+                for(let i=0; i<dataArr.length; i++){
+                    if(dataArr[i].name == "COD"){
+                        dataArr[i].data = this.hisDataall.yDatacod
+                    }else if(dataArr[i].name == "总氮"){
+                        dataArr[i].data = this.hisDataall.yDatazodan
+                    }else if(dataArr[i].name == "氨氮"){
+                        dataArr[i].data = this.hisDataall.yDataandan
+                    }else if(dataArr[i].name == "总磷"){
+                        dataArr[i].data = this.hisDataall.yDatazolin
+                    }else if(dataArr[i].name == "PH"){
+                         dataArr[i].data = this.hisDataall.yDataph
+                    }else if(dataArr[i].name == "流量"){
+                         dataArr[i].data = this.hisDataall.yDatall
+                    }
+                }
+            }
             setTimeout(function() {
                 myCharts.hideLoading(); //隐藏加载动画
             }, 2000);
@@ -199,7 +187,7 @@ export default {
                         width: 2,
                         color: "rgba(255,0,0,1)"
                     },
-                    data: [220, 122, 191, 294, 390, 330, 310]
+                   data: this.hisDataall.yDatacod
                 };
                 this.options.series.push(cod); //先添加数据
                 this.options.legend.data.push("COD"); //再添加name值
@@ -239,7 +227,7 @@ export default {
                         width: 2,
                         color: "rgba(0,0,255,1)"
                     },
-                    data: [129, 321, 191, 234, 190, 230, 110]
+                     data: this.hisDataall.yDatazodan
                 };
                 this.options.series.push(zd); //先添加数据
                 this.options.legend.data.push("总氮"); //再添加name值
@@ -278,7 +266,7 @@ export default {
                         width: 2,
                         color: "rgba(241,225,0,1)"
                     },
-                    data: [150, 52, 201, 154, 190, 330, 410]
+                     data: this.hisDataall.yDataandan
                 };
                 this.options.series.push(an); //先添加数据
                 this.options.legend.data.push("氨氮"); //再添加name值
@@ -317,7 +305,7 @@ export default {
                         width: 2,
                         color: "rgba(113,209,75,1)"
                     },
-                    data: [320, 332, 81, 334, 90, 480, 320]
+                    data: this.hisDataall.yDatazolin
                 };
                 this.options.series.push(zl); //先添加数据
                 this.options.legend.data.push("总磷"); //再添加name值
@@ -356,7 +344,7 @@ export default {
                         width: 2,
                         color: "rgba(255,1,255,1)"
                     },
-                    data: [20, 332, 101, 234, 1290, 133, 432]
+                    data: this.hisDataall.yDataph
                 };
                 this.options.series.push(ph); //先添加数据
                 this.options.legend.data.push("PH"); //再添加name值
@@ -395,7 +383,7 @@ export default {
                         width: 2,
                         color: "rgba(228,139,0,1)"
                     },
-                    data: [50, 232, 191, 294, 129, 436, 132]
+                    data: this.hisDataall.yDatall
                 };
                 this.options.series.push(ll); //先添加数据
                 this.options.legend.data.push("流量"); //再添加name值
@@ -423,8 +411,8 @@ export default {
         }
     },
     watch: {
-        hoursArr(val) {
-            if (val.length > 0) {
+        hisDataall(val) {
+            if(val){
                 this.getZx();
             }
         }

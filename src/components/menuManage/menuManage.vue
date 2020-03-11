@@ -25,14 +25,17 @@
                 ></el-pagination>
             </div>
         </menu-list>
+        <menu-add></menu-add>
     </div>
 </template>
 
 <script>
 import menuList from './menuList'
+import menuAdd from './menuAdd'
 export default {
     components:{
-        menuList
+        menuList,
+        menuAdd
     },
     data() {
          return {

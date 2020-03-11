@@ -11,6 +11,7 @@ export default ({
     msg: '权限管理',
     menuLeftwidth: '240px', //右侧菜单初始宽度
     breadArr: localStorage.breadArr ? JSON.parse(localStorage.breadArr) : [],  //动态面包屑
+    hisDataall: '',  //历史数据不分页--折线图用
     hoursArr: [], //x轴坐标
     pwdDialog: false,  //头部右侧修改密码 dialog状态
     enterDialog: false, //企业管理下的企业信息中的详情 dialog状态

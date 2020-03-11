@@ -71,7 +71,6 @@
             </el-table>
             <slot></slot>
         </div>
-        
     </div>
     <no-data v-else></no-data>
 </template>
@@ -105,10 +104,10 @@ export default {
         //     }
         // },
         iRowStyle:function ({row, rowIndex}) {
-            return {height:'30px'};
+            return {height:'50px'};
         },
         iHeaderRowStyle:function ({row, rowIndex}) {
-            return {height:'30px'};
+            return {height:'50px'};
         },
         iCellStyle:function ({row, column, rowIndex, columnIndex}) {
             return {padding:'0'};
@@ -199,7 +198,6 @@ export default {
 .listData {
     .tabE {
         padding-top: 15px;
-        
     }
 }
 // .listData >>> .el-table th,
@@ -212,18 +210,18 @@ export default {
 //     padding: 0 !important;
 //     height: 40px !important;
 // }
-.listData >>> .el-table__header tr,
-  .el-table__header th {
-    padding: 0 !important;
-    height: 40px !important;
-    line-height: 40px;
-}
-.listData >>> .el-table__body tr,
-  .el-table__body td {
-    padding: 0 !important;
-    height: 40px !important;
-    line-height: 40px;
-}
+// .listData >>> .el-table__header tr,
+//   .el-table__header th {
+//     padding: 0 !important;
+//     height: 40px !important;
+//     line-height: 40px;
+// }
+// .listData >>> .el-table__body tr,
+//   .el-table__body td {
+//     padding: 0 !important;
+//     height: 40px !important;
+//     line-height: 40px;
+// }
 .listData >>> .el-table::before {
     left: 0;
     bottom: 0;

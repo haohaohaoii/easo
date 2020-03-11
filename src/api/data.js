@@ -17,6 +17,7 @@ const data = {
     },
     //历史数据接口，不分页
     hisAlldata(params) {
+
         return axios.get(`${base.localUrl}/admin/data/history/list`, params)
     }
 }

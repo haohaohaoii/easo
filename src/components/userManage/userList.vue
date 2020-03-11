@@ -62,6 +62,17 @@ export default {
             if (this.userarr && this.userarr.length > 0) {
                 let userArr = [];
                 for (let i = 0; i < this.userarr.length; i++) {
+                    let str =''
+                    if(this.userarr[i].sysRoleList && this.userarr[i].sysRoleList.length>0){
+                        
+                        for(let k=0; k<this.userarr[i].sysRoleList.length; k++){
+                            if(k ==0){
+                                str =this.userarr[i].sysRoleList[k].roleShow
+                            }else{
+                                str+= ','+this.userarr[i].sysRoleList[k].roleShow
+                            }
+                        }
+                    }
                     // if(this.userarr[i].)
                     let obj = {
                         userName: this.userarr[i].username, //用户名
@@ -69,7 +80,7 @@ export default {
                         linkPhone: this.userarr[i].phone, //联系电话
                         userMail: this.userarr[i].email, //邮箱
                         userSection: this.userarr[i].sysDept.deptName, //所属部门
-                        userPart: this.userarr[i].realName, //用户角色
+                        userPart: str, //用户角色
                         turnTime: this.userarr[i].createTime, //更新时间
                         id: this.userarr[i].id //用户id
                     };
