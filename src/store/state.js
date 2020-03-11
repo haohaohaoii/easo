@@ -13,6 +13,7 @@ export default ({
     breadArr: localStorage.breadArr ? JSON.parse(localStorage.breadArr) : [],  //动态面包屑
     hisDataall: '',  //历史数据不分页--折线图用
     hoursArr: [], //x轴坐标
+    messageD: false,  //消息详情 dialog状态
     pwdDialog: false,  //头部右侧修改密码 dialog状态
     enterDialog: false, //企业管理下的企业信息中的详情 dialog状态
     enterRow: '',     //企业管理下的 当行详情数据
@@ -40,7 +41,8 @@ export default ({
     divAdd: false,    //权限管理下的部门管理添加部门 dialog状态
     divEditor: false,  //权限管理下的部门管理编辑部门 dialog状态
     divItem: [],  //权限管理下的部门管理编辑部门  所需的部门信息
-    menuAdd: false,    //权限管理下的菜单管理添加菜单 dialog状态
+    userAdddialog: false,    //权限管理下的菜单管理添加菜单 dialog状态
+    menuE: false,   //权限管理下的菜单管理  编辑菜单 dialog状态
     roleTree: [],     //角色管理中的树状结构数组(所有的)
     roleItem: [],   //单个的角色对应的权限
     roleName: '',    //角色名称

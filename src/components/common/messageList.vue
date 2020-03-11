@@ -3,47 +3,43 @@
         <div class="tabE">
             <el-table
                 :height="tableHeight"
-                :data="tableData"
+                :data="messageData"
                 stripe
                 style="width: 100%"
                 :header-cell-style="{background: 'rgba(237,237,237,1)'}"
                 class="tab"
             >
+            <el-table-column
+                type="selection"
+                width="55">
+            </el-table-column>
                 <el-table-column align="center" prop="erpName" label="企业名称" width="260"></el-table-column>
-                <el-table-column align="center" prop="erpLinkMan" label="联系人"></el-table-column>
-                <el-table-column align="center" prop="erpLinkTel" label="联系电话"></el-table-column>
-                <el-table-column align="center" prop="erpAddr" label="企业地址"></el-table-column>
-                <el-table-column align="center" prop="userSection" label="审核状态">
-                    <template slot-scope="scope">
-                        <span v-if="scope.row.userSection==0">审核中</span>
-                        <span v-else-if="scope.row.userSection==1">审核通过</span>
-                        <span v-else-if="scope.row.userSection==2">审核未通过</span>
-                    </template>
-                </el-table-column>
-                <el-table-column align="center" prop="turnTime" label="注册时间"></el-table-column>
+                <el-table-column align="center" prop="messageTit" label="消息标题"></el-table-column>
+                <el-table-column align="center" prop="messageCon" label="消息内容"></el-table-column>
+                <el-table-column align="center" prop="messageTime" label="消息时间"></el-table-column>
                 <el-table-column label="操作" align="center" width="220" fixed="right">
                     <template slot-scope="scope">
-                        <el-button size="mini" @click="base(scope.$index, scope.row)">基站</el-button>
                         <el-button
                             size="mini"
                             type="primary"
                             @click="handleEdit(scope.$index, scope.row)"
-                        >编辑</el-button>
+                        >查看详情</el-button>
                         <el-button
                             size="mini"
                             type="danger"
-                            @click="handleDetail(scope.$index, scope.row)"
-                        >详情</el-button>
+                            @click="handleDelete(scope.$index, scope.row)"
+                        >删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
         </div>
-     
+        <message-detail></message-detail>
         <slot></slot>
     </div>
 </template>
 
 <script>
+import messageDetail from './messageDetail'
 import { mapMutations } from "vuex";
 export default {
     props: {
@@ -54,9 +50,26 @@ export default {
             }
         }
     },
+    components:{
+        messageDetail
+    },
     data() {
         return {
-            tableHeight: window.innerHeight * 0.6
+            tableHeight: window.innerHeight * 0.6,
+            messageData:[
+                {erpName:'郑州思念食品厂',messageTit:'测试',messageCon:'发汤圆了',messageTime:'2020/00:00'},
+                {erpName:'郑州思念食品厂',messageTit:'测试',messageCon:'发汤圆了',messageTime:'2020/00:00'},
+                {erpName:'郑州思念食品厂',messageTit:'测试',messageCon:'发汤圆了',messageTime:'2020/00:00'},
+                {erpName:'郑州思念食品厂',messageTit:'测试',messageCon:'发汤圆了',messageTime:'2020/00:00'},
+                {erpName:'郑州思念食品厂',messageTit:'测试',messageCon:'发汤圆了',messageTime:'2020/00:00'},
+                {erpName:'郑州思念食品厂',messageTit:'测试',messageCon:'发汤圆了',messageTime:'2020/00:00'},
+                {erpName:'郑州思念食品厂',messageTit:'测试',messageCon:'发汤圆了',messageTime:'2020/00:00'},
+                {erpName:'郑州思念食品厂',messageTit:'测试',messageCon:'发汤圆了',messageTime:'2020/00:00'},
+                {erpName:'郑州思念食品厂',messageTit:'测试',messageCon:'发汤圆了',messageTime:'2020/00:00'},
+                {erpName:'郑州思念食品厂',messageTit:'测试',messageCon:'发汤圆了',messageTime:'2020/00:00'},
+                {erpName:'郑州思念食品厂',messageTit:'测试',messageCon:'发汤圆了',messageTime:'2020/00:00'},
+                {erpName:'郑州思念食品厂',messageTit:'测试',messageCon:'发汤圆了',messageTime:'2020/00:00'}
+            ]
         };
     },
     computed: {
@@ -81,19 +94,14 @@ export default {
     },
     methods: {
         //详情--跳转详情dialog
-        handleDetail(index, row) {
-            this.$store.commit("getDialogstatus", true);
+        handleEdit(index, row) {
+            this.$store.commit("messageDe", true);
         },
         //点击编辑--跳转编辑dialog
-        handleEdit(index, row) {
+        handleDelete(index, row) {
             console.log(index, row);
             let erpId = row.id;
             this.$store.dispatch("getEnteritem", erpId);
-        },
-        
-        //跳转基站
-        base() {
-            this.$router.push("/baseManage");
         }
     }
 };

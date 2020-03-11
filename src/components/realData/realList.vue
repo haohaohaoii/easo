@@ -1,10 +1,11 @@
 <template>
     <div class="realList">
-        <div class="tabE">
+        <div class="tabE"  v-if="tableData">
             <el-table
                 :data="tableData"
                 stripe
                 style="width: 100%"
+                :height="tableHeight"
                 :header-cell-style="{background: 'rgba(237,237,237,1)'}"
                 class="tab"
                 align="center"
@@ -75,13 +76,22 @@
                     </template>
                 </el-table-column>
             </el-table>
+             <slot></slot>
+        </div>
+         <!--无列表数据-->
+        <div v-else>
+            <no-data></no-data>
         </div>
     </div>
 </template>
 
 <script>
 import {mapMutations} from 'vuex'
+import noData from "../common/noData";
 export default {
+    components: {
+        noData
+    },
     props:{
         datalist:{     //tab数据
             type:Array,
@@ -91,7 +101,9 @@ export default {
         }
     },
     data() {
-        return {};
+        return {
+            tableHeight:window.innerHeight -270
+        };
     },
     computed:{
         tableData(){
@@ -176,13 +188,7 @@ export default {
 <style lang="scss" scoped>
 .realList {
     .tabE {
-        height: 99.5%;
-        margin-top: 1%;
-        border: none;
-        .tab {
-            height: auto;
-            overflow-y: auto;
-        }
+        padding-top: 15px;
     }
 }
 </style>

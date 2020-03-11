@@ -136,7 +136,7 @@ export default ({
     },
     //权限管理下的用户管理添加用户 dialog状态
     changeUserAdd(state, status) {
-        state.userAdd = status;
+        state.userAdddialog = status;
     },
     //权限管理下的用户管理编辑用户 dialog状态
     changeUseredit(state, status) {
@@ -167,10 +167,13 @@ export default ({
         state.divItem = divArr
     },
     //权限管理下的菜单管理添加菜单 dialog状态
-    menuAdd(state, menuStatus) {
-        state.menuAdd = menuStatus;
+    menuEditor(state, menuStatus) {
+        state.menuE = menuStatus;
     },
-
+    //消息详情 dialog状态
+    messageDe(state, status) {
+        state.messageD = status
+    },
     //更改默认选中的菜单
     changeDefaultmenu(state, menuMsg) {
         state.defaultMenu = menuMsg

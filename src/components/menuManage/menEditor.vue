@@ -1,8 +1,8 @@
 <template>
-    <el-dialog :visible.sync="userAdddialog" class="dialog" center @close="closeDialog">
+    <el-dialog :visible.sync="menuE" class="dialog" center @close="closeDialog">
         <div slot="title" class="tit">
             <div class="line"></div>
-            <p>添加菜单</p>
+            <p>编辑菜单</p>
         </div>
         <el-form
             :model="ruleForm"
@@ -69,7 +69,7 @@ export default {
     },
     methods: {
         closeDialog() {
-            this.$store.commit("changeUserAdd", false); //关闭dialog
+            this.$store.commit("menuEditor", false); //关闭dialog
             this.$refs.ruleForm.resetFields(); //重置from和rules
         },
         save() {
@@ -80,7 +80,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(["userAdddialog"])
+        ...mapState(["menuE"])
     }
 };
 </script>

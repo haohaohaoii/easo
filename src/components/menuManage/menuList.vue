@@ -1,5 +1,6 @@
 <template>
     <div class="menuList">
+        <menu-editor></menu-editor>
         <div class="tabE">
             <el-table
                 :data="tableData"
@@ -34,7 +35,11 @@
 
 <script>
 import { mapMutations } from "vuex";
+import menuEditor from './menEditor'
 export default {
+    components:{
+        menuEditor
+    },
     props:{
         munuList:{
             type:Array,
@@ -99,8 +104,7 @@ export default {
         //点击编辑
         roleEditor(index, row) {
             console.log(index, row);
-            this.$router.push({ path: "/menuAdd" });
-            this.$store.commit("menuAdd", true);
+            this.$store.commit("menuEditor", true);
         }
     }
 };

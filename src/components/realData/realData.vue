@@ -35,35 +35,31 @@
             </div>
         </div>
         <!--有列表数据-->
-        <div class="dataS" v-if="isShow">
-            <real-list :datalist="dataList"></real-list>
-            <div class="tabPage">
-                <p class="indic">注：红色字体代表超标数据，橙色字体代表异常数据。</p>
-                <el-pagination
-                    background
-                    layout="prev, pager, next"
-                    :total="totalLength"
-                    @current-change="handleCurrentChange"
-                    :current-page="currentPage"
-                    :page-size="pagesize"
-                ></el-pagination>
-            </div>
-        </div>
-        <!--无列表数据-->
-        <div class="dataS" v-else>
-            <no-data></no-data>
-        </div>
+      
+            <real-list :datalist="dataList">
+                <div class="tabPage">
+                    <p class="indic">注：红色字体代表超标数据，橙色字体代表异常数据。</p>
+                    <el-pagination
+                        background
+                        layout="prev, pager, next"
+                        :total="totalLength"
+                        @current-change="handleCurrentChange"
+                        :current-page="currentPage"
+                        :page-size="pagesize"
+                    ></el-pagination>
+                </div>
+            </real-list>
+      
+       
     </div>
 </template>
 
 <script>
 import realList from "./realList"; //引入子组件
-import noData from "../common/noData";
 import axios from "axios";
 export default {
     components: {
-        realList,
-        noData
+        realList
     },
     data() {
         return {
@@ -190,9 +186,10 @@ export default {
     height: 100%;
     background: #ffff;
     box-sizing: border-box;
-    padding: 1%;
+     padding: 15px;
+
     .realTop {
-        height: 13.5%;
+        height: 85px;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
@@ -212,20 +209,34 @@ export default {
                 color: rgba(51, 62, 68, 1);
             }
         }
-    }
-    .dataS {
-        .tabPage {
-            text-align: center;
-            padding: 20px;
-
-            .indic {
-                position: absolute;
-                right: 2%;
-                font-family: Microsoft YaHei;
-                font-weight: 400;
-                color: red;
+         .search {
+            padding-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            .searchL {
+                width: 68%;
+                display: flex;
+                justify-content: space-between;
+            }
+            .changeW {
+                margin-right: 2%;
             }
         }
+    }
+    .dataS {
+       .tabPage {
+        text-align: center;
+        padding-top: 8px;
+
+        .indic {
+            position: absolute;
+            right: 2%;
+            font-size: 12px;
+            font-family: Microsoft YaHei;
+            font-weight: 400;
+            color: rgba(255, 0, 0, 1);
+        }
+    }
     }
 }
 </style>
