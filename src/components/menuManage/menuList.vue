@@ -83,16 +83,25 @@ export default {
     methods: {
         //点击删除
         roleDelete(index, row) {
-            this.$confirm("此操作将永久删除该条角色, 是否继续?", "提示", {
+      
+            let menuId = row.id
+            this.$confirm("此操作将永久删除该菜单吗？, 是否继续?", "提示", {
                 confirmButtonText: "确定",
                 cancelButtonText: "取消",
                 type: "warning"
             })
                 .then(() => {
-                    this.$message({
-                        type: "success",
-                        message: "删除成功!"
-                    });
+                    this.$api.menu.menuDel(menuId).then(res=>{
+                 
+                       if(res.data.code ==0){
+                        
+                            this.$message({
+                                type: "success",
+                                message: "删除成功!"
+                            });
+                       }
+                    })
+                    
                 })
                 .catch(() => {
                     this.$message({
@@ -104,7 +113,9 @@ export default {
         //点击编辑
         roleEditor(index, row) {
             console.log(index, row);
-            this.$store.commit("menuEditor", true);
+            let id =  row.id
+            this.$store.dispatch('menuE',id)
+            // this.$store.commit("menuEditor", true);
         }
     }
 };

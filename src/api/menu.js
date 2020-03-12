@@ -15,7 +15,23 @@ const menu = {
     },
     getFymenu(params) {  //分页获取所有菜单
         return axios.get(`${base.localUrl}/admin/menu`, params)
-    }
+    },
+    getMenuitem(menuId) {  //根据菜单id查看菜单信息
+        return axios.get(`${base.localUrl}/admin/menu/${menuId}`)
+    },
+    getFathermenu(type) {  //根据菜单类型查看菜单信息
+        return axios.get(`${base.localUrl}/admin/menu/menusByType/${type}`)
+    },
+    menuAdd(params) {  //添加菜单
+        return axios.post(`${base.localUrl}/admin/menu`, qs.stringify(params))
+    },
+    menuChange(menuId, params) {  //修改菜单
+
+        return axios.put(`${base.localUrl}/admin/menu/${menuId}`, qs.stringify(params))
+    },
+    menuDel(menuId) {  //删除菜单
+        return axios.delete(`${base.localUrl}/admin/menu/${menuId}`)
+    },
 }
 
 

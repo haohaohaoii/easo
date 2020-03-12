@@ -13,7 +13,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="cancel">取 消</el-button>
-            <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+            <el-button type="primary" @click="sure">确 定</el-button>
         </div>
     </el-dialog>
 </template>
@@ -54,12 +54,23 @@ export default {
         };
     },
     computed: {
-        ...mapState(["pwdDialog"])
+        ...mapState(["pwdDialog","adminId"])
     },
     methods: {
         //点击取消关闭dialog
         cancel() {
             this.close();
+        },
+        sure(){
+            debugger
+            if(this.oldPawwd && this.newPawwd && this.sureNewpwwd){
+                if( this.newPawwd && this.sureNewpwwd){
+                    let adminId = this.adminId;
+                    this.$api.user.changePawd(adminId).then(res=>{
+                        debugger
+                    })
+                }
+            }
         },
         //点击弹出框右上角x号，关闭dialog
         closeDialog() {

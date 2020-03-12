@@ -69,6 +69,9 @@
             <el-button type="primary" @click="sureEditor">编辑</el-button>
             <el-button @click="cancelEditor">取消</el-button>
         </div>
+        <el-dialog append-to-body :visible.sync="dialogVisible" width="28%">
+            <img width="100%" :src="dialogImageUrl" alt />
+        </el-dialog>
     </el-dialog>
 </template>
 
@@ -86,6 +89,8 @@ export default {
         };
         return {
             id: "",
+            dialogImageUrl: '',
+            dialogVisible: false,
             imageUrl: [], //上传图片的url地址
             localUrl: [],
             types: [], //企业类型
@@ -179,6 +184,7 @@ export default {
         ...mapState(["editorDialog", "enterRow"])
     },
     methods: {
+       
         handleChange(file, fileList) {
             let obj = { url: file.url };
             this.localUrl.push(obj);
@@ -226,16 +232,14 @@ export default {
         },
         //点击每个url放大的方法
         handlePictureCardPreview(file) {
-            for (let i = 0; i < this.imageUrl.length; i++) {
-                if (this.imageUrl[i].uid == file.uid) {
-                    this.$alert(
-                        "<img src=" +
-                            this.imageUrl[i].url +
-                            ' alt / width="100%">',
-                        {
-                            dangerouslyUseHTMLString: true
-                        }
-                    );
+
+            let url = file.url;
+            let urlArr = this.imageUrl.concat(this.localUrl); //合并
+            for (let i = 0; i <urlArr.length; i++) {
+                if (urlArr[i].url == url) {
+                    this.dialogImageUrl = file.url;
+                    
+                    this.dialogVisible = true;
                     break;
                 }
             }
@@ -279,7 +283,7 @@ export default {
                             await promise;
                         }
                         console.log(base64Arr);
-                        debugger;
+            
                         let params = {
                             erpName: _this.ruleForm.firmName, //企业名称
                             erpAddr: _this.ruleForm.firmAddress, //企业地址

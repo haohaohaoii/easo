@@ -21,5 +21,10 @@ export default ({
             );
         });
         return router.options.routes
-    }
+    },
+    // spamIsshow(state) {
+    //     debugger
+    //     let menuArr = state.menulist
+    //     return menuArr
+    // }
 })

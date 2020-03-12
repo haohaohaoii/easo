@@ -11,6 +11,7 @@ export default ({
                     sessionStorage.setItem('opt', JSON.stringify(roles))
                     context.commit('filters', roles)
                     context.commit('getMenus', roles)
+                    context.commit('getSpamisShow', roles)
                 }
                 resolve()
             }).catch(error => {
@@ -265,6 +266,16 @@ export default ({
 
         })
 
+    },
+    //权限管理下  菜单管理  编辑菜单   
+    menuE(context, id) {
+        api.menu.getMenuitem(id).then(res => {
+            if (res.data.code == 0) {
+                let itemObj = res.data.data[0]
+                context.commit('getMenuitem', itemObj)
+                context.commit("menuEditor", true);
+            }
+        })
     },
     //获取到历史数据中的总数据(折线和柱状需要)
     getAllhisData(content, params) {

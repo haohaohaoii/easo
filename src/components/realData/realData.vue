@@ -35,22 +35,20 @@
             </div>
         </div>
         <!--有列表数据-->
-      
-            <real-list :datalist="dataList">
-                <div class="tabPage">
-                    <p class="indic">注：红色字体代表超标数据，橙色字体代表异常数据。</p>
-                    <el-pagination
-                        background
-                        layout="prev, pager, next"
-                        :total="totalLength"
-                        @current-change="handleCurrentChange"
-                        :current-page="currentPage"
-                        :page-size="pagesize"
-                    ></el-pagination>
-                </div>
-            </real-list>
-      
-       
+
+        <real-list :datalist="dataList">
+            <div class="tabPage">
+                <p class="indic">注：红色字体代表超标数据，橙色字体代表异常数据。</p>
+                <el-pagination
+                    background
+                    layout="prev, pager, next"
+                    :total="totalLength"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    :page-size="pagesize"
+                ></el-pagination>
+            </div>
+        </real-list>
     </div>
 </template>
 
@@ -87,9 +85,17 @@ export default {
         },
         search() {
             //点击搜索
-            this.currentPage = 1; //每次点击搜索的时候，从第一页开始
-            let pageNum = this.currentPage;
-            this.sendAxios(pageNum);
+            if(this.enterValue && this.baseValue){
+                this.currentPage = 1; //每次点击搜索的时候，从第一页开始
+                let pageNum = this.currentPage;
+                this.sendAxios(pageNum);
+            }else{
+                this.$message({
+                    type: "warning",
+                    message: "请填选择查询条件"
+                });
+            }
+            
         },
         //发送数据请求
         sendAxios(pageNum) {
@@ -125,6 +131,7 @@ export default {
                 .catch(error => {});
         },
         //获取企业相关数据
+        
         getCompany() {
             this.$api.company
                 .companyAll()
@@ -186,7 +193,7 @@ export default {
     height: 100%;
     background: #ffff;
     box-sizing: border-box;
-     padding: 15px;
+    padding: 15px;
 
     .realTop {
         height: 85px;
@@ -209,12 +216,12 @@ export default {
                 color: rgba(51, 62, 68, 1);
             }
         }
-         .search {
+        .search {
             padding-top: 15px;
             display: flex;
             justify-content: space-between;
             .searchL {
-                width: 68%;
+                width: 40%;
                 display: flex;
                 justify-content: space-between;
             }
@@ -223,8 +230,7 @@ export default {
             }
         }
     }
-    .dataS {
-       .tabPage {
+    .tabPage {
         text-align: center;
         padding-top: 8px;
 
@@ -236,7 +242,6 @@ export default {
             font-weight: 400;
             color: rgba(255, 0, 0, 1);
         }
-    }
     }
 }
 </style>

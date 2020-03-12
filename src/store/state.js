@@ -22,6 +22,7 @@ export default ({
     // companyType: [],   //企业管理下的企业信息 编辑中需要获取企业类型
     baseAdd: false,  //企业管理下的基站管理中的添加基站 dialog状态
     Equilist: [],  //企业管理下的基站管理中的添加基站  所需的托管设备数组
+    menuItemD: '',   //权限管理下的菜单管理  行信息详情，编辑要用
     baseDetail: false,    //企业管理下的基站管理中的基站详情  dialog状态
     siteRowlist: '',    //企业管理下的基站管理 点击基站详情  row
     baseEditor: false,    //企业管理下的基站管理中的编辑  dialog状态
@@ -47,6 +48,7 @@ export default ({
     roleItem: [],   //单个的角色对应的权限
     roleName: '',    //角色名称
     roleId: '',       //角色id
+    spamIsshow: false,
     menulist: [],  //由角色权限和本地完整路由结合生成的实际菜单表
     defaultMenu: 'hisData',  //默认选中的是历史数据
     rolesRoutes: [],  //由角色权限和本地完整路由结合生成的实际角色路由

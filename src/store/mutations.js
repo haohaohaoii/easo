@@ -108,6 +108,10 @@ export default ({
     getspamDetail(state, content) {
         state.spamItemlist = content
     },
+    //权限管理下的菜单管理   菜单id获取行信息
+    getMenuitem(state, itemObj) {
+        state.menuItemD = itemObj
+    },
     //权限管理下的角色管理添加角色 dialog状态,并获取全部菜单
     roleAdd(state, pdObj) {
         if (pdObj.type == 'add') {  //添加角色
@@ -259,5 +263,23 @@ export default ({
         }
 
         state.menulist = menuTree
+    },
+
+    //实时消息有没有权限
+    getSpamisShow(state, roles) {
+        let menuTree = roles
+        let status = false
+        for (let i = 0; i < menuTree.length; i++) {
+            if (menuTree[i].menuName == '企业管理') {
+                if (menuTree[i].subMenus && menuTree[i].subMenus.length > 0) {
+                    for (let k = 0; k < menuTree[i].subMenus.length; k++) {
+                        if (menuTree[i].subMenus[k].menuName == '留言管理') {
+                            status = true
+                        }
+                    }
+                }
+            }
+        }
+        state.spamIsshow = status;
     }
 })

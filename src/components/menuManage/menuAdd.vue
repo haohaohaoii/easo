@@ -14,13 +14,37 @@
             <el-form-item label="菜单名称:" prop="menuName">
                 <el-input v-model="ruleForm.menuName"></el-input>
             </el-form-item>
-            <el-form-item label="访问代码:" prop="menuAddress">
+            <el-form-item label="访问地址:" prop="menuAddress">
                 <el-input v-model="ruleForm.menuAddress"></el-input>
+            </el-form-item>
+            <el-form-item label="菜单级别" prop="menuLevelO" v-if="oneOpations && oneOpations.length>0">
+                <el-select v-model="ruleForm.menuLevelO" placeholder="请选择父级菜单">
+                    <el-option
+                        v-for="item in oneOpations"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="菜单级别" prop="menuLevelT" v-if="twoOpations && twoOpations.length>0">
+                <el-select v-model="ruleForm.menuLevelT" placeholder="请选择父级菜单">
+                    <el-option
+                        v-for="item in twoOpations"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                    ></el-option>
+                </el-select>
             </el-form-item>
             <el-form-item label="菜单级别" prop="menuLevel">
                 <el-select v-model="ruleForm.menuLevel" placeholder="请选择菜单级别">
-                    <el-option label="区域一" value="shanghai"></el-option>
-                    <el-option label="区域二" value="beijing"></el-option>
+                    <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                    ></el-option>
                 </el-select>
             </el-form-item>
         </el-form>
@@ -36,11 +60,19 @@ import { mapState, mapMutations } from "vuex";
 export default {
     data() {
         return {
-            status: false, //控制表头不显示
+            oneOpations:[],   //一级菜单
+            twoOpations:[],   //二级菜单
+            options:[
+                {label:'一级菜单',value:0},
+                {label:'二级菜单',value:1},
+                {label:'三级菜单',value:2}
+            ],
             ruleForm: {
                 menuName: "", //菜单名称
                 menuAddress: "", //访问代码
-                menuLevel:"", //菜单级别
+                menuLevel:"", //菜单级别(默认)
+                menuLevelO:'', //一级菜单
+                menuLevelT:''
             },
             rules: {
                 menuName: [
@@ -63,6 +95,20 @@ export default {
                         message: "请选择菜单级别",
                         trigger: "change"
                     }
+                ],
+                menuLevelO: [
+                    {
+                        required: true,
+                        message: "请选择菜单级别",
+                        trigger: "change"
+                    }
+                ],
+                menuLevelT: [
+                    {
+                        required: true,
+                        message: "请选择菜单级别",
+                        trigger: "change"
+                    }
                 ]
             }
         };
@@ -73,14 +119,101 @@ export default {
             this.$refs.ruleForm.resetFields(); //重置from和rules
         },
         save() {
-            this.closeDialog()
+    
+            if(this.ruleForm.menuName && this.ruleForm.menuAddress){
+     
+                let typeM = this.ruleForm.menuLevel
+                let type
+                if(typeM ==0){
+                    type = ''
+                }else if(typeM == 1){
+                    type = this.ruleForm.menuLevelO
+                }else if(typeM == 2){
+                    type = this.ruleForm.menuLevelT
+                }
+                let params = {
+                    menuName:this.ruleForm.menuName,
+                    url:this.ruleForm.menuAddress,
+                    menuType:typeM,
+                    parentId:type
+                }
+                let _this = this
+                this.$api.menu.menuAdd(params).then(res=>{
+          
+                    if(res.data.code ==0){
+                         _this.$message({
+                            message: '菜单添加成功',
+                            type: 'success'
+                        });
+                        _this.closeDialog()
+                    }
+                })
+            }else{
+                this.$message({
+                    type: "warning",
+                    message: "请填写完毕后再添加"
+                });
+            }
+           
         },
         cancel() {
             this.closeDialog()
+        },
+        getFmenuO(type){
+            this.$api.menu.getFathermenu(type).then(res=>{
+  
+                if(res.data.code == 0){
+                    let arr =res.data.data
+                    for(let i=0; i<arr.length;i++){
+                        let obj = {
+                            label:arr[i].menuName,
+                            value:arr[i].id
+                        }
+                        this.oneOpations.push(obj)
+                        
+                    }
+                }
+            })
+        },
+        getFmenuT(type){
+            this.$api.menu.getFathermenu(type).then(res=>{
+
+                if(res.data.code == 0){
+                    let arr =res.data.data
+                    for(let i=0; i<arr.length;i++){
+                        let obj = {
+                            label:arr[i].menuName,
+                            value:arr[i].id
+                        }
+                        this.twoOpations.push(obj)
+                        
+                    }
+                }
+            })
         }
     },
     computed: {
-        ...mapState(["userAdddialog"])
+        ...mapState(["userAdddialog"]),
+        menuLevel(){
+            return this.ruleForm.menuLevel
+        }
+    },
+    watch:{
+        menuLevel(val) {
+    　　　　console.log(val)
+            if(val == 1){    //二级菜单 需要找父级菜单一级菜单
+             this.twoOpations=[]
+                let type = 1-1
+                this.getFmenuO(type)
+            }else if(val == 0){
+                this. oneOpations=[]
+                this.twoOpations=[]
+            }else if(val ==2){  //三级菜单 需要找父级菜单 二级菜单
+               this. oneOpations=[]
+                let type = 2-1
+                this.getFmenuT(type)
+            }
+    　　}
     }
 };
 </script>

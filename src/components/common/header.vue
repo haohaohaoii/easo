@@ -76,7 +76,7 @@
                 @mouseleave="cusLeave"
                 :style="cusObj"
             ></i>
-            <el-badge :value="99" class="item">
+            <el-badge :value="1" class="item">
                 <i
                     class="el-icon-message-solid ic"
                     @mouseenter="msgEnter"
@@ -252,7 +252,7 @@ export default {
         },
         //点击消息
         message() {
-            this.$router.push("/message");
+            this.$router.push("/spam");
         },
         //点击修改密码
         changePawd() {

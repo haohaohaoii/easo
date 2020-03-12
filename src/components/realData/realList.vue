@@ -1,6 +1,6 @@
 <template>
-    <div class="realList">
-        <div class="tabE"  v-if="tableData">
+    <div class="realList" v-if="tableData">
+        <div class="tabE">
             <el-table
                 :data="tableData"
                 stripe
@@ -76,13 +76,12 @@
                     </template>
                 </el-table-column>
             </el-table>
-             <slot></slot>
+            <slot></slot>
         </div>
-         <!--无列表数据-->
-        <div v-else>
-            <no-data></no-data>
-        </div>
+        <!--无列表数据-->
     </div>
+
+    <no-data v-else></no-data>
 </template>
 
 <script>
@@ -190,5 +189,11 @@ export default {
     .tabE {
         padding-top: 15px;
     }
+}
+.realList >>> .el-table::before {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 0;
 }
 </style>

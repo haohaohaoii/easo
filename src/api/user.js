@@ -25,6 +25,10 @@ const user = {
     //删除用户信息
     deleteUseritem(adminId) {
         return axios.delete(`${base.localUrl}/admin/admin/${adminId}`)
+    },
+    changePawd(adminId) {  //修改密码
+        debugger
+        return axios.put(`${base.localUrl}/admin/admin/${adminId}`)
     }
 }
 

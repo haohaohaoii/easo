@@ -14,13 +14,17 @@
             <el-form-item label="菜单名称:" prop="menuName">
                 <el-input v-model="ruleForm.menuName"></el-input>
             </el-form-item>
-            <el-form-item label="访问代码:" prop="menuAddress">
-                <el-input v-model="ruleForm.menuAddress"></el-input>
+            <el-form-item label="访问地址:" prop="menuAddress">
+                <el-input readonly v-model="ruleForm.menuAddress"></el-input>
             </el-form-item>
             <el-form-item label="菜单级别" prop="menuLevel">
-                <el-select v-model="ruleForm.menuLevel" placeholder="请选择菜单级别">
-                    <el-option label="区域一" value="shanghai"></el-option>
-                    <el-option label="区域二" value="beijing"></el-option>
+                <el-select v-model="ruleForm.menuLevel" placeholder="请选择菜单级别" disabled>
+                    <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                    ></el-option>
                 </el-select>
             </el-form-item>
         </el-form>
@@ -36,7 +40,13 @@ import { mapState, mapMutations } from "vuex";
 export default {
     data() {
         return {
-            status: false, //控制表头不显示
+            id:'',
+            readonly: true,
+            options:[
+                {label:'一级菜单',value:0},
+                {label:'二级菜单',value:1},
+                {label:'三级菜单',value:2}
+            ],
             ruleForm: {
                 menuName: "", //菜单名称
                 menuAddress: "", //访问代码
@@ -67,20 +77,58 @@ export default {
             }
         };
     },
+    computed: {
+        ...mapState(["menuE","menuItemD"])
+    },
     methods: {
         closeDialog() {
             this.$store.commit("menuEditor", false); //关闭dialog
             this.$refs.ruleForm.resetFields(); //重置from和rules
         },
         save() {
-            this.closeDialog()
+            if(this.ruleForm.menuName){
+                let menuId = this.id
+                let params = {
+                    menuName:this.ruleForm.menuName,
+                    url:this.ruleForm.menuAddress,
+                    menuType:this.ruleForm.menuLevel
+                }
+                let _this = this
+                this.$api.menu
+                .menuChange(menuId, params)
+                .then(res => {
+                    if (res.data.code == 0) {
+                        console.log(res);
+                        _this.$message({
+                            message: "菜单修改成功",
+                            type: "success"
+                        });
+                        _this.closeDialog();
+                    }
+                });
+            }else{
+                this.$message({
+                    type: "warning",
+                    message: "请填写完毕后再添加"
+                });
+            }
+            
         },
         cancel() {
             this.closeDialog()
         }
     },
-    computed: {
-        ...mapState(["menuE"])
+    watch:{
+        menuItemD(val){
+            this.id = val.id
+            this.ruleForm.menuName =val.menuName
+            this.ruleForm.menuAddress = val.url
+            for(let i=0; i<this.options.length; i++){
+                if(this.options[i].value == val.menuType){
+                    this.ruleForm.menuLevel = this.options[i].value
+                }
+            }
+        }
     }
 };
 </script>

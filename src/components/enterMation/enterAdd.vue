@@ -68,6 +68,9 @@
             <el-button type="primary" @click="sureEditor" size="mini">编辑</el-button>
             <el-button @click="cancelEditor" size="mini">取消</el-button>
         </div>
+        <el-dialog append-to-body :visible.sync="dialogVisible" width="28%">
+            <img width="100%" :src="dialogImageUrl" alt />
+        </el-dialog>
     </el-dialog>
 </template>
 
@@ -85,7 +88,8 @@ export default {
             }
         }
         return {
-            
+            dialogImageUrl: '',
+            dialogVisible: false,
             types:[],   //企业类型集合
             imageUrl: [], //上传图片的url地址
             ruleForm: {
@@ -194,9 +198,7 @@ export default {
             let _this = this;
 
             this.getBase64(file.raw)
-                .then(res => {
-
-                                        
+                .then(res => {                
                     let str = res.substring(res.indexOf(",")+1);
 
                     _this.imageUrl.push(str);
@@ -244,17 +246,12 @@ export default {
             let _this = this;
             this.getBase64(file.raw).then(res => {
                 console.log(res);
+                let str = res.substring(res.indexOf(",")+1);
                 for (let i = 0; i < _this.imageUrl.length; i++) {
-                    if (_this.imageUrl[i] == res) {
-                        _this.$alert(
-                            "<img src=" +
-                                _this.imageUrl[i] +
-                                ' alt / width="100%">',
-                            {
-                                dangerouslyUseHTMLString: true,
-                                showConfirmButton: false
-                            }
-                        );
+                    if (_this.imageUrl[i] == str) {
+                        _this.dialogImageUrl = file.url;
+                        
+                        _this.dialogVisible = true;
                         break;
                     }
                 }
@@ -269,7 +266,7 @@ export default {
         },
         //确定编辑  --关闭dialog
         sureEditor() {
-            debugger
+
             this.$refs["ruleForm"].validate(valid => {
                 if (valid) {
   
