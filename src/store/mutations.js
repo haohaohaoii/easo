@@ -146,6 +146,23 @@ export default ({
     changeUseredit(state, status) {
         state.userEditor = status
     },
+    //企业信息 审核 dialog
+    changeEnteraudit(state, status) {
+        state.enterAud = status
+    },
+    //企业信息 审核行的id
+    getEnterId(state, id) {
+        state.enterId = id
+    },
+    //企业用户 编辑 dialog
+    comUserE(state, status) {
+        state.companyUseredi = status
+    },
+    //企业用户行信息 
+    comUseri(state, obj) {
+
+        state.companyUseritem = obj
+    },
     //权限管理下的用户管理编辑用户 所需的行数据信息
     userItemdetail(state, itemDetail) {
         state.userItem = itemDetail;
@@ -177,6 +194,10 @@ export default ({
     //消息详情 dialog状态
     messageDe(state, status) {
         state.messageD = status
+    },
+    //企业管理下  企业用户  添加用户
+    changeUserA(state, status) {
+        state.companyUseradd = status
     },
     //更改默认选中的菜单
     changeDefaultmenu(state, menuMsg) {

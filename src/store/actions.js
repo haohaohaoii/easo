@@ -267,6 +267,23 @@ export default ({
         })
 
     },
+    //企业用户  点击 编辑 dialog状态  和当行信息
+    getUseritem(context, erpId) {
+
+        api.company.getUseritem(erpId).then(res => {
+            console.log(res)
+            if (res.data.code == 0) {
+                let rowObj = res.data.data[0]
+                context.commit("comUserE", true) //改变dialog状态
+                context.commit('comUseri', rowObj)  //获取行数据信息
+
+            }
+
+
+        }).catch(error => {
+
+        })
+    },
     //权限管理下  菜单管理  编辑菜单   
     menuE(context, id) {
         api.menu.getMenuitem(id).then(res => {

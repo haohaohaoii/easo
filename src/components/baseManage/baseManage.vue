@@ -14,6 +14,7 @@
                     size="mini"
                     class="add"
                     @click="baseAdd"
+                    v-has="'添加基站'"
                 >添加基站</el-button>
             </div>
         </div>

@@ -72,6 +72,7 @@
                             size="mini"
                             type="primary"
                             @click="toHistorydata(scope.$index, scope.row)"
+                            v-has="'历史数据'"
                         >历史数据</el-button>
                     </template>
                 </el-table-column>

@@ -4,17 +4,17 @@
             <p class="titName">环境管理后台系统</p>
             <div class="userLog">
                 <img src="../../assets/images/user.png" alt />
-                <p>用户admin</p>
+                <p class="name">{{adminName}}</p>
             </div>
         </div>
         <!-- <el-radio-group v-model="isCollapse" id="changeMenubtn">
             <el-radio-button :label="false">展开</el-radio-button>
             <el-radio-button :label="true">收起</el-radio-button>
         </el-radio-group>-->
-        <div id="changeMenubtn">
+        <!-- <div id="changeMenubtn">
             <el-button type="primary" :icon="showSide" @click="sideBtn" circle></el-button>
-        </div>
-        <el-menu
+        </div>-->
+        <!-- <el-menu
             default-active="1"
             class="el-menu-vertical-demo"
             :collapse="isCollapse"
@@ -37,7 +37,7 @@
                 <i class="el-icon-setting"></i>
                 <span slot="title">导航四</span>
             </el-menu-item>
-        </el-menu>
+        </el-menu>-->
     </div>
 </template>
 
@@ -46,6 +46,7 @@ import { mapState, mapMutations } from "vuex";
 export default {
     data() {
         return {
+            adminName:localStorage.userName,
             isCollapse: false, //控制是否折叠
             isShow: true,
             showSide: "el-icon-arrow-left"
@@ -55,7 +56,7 @@ export default {
         let elmenu = document.getElementById("elmenu");
         let btnControl = document.getElementById("changeMenubtn");
         elmenu.style.width = this.menuLeftwidth;
-        btnControl.style.left = this.menuLeftwidth;
+        // btnControl.style.left = this.menuLeftwidth;
     },
     computed: {
         ...mapState(["menuLeftwidth"])
@@ -131,6 +132,7 @@ export default {
             color: rgba(255, 255, 255, 1);
             line-height: 64px;
         }
+
         .userLog {
             display: flex;
             flex-direction: column;
@@ -139,10 +141,11 @@ export default {
                 width: 68px;
                 height: 68px;
             }
-            p {
-                font-family: Microsoft YaHei;
-                font-weight: 400;
+
+            .name {
                 color: rgba(255, 255, 255, 1);
+                font-family: Microsoft YaHei;
+                font-weight: bolder;
             }
         }
     }
@@ -152,8 +155,8 @@ export default {
     border-right: 0;
     background-color: transparent !important;
 }
-menuNav >>> .el-menu-item{
-    background-color: red !important
+menuNav >>> .el-menu-item {
+    background-color: red !important;
 }
 .menuNav >>> .el-menu-item:hover {
     background-color: #1f87e7 !important;

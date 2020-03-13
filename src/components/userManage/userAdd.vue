@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :visible.sync="userAdd" class="dialog" center @close="closeDialog">
+    <el-dialog :visible.sync="userAdddialog" class="dialog" center @close="closeDialog">
         <div slot="title" class="tit">
             <div class="line"></div>
             <p>添加用户信息</p>
@@ -129,7 +129,7 @@ export default {
         };
     },
     computed: {
-        ...mapState(["userAdd"])
+        ...mapState(["userAdddialog"])
     },
     methods: {
         //点击部门 获取部门列表

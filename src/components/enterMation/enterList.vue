@@ -21,34 +21,50 @@
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="turnTime" label="注册时间"></el-table-column>
-                <el-table-column label="操作" align="center" width="220" fixed="right">
+                <el-table-column label="操作" align="center" width="300" fixed="right">
                     <template slot-scope="scope">
-                        <el-button size="mini" @click="base(scope.$index, scope.row)">基站</el-button>
+                        <el-button
+                            size="mini"
+                            @click="base(scope.$index, scope.row)"
+                            v-has="'基站'"
+                        >基站</el-button>
+                        <el-button
+                            size="mini"
+                            @click="audit(scope.$index, scope.row)"
+                            v-if="scope.row.userSection==0"
+                            type="danger"
+                            v-has="'审核'"
+                        >审核</el-button>
                         <el-button
                             size="mini"
                             type="primary"
                             @click="handleEdit(scope.$index, scope.row)"
+                            v-has="'编辑'"
                         >编辑</el-button>
                         <el-button
                             size="mini"
-                            type="danger"
+                            type="warning"
                             @click="handleDetail(scope.$index, scope.row)"
+                            v-has="'详情'"
                         >详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
         </div>
         <edi-dialog></edi-dialog>
+        <enter-audit></enter-audit>
         <slot></slot>
     </div>
 </template>
 
 <script>
+import enterAudit from './enterAudit';
 import { mapMutations } from "vuex";
 import ediDialog from "./ediDialog";
 export default {
     components: {
-        ediDialog
+        ediDialog,
+        enterAudit
     },
     props: {
         companyList: {
@@ -98,6 +114,12 @@ export default {
         //跳转基站
         base() {
             this.$router.push("/baseManage");
+        },
+        audit(index, row){
+         
+            let id =row.id
+            this.$store.commit ('getEnterId',id)
+            this.$store.commit('changeEnteraudit',true)
         }
     }
 };
@@ -112,5 +134,11 @@ export default {
         text-align: center;
         padding-top: 20px;
     }
+}
+.enterList >>> .el-table::before {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 0;
 }
 </style>

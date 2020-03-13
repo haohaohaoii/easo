@@ -19,11 +19,13 @@
                             size="mini"
                             type="primary"
                             @click="handleReply(scope.$index, scope.row)"
+                            v-has="'回复'"
                         >回复</el-button>
                         <el-button
                             size="mini"
                             type="danger"
                             @click="handleDelete(scope.$index, scope.row)"
+                            v-has="'删除'"
                         >删除</el-button>
                     </template>
                 </el-table-column>

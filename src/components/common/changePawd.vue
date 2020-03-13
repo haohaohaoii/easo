@@ -1,14 +1,21 @@
 <template>
-    <el-dialog title="修改密码" :visible.sync="pwdDialog" center width="40%" @close="closeDialog">
+    <el-dialog
+        title="修改密码"
+        :visible.sync="pwdDialog"
+        center
+        width="30%"
+        @close="closeDialog"
+        class="dialog"
+    >
         <el-form :model="form" ref="forms" :rules="rules">
             <el-form-item label="原密码" prop="oldPawwd">
                 <el-input v-model="form.oldPawwd" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="新密码" prop="newPawwd">
-                <el-input v-model="form.newPawwd" autocomplete="off"></el-input>
+                <el-input type="password" v-model="form.newPawwd" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="确认新密码" prop="sureNewpwwd">
-                <el-input v-model="form.sureNewpwwd" autocomplete="off"></el-input>
+                <el-input type="password" v-model="form.sureNewpwwd" autocomplete="off"></el-input>
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -62,12 +69,31 @@ export default {
             this.close();
         },
         sure(){
-            debugger
-            if(this.oldPawwd && this.newPawwd && this.sureNewpwwd){
-                if( this.newPawwd && this.sureNewpwwd){
+            if(this.form.oldPawwd && this.form.newPawwd && this.form.sureNewpwwd){
+                if( this.form.newPawwd && this.form.sureNewpwwd){
                     let adminId = this.adminId;
-                    this.$api.user.changePawd(adminId).then(res=>{
-                        debugger
+                    let params = {
+                        password:this.form.sureNewpwwd,
+                        username:localStorage.userName
+                    }
+                    let _this =this
+                    _this.$api.user.changePawd(adminId,params).then(res=>{
+                      
+                        if(res.data.code == 0){
+                            _this.close();
+                            _this.$alert('密码修改成功，请重新登陆', '注意', {
+                                confirmButtonText: '确定',
+                                callback: action => {
+                            
+                                    localStorage.clear(); //清空local中的数据
+                                    sessionStorage.clear(); //清空session中的数据
+                                    _this.$store.commit("getToken", "");
+                                    _this.$store.commit("getAdminid", "");
+                                    _this.$router.push("/login");
+                                }
+                            });
+                        }
+                        
                     })
                 }
             }
@@ -88,4 +114,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.dialog >>> .el-dialog {
+    margin-top: 0 !important;
+    position: relative;
+    margin: 0 auto;
+
+    top: 50%;
+    transition: transform;
+    transform: translateY(-50%);
+    border: 1px solid #ebeef5;
+
+    width: 38%;
+    height: 52%;
+    overflow-y: auto;
+}
+.dialog >>> .el-dialog__header {
+    padding: 10px !important;
+}
+.dialog >>> .el-dialog__footer {
+    padding: 0 !important;
+}
 </style>

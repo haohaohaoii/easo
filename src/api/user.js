@@ -26,9 +26,8 @@ const user = {
     deleteUseritem(adminId) {
         return axios.delete(`${base.localUrl}/admin/admin/${adminId}`)
     },
-    changePawd(adminId) {  //修改密码
-        debugger
-        return axios.put(`${base.localUrl}/admin/admin/${adminId}`)
+    changePawd(adminId, params) {  //修改密码
+        return axios.put(`${base.localUrl}/admin/admin/${adminId}`, qs.stringify(params))
     }
 }
 

@@ -1,22 +1,21 @@
 <template>
-    <div class="enterMation">
-        <enter-add></enter-add>
-        <enter-dialog></enter-dialog>
+    <div class="companyUser">
+        <user-add></user-add>
         <div class="enmationTop">
             <div class="markMsg">
                 <div></div>
-                <p>企业信息</p>
+                <p>企业用户</p>
                 <el-button
                     type="primary"
                     icon="el-icon-circle-plus-outline"
                     size="mini"
                     class="add"
                     @click="addQy"
-                    v-has="'添加企业'"
-                >添加企业</el-button>
+                    v-has="'添加企业用户'"
+                >添加企业用户</el-button>
             </div>
         </div>
-        <enter-list :companyList="companyArr">
+        <user-list :companyList="companyArr">
             <div class="tabPage">
                 <el-pagination
                     background
@@ -27,20 +26,18 @@
                     :page-size="pagesize"
                 ></el-pagination>
             </div>
-        </enter-list>
+        </user-list>
     </div>
 </template>
 
 <script>
-import enterList from "./enterList";
+import userAdd from './userAdd'
+import userList from "./userList";
 import {mapMutations} from 'vuex'
-import enterAdd from './enterAdd'
-import enterDialog from './enterDialog'
 export default {
     components: {
-        enterList,
-        enterDialog,
-        enterAdd
+        userList,
+        userAdd
     },
     data() {
         return {
@@ -58,7 +55,7 @@ export default {
         getUserlist(pageNum){
             let pageSize = this.pagesize;
             this.$api.company
-                .companyFyall({
+                .getCompanyusers({
                     params: {
                         pageNum: pageNum,
                         pageSize: pageSize,
@@ -66,6 +63,7 @@ export default {
                 })
 
                 .then(res => {
+                 
                     console.log(res)
                     if(res.data.code ==0){
                         this.totalLength = res.data.pageInfo.total  //获取总条数
@@ -74,9 +72,9 @@ export default {
                 })
                 .catch(error => {});
         },
-        //添加企业
+        //添加企业用户
         addQy(){
-            this.$store.commit('changeEnterAdd',true);
+            this.$store.commit('changeUserA',true);
         },
         //点击页码的时候
         handleCurrentChange(currentPage) {
@@ -90,7 +88,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.enterMation {
+.companyUser {
     height: 100%;
     background: #ffff;
     box-sizing: border-box;

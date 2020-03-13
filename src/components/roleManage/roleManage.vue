@@ -12,6 +12,7 @@
                     size="mini"
                     class="add"
                     @click="addRole"
+                    v-has="'添加角色'"
                 >添加角色</el-button>
             </div>
         </div>

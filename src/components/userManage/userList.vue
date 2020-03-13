@@ -22,11 +22,13 @@
                             size="mini"
                             type="primary"
                             @click="roleEditor(scope.$index, scope.row)"
+                            v-has="'编辑'"
                         >编辑</el-button>
                         <el-button
                             size="mini"
                             type="danger"
                             @click="roleDelete(scope.$index, scope.row)"
+                            v-has="'删除'"
                         >删除</el-button>
                     </template>
                 </el-table-column>

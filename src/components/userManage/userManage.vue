@@ -10,6 +10,7 @@
                     size="mini"
                     class="add"
                     @click="addUser"
+                    v-has="'添加用户'"
                 >添加用户</el-button>
             </div>
             <user-add></user-add>

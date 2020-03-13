@@ -110,11 +110,45 @@ export default {
     },
     mounted() {
         this.getCompany();
+        this.getNowTime();
+        this.getCurrentMonthFirst()
+        this.sendAxios( this.currentPage)
     },
     computed: {
         ...mapState(["searchHours"])
     },
     methods: {
+        getNowTime() {
+            
+            let now = new Date();
+            let year = now.getFullYear(); //得到年份
+            let month = now.getMonth(); //得到月份
+            let date = now.getDate(); //得到日期
+            let hour = now.getHours();//得到小时
+            month = month + 1;
+            month = month.toString().padStart(2, "0");
+            date = date.toString().padStart(2, "0");
+            let defaultDate = `${year}-${month}-${date} :${hour}:00:00`;
+            this.endTime  =defaultDate
+        },
+        getCurrentMonthFirst(){
+          
+            let date = new Date();
+            date.setDate(1);
+            let month = parseInt(date.getMonth()+1);
+            let day = date.getDate();
+            let hour = date.getHours();//得到小时
+            if (month < 10) {
+                month = '0' + month
+            }
+            if (day < 10) {
+                day = '0' + day
+            }
+           let firstData= date.getFullYear() + '-' + month + '-' + day +':'+hour +':00:00';
+           this.startTime = firstData
+        },
+
+
         //点击查询
         search() {
             //必传参数 开始时间和结束时间

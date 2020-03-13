@@ -131,12 +131,13 @@ export default {
                         //登陆成功
                         if (this.remenbVal) {
                             //记住密码
-                            localStorage.setItem("userName", this.userName); //存储账号
+                           
                             localStorage.setItem(
                                 "userPaw",
                                 Base64.encode(this.userPaw)
                             ); //存储密码(base64加密)
                         }
+                         localStorage.setItem("userName", this.userName); //存储账号
                         localStorage.setItem("token", res.data.data[0].token); //存储token
                         let adminId = res.data.data[0].id; //获取adminId
                         localStorage.setItem("adminId", adminId);

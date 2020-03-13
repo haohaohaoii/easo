@@ -70,12 +70,12 @@
 
         <div class="tubiao">
             <theme-picker></theme-picker>
-            <i
+            <!-- <i
                 class="el-icon-s-custom ic"
                 @mouseenter="cusEnter"
                 @mouseleave="cusLeave"
                 :style="cusObj"
-            ></i>
+            ></i>-->
             <el-badge :value="1" class="item">
                 <i
                     class="el-icon-message-solid ic"
@@ -292,7 +292,7 @@ export default {
         position: absolute;
         right: 0%;
         top: 14px;
-        width: 17%;
+        width: 10%;
         display: flex;
         justify-content: space-around;
         align-items: center;

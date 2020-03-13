@@ -11,6 +11,7 @@
                     size="mini"
                     class="add"
                     @click="addManage"
+                    v-has="'添加部门'"
                 >添加部门</el-button>
             </div>
         </div>

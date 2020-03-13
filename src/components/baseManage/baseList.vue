@@ -35,16 +35,19 @@
                             size="mini"
                             @click="audit(scope.$index, scope.row)"
                             v-if="scope.row.siteState==0 || scope.row.siteState==3"
+                            v-has="'审核'"
                         >审核</el-button>
                         <el-button
                             size="mini"
                             type="primary"
                             @click="handleEdit(scope.$index, scope.row)"
+                            v-has="'编辑'"
                         >编辑</el-button>
                         <el-button
                             size="mini"
                             type="danger"
                             @click="handleDetail(scope.$index, scope.row)"
+                            v-has="'详情'"
                         >详情</el-button>
                     </template>
                 </el-table-column>

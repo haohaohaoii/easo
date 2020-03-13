@@ -13,6 +13,9 @@ export default ({
     breadArr: localStorage.breadArr ? JSON.parse(localStorage.breadArr) : [],  //动态面包屑
     hisDataall: '',  //历史数据不分页--折线图用
     hoursArr: [], //x轴坐标
+    companyUseradd: false,   //企业管理下的 企业用户 添加企业用户dialog状态
+    companyUseredi: false,   //企业管理下的 企业用户 编辑 企业用户dialog状态
+    companyUseritem: '',  //企业管理下的 企业用户 编辑 行信息
     messageD: false,  //消息详情 dialog状态
     pwdDialog: false,  //头部右侧修改密码 dialog状态
     enterDialog: false, //企业管理下的企业信息中的详情 dialog状态
@@ -31,7 +34,9 @@ export default ({
     companyArr: [],       //企业管理中的基站管理中的编辑 所需的全部企业
     baseItemlist: '',   //企业管理下的基站管理中的编辑 所需的信息
     spamReply: false,   //企业管理下的留言回复
+    enterAud: false,   //企业信息审核弹窗
     spamItemlist: [],    //企业管理写的 留言回复  单个留言id对应的内容
+    enterId: '',   //企业信息审核行的id
     roleAdd: false,     //权限管理下的角色管理添加角色 dialog状态
     roleEditor: false,   //权限管理下的角色管理修改角色 dialog状态
     userAdd: false,   //权限管理下的用户管理添加用户 dialog状态
@@ -98,6 +103,11 @@ export default ({
             path: 'message',     //消息
             name: '消息',
             component: resolve => (require(["@/components/common/message"], resolve))
+        },
+        {
+            path: 'companyUser',     //企业用户
+            name: '企业用户',
+            component: resolve => (require(["@/components/companyUser/companyUser"], resolve))
         }
     ]
 })

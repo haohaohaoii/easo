@@ -1,8 +1,8 @@
 <template>
-    <el-dialog :visible.sync="baseAudit" class="dialog" center @close="closeDialog">
+    <el-dialog :visible.sync="enterAud" class="dialog" center @close="closeDialog">
         <div slot="title" class="tit">
             <div class="line"></div>
-            <p>基站审核</p>
+            <p>企业信息审核</p>
         </div>
         <el-form ref="audit" :model="form" label-width="100px">
             <el-form-item label="基站状态更改:" prop="siteStatus">
@@ -27,7 +27,6 @@
 </template>
 
 <script>
-
 import { mapState,mapMutations} from "vuex";
 export default {
     data() {
@@ -38,17 +37,17 @@ export default {
             },
             options:[
                 {label:'审核通过',value:1},
-                {label:'审核不通过',value:3}
+                {label:'审核未通过',value:2}
             ]
         };
     },
     computed: {
-        ...mapState(["baseAudit","siteRowmn"])
+        ...mapState(["enterAud","enterId"])
     },
     methods:{
         clearForm(){
             this.tableData = []
-            this.$store.commit("siteRowstatus", false); //关闭dialog
+            this.$store.commit("changeEnteraudit", false); //关闭dialog
            
         },
         //取消
@@ -61,8 +60,8 @@ export default {
         },
         //点击审核
         audit(){
-            if(this.form.siteStatus &&　localStorage.adminId && this.siteRowmn){
-                this.$confirm("此操作将更改基站状态, 确定提交审核?", "注意", {
+            if(this.form.siteStatus &&　localStorage.adminId && this.enterId){
+                this.$confirm("此操作将更改企业信息状态, 确定提交审核?", "注意", {
                 confirmButtonText: "确定",
                 cancelButtonText: "取消",
                 type: "warning"
@@ -72,7 +71,7 @@ export default {
                          if(res == 'success'){
                             this.$message({
                                 type: "success",
-                                message: "基站状态修改成功"
+                                message: "企业信息状态修改成功"
                             });
                             this.clearForm()
                          }
@@ -95,17 +94,18 @@ export default {
         },
         changeAudit(){
             return new Promise((resolve,reject)=>{
-                let mn = this.siteRowmn
-                let auditManId = localStorage.adminId
+                let erpId = this.enterId;
+                let auditState = this.form.siteStatus;
+                let auditNode = this.form.textarea
                 let params = {
-                    mn:mn,
-                    siteState:this.form.siteStatus,
-                    auditNote:this.form.textarea,
-                    auditManId:auditManId
+                    erpId:erpId,
+                    auditState:auditState,
+                    auditNode:auditNode
                 }
-                this.$api.site
-                .changeSitedetail(params,mn)
+                this.$api.company
+                .companyEditor(erpId,params)
                 .then(res => {
+                    debugger
                    if(res.data.code == 0){
                         resolve('success')
                     }

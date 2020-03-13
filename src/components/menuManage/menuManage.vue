@@ -10,6 +10,7 @@
                     size="mini"
                     class="add"
                     @click="menuClick"
+                    v-has="'添加菜单'"
                 >添加菜单</el-button>
             </div>
         </div>

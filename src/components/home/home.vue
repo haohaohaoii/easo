@@ -72,7 +72,7 @@ export default {
                         title: msgObj.title,
                         position: 'bottom-right',
                         offset: 60,
-                        duration: 2900,
+                        duration: 6000,
                         dangerouslyUseHTMLString: true,
                         message: `<p style="height:80px;overflow: hidden;">${msgObj.content}</p>`,
                         onClick: () => {
@@ -89,7 +89,7 @@ export default {
         },
         toSpam(id){
      
-            this.$store.dispatch('spamDetail',17)
+            this.$store.dispatch('spamDetail',id)
         }
     },
     watch: {

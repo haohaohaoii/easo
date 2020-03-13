@@ -337,7 +337,7 @@ export default {
     margin-top: 0 !important;
     position: relative;
     margin: 0 auto;
-    height: 60%;
+    height: 40%;
     overflow-y: auto;
     top: 50%;
     width: 36%;
