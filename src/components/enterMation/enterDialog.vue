@@ -1,17 +1,47 @@
 <template>
-    <el-dialog :visible.sync="enterDialog" class="dialog" center @close='closeDialog'>
+    <el-dialog
+        :visible.sync="enterDialog"
+        class="dialog"
+        center
+        @close="closeDialog"
+        :close-on-click-modal="false"
+    >
         <div slot="title" class="tit">
             <div class="line"></div>
             <p>查看详情</p>
         </div>
-        <el-table :data="tableData" border style="width: 100%" >
-            <el-table-column prop="date" label="日期" width="180" align="right"></el-table-column>
-            <el-table-column prop="name" label="姓名" align="left"></el-table-column>
-           
+        <el-table :data="tableData" border style="width: 100%" :show-header="false">
+            <el-table-column prop="date" label width="180" align="right"></el-table-column>
+            <!-- <el-table-column prop="image" v-if="row.image" label="图片" min-width="20%"> -->
+
+            <!-- <el-table-column prop="name" label align="left"></el-table-column> -->
+            <el-table-column prop="name" label="描述图片">
+                <template scope="scope">
+                    <el-popover trigger="hover" v-if="scope.row.pictures">
+                        <img
+                            v-for="item in scope.row.pictures"
+                            :key="item"
+                            :src="item"
+                            width="40"
+                            height="40"
+                            class="head_pic"
+                            slot="reference"
+                            style="margin-right:25px"
+                        />
+                        <img
+                            v-for="item in scope.row.pictures"
+                            :key="item"
+                            :src="item"
+                            style="max-height: 500px;max-width: 130px"
+                        />
+                    </el-popover>
+                    <p v-else>{{scope.row.name}}</p>
+                </template>
+            </el-table-column>
         </el-table>
         <div slot="footer" class="footer">
-            <el-button type="primary" size="mini" @click="save">保存</el-button>
-            <el-button size="mini" @click="cancel">取消</el-button>
+            <!-- <el-button type="primary" size="mini" @click="save">保存</el-button> -->
+            <el-button size="mini" @click="cancel">关闭</el-button>
         </div>
     </el-dialog>
 </template>
@@ -49,7 +79,7 @@ export default {
                 },
                 {
                     date: "营业执照:",
-                    name: "123456789@163.com"
+                    pictures: []
                 },
                 {
                     date: "注册时间:",
@@ -61,16 +91,32 @@ export default {
     methods:{
         closeDialog(){
             this.$store.commit('getDialogstatus',false)  //关闭dialog
+            this.tableData[6].pictures = []
+         
         },
-        save(){
-            this.$store.commit('getDialogstatus',false) //关闭dialog
-        },
+        // save(){
+        //   this.closeDialog()
+        // },
         cancel(){
-            this.$store.commit('getDialogstatus',false) //关闭dialog
+         this.closeDialog()
         }
     },
     computed: {
-        ...mapState(["enterDialog"])
+        ...mapState(["enterDialog","comDetail"])
+    },
+    watch:{
+        comDetail(val){
+           
+            this.tableData[0].name = val.erpName;
+            this.tableData[1].name = val.erpAddr;
+            this.tableData[2].name = val.erpLinkMan;
+            this.tableData[3].name = val.erpLinkTel;
+            this.tableData[4].name = '';
+            this.tableData[5].name = val.erpMail;
+            this.tableData[6].pictures.push('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584282637096&di=75fdad3e889cba12738f0855876ebe1e&imgtype=0&src=http%3A%2F%2Fa3.att.hudong.com%2F68%2F61%2F300000839764127060614318218_950.jpg')
+              this.tableData[6].pictures.push('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584282637096&di=81d3ef87fe63235dcd3fc5af6f9fec8c&imgtype=0&src=http%3A%2F%2Fa0.att.hudong.com%2F78%2F52%2F01200000123847134434529793168.jpg')
+            this.tableData[7].name = val.createTime
+        }
     }
 };
 </script>
@@ -92,7 +138,7 @@ export default {
         }
     }
 }
-.dialog >>> .el-dialog{
+.dialog >>> .el-dialog {
     margin-top: 0 !important;
     position: relative;
     margin: 0 auto;
@@ -100,6 +146,6 @@ export default {
     top: 50%;
     transition: transform;
     transform: translateY(-50%);
-    border: 1px solid #EBEEF5
+    border: 1px solid #ebeef5;
 }
 </style>

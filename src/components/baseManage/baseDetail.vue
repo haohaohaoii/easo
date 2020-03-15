@@ -2,7 +2,7 @@
     <el-dialog :visible.sync="baseDetail" class="dialog" center @close="closeDialog">
         <div slot="title" class="tit">
             <div class="line"></div>
-            <p>基站审核</p>
+            <p>基站详情</p>
         </div>
         <el-table :data="tableData" border style="width: 100%" :show-header="false">
             <el-table-column prop="date" width="180" align="right"></el-table-column>
@@ -48,6 +48,7 @@ export default {
     },
     watch:{
         siteRowlist(val){
+         
             if(val.siteName){
                 let obj = {
                     date:'基站名称:',
@@ -61,6 +62,13 @@ export default {
                     name:val.ioType
                 }
                 this.tableData.push(obj)
+            }
+            if(val.mn){
+                let obj = {
+                    date:'MN:',
+                    name:val.mn
+                }
+                  this.tableData.push(obj)
             }
             if (val.yinZ){
                 let obj = {
@@ -83,6 +91,7 @@ export default {
                 }
                 this.tableData.push(obj)
             }
+            
         }
     }
 };

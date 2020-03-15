@@ -126,12 +126,14 @@ export default ({
         api.spam.getSpamitem(id).then(res => {  //获取角色对应的菜单
             console.log(res)
             if (res.data.code == 0) {
+
                 let itemArr = res.data.data[0]
                 let obj = {
                     title: itemArr.title,  //留言标题
                     content: itemArr.content, //留言内容
                     messageType: itemArr.messageType, //留言类型
-                    id: itemArr.id
+                    id: itemArr.id,
+                    replies: itemArr.replies
                 }
                 context.commit("spamReply", true) //留言回复对应的dialog状态
                 context.commit("getspamDetail", obj); //存储对应id的留言信息
@@ -186,6 +188,7 @@ export default ({
         Promise.all([getSiteitem, getEquiments, companyAll]).then(res => {
             console.log(res);
             if (res[0].data.code == 0) {
+
                 let itemObj = res[0].data.data[0]
                 let siteDevarr = []
                 if (itemObj.siteDevices && itemObj.siteDevices.length > 0) {
@@ -198,7 +201,8 @@ export default ({
                     siteName: itemObj.siteName,  //基站名称
                     ioType: itemObj.ioType,  // 进口/出口
                     erpId: itemObj.erpId,  //企业id
-                    siteDevices: siteDevarr  //托管设备对应的id
+                    siteDevices: siteDevarr, //托管设备对应的id
+                    siteS: itemObj.siteState,  //站点状态
                 }
                 context.commit('getBaseitemList', obj)
 
@@ -240,6 +244,7 @@ export default ({
     },
     //企业信息(编辑 dialog状态)  详情也可以用
     getEnteritem(context, erpId) {
+
         api.company.companyDetail(erpId).then(res => {
             console.log(res)
             if (res.data.code == 0) {
@@ -295,7 +300,7 @@ export default ({
         })
     },
     //获取到历史数据中的总数据(折线和柱状需要)
-    getAllhisData(content, params) {
+    getAllhisData(context, params) {
         api.data
             .hisAlldata({ params })
             .then(res => {
@@ -331,9 +336,25 @@ export default ({
                         }
                     }
                     console.log(obj)
-                    content.commit('getHisdataAll', obj)  //获取到历史数据--折线图用
+                    context.commit('getHisdataAll', obj)  //获取到历史数据--折线图用
                 }
             })
             .catch(error => { });
+    },
+    //企业管理下的  企业信息 详情
+    getComdetail(context, erpId) {
+
+        api.company.companyDetail(erpId).then(res => {
+            console.log(res)
+            if (res.data.code == 0) {
+
+                context.commit('getCompanyDetails', res.data.data[0])
+                context.commit("getDialogstatus", true)
+            }
+
+
+        }).catch(error => {
+
+        })
     }
 })

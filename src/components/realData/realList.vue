@@ -178,8 +178,10 @@ export default {
     methods: {
         toHistorydata(index, row) {  //跳转到历史数据信息
             console.log(index, row);
+            let erpName = row.erpName;
+            let siteName = row.siteName;
             this.$store.commit('changeDefaultmenu','hisData')
-            this.$router.push({path:'/hisData'})
+            this.$router.push({name:'历史数据',params:{erpName:erpName,siteName:siteName}})
         }
     }
 };

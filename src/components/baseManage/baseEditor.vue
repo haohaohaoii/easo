@@ -4,7 +4,7 @@
             <div class="line"></div>
             <p>基站编辑</p>
         </div>
-        <el-form ref="baseE" :model="form" label-width="100px">
+        <el-form ref="baseE" :model="form" :rules="rules" label-width="100px">
             <el-form-item label="基站名称:" prop="siteName">
                 <el-input v-model="form.siteName"></el-input>
             </el-form-item>
@@ -21,10 +21,20 @@
             <el-form-item label="MN:" prop="mn">
                 <el-input v-model="form.mn"></el-input>
             </el-form-item>
-            <el-form-item label="企业选择">
+            <el-form-item label="企业选择" prop="erpId">
                 <el-select v-model="form.erpId" clearable>
                     <el-option
                         v-for="item of companyArr"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="站点状态" v-if="isShowsite" prop="siteS">
+                <el-select v-model="form.siteS" clearable>
+                    <el-option
+                        v-for="item of siteSes"
                         :key="item.value"
                         :label="item.label"
                         :value="item.value"
@@ -43,7 +53,7 @@
             </el-form-item>
         </el-form>
         <div slot="footer" class="footer">
-            <el-button type="primary" size="mini" @click="addBase">添加</el-button>
+            <el-button type="primary" size="mini" @click="addBase">编辑</el-button>
             <el-button size="mini" @click="cancel">取消</el-button>
         </div>
     </el-dialog>
@@ -54,6 +64,11 @@ import { mapState, mapMutations } from "vuex";
 export default {
     data() {
         return {
+            isShowsite:false,
+            siteSes:[  //站点状态数组
+                {label:'启用',value:1},
+                {label:'禁用',value:2}
+            ],  
             status: false, //控制表头不显示
             jcType:[
                 {label:'进口',value:0},
@@ -64,7 +79,53 @@ export default {
                 ioType:' ',  //选择的是哪个进出口值
                 mn:'', //mn
                 factors:[], //托管设备
-                erpId:''
+                erpId:'',
+                siteS:'', //站点状态
+            },
+             rules: {
+                siteName: [
+                    {
+                        required: true,
+                        message: "请输入基站名称",
+                        trigger: "blur"
+                    }
+                ],
+                ioType: [
+                    {
+                        required: true,
+                        message: "请选择进出口值",
+                        trigger: "change"
+                    }
+                ],
+                mn: [
+                    
+                    {
+                        required: true,
+                        message: "请输入mn号",
+                        trigger: "blur"
+                    }
+                ],
+                factors: [
+                    {
+                        required: true,
+                        message: "请选择设备托管",
+                        trigger: "change"
+                    }
+                ],
+                erpId:[
+                     {
+                        required: true,
+                        message: "请选择企业",
+                        trigger: "change"
+                    }
+                ],
+                siteS:[
+                     {
+                        required: true,
+                        message: "请选择状态",
+                        trigger: "change"
+                    }
+                ]
             },
             stateType:false,  //这一步是为了分别0和空字符串相等的问题
             // companyArr:[]
@@ -77,9 +138,11 @@ export default {
     methods: {
         //添加基站
         addBase() {
+            debugger
             let siteName = this.form.siteName  //基站名称
             let ioType = this.form.ioType  //基站状态
             let erpId = this.form.erpId  //企业选择
+            let siteState = this.form.siteS
             if(ioType ===0){
                 this.stateType = true
             }
@@ -94,7 +157,8 @@ export default {
                     ioType:ioType,
                     mn:mn,
                     factors:factors,
-                    erpId:erpId
+                    erpId:erpId,
+                    siteState:siteState
                 }
                 let _this = this
                 this.$api.site.changeSitedetail(params,mn).then(res=>{
@@ -133,6 +197,7 @@ export default {
     },
     watch:{
        baseItemlist(val){
+           
            console.log(val)
            let arr = Object.keys(val);
            if(arr && arr.length>0){
@@ -157,8 +222,19 @@ export default {
                             }
                     }
                 }
-                // this.form.erpId = val.erpId
+                if(val.siteS== 0){
+                    this.isShowsite = false
+                }else if(val.siteS == 1){
+                    this.isShowsite = true
+                    this.form.siteS = 1
+                }else if(val.siteS == 2){
+                    this.isShowsite = true
+                       this.form.siteS = 2
+                }else if(val.siteS == 3){
+                   this.isShowsite = false
+                }
                 this.form.factors = val.siteDevices
+                
                 console.log(this.companyArr)
                 console.log(this.Equilist)
                 console.log(this.form.erpId)

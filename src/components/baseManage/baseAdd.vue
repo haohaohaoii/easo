@@ -4,7 +4,7 @@
             <div class="line"></div>
             <p>基站添加</p>
         </div>
-        <el-form ref="form" :model="form" label-width="100px">
+        <el-form ref="form" :model="form" :rules="rules" label-width="100px">
             <el-form-item label="基站名称:" prop="siteName">
                 <el-input v-model="form.siteName"></el-input>
             </el-form-item>
@@ -65,6 +65,44 @@ export default {
                 mn:'', //mn
                 factors:[], //托管设备
                 erpId:''
+            },
+            rules: {
+                siteName: [
+                    {
+                        required: true,
+                        message: "请输入基站名称",
+                        trigger: "blur"
+                    }
+                ],
+                ioType: [
+                    {
+                        required: true,
+                        message: "请选择进出口值",
+                        trigger: "change"
+                    }
+                ],
+                mn: [
+                    
+                    {
+                        required: true,
+                        message: "请输入mn号",
+                        trigger: "blur"
+                    }
+                ],
+                factors: [
+                    {
+                        required: true,
+                        message: "请选择设备托管",
+                        trigger: "change"
+                    }
+                ],
+                erpId:[
+                     {
+                        required: true,
+                        message: "请选择企业",
+                        trigger: "change"
+                    }
+                ]
             },
             stateType:false,  //这一步是为了分别0和空字符串相等的问题
             companyArr:[]

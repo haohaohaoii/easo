@@ -74,6 +74,8 @@ export default {
     },
     mounted() {
         this.getCompany();
+        let pageNum = this.currentPage;
+        this.sendAxios(pageNum);
     },
     methods: {
         //点击第几页

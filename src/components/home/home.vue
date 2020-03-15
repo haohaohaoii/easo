@@ -88,7 +88,7 @@ export default {
             });
         },
         toSpam(id){
-     
+            debugger
             this.$store.dispatch('spamDetail',id)
         }
     },

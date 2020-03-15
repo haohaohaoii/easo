@@ -26,6 +26,9 @@
                         <el-button
                             size="mini"
                             @click="base(scope.$index, scope.row)"
+                            style="    background: rgba(54,182,243,1);
+    color: white;
+}"
                             v-has="'基站'"
                         >基站</el-button>
                         <el-button
@@ -102,7 +105,10 @@ export default {
     methods: {
         //详情--跳转详情dialog
         handleDetail(index, row) {
-            this.$store.commit("getDialogstatus", true);
+       
+            let erpId = row.id
+            this.$store.dispatch('getComdetail',erpId)
+            // this.$store.commit("getDialogstatus", true);
         },
         //点击编辑--跳转编辑dialog
         handleEdit(index, row) {

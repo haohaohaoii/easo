@@ -20,6 +20,7 @@ export default ({
     pwdDialog: false,  //头部右侧修改密码 dialog状态
     enterDialog: false, //企业管理下的企业信息中的详情 dialog状态
     enterRow: '',     //企业管理下的 当行详情数据
+    comDetail: '',   //企业 管理下的  企业详情 行信息
     enterAdd: false,   //企业管理下 企业信息  添加企业
     editorDialog: false,  //企业管理下的企业信息中的编辑 dialog状态
     // companyType: [],   //企业管理下的企业信息 编辑中需要获取企业类型
@@ -108,6 +109,11 @@ export default ({
             path: 'companyUser',     //企业用户
             name: '企业用户',
             component: resolve => (require(["@/components/companyUser/companyUser"], resolve))
+        },
+        {
+            path: 'firstPage',     //企业用户
+            name: '首页',
+            component: resolve => (require(["@/components/firstPage/firstPage"], resolve))
         }
     ]
 })

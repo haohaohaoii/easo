@@ -105,7 +105,7 @@ export default {
                 this.$api.company
                 .companyEditor(erpId,params)
                 .then(res => {
-                    debugger
+              
                    if(res.data.code == 0){
                         resolve('success')
                     }

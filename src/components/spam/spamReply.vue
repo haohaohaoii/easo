@@ -1,5 +1,12 @@
 <template>
-    <el-dialog :visible.sync="spamReply" class="dialog" center @close="closeDialog">
+    <el-dialog
+        :visible.sync="spamReply"
+        class="dialog"
+        center
+        @close="closeDialog"
+        :close-on-click-modal="false"
+        v-if="hisReplymsg"
+    >
         <div slot="title" class="tit">
             <div class="line"></div>
             <p>留言回复</p>
@@ -13,19 +20,33 @@
                 留言者分类：
                 <span>{{spamType}}</span>
             </p>
-            <div class="left neir">
-                留言者内容：
-                <p>{{spamContent}}</p>
-            </div>
             <p class="left">
-                回复内容：
-                <el-input
-                    type="textarea"
-                    autosize
-                    placeholder="请输入内容"
-                    v-model="spamReplymsg"
-                    style="margin-top: 13px;"
-                ></el-input>
+                留言内容：
+                {{spamContent}}
+                <span></span>
+            </p>
+            <el-divider></el-divider>
+            <div
+                v-if="hisReplymsg && hisReplymsg.length>0"
+                style="height: 260px;
+    overflow: auto;"
+            >
+                <div class="left neir" v-for="item of hisReplymsg " :key="item.id">
+                    <div v-if="item.type ==1" class="f">
+                        企业回复：
+                        {{item.content}}
+                        <p class="rep">--{{item.createTime}}</p>
+                    </div>
+                    <div v-else-if="item.type ==0" class="f">
+                        我的回复：
+                        {{item.content}}
+                        <p class="rep">--{{item.createTime}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="left">
+                <el-input type="textarea" placeholder="请输入回复内容" :rows="4" v-model="spamReplymsg"></el-input>
             </p>
         </div>
         <div slot="footer" class="footer">
@@ -43,6 +64,7 @@ export default {
             title:'', //留言标题
             spamType:'', //留言分类
             spamContent:'', //留言内容
+            hisReplymsg:[],  //留言历史回复
             spamReplymsg:'',  //回复内容
             id:''   //留言id
         };
@@ -56,12 +78,13 @@ export default {
             let id = this.id
             if(spamReplay){
                 let params={
-                   spamReplay:spamReplay,
+                   replyContent:spamReplay,
                    messageId:id
                 }
+         
                 let _this = this
                 this.$api.spam.spamReplay(params).then(res=>{
-                    debugger
+                 
                     if(res.data.code == 0){
                         _this.$message({
                             message: '留言回复成功',
@@ -99,6 +122,7 @@ export default {
     },
     watch: {
         spamItemlist(val){
+      
             let arr = Object.keys(val);
            
             if(arr && arr.length>0){
@@ -106,6 +130,10 @@ export default {
                 this.spamType= val.messageType  //留言类型
                 this.spamContent = val.content   //留言内容
                 this.id = val.id //留言id
+            }
+            let replies = val.replies;
+            if(replies && replies.length>0){
+                this.hisReplymsg = replies
             }
         }
     },
@@ -137,6 +165,16 @@ export default {
             display: flex;
             .li {
                 width: 21%;
+            }
+        }
+        .f {
+            position: relative;
+            width: 100%;
+            .rep {
+                position: absolute;
+                right: 0;
+                font-size: 12px;
+                color: #ccc;
             }
         }
     }

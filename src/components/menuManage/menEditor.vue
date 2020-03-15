@@ -155,7 +155,7 @@ export default {
     margin-top: 0 !important;
     position: relative;
     margin: 0 auto;
-
+    width: 28%;
     top: 50%;
     transition: transform;
     transform: translateY(-50%);

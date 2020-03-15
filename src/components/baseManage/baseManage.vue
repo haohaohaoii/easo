@@ -107,6 +107,7 @@ export default {
         margin-bottom: 2%;
         .markMsg {
             display: flex;
+            position: relative;
             div {
                 width: 0.15%;
                 background: rgba(30, 135, 240, 1);

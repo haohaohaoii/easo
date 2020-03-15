@@ -104,10 +104,10 @@ export default {
         //     }
         // },
         iRowStyle:function ({row, rowIndex}) {
-            return {height:'50px'};
+            return {height:'58px'};
         },
         iHeaderRowStyle:function ({row, rowIndex}) {
-            return {height:'50px'};
+            return {height:'58px'};
         },
         iCellStyle:function ({row, column, rowIndex, columnIndex}) {
             return {padding:'0'};

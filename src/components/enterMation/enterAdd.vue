@@ -100,6 +100,7 @@ export default {
                 firmType: "", //企业类型
                 mail: ""//邮箱
             },
+            
             rules: {
                 firmName: [
                     {

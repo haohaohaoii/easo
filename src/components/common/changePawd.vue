@@ -3,19 +3,31 @@
         title="修改密码"
         :visible.sync="pwdDialog"
         center
-        width="30%"
         @close="closeDialog"
         class="dialog"
+        :close-on-click-modal="false"
     >
-        <el-form :model="form" ref="forms" :rules="rules">
+        <el-form
+            :model="form"
+            ref="forms"
+            :rules="rules"
+            label-width="100px"
+            class="demo-ruleForm"
+            status-icon
+        >
             <el-form-item label="原密码" prop="oldPawwd">
                 <el-input v-model="form.oldPawwd" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="新密码" prop="newPawwd">
-                <el-input type="password" v-model="form.newPawwd" autocomplete="off"></el-input>
+                <el-input type="password" v-model="form.newPawwd" autocomplete="off" show-password></el-input>
             </el-form-item>
             <el-form-item label="确认新密码" prop="sureNewpwwd">
-                <el-input type="password" v-model="form.sureNewpwwd" autocomplete="off"></el-input>
+                <el-input
+                    type="password"
+                    v-model="form.sureNewpwwd"
+                    autocomplete="off"
+                    show-password
+                ></el-input>
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -70,7 +82,7 @@ export default {
         },
         sure(){
             if(this.form.oldPawwd && this.form.newPawwd && this.form.sureNewpwwd){
-                if( this.form.newPawwd && this.form.sureNewpwwd){
+                if( this.form.newPawwd === this.form.sureNewpwwd){
                     let adminId = this.adminId;
                     let params = {
                         password:this.form.sureNewpwwd,
@@ -95,6 +107,12 @@ export default {
                         }
                         
                     })
+                }else{
+                     this.$message({
+                        type: "warning",
+                        message: "两次密码输入不一致!"
+                    });
+                
                 }
             }
         },
@@ -118,20 +136,14 @@ export default {
     margin-top: 0 !important;
     position: relative;
     margin: 0 auto;
-
+    width: 30%;
     top: 50%;
     transition: transform;
     transform: translateY(-50%);
     border: 1px solid #ebeef5;
-
-    width: 38%;
-    height: 52%;
-    overflow-y: auto;
 }
-.dialog >>> .el-dialog__header {
-    padding: 10px !important;
-}
-.dialog >>> .el-dialog__footer {
-    padding: 0 !important;
+//表单校验的图标颜色
+.dialog >>> .el-input__suffix {
+    color: #67c23a !important;
 }
 </style>

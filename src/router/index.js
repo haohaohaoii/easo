@@ -16,7 +16,7 @@ let router = new Router({
         {
             path: '/',
             name: 'home',
-            redirect: '/hisData',
+            redirect: 'firstPage',
             component: resolve => (require(["@/components/home/home"], resolve)),
             children: []
         }

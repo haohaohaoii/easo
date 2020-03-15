@@ -29,12 +29,13 @@
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="updateTime" label="更新时间"></el-table-column>
-                <el-table-column label="操作" align="right">
+                <el-table-column label="操作" align="center">
                     <template slot-scope="scope">
                         <el-button
                             size="mini"
                             @click="audit(scope.$index, scope.row)"
-                            v-if="scope.row.siteState==0 || scope.row.siteState==3"
+                            style="background:#36B6F3;color:white"
+                            v-if="scope.row.siteState==0"
                             v-has="'审核'"
                         >审核</el-button>
                         <el-button
@@ -73,6 +74,7 @@ export default {
     }, 
    computed:{
         tableData(){
+            debugger
             if(this.baseAll && this.baseAll.length>0){
                 let baseList= [];
                 for(let i=0; i<this.baseAll.length; i++){
@@ -100,11 +102,11 @@ export default {
                     if(this.baseAll[i].siteState == 0){
                         stateMsg = '审核中'
                     }else if(this.baseAll[i].siteState == 1){
-                        stateMsg = '使用中'
+                        stateMsg = '运行中'
                     }else if(this.baseAll[i].siteState == 2){
-                         stateMsg = '维护中'
+                         stateMsg = '禁用'
                     }else if(this.baseAll[i].siteState == 3){
-                        stateMsg = '审核未通过'
+                        stateMsg = '审核失败'
                     }
                     let obj={
                         siteName:this.baseAll[i].siteName,  //基站名称

@@ -8,6 +8,7 @@
             mode="horizontal"
             @select="handleSelect"
         >
+            <el-menu-item index="firstPage">首页</el-menu-item>
             <!-- <div v-for="(item,index) of createMenu" :key="index"> -->
             <el-submenu
                 v-if="item.subMenus && item.subMenus.length>=1"
@@ -16,10 +17,19 @@
                 class="upopt"
                 :index="item.createTime"
             >
-                <template slot="title">
-                    <i class="iconfont icon-shuju" style="font-size:20px"></i>
+                <template slot="title" v-if="item.menuType==0 && item.menuName=='数据管理'">
+                    <i class="iconfont icon-shuju" style="font-size:28px"></i>
                     {{item.menuName}}
                 </template>
+                <template slot="title" v-else-if="item.menuType==0 && item.menuName=='企业管理'">
+                    <i class="el-icon-office-building" style="font-size:24px"></i>
+                    <span>{{item.menuName}}</span>
+                </template>
+                <template slot="title" v-else-if="item.menuType==0 && item.menuName=='权限管理'">
+                    <i class="el-icon-set-up" style="font-size:24px"></i>
+                    {{item.menuName}}
+                </template>
+
                 <el-menu-item
                     v-for="seciem of item.subMenus"
                     :key="seciem.path"
@@ -107,6 +117,7 @@
 import ThemePicker from "./ThemePicker";
 import changePawd from "./changePawd";
 import { mapState, mapMutations } from "vuex";
+const Base64 = require("js-base64").Base64;
 export default {
     components: {
         ThemePicker,
@@ -266,11 +277,27 @@ export default {
                 type: "warning"
             })
                 .then(() => {
-                    localStorage.clear(); //清空local中的数据
-                    sessionStorage.clear(); //清空session中的数据
-                    this.$store.commit("getToken", "");
-                    this.$store.commit("getAdminid", "");
-                    this.$router.push("/login");
+                    
+                    if(localStorage.getItem("userPaw")){  //说明是记住密码
+                        let password = Base64.decode(localStorage.getItem("userPaw")); //获取密码(base64解密)
+                        let name = localStorage.getItem("userName");
+             
+                        localStorage.removeItem('tremePackers')
+                        localStorage.removeItem('breadArr')
+                        localStorage.removeItem('adminId')
+                        localStorage.removeItem('token')  
+                        sessionStorage.clear(); //清空session中的数据
+                        this.$store.commit("getToken", "");
+                        this.$store.commit("getAdminid", "");
+                        this.$router.push({name:'login',params:{name:name,pwd:password}});
+                    }else{
+                        localStorage.clear(); //清空local中的数据
+                        sessionStorage.clear(); //清空session中的数据
+                        this.$store.commit("getToken", "");
+                        this.$store.commit("getAdminid", "");
+                        this.$router.push("/login");
+                    }
+                   
                 })
                 .catch(() => {
                     this.$message({
@@ -285,6 +312,9 @@ export default {
 <style lang="scss" scoped>
 .header {
     height: 60px;
+    position: relative;
+    top: 0;
+    right: 0;
     .el-menu-demo {
         display: flex;
     }
@@ -304,14 +334,22 @@ export default {
         }
     }
 }
+.header >>> .el-menu-item {
+    width: 200px;
+    text-align: center;
+}
+.header >>> .el-submenu__title {
+    width: 200px;
+    text-align: center;
+}
 //多级菜单(第一级)移入
 .header >>> .el-submenu__title:hover {
     background-color: #1f87e7 !important; //改变背景颜色
     color: #ffffff !important; //改变字体颜色
 }
-// .header >>>.el-submenu__title i:hover {
-//         color: red !important;
-//     }
+.header >>> .el-submenu__title i:hover {
+    color: red !important;
+}
 //二级菜单移入的背景颜色
 .opt:hover {
     background-color: #1f87e7 !important; //改变背景颜色
@@ -323,6 +361,10 @@ export default {
     color: #ffffff !important; //改变字体颜色
 }
 .header >>> .el-menu-item.is-active {
+    background-color: #1f87e7 !important;
+    color: #ffffff !important; //改变字体颜色
+}
+.header >>> .el-menu-item:hover {
     background-color: #1f87e7 !important;
     color: #ffffff !important; //改变字体颜色
 }

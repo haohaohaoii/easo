@@ -35,8 +35,6 @@
                         class="changeW"
                         v-model="startTime"
                         placeholder="开始时间"
-                        value-format="yyyy-MM-dd HH:00:00"
-                        format="yyyy-MM-dd HH:00:00"
                         time-arrow-control
                     ></el-date-picker>
                     <el-date-picker
@@ -44,8 +42,6 @@
                         class="changeW"
                         v-model="endTime"
                         placeholder="结束时间"
-                        value-format="yyyy-MM-dd HH:00:00"
-                        format="yyyy-MM-dd HH:00:00"
                         time-arrow-control
                     ></el-date-picker>
                     <el-button type="primary" class="changeW" @click="search">查询</el-button>
@@ -109,15 +105,47 @@ export default {
         };
     },
     mounted() {
-        this.getCompany();
-        this.getNowTime();
-        this.getCurrentMonthFirst()
-        this.sendAxios( this.currentPage)
+        this.ljpd()
     },
     computed: {
         ...mapState(["searchHours"])
     },
     methods: {
+        ljpd(){
+            if(this.$route.params.erpName && this.$route.params.siteName){   //说明是从实时数据过来的
+                this.getCompany().then(comP=>{
+                    this.companyLit = comP;
+                    for(let j=0; j<comP.length; j++){
+                        if(comP[j].label == this.$route.params.erpName){
+                            this.companyValue = comP[j].value
+                            break;
+                        }
+                    }
+                    if(this.companyValue){
+                    this.getComsite(this.companyValue).then(siteArr=>{
+                        this.baseArr = siteArr
+                        for(let i=0; i<siteArr.length; i++){
+                            if(siteArr[i].label == this.$route.params.siteName){
+                                this.baseValue = siteArr[i].value;
+                                break
+                            }
+                        }
+                    })
+                    }
+                    this.getNowTime();
+                    this.getCurrentMonthFirst() 
+                    this.sendAxios( this.currentPage)
+                });
+            }else{
+                this.getCompany().then(comP=>{
+                    debugger
+                    this.companyLit = comP;
+                });
+                this.getNowTime();
+                this.getCurrentMonthFirst() 
+                this.sendAxios( this.currentPage)
+            }
+        },
         getNowTime() {
             
             let now = new Date();
@@ -182,7 +210,7 @@ export default {
             let endTime = this.endTime;
             let userId = this.companyValue;
             let mn = this.baseValue;
-            if(startTime!="" && endTime!="" && userId!="" && mn!=""){
+            if(startTime!="" && endTime!=""){
                 let  params= {
                             start: startTime,
                             end: endTime,
@@ -244,7 +272,8 @@ export default {
         },
         //获取企业下拉数组
         getCompany() {
-            this.$api.company
+            return new Promise(resolve=>{
+                this.$api.company
                 .companyAll()
                 .then(res => {
                     console.log(res);
@@ -258,17 +287,21 @@ export default {
                             };
                             listArr.push(obj);
                         }
-                        this.companyLit = listArr;
+                        resolve(listArr)
                     }
                 })
                 .catch(error => {});
+            })
+           
         },
         //选中企业事件
         changeVal(val) {
             this.baseValue = ""; //每次点击都要把之前选中的基站置空
             if (val) {
                 //这个判断为了防止删除的时候，val的值为空
-                this.getComsite(val);
+                this.getComsite(val).then(siteArr=>{
+                    this.baseArr = siteArr;
+                });
             } else {
                 //这个逻辑防止企业选择框删除的时候,基站的下拉框中还有值
                 this.baseArr = [];
@@ -276,7 +309,8 @@ export default {
         },
         //根据企业获取对应基站相关数据
         getComsite(companyId) {
-            this.$api.site
+            return new Promise(resolve=>{
+                this.$api.site
                 .formComsite(companyId)
                 .then(res => {
                     console.log(res);
@@ -290,16 +324,23 @@ export default {
                             };
                             siteArr.push(item);
                         }
-                        this.baseArr = siteArr;
+                        resolve(siteArr)
+                       
                     }
                 })
                 .catch(error => {});
+            })
+            
         }
     },
     watch:{
         btnMsg(val){
             if(this.btnMsg == '折线' ||this.btnMsg == '柱状'){
                 this.getAlldata()
+            }else{
+                 this.currentPage = 1;
+                let pageNum = this.currentPage;
+                this.sendAxios(pageNum);
             }
         }
     }

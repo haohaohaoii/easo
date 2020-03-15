@@ -44,7 +44,6 @@
                     placeholder="请选择用户角色"
                     @visible-change="roleChange"
                     clearable
-                    multiple
                 >
                     <el-option
                         v-for="item of roleArr"
@@ -109,6 +108,11 @@ export default {
                         required: true,
                         message: "请输入电话",
                         trigger: "blur"
+                    },
+                     {
+                        pattern: /^[1][3,4,5,6,7,8,9][0-9]{9}$/,
+                        message: "请输入正确的手机号",
+                        trigger: "change"
                     }
                 ],
                 userDepart: [
@@ -122,6 +126,18 @@ export default {
                     {
                         required: true,
                         message: "请选择用户角色",
+                        trigger: "blur"
+                    }
+                ],
+                email:[
+                    {
+                        required: true,
+                        message: "请填写正确的邮箱地址",
+                        trigger: "blur"
+                    },
+                    {
+                        pattern:/^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/,
+                        message: "请输入正确的邮箱号",
                         trigger: "change"
                     }
                 ]
@@ -175,41 +191,51 @@ export default {
         },
         //提交
         save() {
-            let username = this.ruleForm.loginName
-            let password = this.ruleForm.password
-            let realName = this.ruleForm.realName
-            let phone = this.ruleForm.phone
-            let deptId = this.ruleForm.userDepart
-            let roles = this.ruleForm.userrole
-            let email = this.ruleForm.email
-            if(username && password && realName && phone && deptId && roles.length>0){
-                let params={
-                    username:username,
-                    password:password,
-                    realName:realName,
-                    phone:phone,
-                    deptId:deptId,
-                    roles:roles,
-                    email:email
-                }
-                let _this = this
-                this.$api.user.addUser(params).then(res=>{
-                    if(res.data.code == 0){
-                        _this.$message({
-                            message: '用户添加成功',
-                            type: 'success'
-                        });
-                       _this.clearForm()
-                    }
-                }).catch(error=>{
+             this.$refs["ruleForm"].validate(valid => {
+               
+                if(valid){
+                    let username = this.ruleForm.loginName
+                    let password = this.ruleForm.password
+                    let realName = this.ruleForm.realName
+                    let phone = this.ruleForm.phone
+                    let deptId = this.ruleForm.userDepart
+                    let roles = []
+                    roles.push(this.ruleForm.userrole)
+                    let email = this.ruleForm.email
+                    if(username && password && realName && phone && deptId && roles.length>0){
+                        let params={
+                            username:username,
+                            password:password,
+                            realName:realName,
+                            phone:phone,
+                            deptId:deptId,
+                            roles:roles,
+                            email:email
+                        }
+                        let _this = this
+                        this.$api.user.addUser(params).then(res=>{
+                            if(res.data.code == 0){
+                                _this.$message({
+                                    message: '用户添加成功',
+                                    type: 'success'
+                                });
+                            _this.clearForm()
+                            }
+                        }).catch(error=>{
 
-                })
-            }else{
-                this.$message({
-                    type: "warning",
-                    message: "请将必填项填写完毕后再提交"
-                });
-            }
+                        })
+                    }
+                            
+                
+                }else{
+                    this.$message({
+                        type: "warning",
+                        message: "请按照要求填写完后再提交!"
+                    });
+                }
+                
+            });
+           
         },
         //清除表单内容
         clearForm(){
@@ -253,10 +279,13 @@ export default {
     margin-top: 0 !important;
     position: relative;
     margin: 0 auto;
-    width: 35%;
+    width: 30%;
     top: 50%;
     transition: transform;
     transform: translateY(-50%);
     border: 1px solid #ebeef5;
+}
+.dialog >>> .el-select {
+    width: 100%;
 }
 </style>

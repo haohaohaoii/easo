@@ -101,6 +101,7 @@ export default {
         justify-content: space-around;
         .markMsg {
             display: flex;
+            position: relative;
             div {
                 width: 0.15%;
                 background: rgba(30, 135, 240, 1);

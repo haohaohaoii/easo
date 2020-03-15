@@ -19,7 +19,7 @@
                             size="mini"
                             type="primary"
                             @click="handleReply(scope.$index, scope.row)"
-                            v-has="'回复'"
+                            v-has="'详情'"
                         >回复</el-button>
                         <el-button
                             size="mini"

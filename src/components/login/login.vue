@@ -39,6 +39,7 @@ export default {
         ...mapGetters(["getRoles"])
     },
     mounted() {
+        
         //判断用户上一次操作是否是记住密码
         this.getPaw();
     },
@@ -169,16 +170,28 @@ export default {
 
         //刚进页面的时候去获取用户名、密码、token
         getPaw() {
-            let name = localStorage.getItem("userName");
-            if (localStorage.getItem("userPaw")) {
-                let password = Base64.decode(localStorage.getItem("userPaw")); //获取密码(base64解密)
+       
+            if(this.$route.params.name && this.$route.params.pwd){
+                let name = this.$route.params.name;
+                let pwd  = this.$route.params.pwd;
+                if (name && pwd) {
+                    //说明上一次登陆是记住密码
+                    this.userName = name;
+                    this.userPaw = pwd;
+                    this.remenbVal = true;
+                }
             }
-            let token = localStorage.getItem("token");
-            if (name && password && token) {
-                //说明上一次登陆是记住密码
-                this.userName = name;
-                this.userPaw = password;
-                this.remenbVal = true;
+            
+        }
+    },
+    watch:{
+        remenbVal(val){
+            if(!val){
+                if(localStorage.getItem("userPaw")){
+                    localStorage.removeItem('userPaw');
+                    localStorage.removeItem("userName");
+                    localStorage.removeItem("token");
+                }
             }
         }
     }
@@ -254,7 +267,8 @@ export default {
             }
             /**登陆框按钮 */
             .btn {
-                width: 60%;
+                width: 32%;
+                height: 8%;
             }
         }
         //记住密码的时候改变字体颜色

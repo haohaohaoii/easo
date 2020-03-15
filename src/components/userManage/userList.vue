@@ -75,13 +75,14 @@ export default {
                             }
                         }
                     }
+                    
                     // if(this.userarr[i].)
                     let obj = {
                         userName: this.userarr[i].username, //用户名
                         realName: this.userarr[i].realName, //真实名称
                         linkPhone: this.userarr[i].phone, //联系电话
                         userMail: this.userarr[i].email, //邮箱
-                        userSection: this.userarr[i].sysDept.deptName, //所属部门
+                        userSection: this.userarr[i].sysDept?this.userarr[i].sysDept.deptName:'', //所属部门
                         userPart: str, //用户角色
                         turnTime: this.userarr[i].createTime, //更新时间
                         id: this.userarr[i].id //用户id
@@ -96,7 +97,7 @@ export default {
         //点击删除
         roleDelete(index, row) {
             let id = row.id;
-            this.$confirm("此操作将永久删除该条角色, 是否继续?", "提示", {
+            this.$confirm("此操作将永久删除该用户, 是否继续?", "提示", {
                 confirmButtonText: "确定",
                 cancelButtonText: "取消",
                 type: "warning"

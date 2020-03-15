@@ -83,15 +83,15 @@ export default {
                     {
                         show: true,
                         realtime: true,
-                        start: 98,
+                        start: 0,
                         end: 100
                     },
                     //内容能不能拉
                     {
                         type: "inside",
                         realtime: true,
-                        start: 0,
-                        end: 0
+                        start: 90,
+                        end: 100
                     }
                 ],
                 xAxis: [

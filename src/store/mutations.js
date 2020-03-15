@@ -4,6 +4,7 @@ export default ({
         state.menuLeftwidth = size;
     },
     getBreadlist(state, toObj) {
+
         let obj = {
             name: toObj.name,
             path: toObj.path
@@ -60,10 +61,11 @@ export default ({
     setEditordialog(state, editorDialogstatus) {
         state.editorDialog = editorDialogstatus;
     },
-    //获取企业管理下的企业信息中的编辑中的企业类型数组
-    // getCompanytypes(state, companyTypes) {
-    //     state.companyType = companyTypes
-    // },
+    //企业信息下的 详情  行数据
+    getCompanyDetails(state, obj) {
+
+        state.comDetail = obj
+    },
     //企业管理下的企业基站管理中的添加（编辑）dialog状态
     baseAdd(state, dialogStatus) {
         state.baseAdd = dialogStatus;
@@ -201,6 +203,7 @@ export default ({
     },
     //更改默认选中的菜单
     changeDefaultmenu(state, menuMsg) {
+
         state.defaultMenu = menuMsg
     },
     //获取登陆成功后的token
@@ -218,7 +221,7 @@ export default ({
         let res = []
         let childrenName = []
         for (let i = 0; i < menuTree.length; i++) {
-            if (menuTree[i].subMenus) { //有二级菜单
+            if (menuTree[i].subMenus && menuTree[i].subMenus.length > 0) { //有二级菜单
                 for (let j = 0; j < menuTree[i].subMenus.length; j++) {
                     menuTree[i].subMenus[j].meta = {}
                     if (menuTree[i].subMenus[j].subMenus && menuTree[i].subMenus[j].subMenus.length > 0) { //有三级菜单(按钮管控)
@@ -232,6 +235,9 @@ export default ({
                         childrenName.push(menuTree[i].subMenus[j])
                     }
                 }
+            } else {
+                menuTree[i].meta = {}
+                childrenName.push(menuTree[i])
             }
         }
         asyncRoutes.forEach((route) => {
@@ -246,6 +252,8 @@ export default ({
                     res.push(routeItem)
                 } else {
                     if (routeItem.name == '消息') {
+                        res.push(routeItem)
+                    } else if (routeItem.name == '首页') {
                         res.push(routeItem)
                     }
                 }
@@ -282,6 +290,7 @@ export default ({
                 }
             }
         }
+        console.log(menuTree)
 
         state.menulist = menuTree
     },
