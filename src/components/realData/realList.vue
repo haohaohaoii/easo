@@ -22,7 +22,7 @@
                         <span v-else>{{ scope.row.cod}}</span>
                     </template>
                 </el-table-column>
-                <el-table-column align="center" prop="nh3n" label="NH3-N(mg/L)">
+                <el-table-column align="center" prop="nh3n" label="氨氮(mg/L)">
                     <template slot-scope="scope">
                         <span
                             v-if="scope.row.nh3nOverflag==1"
@@ -35,7 +35,7 @@
                         <span v-else>{{ scope.row.nh3n}}</span>
                     </template>
                 </el-table-column>
-                <el-table-column align="center" prop="tn" label="TN(mg/L)" min-width="100">
+                <el-table-column align="center" prop="tn" label="总氮(mg/L)" min-width="100">
                     <template slot-scope="scope">
                         <span v-if="scope.row.tnOverflag==1" style="color: red">{{ scope.row.tn }}</span>
                         <span
@@ -45,7 +45,7 @@
                         <span v-else>{{ scope.row.tn}}</span>
                     </template>
                 </el-table-column>
-                <el-table-column align="center" prop="tp" label="TP(mg/L)">
+                <el-table-column align="center" prop="tp" label="总磷(mg/L)">
                     <template slot-scope="scope">
                         <span v-if="scope.row.tpOverflag==1" style="color: red">{{ scope.row.tp }}</span>
                         <span

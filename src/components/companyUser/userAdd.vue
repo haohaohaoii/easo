@@ -122,17 +122,27 @@ export default {
     methods: {
         //获取企业类型
         getTypes(){
+  
             this.types=[]  //每次都先清空
             this.$api.company.companyAll().then(res=>{
+                
                 if(res.data.code == 0){
                     let arr =res.data.data
-                    for(let i=0; i<arr.length; i++){
-                        let obj = {
-                            label:arr[i].erpName,
-                            value:arr[i].id
+                    if(arr && arr.length>0){
+                        for(let i=0; i<arr.length; i++){
+                            let obj = {
+                                label:arr[i].erpName,
+                                value:arr[i].id
+                            }
+                            this.types.push(obj)
                         }
-                        this.types.push(obj)
+                    }else{
+                        this.$message({
+                            type: "warning",
+                            message: "请先添加企业"
+                        }); 
                     }
+                    
                 }
             })
         },
@@ -160,6 +170,7 @@ export default {
                                     message: '企业用户添加成功',
                                     type: 'success'
                                 });
+                            _this.$emit('addSuccess',true)
                             _this.closeDialog()
                         }
                     })
@@ -210,7 +221,6 @@ export default {
     margin-top: 0 !important;
     position: relative;
     margin: 0 auto;
-    height: 40%;
     overflow-y: auto;
     top: 50%;
     width: 30%;

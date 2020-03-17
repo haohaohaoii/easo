@@ -4,7 +4,7 @@
             <div class="line"></div>
             <p>基站添加</p>
         </div>
-        <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+        <el-form ref="form" :model="form" :rules="rules" label-width="100px" size="mini">
             <el-form-item label="基站名称:" prop="siteName">
                 <el-input v-model="form.siteName"></el-input>
             </el-form-item>
@@ -21,7 +21,7 @@
             <el-form-item label="MN:" prop="mn">
                 <el-input v-model="form.mn"></el-input>
             </el-form-item>
-            <el-form-item label="企业选择" prop="erpId">
+            <el-form-item label="企业选择" prop="erpId" v-if="isFromcom">
                 <el-select v-model="form.erpId" @visible-change="companyChoose" clearable>
                     <el-option
                         v-for="item of companyArr"
@@ -54,6 +54,7 @@ import { mapState, mapMutations } from "vuex";
 export default {
     data() {
         return {
+            isFromcom:true,
             status: false, //控制表头不显示
             jcType:[
                 {label:'进口',value:0},
@@ -108,6 +109,14 @@ export default {
             companyArr:[]
         };
     },
+    mounted(){
+
+        if(this.$route.query.companyId){
+           this.isFromcom = false
+        }else{
+             this.isFromcom = true
+        }
+    },
     computed: {
         ...mapState(["baseAdd","Equilist"])
     },
@@ -159,6 +168,7 @@ export default {
                             message: '基站添加成功',
                             type: 'success'
                         });
+                        _this.$emit('addSuccess',true)
                        _this.clearForm()
                     }
                 }).catch(error=>{
@@ -211,12 +221,14 @@ export default {
     margin-top: 0 !important;
     position: relative;
     margin: 0 auto;
-    width: 32% !important;
+    width: 28% !important;
     top: 50%;
     transition: transform;
     transform: translateY(-50%);
     border: 1px solid #ebeef5;
-    width: 40%;
     overflow-y: auto;
+}
+.baseAdd >>> .el-select {
+    width: 100%;
 }
 </style>

@@ -74,7 +74,6 @@ export default {
     }, 
    computed:{
         tableData(){
-            debugger
             if(this.baseAll && this.baseAll.length>0){
                 let baseList= [];
                 for(let i=0; i<this.baseAll.length; i++){
@@ -152,8 +151,7 @@ export default {
         },
         delete(roleId){
             return new Promise((resolve,reject)=>{
-                this.$api.user.deleteUseritem(roleId).then(res=>{
-                    debugger
+                this.$api.user.deleteUseritem(roleId).then(res=>{           
                     if(res.data.code == 0){
                         resolve('success')
                     }

@@ -113,7 +113,6 @@ export default {
     methods: {
         //提交
         save() {
-            debugger
             let username = this.ruleForm.loginName
             let realName = this.ruleForm.realName
             let phone = this.ruleForm.phone
@@ -137,6 +136,7 @@ export default {
                             message: '用户修改成功',
                             type: 'success'
                         });
+                        _this.$emit('ediSuccess',true)
                        _this.clearForm()
                     }
                 }).catch(error=>{

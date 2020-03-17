@@ -248,6 +248,7 @@ export default {
         getCode() {},
         //确定编辑  --关闭dialog
         sureEditor() {
+            debugger
             this.$refs["ruleForm"].validate(valid => {
                 if (valid) {
                     // // 表单验证通过之后的操作
@@ -304,6 +305,7 @@ export default {
                                         message: "企业信息修改成功",
                                         type: "success"
                                     });
+                                    _this.$emit('ediSuccess',true)
                                     _this.closeDialog();
                                 }
                             });

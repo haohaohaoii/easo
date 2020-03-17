@@ -74,6 +74,7 @@ export default {
                                 type: "success",
                                 message: "基站状态修改成功"
                             });
+                            this.$emit('auditSuccess',true)
                             this.clearForm()
                          }
                      })

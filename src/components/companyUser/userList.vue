@@ -1,6 +1,5 @@
 <template>
     <div class="userList">
-        <user-editor></user-editor>
         <div class="tabE">
             <el-table
                 :height="tableHeight"
@@ -38,13 +37,9 @@
 </template>
 
 <script>
-import userEditor from './userEditor'
 import { mapMutations } from "vuex";
 
 export default {
-    components:{
-        userEditor
-    },
     props: {
         companyList: {
             type: Array,
@@ -67,7 +62,7 @@ export default {
                 for (let i = 0; i < this.companyList.length; i++) {
                     let obj = {
                         userName: this.companyList[i].username, //联系人
-                        comName: this.companyList[i].userDetail.companyName, //企业名称
+                        comName: this.companyList[i].userDetail? this.companyList[i].userDetail.companyName:'', //企业名称
                  
                         phone: this.companyList[i].phone, //联系电话
                         creTime: this.companyList[i].createTime, //企业地址
@@ -100,6 +95,7 @@ export default {
                                 type: "success",
                                 message: "删除成功!"
                             });
+                            this.$emit('delSuccess',true)
                         }
                     })
                 })

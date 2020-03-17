@@ -2,6 +2,7 @@
     <!--角色管理-->
     <div class="roleManage">
         <role-add @addSuccsss="addSuccsss"></role-add>
+        <role-editor @ediSuccess="ediT"></role-editor>
         <div class="roleTop">
             <div class="markMsg">
                 <div></div>
@@ -35,6 +36,7 @@
 
 <script>
 import roleAdd from "./roleAdd";
+import roleEditor from "./roleEditor";
 import noData from "../common/noData";
 import roleList from "./roleList";
 import { mapMutations } from "vuex";
@@ -42,7 +44,8 @@ export default {
     components: {
         roleList,
         noData,
-        roleAdd
+        roleAdd,
+        roleEditor
     },
     data() {
         return {
@@ -68,6 +71,14 @@ export default {
         //父组件监听，子组件删除成功
         delSuccess(status) {
             if (status == true) {
+                //重新请求数据
+                let pageNum = this.currentPage;
+                this.getRoles(pageNum);
+            }
+        },
+        //编辑成功
+        ediT(val){
+             if (val) {
                 //重新请求数据
                 let pageNum = this.currentPage;
                 this.getRoles(pageNum);

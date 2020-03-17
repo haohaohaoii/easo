@@ -10,6 +10,7 @@
             ref="ruleForm"
             label-width="100px"
             class="demo-ruleForm"
+            size="mini"
         >
             <el-form-item label="登陆名:" prop="loginName">
                 <el-input v-model="ruleForm.loginName"></el-input>
@@ -219,6 +220,7 @@ export default {
                                     message: '用户添加成功',
                                     type: 'success'
                                 });
+                            _this.$emit('addSuccess',true)
                             _this.clearForm()
                             }
                         }).catch(error=>{

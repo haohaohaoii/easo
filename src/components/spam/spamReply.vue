@@ -5,7 +5,6 @@
         center
         @close="closeDialog"
         :close-on-click-modal="false"
-        v-if="hisReplymsg"
     >
         <div slot="title" class="tit">
             <div class="line"></div>
@@ -26,11 +25,7 @@
                 <span></span>
             </p>
             <el-divider></el-divider>
-            <div
-                v-if="hisReplymsg && hisReplymsg.length>0"
-                style="height: 260px;
-    overflow: auto;"
-            >
+            <div style="height: 260px;overflow: auto;">
                 <div class="left neir" v-for="item of hisReplymsg " :key="item.id">
                     <div v-if="item.type ==1" class="f">
                         企业回复：
@@ -51,7 +46,7 @@
         </div>
         <div slot="footer" class="footer">
             <el-button type="primary" size="mini" @click="spam">回复</el-button>
-            <el-button size="mini" @click="cancel">取消</el-button>
+            <!-- <el-button size="mini" @click="cancel">取消</el-button> -->
         </div>
     </el-dialog>
 </template>
@@ -61,6 +56,7 @@ import { mapState, mapMutations } from "vuex";
 export default {
     data() {
         return {
+   
             title:'', //留言标题
             spamType:'', //留言分类
             spamContent:'', //留言内容
@@ -112,9 +108,9 @@ export default {
             this.$store.commit("spamReply", false); //关闭dialog
         },
         //取消
-        cancel() {
-            this.clearForm()
-        },
+        // cancel() {
+        //     this.clearForm()
+        // },
         //点击x号关闭
         closeDialog() {
             this.clearForm()
@@ -122,19 +118,20 @@ export default {
     },
     watch: {
         spamItemlist(val){
-      
-            let arr = Object.keys(val);
-           
-            if(arr && arr.length>0){
-                this.title = val.title  //留言标题
-                this.spamType= val.messageType  //留言类型
-                this.spamContent = val.content   //留言内容
-                this.id = val.id //留言id
-            }
-            let replies = val.replies;
-            if(replies && replies.length>0){
-                this.hisReplymsg = replies
-            }
+        
+                let arr = Object.keys(val);
+
+                if(arr && arr.length>0){
+                    this.title = val.title  //留言标题
+                    this.spamType= val.messageType  //留言类型
+                    this.spamContent = val.content   //留言内容
+                    this.id = val.id //留言id
+                }
+                let replies = val.replies;
+                if(replies && replies.length>0){
+                    this.hisReplymsg = replies
+                }
+            
         }
     },
 };

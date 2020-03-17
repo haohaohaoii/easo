@@ -1,7 +1,9 @@
 <template>
     <div class="enterMation">
-        <enter-add></enter-add>
+        <enter-add @addSuccess="addT"></enter-add>
         <enter-dialog></enter-dialog>
+        <edi-dialog @ediSuccess="ediT"></edi-dialog>
+        <enter-audit @auditSuccess="audiT"></enter-audit>
         <div class="enmationTop">
             <div class="markMsg">
                 <div></div>
@@ -32,6 +34,8 @@
 </template>
 
 <script>
+import ediDialog from "./ediDialog";
+import enterAudit from './enterAudit';
 import enterList from "./enterList";
 import {mapMutations} from 'vuex'
 import enterAdd from './enterAdd'
@@ -40,7 +44,9 @@ export default {
     components: {
         enterList,
         enterDialog,
-        enterAdd
+        enterAdd,
+        ediDialog,
+        enterAudit
     },
     data() {
         return {
@@ -55,6 +61,27 @@ export default {
         this.getUserlist(pageNum)
     },
     methods:{
+        //添加企业成功重新请求页面
+        addT(val){
+            if(val){
+               let pageNum = this.currentPage;
+                this.getUserlist(pageNum)
+           } 
+        },
+        //编辑成功
+        ediT(val){
+            if(val){
+                let pageNum = this.currentPage;
+                this.getUserlist(pageNum)
+            } 
+        },
+        //审核成功
+        audiT(val){  
+            if(val){
+                let pageNum = this.currentPage;
+                this.getUserlist(pageNum)
+            } 
+        },
         getUserlist(pageNum){
             let pageSize = this.pagesize;
             this.$api.company

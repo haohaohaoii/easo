@@ -25,6 +25,14 @@ const site = {
     //修改站点
     changeSitedetail(params, mn) {
         return axios.put(`${base.localUrl}/admin/site/${mn}`, qs.stringify(params))
+    },
+    //根据企业ID查看站点信息(不分页)
+    getSites(companyId) {
+        return axios.get(`${base.localUrl}/admin/site/user/${companyId}`)
+    },
+    //根据企业ID查看站点信息(分页)
+    getSitess(companyId, params) {
+        return axios.get(`${base.localUrl}/admin/site/sites/${companyId}`, params)
     }
 }
 

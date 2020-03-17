@@ -3,39 +3,81 @@ export default ({
     changeMenuleft(state, size) {
         state.menuLeftwidth = size;
     },
-    getBreadlist(state, toObj) {
+    getBreadlist(state, nowPath) {
 
-        let obj = {
-            name: toObj.name,
-            path: toObj.path
+        let menuArr = state.menulist;
+        let arr = [];
+        let objF = {
+            name: '',
+            path: ''
+        };
+        let objN = {
+            name: nowPath.name,
+            path: nowPath.path
         }
-        let arr = state.breadArr
-
-        let flag = false
-        if (arr && arr.length > 0) {
-            for (let i = 0; i < arr.length; i++) {
-                if (arr[i].name == obj.name) {
-                    arr.splice(i + 1, arr.length - 1)
-                    flag = true
-                    break
-                } else {
-                    if (i == arr.length - 1 && !flag) {
-                        arr.push(obj)
-                        break
+        for (let i = 0; i < menuArr.length; i++) {
+            if (menuArr[i].menuName == nowPath.name) {
+                objF.name = ''
+                break
+            } else {
+                if (menuArr[i].subMenus && menuArr[i].subMenus.length > 0) {
+                    for (let k = 0; k < menuArr[i].subMenus.length; k++) {
+                        if (menuArr[i].subMenus[k].menuName == nowPath.name) {
+                            objF.name = menuArr[i].menuName
+                            break
+                        }
                     }
                 }
             }
+        }
+        console.log(objF)
+        if (objF.name) {
+            arr.push(objF)
+            arr.push(objN)
         } else {
-            arr.push(obj)
+            arr.push(objN)
         }
 
-
+        state.breadArr = arr
         localStorage.breadArr = JSON.stringify(arr)
     },
+    // getBreadlist(state, toObj) {
+
+    //     let obj = {
+    //         name: toObj.name,
+    //         path: toObj.path
+    //     }
+    //     let arr = state.breadArr
+
+    //     let flag = false
+    //     if (arr && arr.length > 0) {
+    //         for (let i = 0; i < arr.length; i++) {
+    //             if (arr[i].name == obj.name) {
+    //                 arr.splice(i + 1, arr.length - 1)
+    //                 flag = true
+    //                 break
+    //             } else {
+    //                 if (i == arr.length - 1 && !flag) {
+    //                     arr.push(obj)
+    //                     break
+    //                 }
+    //             }
+    //         }
+    //     } else {
+    //         arr.push(obj)
+    //     }
+
+
+    //     localStorage.breadArr = JSON.stringify(arr)
+    // },
     //获取搜索时间区间[yyyy-MM-dd HH:00:00 ...... yyyy-MM-dd HH:00:00]
     getHours(state, hourA) {
 
         state.hoursArr = hourA;
+    },
+    //获取消息  当行详情
+    getMsgD(state, obj) {
+        state.msgRowDetail = obj
     },
     //获取历史数据--折线图用
     getHisdataAll(state, objHis) {

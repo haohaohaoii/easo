@@ -8,7 +8,7 @@
                 <el-checkbox v-model="zolin" @change="changeZl">总磷</el-checkbox>
                 <el-checkbox v-model="zodan" @change="changeZd">总氮</el-checkbox>
                 <el-checkbox v-model="ph" @change="changePh">PH</el-checkbox>
-                <el-checkbox v-model="ll" @change="changeLl">流量</el-checkbox>
+                <!-- <el-checkbox v-model="ll" @change="changeLl">流量</el-checkbox> -->
             </div>
             <div class="shuoming">
                 <div class="cod">
@@ -31,10 +31,10 @@
                     <div></div>
                     <p>PH</p>
                 </div>
-                <div class="liuliang">
+                <!-- <div class="liuliang">
                     <div></div>
                     <p>流量</p>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>
@@ -83,7 +83,7 @@ export default {
                     {
                         show: true,
                         realtime: true,
-                        start: 0,
+                        start: 90,
                         end: 100
                     },
                     //内容能不能拉
@@ -117,7 +117,7 @@ export default {
                         name: "COD",
                         type: "bar", //柱状
                         animation: true, //是否开启动画
-
+                         barWidth:18,
                         lineStyle: {
                             color: "rgba(255,0,0,1)"
                         },
@@ -127,7 +127,7 @@ export default {
                         name: "总氮",
                         type: "bar", //柱状
                         animation: true, //是否开启动画
-
+                         barWidth:18,
                         lineStyle: {
                             color: "rgba(0,0,255,1)" //总氮的颜色
                         },
@@ -142,7 +142,9 @@ export default {
         ...mapState(["hisDataall"])
     },
     mounted() {
-        this.getZx();
+        this.$nextTick(() => {
+           this.getZx();
+        });
     },
 
     methods: {
@@ -182,9 +184,10 @@ export default {
                 let cod = {
                     name: "COD",
                     type: "bar", //折线
+                     barWidth:18,
                     animation: true, //是否开启动画
                     lineStyle: {
-                        width: 2,
+                        width: 4,
                         color: "rgba(255,0,0,1)"
                     },
                    data: this.hisDataall.yDatacod
@@ -222,7 +225,7 @@ export default {
                     name: "总氮",
                     type: "bar", //折线
                     animation: true, //是否开启动画
-
+                     barWidth:18,
                     lineStyle: {
                         width: 2,
                         color: "rgba(0,0,255,1)"
@@ -262,6 +265,7 @@ export default {
                     name: "氨氮",
                     type: "bar", //折线
                     animation: true, //是否开启动画
+                     barWidth:18,
                     lineStyle: {
                         width: 2,
                         color: "rgba(241,225,0,1)"
@@ -301,6 +305,7 @@ export default {
                     name: "总磷",
                     type: "bar", //折线
                     animation: true, //是否开启动画
+                     barWidth:18,
                     lineStyle: {
                         width: 2,
                         color: "rgba(113,209,75,1)"
@@ -338,6 +343,7 @@ export default {
                 //选中
                 let ph = {
                     name: "PH",
+                     barWidth:18,
                     type: "bar", //折线
                     animation: true, //是否开启动画
                     lineStyle: {
@@ -380,7 +386,7 @@ export default {
                     type: "bar", //折线
                     animation: true, //是否开启动画
                     lineStyle: {
-                        width: 2,
+                        width: 20,
                         color: "rgba(228,139,0,1)"
                     },
                     data: this.hisDataall.yDatall

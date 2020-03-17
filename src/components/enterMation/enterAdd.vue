@@ -65,7 +65,7 @@
             </el-form-item>
         </el-form>
         <div slot="footer" class="foot">
-            <el-button type="primary" @click="sureEditor" size="mini">编辑</el-button>
+            <el-button type="primary" @click="sureEditor" size="mini">添加</el-button>
             <el-button @click="cancelEditor" size="mini">取消</el-button>
         </div>
         <el-dialog append-to-body :visible.sync="dialogVisible" width="28%">
@@ -289,6 +289,7 @@ export default {
                                     message: '企业添加成功',
                                     type: 'success'
                                 });
+                            _this.$emit('addSuccess',true)
                             _this.closeDialog()
                         }
                     })
@@ -338,15 +339,14 @@ export default {
     margin-top: 0 !important;
     position: relative;
     margin: 0 auto;
-    height: 40%;
+    height: 50%;
     overflow-y: auto;
     top: 50%;
-    width: 36%;
     transition: transform;
     transform: translateY(-50%);
     border: 1px solid #ebeef5;
 
-    width: 40%;
+    width: 30%;
     overflow-y: auto;
 }
 //表单校验的图标颜色
@@ -372,5 +372,8 @@ export default {
     height: 90px;
     border: 2px solid rgba(153, 153, 153, 1);
     border-radius: 10px;
+}
+.dialog >>> .el-select {
+    width: 100%;
 }
 </style>

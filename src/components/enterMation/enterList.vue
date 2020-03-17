@@ -26,9 +26,7 @@
                         <el-button
                             size="mini"
                             @click="base(scope.$index, scope.row)"
-                            style="    background: rgba(54,182,243,1);
-    color: white;
-}"
+                            style="background: rgba(54,182,243,1);color: white;"
                             v-has="'基站'"
                         >基站</el-button>
                         <el-button
@@ -54,21 +52,17 @@
                 </el-table-column>
             </el-table>
         </div>
-        <edi-dialog></edi-dialog>
-        <enter-audit></enter-audit>
+
         <slot></slot>
     </div>
 </template>
 
 <script>
-import enterAudit from './enterAudit';
+
 import { mapMutations } from "vuex";
-import ediDialog from "./ediDialog";
+
 export default {
-    components: {
-        ediDialog,
-        enterAudit
-    },
+  
     props: {
         companyList: {
             type: Array,
@@ -118,8 +112,11 @@ export default {
         },
         
         //跳转基站
-        base() {
-            this.$router.push("/baseManage");
+        base(index,row) {
+        
+            let companyId = row.id;
+         
+            this.$router.push({path:'/baseManage',query:{companyId:companyId}});
         },
         audit(index, row){
          

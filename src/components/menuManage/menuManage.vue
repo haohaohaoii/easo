@@ -1,5 +1,7 @@
 <template>
     <div class="menuManage">
+        <menu-add @addSuccess="addT"></menu-add>
+        <menu-editor @ediSuccess="ediT"></menu-editor>
         <div class="menuTop">
             <div class="markMsg">
                 <div></div>
@@ -14,7 +16,7 @@
                 >添加菜单</el-button>
             </div>
         </div>
-        <menu-list :munuList="menuArr">
+        <menu-list :munuList="menuArr" @delSuccess="delT">
             <div class="tabPage">
                 <el-pagination
                     background
@@ -26,17 +28,18 @@
                 ></el-pagination>
             </div>
         </menu-list>
-        <menu-add></menu-add>
     </div>
 </template>
 
 <script>
 import menuList from './menuList'
 import menuAdd from './menuAdd'
+import menuEditor from './menEditor'
 export default {
     components:{
         menuList,
-        menuAdd
+        menuAdd,
+         menuEditor
     },
     data() {
          return {
@@ -51,6 +54,24 @@ export default {
         this.getUserlist(pageNum)
     },
     methods:{
+        addT(val){
+            if(val){
+                let pageNum = this.currentPage;
+                this.getUserlist(pageNum)
+            }
+        },
+        ediT(val){
+            if(val){
+                let pageNum = this.currentPage;
+                this.getUserlist(pageNum)
+            }
+        },
+        delT(val){
+            if(val){
+                let pageNum = this.currentPage;
+                this.getUserlist(pageNum)
+            }
+        },
         getUserlist(pageNum){
             let pageSize = this.pagesize;
             this.$api.menu

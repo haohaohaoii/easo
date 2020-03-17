@@ -6,11 +6,12 @@
 import { mapState } from "vuex";
 
 export default {
+    props:['zxData'],
     data() {
         return {
       
-            xDatas:['2020-1-15','2020-1-30','2020-2-10','2020-2-15','2020-2-30','2020-3-5','2020-3.10'],
-           
+            xDatas:[],
+            yDatas:[],
             options: {
                 title: {
                     text: '最近三个月接入站点',//标题
@@ -18,11 +19,12 @@ export default {
                         color: 'rgba(51,51,51,1)'
                         
                     },
-                    x:'4%',
+                    x:'5.5%',
                     y:'3%'
                 },
                 grid: {
-                    bottom: 80
+                    bottom: 80,
+                    left:60
                 },
                
                 tooltip: {
@@ -71,9 +73,9 @@ export default {
                     {
                         name: "站点接入",
                         type: "bar", //柱状
-                        barWidth:30,
+                        barWidth:18,
                         animation: true, //是否开启动画
-                        data: [28,30,20,32,15,22,19],
+                        data: [],
                         itemStyle: {
                             
                             normal: {
@@ -106,9 +108,11 @@ export default {
         };
     },
     mounted() {
-        this.getZx();
+        this.$nextTick(() => {
+           this.getZx();
+        });
     },
-
+  
     methods: {
         
         //折线图方法
@@ -116,11 +120,27 @@ export default {
             let myCharts = this.$echarts.init(this.$refs.myCharts);
             myCharts.showLoading(); //加载动画
             this.options.xAxis[0].data = this.xDatas //设置x轴坐标
+            this.options.series[0].data = this.yDatas  //设置y轴坐标
             setTimeout(function() {
                 myCharts.hideLoading(); //隐藏加载动画
             }, 2000);
             myCharts.setOption(this.options);
         },
+    },
+    watch:{
+        zxData(val){
+            if(val && val.length>0){
+                let x =[]
+                let y =[]
+                for(let i=0; i<val.length; i++){
+                    x.push(val[i].create_time)
+                    y.push(val[i].count)
+                }
+                this.xDatas = x
+                this.yDatas = y
+                this.getZx()
+            }
+        }
     }
 };
 </script>

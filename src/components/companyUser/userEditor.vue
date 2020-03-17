@@ -74,7 +74,7 @@ export default {
                         trigger: "change"
                     },
                     {
-                        pattern: "^[1][3,4,5,7,8][0-9]{9}$",
+                        pattern: "^[1][3,4,5,7,8,9][0-9]{9}$",
                         message: "请填写正确的手机号",
                         trigger: "change"
                     }
@@ -151,6 +151,7 @@ export default {
                                     message: '企业用户修改成功',
                                     type: 'success'
                                 });
+                            _this.$emit('ediSuccess',true)
                             _this.closeDialog()
                         }
                     })
@@ -173,7 +174,6 @@ export default {
             this.id = val.id
             this.ruleForm.phone = val.phone
             this.ruleForm.userName = val.username
-
             if(this.types && this.types.length>0){
                 for(let i =0; i<this.types.length; i++){
               
@@ -181,6 +181,11 @@ export default {
                        this.ruleForm.firmType = val.erpId
                    }
                 }
+            }else{
+                this.$message({
+                    type: "warning",
+                    message: "请先添加企业"
+                }); 
             }
         }
     }
@@ -217,15 +222,14 @@ export default {
     margin-top: 0 !important;
     position: relative;
     margin: 0 auto;
-    height: 40%;
+    width: 30%;
     overflow-y: auto;
     top: 50%;
-    width: 36%;
+
     transition: transform;
     transform: translateY(-50%);
     border: 1px solid #ebeef5;
 
-    width: 40%;
     overflow-y: auto;
 }
 //表单校验的图标颜色
@@ -251,5 +255,8 @@ export default {
     height: 90px;
     border: 2px solid rgba(153, 153, 153, 1);
     border-radius: 10px;
+}
+.dialog >>> .el-select {
+    width: 100%;
 }
 </style>

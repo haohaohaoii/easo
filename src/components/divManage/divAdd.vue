@@ -16,6 +16,7 @@
             ref="ruleForm"
             label-width="100px"
             status-icon
+            size="mini"
             class="demo-ruleForm"
         >
             <el-form-item label="部门名称:" prop="deptName">
@@ -114,6 +115,7 @@ export default {
                                     message: "用户添加成功",
                                     type: "success"
                                 });
+                                _this.$emit('addSuccess',true)
                                 _this.clearForm();
                             }
                         })

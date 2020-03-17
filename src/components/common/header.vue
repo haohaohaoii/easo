@@ -8,7 +8,10 @@
             mode="horizontal"
             @select="handleSelect"
         >
-            <el-menu-item index="firstPage">首页</el-menu-item>
+            <el-menu-item index="firstPage">
+                <i class="el-icon-s-home" style="font-size:26px"></i>
+                <span slot="title">首页</span>
+            </el-menu-item>
             <!-- <div v-for="(item,index) of createMenu" :key="index"> -->
             <el-submenu
                 v-if="item.subMenus && item.subMenus.length>=1"
@@ -263,7 +266,7 @@ export default {
         },
         //点击消息
         message() {
-            this.$router.push("/spam");
+            this.$router.push("/message");
         },
         //点击修改密码
         changePawd() {
@@ -347,8 +350,11 @@ export default {
     background-color: #1f87e7 !important; //改变背景颜色
     color: #ffffff !important; //改变字体颜色
 }
+.header >>> .el-menu-item i:hover {
+    color: white !important;
+}
 .header >>> .el-submenu__title i:hover {
-    color: red !important;
+    color: white !important;
 }
 //二级菜单移入的背景颜色
 .opt:hover {

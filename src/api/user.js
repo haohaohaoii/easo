@@ -27,7 +27,12 @@ const user = {
         return axios.delete(`${base.localUrl}/admin/admin/${adminId}`)
     },
     changePawd(adminId, params) {  //修改密码
-        return axios.put(`${base.localUrl}/admin/admin/${adminId}`, qs.stringify(params))
+        return axios.put(`${base.localUrl}/admin/admin/changePswd/${adminId}`, qs.stringify(params))
+    },
+    //首页
+    firstP(params) {
+
+        return axios.get(`${base.localUrl}/admin/index`, params)
     }
 }
 

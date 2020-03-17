@@ -14,9 +14,10 @@
             label-width="100px"
             class="demo-ruleForm"
             status-icon
+            size="mini"
         >
             <el-form-item label="原密码" prop="oldPawwd">
-                <el-input v-model="form.oldPawwd" autocomplete="off"></el-input>
+                <el-input v-model="form.oldPawwd" autocomplete="off" show-password>></el-input>
             </el-form-item>
             <el-form-item label="新密码" prop="newPawwd">
                 <el-input type="password" v-model="form.newPawwd" autocomplete="off" show-password></el-input>
@@ -30,7 +31,7 @@
                 ></el-input>
             </el-form-item>
         </el-form>
-        <div slot="footer" class="dialog-footer">
+        <div style="text-align: center;">
             <el-button @click="cancel">取 消</el-button>
             <el-button type="primary" @click="sure">确 定</el-button>
         </div>
@@ -75,6 +76,7 @@ export default {
     computed: {
         ...mapState(["pwdDialog","adminId"])
     },
+    
     methods: {
         //点击取消关闭dialog
         cancel() {
@@ -85,12 +87,12 @@ export default {
                 if( this.form.newPawwd === this.form.sureNewpwwd){
                     let adminId = this.adminId;
                     let params = {
-                        password:this.form.sureNewpwwd,
-                        username:localStorage.userName
+                        newPswd:this.form.sureNewpwwd,
+                        oldPswd:this.form.oldPawwd
                     }
                     let _this =this
                     _this.$api.user.changePawd(adminId,params).then(res=>{
-                      
+                   
                         if(res.data.code == 0){
                             _this.close();
                             _this.$alert('密码修改成功，请重新登陆', '注意', {
@@ -114,6 +116,11 @@ export default {
                     });
                 
                 }
+            }else{
+                this.$message({
+                    type: "warning",
+                    message: "请输入后再提交!"
+                });
             }
         },
         //点击弹出框右上角x号，关闭dialog
@@ -136,7 +143,7 @@ export default {
     margin-top: 0 !important;
     position: relative;
     margin: 0 auto;
-    width: 30%;
+    width: 25%;
     top: 50%;
     transition: transform;
     transform: translateY(-50%);

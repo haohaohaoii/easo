@@ -6,7 +6,7 @@
                 <p>留言管理</p>
             </div>
         </div>
-        <spam-list :spamAll="spamArr">
+        <spam-list :spamAll="spamArr" @delSuccess="delT">
             <div class="tabPage">
                 <el-pagination
                     background
@@ -40,6 +40,11 @@ export default {
         this.getSpam(pageNum)
     },
     methods:{
+        //删除成功
+        delT(val){
+            let pageNum = this.currentPage;
+            this.getSpam(pageNum)
+        },
         getSpam(pageNum){
             let pageSize = this.pagesize;
             this.$api.spam

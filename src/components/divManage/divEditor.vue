@@ -111,9 +111,10 @@ export default {
                     this.$api.depart.changeDeptitem(params,id).then(res=>{
                         if(res.data.code == 0){
                             _this.$message({
-                                message: '用户添加成功',
+                                message: '部门编辑成功',
                                 type: 'success'
                             });
+                        _this.$emit('editorSuccess',true)
                         _this.clearForm()
                         }
                     }).catch(error=>{

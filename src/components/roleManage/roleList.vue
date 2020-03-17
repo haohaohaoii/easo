@@ -1,6 +1,5 @@
 <template>
     <div class="roleList">
-        <role-editor></role-editor>
         <div class="tabE">
             <el-table
                 :data="roleData"
@@ -35,12 +34,8 @@
 
 <script>
 import { mapMutations } from "vuex";
-import roleEditor from "./roleEditor";
 import { resolve, reject } from "q";
 export default {
-    components: {
-        roleEditor
-    },
     props: {
         rolelist: {
             type: Array,

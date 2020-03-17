@@ -21,7 +21,7 @@
             <el-form-item label="MN:" prop="mn">
                 <el-input v-model="form.mn"></el-input>
             </el-form-item>
-            <el-form-item label="企业选择" prop="erpId">
+            <el-form-item label="企业选择" prop="erpId" v-if="isFromcom">
                 <el-select v-model="form.erpId" clearable>
                     <el-option
                         v-for="item of companyArr"
@@ -64,6 +64,7 @@ import { mapState, mapMutations } from "vuex";
 export default {
     data() {
         return {
+            isFromcom:true,
             isShowsite:false,
             siteSes:[  //站点状态数组
                 {label:'启用',value:1},
@@ -135,10 +136,17 @@ export default {
         ...mapState(["baseEditor","Equilist","companyArr",'baseItemlist'])
 
     },
+    mounted(){
+      if(this.$route.query.companyId){
+           this.isFromcom = false
+        }else{
+             this.isFromcom = true
+        }
+    },
     methods: {
         //添加基站
         addBase() {
-            debugger
+  
             let siteName = this.form.siteName  //基站名称
             let ioType = this.form.ioType  //基站状态
             let erpId = this.form.erpId  //企业选择
@@ -164,9 +172,10 @@ export default {
                 this.$api.site.changeSitedetail(params,mn).then(res=>{
                     if(res.data.code == 0){
                         _this.$message({
-                            message: '基站添加成功',
+                            message: '基站编辑成功',
                             type: 'success'
                         });
+                        _this.$emit('ediSuccess',true)
                        _this.clearForm()
                     }
                 }).catch(error=>{

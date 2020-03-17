@@ -138,7 +138,7 @@ export default {
                 });
             }else{
                 this.getCompany().then(comP=>{
-                    debugger
+         
                     this.companyLit = comP;
                 });
                 this.getNowTime();
@@ -390,7 +390,6 @@ export default {
     }
     .tabPage {
         text-align: center;
-        padding-top: 8px;
 
         .indic {
             position: absolute;

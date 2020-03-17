@@ -8,10 +8,10 @@
             <el-table-column prop="date" width="180" align="right"></el-table-column>
             <el-table-column prop="name" align="left"></el-table-column>
         </el-table>
-        <div slot="footer" class="footer">
+        <!-- <div slot="footer" class="footer">
             <el-button type="primary" size="mini" @click="save">确定</el-button>
             <el-button size="mini" @click="cancel">取消</el-button>
-        </div>
+        </div>-->
     </el-dialog>
 </template>
 
@@ -33,18 +33,18 @@ export default {
             this.$store.commit("baseDetail", false); //关闭dialog
           
         },
-        //取消
-        cancel() {
-            this.clearForm()
-        },
+        // //取消
+        // cancel() {
+        //     this.clearForm()
+        // },
         //点击x号关闭
         closeDialog() {
             this.clearForm()
         },
-        //点击保存
-        save(){
-            this.clearForm()
-        }
+        // //点击保存
+        // save(){
+        //     this.clearForm()
+        // }
     },
     watch:{
         siteRowlist(val){

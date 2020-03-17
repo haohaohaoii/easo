@@ -6,11 +6,11 @@
         </div>
         <div class="contentSpan">
             <p class="left">
-                消息标题标题：
+                消息类型：
                 <span>{{title}}</span>
             </p>
             <div class="left neir">
-                <span>留言者内容：</span>
+                <span>消息内容：</span>
                 <span>{{messageContent}}</span>
             </div>
         </div>
@@ -26,12 +26,12 @@ import { mapState, mapMutations } from "vuex";
 export default {
     data() {
         return {
-            title:'asdasdasasdasdasdas', //消息标题
-            messageContent:'asdasasasdassssssssssssssssssssssssssssssssdsaadewewrewrweeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedfsfdsfdsfdsfsdfdsfdsfdsfsdfdsf' //消息内容
+            title:'', //消息类型
+            messageContent:'' //消息内容
         };
     },
     computed: {
-        ...mapState(["messageD"])
+        ...mapState(["messageD","msgRowDetail"])
     },
     methods: {
        sure() {
@@ -51,6 +51,19 @@ export default {
         closeDialog() {
             this.clearForm()
         },
+    },
+    watch:{
+        msgRowDetail(val){
+        
+            if(val.type == 0){
+                this.title = "预警"
+            }else if(val.type == 1){
+                this.title = "超标"
+            }else if(val.type == 2){
+                this.title = "异常"
+            }
+            this.messageContent = val.content
+        }
     }
 };
 </script>
@@ -77,7 +90,6 @@ export default {
             margin-top: 18px;
         }
         .neir {
-            
             .li {
                 width: 21%;
             }

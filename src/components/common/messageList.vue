@@ -3,19 +3,28 @@
         <div class="tabE">
             <el-table
                 :height="tableHeight"
-                :data="messageData"
+                :data="messList"
                 stripe
                 style="width: 100%"
                 :header-cell-style="{background: 'rgba(237,237,237,1)'}"
                 class="tab"
             >
-            <el-table-column
-                type="selection"
-                width="55">
-            </el-table-column>
                 <el-table-column align="center" prop="erpName" label="企业名称" width="260"></el-table-column>
-                <el-table-column align="center" prop="messageTit" label="消息标题"></el-table-column>
-                <el-table-column align="center" prop="messageCon" label="消息内容"></el-table-column>
+                <el-table-column align="center" prop="messageType" label="消息类型">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.messageType==0">预警</span>
+                        <span v-else-if="scope.row.messageType==1">超标</span>
+                        <span v-else-if="scope.row.messageType==2">异常</span>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="messageCon" label="消息内容">
+                    <template slot-scope="scope">
+                        <el-popover placement="top-start" title width="200" trigger="hover">
+                            <p>{{scope.row.messageCon}}</p>
+                            <p slot="reference">{{scope.row.at}}</p>
+                        </el-popover>
+                    </template>
+                </el-table-column>
                 <el-table-column align="center" prop="messageTime" label="消息时间"></el-table-column>
                 <el-table-column label="操作" align="center" width="220" fixed="right">
                     <template slot-scope="scope">
@@ -43,7 +52,7 @@ import messageDetail from './messageDetail'
 import { mapMutations } from "vuex";
 export default {
     props: {
-        companyList: {
+        messageArr: {
             type: Array,
             default: function() {
                 return [];
@@ -57,22 +66,30 @@ export default {
         return {
             tableHeight: window.innerHeight * 0.6,
             messageData:[
-                {erpName:'郑州思念食品厂',messageTit:'测试',messageCon:'发汤圆了',messageTime:'2020/00:00'},
-                {erpName:'郑州思念食品厂',messageTit:'测试',messageCon:'发汤圆了',messageTime:'2020/00:00'},
-                {erpName:'郑州思念食品厂',messageTit:'测试',messageCon:'发汤圆了',messageTime:'2020/00:00'},
-                {erpName:'郑州思念食品厂',messageTit:'测试',messageCon:'发汤圆了',messageTime:'2020/00:00'},
-                {erpName:'郑州思念食品厂',messageTit:'测试',messageCon:'发汤圆了',messageTime:'2020/00:00'},
-                {erpName:'郑州思念食品厂',messageTit:'测试',messageCon:'发汤圆了',messageTime:'2020/00:00'},
-                {erpName:'郑州思念食品厂',messageTit:'测试',messageCon:'发汤圆了',messageTime:'2020/00:00'},
-                {erpName:'郑州思念食品厂',messageTit:'测试',messageCon:'发汤圆了',messageTime:'2020/00:00'},
-                {erpName:'郑州思念食品厂',messageTit:'测试',messageCon:'发汤圆了',messageTime:'2020/00:00'},
-                {erpName:'郑州思念食品厂',messageTit:'测试',messageCon:'发汤圆了',messageTime:'2020/00:00'},
-                {erpName:'郑州思念食品厂',messageTit:'测试',messageCon:'发汤圆了',messageTime:'2020/00:00'},
-                {erpName:'郑州思念食品厂',messageTit:'测试',messageCon:'发汤圆了',messageTime:'2020/00:00'}
+
             ]
         };
     },
     computed: {
+        messList(){
+            if(this.messageArr && this.messageArr.length>0){
+                let messA=[]
+                for(let i=0; i<this.messageArr.length; i++){
+                    let newStr = this.messageArr[i].content.slice(0,10) +'...'
+
+                    let obj = {
+                        erpName:this.messageArr[i].companyName,   //企业名称
+                        messageType:this.messageArr[i].type,  //企业类型
+                        messageCon:this.messageArr[i].content,
+                        messageTime:this.messageArr[i].createTime,
+                        at:newStr,
+                        id:this.messageArr[i].id
+                    }
+                    messA.push(obj)
+                }
+                return messA
+            }
+        },
         tableData() {
             if (this.companyList && this.companyList.length > 0) {
                 let companyArr = [];
@@ -95,13 +112,23 @@ export default {
     methods: {
         //详情--跳转详情dialog
         handleEdit(index, row) {
-            this.$store.commit("messageDe", true);
+            let id = row.id
+            this.$store.dispatch('getMsgdetail',id)
+            // this.$store.commit("messageDe", true);
         },
         //点击编辑--跳转编辑dialog
         handleDelete(index, row) {
             console.log(index, row);
-            let erpId = row.id;
-            this.$store.dispatch("getEnteritem", erpId);
+            let id = row.id;
+            this.$api.msg.delMsgitem(id).then(res=>{
+                if(res.data.code == 0){
+                    this.$message({
+                        type: "success",
+                        message: "删除成功!"
+                    });
+                    this.$emit('delSuccess',true)
+                }
+            })
         }
     }
 };
@@ -111,10 +138,6 @@ export default {
 .messageList {
     .tabE {
         margin-top: 1%;
-    }
-    .tabPage {
-        text-align: center;
-        padding-top: 20px;
     }
 }
 </style>

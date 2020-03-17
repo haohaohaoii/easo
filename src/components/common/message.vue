@@ -8,27 +8,11 @@
             </div>
             <div class="search">
                 <div class="searchL">
-                    <el-select
-                        placeholder="选择企业"
-                        class="changeW"
-                        v-model="companyValue"
-                        filterable
-                        clearable
-                    >
-                        <el-option
-                            v-for="item of companyLit"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value"
-                        ></el-option>
-                    </el-select>
                     <el-date-picker
                         type="datetime"
                         class="changeW"
                         v-model="startTime"
                         placeholder="开始时间"
-                        value-format="yyyy-MM-dd HH:00:00"
-                        format="yyyy-MM-dd HH:00:00"
                         time-arrow-control
                     ></el-date-picker>
                     <el-date-picker
@@ -36,26 +20,23 @@
                         class="changeW"
                         v-model="endTime"
                         placeholder="结束时间"
-                        value-format="yyyy-MM-dd HH:00:00"
-                        format="yyyy-MM-dd HH:00:00"
                         time-arrow-control
                     ></el-date-picker>
-                    <el-button type="primary" class="changeW" @click="search">查询</el-button>
-                    <el-button type="danger" class="changeW" @click="delet">删除</el-button>
+                    <el-button type="primary" class="changeW" @click="cx">查询</el-button>
                 </div>
             </div>
-             <message-list :messageArr="messageL">
-            <div class="tabPage">
-                <el-pagination
-                    background
-                    layout="prev, pager, next"
-                    :total="totalLength"
-                    @current-change="handleCurrentChange"
-                    :current-page="currentPage"
-                    :page-size="pagesize"
-                ></el-pagination>
-            </div>
-        </message-list>
+            <message-list :messageArr="messageL" @delSuccess="delT">
+                <div class="tabPage">
+                    <el-pagination
+                        background
+                        layout="prev, pager, next"
+                        :total="totalLength"
+                        @current-change="handleCurrentChange"
+                        :current-page="currentPage"
+                        :page-size="pagesize"
+                    ></el-pagination>
+                </div>
+            </message-list>
         </div>
     </div>
 </template>
@@ -69,8 +50,6 @@ export default {
     },
     data() {
        return{
-           companyValue:'',  //选中的企业value
-           companyLit:[],  //企业数组
            startTime:'',  //选中的开始时间value
            endTime:'',  //选中的结束时间value
            totalLength: 0, //总共多少条数据
@@ -79,14 +58,85 @@ export default {
             messageL: [], //所有留言的数组
        }
     },
-    created(){
+    mounted(){
+        this.getNowTime();
+        this.getCurrentMonthFirst();
         let pageNum = this.currentPage;
-        this.getUserlist(pageNum)
+        this.getUserlist(pageNum);
     },
     methods: {
+            //点击查询
+            delT(val){
+                if(val){
+                    let pageNum = this.currentPage;
+                    this.getUserlist(pageNum);
+                }
+            },
+            cx(){
+                this.currentPage = 1;
+                let pageNum = this.currentPage;
+                this.getUserlist(pageNum);
+            },
+          getNowTime() {
+            let now = new Date();
+            let year = now.getFullYear(); //得到年份
+            let month = now.getMonth(); //得到月份
+            let date = now.getDate(); //得到日期
+            let hour = now.getHours();//得到小时
+            month = month + 1;
+            month = month.toString().padStart(2, "0");
+            date = date.toString().padStart(2, "0");
+            let defaultDate = `${year}-${month}-${date} :${hour}:00:00`;
+            this.endTime  =defaultDate
+        },
+        getCurrentMonthFirst(){
+          
+            let date = new Date();
+            date.setDate(1);
+            let month = parseInt(date.getMonth()+1);
+            let day = date.getDate();
+            let hour = date.getHours();//得到小时
+            if (month < 10) {
+                month = '0' + month
+            }
+            if (day < 10) {
+                day = '0' + day
+            }
+           let firstData= date.getFullYear() + '-' + month + '-' + day +':'+hour +':00:00';
+           this.startTime = firstData
+        },
         //获取留言列表数据
-        getUserlist(){
-
+        getUserlist(pageNum){
+            if (this.startTime != "" && this.endTime != "") {
+                let startTime = this.startTime;
+                let endTime = this.endTime;
+                let pageSize = this.pagesize;
+                this.$api.msg
+                    .getMsglist({
+                        params: {
+                            pageNum: pageNum,
+                            pageSize: pageSize,
+                            start: startTime,
+                            end: endTime
+                        }
+                    })
+                    .then(res => {
+                        console.log(res);
+                        if (res.data.code == 0) {
+                            if(res.data.pageInfo.list &&res.data.pageInfo.list.length >= 1) {
+                                //说明有数据
+                                this.messageL = res.data.pageInfo.list;
+                                this.totalLength = res.data.pageInfo.total; //获取总条数
+                            } else {
+                                //说明没有数据
+                                this.messageL = [];
+                            }
+                        }
+                    })
+                    .catch(error => {});
+            } else {
+                this.$message.error("注意：开始时间和结束时间为必选项");
+            }
         },
         search(){  //点击查询
 
@@ -110,14 +160,14 @@ export default {
     box-sizing: border-box;
     padding: 1%;
     .roleTop {
-        margin-top: .5%;
+        margin-top: 0.5%;
         margin-bottom: 2%;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
         .markMsg {
             display: flex;
-             margin-bottom: 2%;
+            margin-bottom: 2%;
             div {
                 width: 0.15%;
                 background: rgba(30, 135, 240, 1);
@@ -140,18 +190,18 @@ export default {
             display: flex;
             justify-content: space-between;
             .searchL {
-                width: 68%;
+                width: 42%;
                 display: flex;
                 justify-content: space-between;
             }
             .changeW {
-               margin-right: 2%;
+                margin-right: 2%;
             }
         }
     }
     .tabPage {
         text-align: center;
-        padding: 20px;
+        padding-top: 40px;
     }
 }
 </style>

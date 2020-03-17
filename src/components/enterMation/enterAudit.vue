@@ -73,6 +73,7 @@ export default {
                                 type: "success",
                                 message: "企业信息状态修改成功"
                             });
+                            this.$emit('auditSuccess',true)
                             this.clearForm()
                          }
                      })

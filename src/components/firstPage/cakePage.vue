@@ -4,11 +4,11 @@
 
 <script>
 import { mapState } from "vuex";
-
 export default {
+    props:["list"],
     data() {
         return {
-           
+            pieList:[],
             options: {
                 title: {
                     text: '站点状态',//标题
@@ -16,7 +16,7 @@ export default {
                         color: 'rgba(51,51,51,1)'
                         
                     },
-                    x:'4%',
+                    x:'8%',
                     y:'3%'
                 },
                
@@ -36,7 +36,7 @@ export default {
                
                 series: [
                     {
-                        name: '在线',
+                        name: '状态',
                         type: 'pie',
                         radius: ['50%', '70%'],
                         avoidLabelOverlap: false,
@@ -44,14 +44,9 @@ export default {
                               normal: {
                                     show: true,
                                     position: 'center',
-                                    formatter:function (argument) {
-                                        var html;
-                                        html='2356\r\n\r\n'+'总数';
-                                        // html='2356'+'总数\r\n\r\n';
-                                        return html;
-                                    },
+                                   
                                     textStyle:{
-                                       fontSize: 15,
+                                       fontSize: 25,
                                         color:'rgba(51,51,51,1)'
                                     }
                                 }
@@ -61,31 +56,50 @@ export default {
                                 show: false
                             }
                         },
-                        data: [
-                            {value: 1772, name: '在线'},
-                            {value: 584, name: '离线'}
-                        ]
+                        data: []
                     },
                 ]
             }
         };
     },
     mounted() {
-        this.getZx();
+        this.$nextTick(() => {
+            this.getZx();
+        });
     },
 
     methods: {
         
         //折线图方法
         getZx() {
+
             let myCharts = this.$echarts.init(this.$refs.myCharts);
             myCharts.showLoading(); //加载动画
-      
+            this.options.series[0].data = this.pieList
+            let _this = this
+            this.options.series[0].label.normal.formatter=function (argument) {
+                                        let arr = _this.list
+                                        let num = 0
+                                        for(let i=0; i<arr.length; i++){
+                                            num +=arr[i].value
+                                        }
+                                       
+                                        var html;
+                                        html=num+'\r\n\r\n'+'总数';
+                                        // html='2356'+'总数\r\n\r\n';
+                                        return html;
+                                    },
             setTimeout(function() {
                 myCharts.hideLoading(); //隐藏加载动画
             }, 2000);
             myCharts.setOption(this.options);
         },
+    },
+    watch:{
+        list(val){
+            this.pieList = val
+            this.getZx()
+        }
     }
 };
 </script>

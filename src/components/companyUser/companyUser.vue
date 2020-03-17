@@ -1,6 +1,7 @@
 <template>
     <div class="companyUser">
-        <user-add></user-add>
+        <user-add @addSuccess="addT"></user-add>
+        <user-editor @ediSuccess="ediT"></user-editor>
         <div class="enmationTop">
             <div class="markMsg">
                 <div></div>
@@ -15,7 +16,7 @@
                 >添加企业用户</el-button>
             </div>
         </div>
-        <user-list :companyList="companyArr">
+        <user-list :companyList="companyArr" @delSuccess="delT">
             <div class="tabPage">
                 <el-pagination
                     background
@@ -32,12 +33,14 @@
 
 <script>
 import userAdd from './userAdd'
+import userEditor from './userEditor'
 import userList from "./userList";
 import {mapMutations} from 'vuex'
 export default {
     components: {
         userList,
-        userAdd
+        userAdd,
+        userEditor
     },
     data() {
         return {
@@ -52,6 +55,27 @@ export default {
         this.getUserlist(pageNum)
     },
     methods:{
+        //企业用户添加成功
+        addT(val){
+            if(val){
+                let pageNum = this.currentPage;
+                this.getUserlist(pageNum)
+            }
+        },
+        //编辑成功
+        ediT(val){
+            if(val){
+                let pageNum = this.currentPage;
+                this.getUserlist(pageNum)
+            }
+        },
+        //删除成功
+        delT(val){
+            if(val){
+                let pageNum = this.currentPage;
+                this.getUserlist(pageNum)
+            }
+        },
         getUserlist(pageNum){
             let pageSize = this.pagesize;
             this.$api.company

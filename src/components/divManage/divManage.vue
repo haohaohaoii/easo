@@ -1,6 +1,7 @@
 <template>
     <div class="divManage">
-        <div-add></div-add>
+        <div-add @addSuccess="addT"></div-add>
+        <div-editor @editorSuccess="ediT"></div-editor>
         <div class="divTop">
             <div class="markMsg">
                 <div></div>
@@ -15,7 +16,7 @@
                 >添加部门</el-button>
             </div>
         </div>
-        <div-list :divManas="divManaArr">
+        <div-list :divManas="divManaArr" @delSuccess="delT">
             <div class="tabPage">
                 <el-pagination
                     background
@@ -32,12 +33,14 @@
 
 <script>
 import divList from './divList'
+import divEditor from './divEditor';
 import {mapMutations} from 'vuex'
 import divAdd from './divAdd'
 export default {
     components:{
         divList,
-        divAdd
+        divAdd,
+        divEditor
     },
     data() {
         return {
@@ -52,6 +55,24 @@ export default {
         this.getdivMana(pageNum)
     },
     methods:{
+        addT(val){
+            if(val){
+                let pageNum = this.currentPage;
+                this.getdivMana(pageNum)
+            }
+        },
+        ediT(val){
+            if(val){
+                let pageNum = this.currentPage;
+                this.getdivMana(pageNum)
+            }
+        },
+        delT(val){
+            if(val){
+                let pageNum = this.currentPage;
+                this.getdivMana(pageNum)
+            }
+        },
         addManage(){
             this.$store.commit('divAddstatus',true)
         },

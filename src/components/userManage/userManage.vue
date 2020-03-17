@@ -1,5 +1,7 @@
 <template>
     <div class="userManage">
+        <user-add @addSuccess="addT"></user-add>
+        <user-editor @ediSuccess="ediT"></user-editor>
         <div class="userTop">
             <div class="markMsg">
                 <div></div>
@@ -13,9 +15,8 @@
                     v-has="'添加用户'"
                 >添加用户</el-button>
             </div>
-            <user-add></user-add>
         </div>
-        <user-list :userarr="userArr">
+        <user-list :userarr="userArr" @delSuccess="delT">
             <div class="tabPage">
                 <el-pagination
                     background
@@ -33,10 +34,12 @@
 <script>
 import userList from './userList'
 import userAdd from './userAdd'
+import userEditor from "./userEditor";
 export default {
     components:{
         userList,
-        userAdd
+        userAdd,
+        userEditor
     },
     data() {
         return {
@@ -51,6 +54,24 @@ export default {
         this.getUserlist(pageNum)
     },
     methods:{
+        addT(val){
+            if(val){
+                let pageNum = this.currentPage;
+                this.getUserlist(pageNum)
+            }
+        },
+        ediT(val){
+            if(val){
+                let pageNum = this.currentPage;
+                this.getUserlist(pageNum)
+            }
+        },
+        delT(val){
+            if(val){
+                let pageNum = this.currentPage;
+                this.getUserlist(pageNum)
+            }
+        },
         getUserlist(pageNum){
             let pageSize = this.pagesize;
             this.$api.user

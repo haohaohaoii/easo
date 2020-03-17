@@ -1,6 +1,5 @@
 <template>
     <div class="divList">
-        <div-editor></div-editor>
         <div class="tabE">
             <el-table
                 :data="tableData"
@@ -37,11 +36,8 @@
 
 <script>
 import { mapMutations } from "vuex";
-import divEditor from './divEditor';
+
 export default {
-    components:{
-        divEditor
-    },
     props:{
         divManas:{
             type:Array,
@@ -76,7 +72,7 @@ export default {
         //点击删除
         roleDelete(index, row) {
             let id = row.id
-            this.$confirm("此操作将永久删除该部门用户, 是否继续?", "提示", {
+            this.$confirm("此操作将永久删除该部门, 是否继续?", "提示", {
                 confirmButtonText: "确定",
                 cancelButtonText: "取消",
                 type: "warning"
@@ -87,6 +83,7 @@ export default {
                                 type: "success",
                                 message: "删除成功!"
                             });
+                            this.$emit('delSuccess',true)
                         }
                     })
                 })

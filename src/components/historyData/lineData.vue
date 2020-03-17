@@ -8,7 +8,7 @@
                 <el-checkbox v-model="zolin" @change="changeZl">总磷</el-checkbox>
                 <el-checkbox v-model="zodan" @change="changeZd">总氮</el-checkbox>
                 <el-checkbox v-model="ph" @change="changePh">PH</el-checkbox>
-                <el-checkbox v-model="ll" @change="changeLl">流量</el-checkbox>
+                <!-- <el-checkbox v-model="ll" @change="changeLl">流量</el-checkbox> -->
             </div>
             <div class="shuoming">
                 <div class="cod">
@@ -31,10 +31,10 @@
                     <div></div>
                     <p>PH</p>
                 </div>
-                <div class="liuliang">
+                <!-- <div class="liuliang">
                     <div></div>
                     <p>流量</p>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>
@@ -142,7 +142,10 @@ export default {
         ...mapState(["hoursArr","hisDataall"])
     },
     mounted() {
-         this.getZx();
+        this.$nextTick(() => {
+           this.getZx();
+        });
+ 
         
     },
 

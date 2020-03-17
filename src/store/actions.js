@@ -356,5 +356,15 @@ export default ({
         }).catch(error => {
 
         })
+    },
+    getMsgdetail(context, id) {
+        api.msg.getMsgitem(id).then(res => {
+
+            console.log(res)
+            if (res.data.code == 0) {
+                context.commit('getMsgD', res.data.data[0]);
+                context.commit("messageDe", true);
+            }
+        })
     }
 })

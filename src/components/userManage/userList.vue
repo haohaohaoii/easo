@@ -34,18 +34,14 @@
                 </el-table-column>
             </el-table>
         </div>
-        <user-editor></user-editor>
         <slot></slot>
     </div>
 </template>
 
 <script>
-import userEditor from "./userEditor";
+
 import { mapMutations } from "vuex";
 export default {
-    components: {
-        userEditor
-    },
     props: {
         userarr: {
             type: Array,
@@ -109,6 +105,7 @@ export default {
                                 type: "success",
                                 message: "删除成功!"
                             });
+                            this.$emit('delSuccess',true)
                         }
                     });
                 })
@@ -124,7 +121,7 @@ export default {
                 this.$api.user
                     .deleteUseritem(roleId)
                     .then(res => {
-                        debugger;
+                 
                         if (res.data.code == 0) {
                             resolve("success");
                         }

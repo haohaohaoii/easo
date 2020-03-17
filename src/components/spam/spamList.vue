@@ -20,7 +20,7 @@
                             type="primary"
                             @click="handleReply(scope.$index, scope.row)"
                             v-has="'详情'"
-                        >回复</el-button>
+                        >详情</el-button>
                         <el-button
                             size="mini"
                             type="danger"
@@ -95,6 +95,7 @@ export default {
                                 type: "success",
                                 message: "删除成功!"
                             });
+                            this.$emit('delSuccess',true)
                         }
                     }).catch(error=>{
                         this.$message.error('删除失败');

@@ -250,7 +250,7 @@ export default {
                     height: 0.5%;
                     position: absolute;
                     left: 71%;
-                    top: 20%;
+                    top: 23%;
                     background: #fff;
                 }
             }
@@ -258,6 +258,7 @@ export default {
             .loginFill {
                 width: 80%;
                 height: 30%;
+                margin-top: -10%;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-around;
@@ -267,8 +268,9 @@ export default {
             }
             /**登陆框按钮 */
             .btn {
-                width: 32%;
+                width: 40%;
                 height: 8%;
+                margin-top: -15%;
             }
         }
         //记住密码的时候改变字体颜色

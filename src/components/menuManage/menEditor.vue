@@ -103,6 +103,7 @@ export default {
                             message: "菜单修改成功",
                             type: "success"
                         });
+                        _this.$emit('ediSuccess',true)
                         _this.closeDialog();
                     }
                 });
@@ -160,5 +161,8 @@ export default {
     transition: transform;
     transform: translateY(-50%);
     border: 1px solid #ebeef5;
+}
+.dialog >>> .el-select {
+    width: 100%;
 }
 </style>

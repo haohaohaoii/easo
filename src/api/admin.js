@@ -12,9 +12,10 @@ const roles = {
     },
     //添加角色
     addRole(params) {
-        qs.stringify(params)
+
         return axios.post(`${base.localUrl}/admin/role`, qs.stringify(params))
     }
+
 }
 
 

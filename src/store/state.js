@@ -36,6 +36,7 @@ export default ({
     baseItemlist: '',   //企业管理下的基站管理中的编辑 所需的信息
     spamReply: false,   //企业管理下的留言回复
     enterAud: false,   //企业信息审核弹窗
+    msgRowDetail: '',    //消息列表 单行数据详情
     spamItemlist: [],    //企业管理写的 留言回复  单个留言id对应的内容
     enterId: '',   //企业信息审核行的id
     roleAdd: false,     //权限管理下的角色管理添加角色 dialog状态

@@ -10,6 +10,7 @@
             ref="ruleForm"
             label-width="100px"
             class="demo-ruleForm"
+            size="mini"
         >
             <el-form-item label="菜单名称:" prop="menuName">
                 <el-input v-model="ruleForm.menuName"></el-input>
@@ -145,6 +146,7 @@ export default {
                             message: '菜单添加成功',
                             type: 'success'
                         });
+                        _this.$emit('addSuccess',true)
                         _this.closeDialog()
                     }
                 })

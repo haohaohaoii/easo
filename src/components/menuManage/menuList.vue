@@ -1,6 +1,5 @@
 <template>
     <div class="menuList">
-        <menu-editor></menu-editor>
         <div class="tabE">
             <el-table
                 :data="tableData"
@@ -37,11 +36,7 @@
 
 <script>
 import { mapMutations } from "vuex";
-import menuEditor from './menEditor'
 export default {
-    components:{
-        menuEditor
-    },
     props:{
         munuList:{
             type:Array,
@@ -101,6 +96,7 @@ export default {
                                 type: "success",
                                 message: "删除成功!"
                             });
+                            this.$emit('delSuccess',true)
                        }
                     })
                     

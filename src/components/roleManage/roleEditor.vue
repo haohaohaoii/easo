@@ -179,6 +179,7 @@ export default {
                             message: "修改角色成功",
                             type: "success"
                         });
+                        this.$emit('ediSuccess',true)
                         this.$refs.tree.setCheckedKeys([]);
                         let obj = {
                             isTrue: false,

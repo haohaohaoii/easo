@@ -1,9 +1,9 @@
 <template>
     <div class="baseMation">
-        <base-add></base-add>
-        <base-editor></base-editor>
+        <base-add @addSuccess="addT"></base-add>
+        <base-editor @ediSuccess="ediT"></base-editor>
         <base-detail></base-detail>
-        <base-audit></base-audit>
+        <base-audit @auditSuccess="audiT"></base-audit>
         <div class="baseTop">
             <div class="markMsg">
                 <div></div>
@@ -56,11 +56,52 @@ export default {
             baseArr: [], //所有基站数组
         };
     },
-    created(){
-        let pageNum = this.currentPage;
-        this.getBaselist(pageNum)
-    },
-    methods:{   
+   mounted(){
+       this.fromWitch()
+   },
+    methods:{
+        //添加成功，重新请求
+        addT(val){
+            if(val){
+                this.fromWitch()
+            }
+        },
+        //编辑成功，重新请求
+        ediT(val){
+            if(val){
+                this.fromWitch()
+            }
+        },
+        //审核成功,重新请求页面
+        audiT(val){
+            if(val){
+                this.fromWitch()
+            }
+        },
+        fromWitch(){
+            if(this.$route.query.companyId){  //说明是从企业信息过来的
+                let companyId = this.$route.query.companyId
+                let pageNum = this.currentPage;
+                let pagesize = this.pagesize;
+                this.getCombase(companyId,pageNum,pagesize)
+            }else{    
+                let pageNum = this.currentPage;
+                this.getBaselist(pageNum)
+            }
+        },
+        getCombase(companyId,pageNum,pagesize){
+            let params={
+                pageNum:pageNum,
+                pageSize:pagesize
+            }
+            this.$api.site.getSitess(companyId,{params}).then(res=>{
+                console.log(res)
+                if(res.data.code ==0){
+                    this.totalLength = res.data.pageInfo.total  //获取总条数
+                    this.baseArr = res.data.pageInfo.list  //获取数据
+                }
+            })
+        },
         getBaselist(pageNum){
             let pageSize = this.pagesize;
             this.$api.site
@@ -71,7 +112,7 @@ export default {
                     }
                 })
                 .then(res => {
-                    
+                
                     console.log(res)
                     if(res.data.code ==0){
                         this.totalLength = res.data.pageInfo.total  //获取总条数
