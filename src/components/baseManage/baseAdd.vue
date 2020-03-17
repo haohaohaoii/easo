@@ -160,7 +160,7 @@ export default {
             }
             let mn = this.form.mn  //mn号
             let factors = this.form.factors
-            if(siteName && this.stateType && mn && erpId && factors.length>0){
+            if(siteName && this.stateType && mn  && factors.length>0){
                 let params={
                     siteName:siteName,
                     ioType:ioType,
