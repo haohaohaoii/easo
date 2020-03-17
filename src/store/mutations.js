@@ -71,6 +71,9 @@ export default ({
     //     localStorage.breadArr = JSON.stringify(arr)
     // },
     //获取搜索时间区间[yyyy-MM-dd HH:00:00 ...... yyyy-MM-dd HH:00:00]
+    getWDLY(state, num) {
+        state.wdly = num
+    },
     getHours(state, hourA) {
 
         state.hoursArr = hourA;

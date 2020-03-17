@@ -227,7 +227,8 @@ export default {
                                     this.zxData = firstObj.countAndCreateTimeByDate
                                 }
                                 this.lxzd = firstObj.siteCountOff   //离线站点总数
-                                
+                                this.$store.commit('getWDLY', this.wdly)
+                                localStorage.setItem('wdly',this.wdly)
                             }
                         })
                     }

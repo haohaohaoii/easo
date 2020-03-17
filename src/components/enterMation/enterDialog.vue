@@ -146,10 +146,16 @@ export default {
     margin-top: 0 !important;
     position: relative;
     margin: 0 auto;
-
+    width: 36%;
     top: 50%;
     transition: transform;
     transform: translateY(-50%);
     border: 1px solid #ebeef5;
+}
+.dialog >>> .el-table td.is-right {
+    background: #ebf2fb;
+}
+.dialog >>> .el-table th.is-right {
+    background: #ebf2fb;
 }
 </style>

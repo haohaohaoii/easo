@@ -4,7 +4,7 @@
         <div class="roleTop">
             <div class="markMsg">
                 <div></div>
-                <p>角色管理</p>
+                <p>消息</p>
             </div>
             <div class="search">
                 <div class="searchL">
@@ -15,6 +15,7 @@
                         placeholder="开始时间"
                         time-arrow-control
                     ></el-date-picker>
+                    <span>至</span>
                     <el-date-picker
                         type="datetime"
                         class="changeW"
@@ -189,10 +190,13 @@ export default {
         .search {
             display: flex;
             justify-content: space-between;
+
+            margin-bottom: 1%;
             .searchL {
                 width: 42%;
                 display: flex;
                 justify-content: space-between;
+                align-items: center;
             }
             .changeW {
                 margin-right: 2%;

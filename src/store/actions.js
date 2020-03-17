@@ -150,10 +150,24 @@ export default ({
             console.log(res)
             if (res.data.code == 0) {
                 let itemArr = res.data.data
+
+
                 if (itemArr && itemArr.length) {
+                    for (let m = 0; m < itemArr.length; m++) {
+                        if (itemArr[m].name == 'NH3-N') {
+                            itemArr[m].name = '氨氮'
+                        } else if (itemArr[m].name == 'TN') {
+                            itemArr[m].name = '总氮'
+                        } else if (itemArr[m].name == 'TP') {
+                            itemArr[m].name = '总磷'
+                        }
+                    }
+
                     context.commit('getEqui', itemArr)
                     context.commit('baseAdd', true);
+
                 }
+
             }
 
 
@@ -187,6 +201,7 @@ export default ({
         })
         Promise.all([getSiteitem, getEquiments, companyAll]).then(res => {
             console.log(res);
+
             if (res[0].data.code == 0) {
 
                 let itemObj = res[0].data.data[0]
@@ -209,6 +224,17 @@ export default ({
             }
             if (res[1].data.data && res[1].data.data.length > 0) {
                 let itemArr = res[1].data.data
+                if (itemArr && itemArr.length > 0) {
+                    for (let m = 0; m < itemArr.length; m++) {
+                        if (itemArr[m].name == 'NH3-N') {
+                            itemArr[m].name = '氨氮'
+                        } else if (itemArr[m].name == 'TN') {
+                            itemArr[m].name = '总氮'
+                        } else if (itemArr[m].name == 'TP') {
+                            itemArr[m].name = '总磷'
+                        }
+                    }
+                }
                 context.commit('getEqui', itemArr)
             }
             if (res[2].data.data && res[2].data.data.length > 0) {

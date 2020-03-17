@@ -4,7 +4,11 @@
             <div class="line"></div>
             <p>基站添加</p>
         </div>
+        <!-- <p v-if="!isFromcom">{{companyName}}</p> -->
         <el-form ref="form" :model="form" :rules="rules" label-width="100px" size="mini">
+            <el-form-item label="当前企业:" v-if="!isFromcom">
+                <el-input v-model="companyName" readonly="true"></el-input>
+            </el-form-item>
             <el-form-item label="基站名称:" prop="siteName">
                 <el-input v-model="form.siteName"></el-input>
             </el-form-item>
@@ -56,6 +60,7 @@ export default {
         return {
             isFromcom:true,
             status: false, //控制表头不显示
+            companyName:'',
             jcType:[
                 {label:'进口',value:0},
                 {label:'出口',value:1}
@@ -111,8 +116,9 @@ export default {
     },
     mounted(){
 
-        if(this.$route.query.companyId){
+        if(this.$route.query.companyId && this.$route.query.companyName){
            this.isFromcom = false
+           this.companyName = this.$route.query.companyName
         }else{
              this.isFromcom = true
         }
@@ -142,6 +148,7 @@ export default {
         },
         //添加基站
         addBase() {
+            debugger
             let siteName = this.form.siteName  //基站名称
             let ioType = this.form.ioType  //基站状态
             let erpId = this.form.erpId  //企业选择

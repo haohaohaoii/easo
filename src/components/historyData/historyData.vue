@@ -37,6 +37,7 @@
                         placeholder="开始时间"
                         time-arrow-control
                     ></el-date-picker>
+                    <span style="padding-right: 2%;">至</span>
                     <el-date-picker
                         type="datetime"
                         class="changeW"
@@ -382,6 +383,7 @@ export default {
                 width: 68%;
                 display: flex;
                 justify-content: space-between;
+                align-items: center;
             }
             .changeW {
                 margin-right: 2%;

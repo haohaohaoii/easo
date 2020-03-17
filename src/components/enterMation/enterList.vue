@@ -113,11 +113,13 @@ export default {
         
         //跳转基站
         base(index,row) {
-        
+            debugger
             let companyId = row.id;
-         
-            this.$router.push({path:'/baseManage',query:{companyId:companyId}});
+            let companyName = row.erpName
+        
+            this.$router.push({path:'/baseManage',query:{companyId:companyId,companyName:companyName}});
         },
+     
         audit(index, row){
          
             let id =row.id

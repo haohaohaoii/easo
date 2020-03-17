@@ -118,17 +118,31 @@ export default {
         },
         //点击编辑--跳转编辑dialog
         handleDelete(index, row) {
-            console.log(index, row);
-            let id = row.id;
-            this.$api.msg.delMsgitem(id).then(res=>{
-                if(res.data.code == 0){
-                    this.$message({
-                        type: "success",
-                        message: "删除成功!"
-                    });
-                    this.$emit('delSuccess',true)
-                }
+            this.$confirm("此操作将永久删除该条消息, 是否继续?", "注意", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning"
             })
+                .then(() => {
+                    console.log(index, row);
+                    let id = row.id;
+                    this.$api.msg.delMsgitem(id).then(res=>{
+                        if(res.data.code == 0){
+                            this.$message({
+                                type: "success",
+                                message: "删除成功!"
+                            });
+                            this.$emit('delSuccess',true)
+                        }
+                    })
+            })
+            .catch(() => {
+                this.$message({
+                    type: "info",
+                    message: "已取消删除"
+                });
+            });
+            
         }
     }
 };
@@ -139,5 +153,11 @@ export default {
     .tabE {
         margin-top: 1%;
     }
+}
+.messageList >>> .el-table::before {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 0;
 }
 </style>

@@ -56,6 +56,7 @@ export default ({
     roleName: '',    //角色名称
     roleId: '',       //角色id
     spamIsshow: false,
+    wdly: localStorage.wdly ? localStorage.wdly : '',
     menulist: [],  //由角色权限和本地完整路由结合生成的实际菜单表
     defaultMenu: 'hisData',  //默认选中的是历史数据
     rolesRoutes: [],  //由角色权限和本地完整路由结合生成的实际角色路由

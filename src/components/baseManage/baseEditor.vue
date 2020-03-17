@@ -4,7 +4,11 @@
             <div class="line"></div>
             <p>基站编辑</p>
         </div>
-        <el-form ref="baseE" :model="form" :rules="rules" label-width="100px">
+
+        <el-form ref="baseE" :model="form" :rules="rules" label-width="100px" size="mini">
+            <el-form-item label="当前企业:" v-if="!isFromcom">
+                <el-input v-model="companyName" readonly="true"></el-input>
+            </el-form-item>
             <el-form-item label="基站名称:" prop="siteName">
                 <el-input v-model="form.siteName"></el-input>
             </el-form-item>
@@ -66,6 +70,7 @@ export default {
         return {
             isFromcom:true,
             isShowsite:false,
+            companyName:'',
             siteSes:[  //站点状态数组
                 {label:'启用',value:1},
                 {label:'禁用',value:2}
@@ -137,8 +142,9 @@ export default {
 
     },
     mounted(){
-      if(this.$route.query.companyId){
+      if(this.$route.query.companyId && this.$route.query.companyName){
            this.isFromcom = false
+           this.companyName = this.$route.query.companyName
         }else{
              this.isFromcom = true
         }
@@ -281,5 +287,8 @@ export default {
     border: 1px solid #ebeef5;
     width: 40%;
     overflow-y: auto;
+}
+.baseAdd >>> .el-select {
+    width: 100%;
 }
 </style>

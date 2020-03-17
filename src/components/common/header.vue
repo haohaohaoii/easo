@@ -80,7 +80,6 @@
                 >{{seciem.name}}</el-menu-item>
             </el-submenu>-->
         </el-menu>
-
         <div class="tubiao">
             <theme-picker></theme-picker>
             <!-- <i
@@ -89,7 +88,7 @@
                 @mouseleave="cusLeave"
                 :style="cusObj"
             ></i>-->
-            <el-badge :value="1" class="item">
+            <el-badge :value="wdly" class="item">
                 <i
                     class="el-icon-message-solid ic"
                     @mouseenter="msgEnter"
@@ -213,7 +212,7 @@ export default {
         };
     },
     computed: {
-        ...mapState(["menulist", "defaultMenu"])
+        ...mapState(["menulist", "defaultMenu","wdly"])
     },
     methods: {
         handleSelect(key, keyPath) {

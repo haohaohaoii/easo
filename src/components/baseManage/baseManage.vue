@@ -79,7 +79,8 @@ export default {
             }
         },
         fromWitch(){
-            if(this.$route.query.companyId){  //说明是从企业信息过来的
+    
+            if(this.$route.query.companyId && this.$route.query.companyName){  //说明是从企业信息过来的
                 let companyId = this.$route.query.companyId
                 let pageNum = this.currentPage;
                 let pagesize = this.pagesize;
@@ -95,6 +96,7 @@ export default {
                 pageSize:pagesize
             }
             this.$api.site.getSitess(companyId,{params}).then(res=>{
+ 
                 console.log(res)
                 if(res.data.code ==0){
                     this.totalLength = res.data.pageInfo.total  //获取总条数
@@ -102,6 +104,7 @@ export default {
                 }
             })
         },
+      
         getBaselist(pageNum){
             let pageSize = this.pagesize;
             this.$api.site

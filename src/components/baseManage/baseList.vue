@@ -87,8 +87,16 @@ export default {
                     }
                    
                     if(this.baseAll[i].siteDevices && this.baseAll[i].siteDevices.length>0){ //说明有因子
+             
                         let yinZarr = this.baseAll[i].siteDevices;
                         for(let k=0; k<yinZarr.length; k++){
+                            if(yinZarr[k].factorName == 'NH3-N'){
+                                yinZarr[k].factorName = '氨氮'
+                            }else if(yinZarr[k].factorName == 'TN'){
+                                yinZarr[k].factorName = '总氮'
+                            }else if(yinZarr[k].factorName == 'TP'){
+                                yinZarr[k].factorName = '总磷'
+                            }
                             if(yinZ == ''){
                                 yinZ = yinZarr[k].factorName
                             }else{
