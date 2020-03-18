@@ -143,7 +143,7 @@ export default {
 <style lang="scss" scoped>
 .baseMation {
     height: 100%;
-    background: #ffff;
+    background: rgb(255, 255, 255);
     box-sizing: border-box;
     padding: 15px;
     .baseTop {
