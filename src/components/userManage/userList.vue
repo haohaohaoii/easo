@@ -5,9 +5,12 @@
                 :data="tableData"
                 stripe
                 style="width: 100%"
-                :header-cell-style="{background: 'rgba(237,237,237,1)'}"
                 class="tab"
                 :height="tableHeight"
+                :row-style="iRowStyle"
+                :cell-style="iCellStyle"
+                :header-row-style="iHeaderRowStyle"
+                :header-cell-style="iHeaderCellStyle"
             >
                 <el-table-column align="center" prop="userName" label="用户名"></el-table-column>
                 <el-table-column align="center" prop="realName" label="真实姓名"></el-table-column>
@@ -16,7 +19,7 @@
                 <el-table-column align="center" prop="userSection" label="所属部门"></el-table-column>
                 <el-table-column align="center" prop="userPart" label="用户角色"></el-table-column>
                 <el-table-column align="center" prop="turnTime" label="更新时间"></el-table-column>
-                <el-table-column label="操作" align="center">
+                <el-table-column label="操作" align="center" width="180">
                     <template slot-scope="scope">
                         <el-button
                             size="mini"
@@ -33,8 +36,8 @@
                     </template>
                 </el-table-column>
             </el-table>
+            <slot></slot>
         </div>
-        <slot></slot>
     </div>
 </template>
 
@@ -52,10 +55,22 @@ export default {
     },
     data() {
         return {
-            tableHeight: window.innerHeight * 0.65
+            tableHeight: window.innerHeight -230
         };
     },
     computed: {
+        iRowStyle:function ({row, rowIndex}) {
+            return {height:'58px'};
+        },
+        iHeaderRowStyle:function ({row, rowIndex}) {
+            return {height:'58px'};
+        },
+        iCellStyle:function ({row, column, rowIndex, columnIndex}) {
+            return {padding:'0'};
+        },
+        iHeaderCellStyle:function ({row, column, rowIndex, columnIndex}) {
+            return {padding:'0px',background:'rgba(237,237,237,1)'}
+        },
         tableData() {
             if (this.userarr && this.userarr.length > 0) {
                 let userArr = [];
@@ -144,15 +159,16 @@ export default {
 <style lang="scss" scoped>
 .userList {
     .tabE {
-        margin-top: 1%;
-        .tab {
-            height: 100%;
-            overflow-y: auto;
-        }
+        padding-top: 15px;
     }
     .tabPage {
         text-align: center;
-        padding: 20px;
     }
+}
+.userList >>> .el-table::before {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 0;
 }
 </style>

@@ -298,7 +298,7 @@ export default {
                 display: flex;
                 justify-content: space-between;
                 div {
-                    width: 316px;
+                    width: 32.2%;
                     height: 128px;
                     // border: 1px solid;
                     display: flex;
@@ -375,7 +375,7 @@ export default {
                         display: flex;
                         justify-content: space-around;
                         div {
-                            width: 120px;
+                            width: 25%;
                             height: 120px;
                             background: rgba(255, 255, 255, 1);
                             box-shadow: 0px 6px 20px 0px rgba(90, 94, 253, 0.24);

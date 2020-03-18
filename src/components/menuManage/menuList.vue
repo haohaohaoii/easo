@@ -5,8 +5,12 @@
                 :data="tableData"
                 stripe
                 style="width: 100%"
-                :header-cell-style="{background: 'rgba(237,237,237,1)'}"
                 class="tab"
+                :height="tableHeight"
+                :row-style="iRowStyle"
+                :cell-style="iCellStyle"
+                :header-row-style="iHeaderRowStyle"
+                :header-cell-style="iHeaderCellStyle"
             >
                 <el-table-column align="center" prop="menuName" label="菜单名称"></el-table-column>
                 <el-table-column align="center" prop="menuAddress" label="访问地址"></el-table-column>
@@ -29,8 +33,8 @@
                     </template>
                 </el-table-column>
             </el-table>
+            <slot></slot>
         </div>
-        <slot></slot>
     </div>
 </template>
 
@@ -47,9 +51,22 @@ export default {
     },  
     data() {
         return {
+             tableHeight:window.innerHeight -230
         };
     },
     computed:{
+        iRowStyle:function ({row, rowIndex}) {
+            return {height:'58px'};
+        },
+        iHeaderRowStyle:function ({row, rowIndex}) {
+            return {height:'58px'};
+        },
+        iCellStyle:function ({row, column, rowIndex, columnIndex}) {
+            return {padding:'0'};
+        },
+        iHeaderCellStyle:function ({row, column, rowIndex, columnIndex}) {
+            return {padding:'0px',background:'rgba(237,237,237,1)'}
+        },
         tableData(){
              if(this.munuList && this.munuList.length>0){
                 let menuArr = [];
@@ -122,15 +139,16 @@ export default {
 <style lang="scss" scoped>
 .menuList {
     .tabE {
-        margin-top: 1%;
-        .tab {
-            height: 100%;
-            overflow-y: auto;
-        }
+        padding-top: 15px;
     }
     .tabPage {
         text-align: center;
-        padding-top: 20px;
     }
+}
+.menuList >>> .el-table::before {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 0;
 }
 </style>

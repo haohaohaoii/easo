@@ -4,11 +4,13 @@
             <el-table
                 :data="tableData"
                 stripe
-                style="width: 100%"
                 :height="tableHeight"
-                :header-cell-style="{background: 'rgba(237,237,237,1)'}"
                 class="tab"
                 align="center"
+                :row-style="iRowStyle"
+                :cell-style="iCellStyle"
+                :header-row-style="iHeaderRowStyle"
+                :header-cell-style="iHeaderCellStyle"
             >
                 <el-table-column align="center" prop="siteName" label="基站点"></el-table-column>
                 <el-table-column align="center" prop="erpName" label="企业名"></el-table-column>
@@ -106,6 +108,18 @@ export default {
         };
     },
     computed:{
+         iRowStyle:function ({row, rowIndex}) {
+            return {height:'58px'};
+        },
+        iHeaderRowStyle:function ({row, rowIndex}) {
+            return {height:'58px'};
+        },
+        iCellStyle:function ({row, column, rowIndex, columnIndex}) {
+            return {padding:'0'};
+        },
+        iHeaderCellStyle:function ({row, column, rowIndex, columnIndex}) {
+            return {padding:'0px',background:'rgba(237,237,237,1)'}
+        },
         tableData(){
             if(this.datalist && this.datalist.length>=1){
                 let arrlist = []

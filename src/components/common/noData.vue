@@ -11,11 +11,16 @@ export default {};
 
 <style lang="scss" scoped>
 .noData {
-        text-align: center;
+    text-align: center;
     position: relative;
     top: 40%;
-    
-    transition: transfotm;
+
     transform: translateY(-50%);
+    p {
+        font-size: 16px;
+        font-family: Microsoft YaHei;
+        font-weight: bold;
+        color: rgba(102, 102, 102, 1);
+    }
 }
 </style>

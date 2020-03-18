@@ -26,19 +26,19 @@
                     <el-button type="primary" class="changeW" @click="cx">查询</el-button>
                 </div>
             </div>
-            <message-list :messageArr="messageL" @delSuccess="delT">
-                <div class="tabPage">
-                    <el-pagination
-                        background
-                        layout="prev, pager, next"
-                        :total="totalLength"
-                        @current-change="handleCurrentChange"
-                        :current-page="currentPage"
-                        :page-size="pagesize"
-                    ></el-pagination>
-                </div>
-            </message-list>
         </div>
+        <message-list :messageArr="messageL" @delSuccess="delT">
+            <div class="tabPage">
+                <el-pagination
+                    background
+                    layout="prev, pager, next"
+                    :total="totalLength"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    :page-size="pagesize"
+                ></el-pagination>
+            </div>
+        </message-list>
     </div>
 </template>
 
@@ -159,10 +159,10 @@ export default {
     height: 100%;
     background: #ffff;
     box-sizing: border-box;
-    padding: 1%;
+    padding: 15px;
     .roleTop {
-        margin-top: 0.5%;
-        margin-bottom: 2%;
+        // margin-top: 0.5%;
+        // margin-bottom: 2%;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
@@ -205,7 +205,7 @@ export default {
     }
     .tabPage {
         text-align: center;
-        padding-top: 40px;
+        // padding-top: 40px;
     }
 }
 </style>

@@ -1,11 +1,12 @@
 <template>
-    <div class="spamList">
+    <div class="spamList" v-if="tableData">
         <spam-reply></spam-reply>
         <div class="tabE">
             <el-table
                 :data="tableData"
                 stripe
                 style="width: 100%"
+                :height="tableHeight"
                 :header-cell-style="{background: 'rgba(237,237,237,1)'}"
                 class="tab"
             >
@@ -30,17 +31,20 @@
                     </template>
                 </el-table-column>
             </el-table>
+            <slot></slot>
         </div>
-        <slot></slot>
     </div>
+    <no-data v-else></no-data>
 </template>
 
 <script>
 import { mapMutations } from "vuex";
 import spamReply from './spamReply'
+import noData from "../common/noData"
 export default {
     components:{
-        spamReply
+        spamReply,
+        noData
     },
     props:{
         spamAll:{
@@ -51,7 +55,9 @@ export default {
         }
     },
     data() {
-        return {};
+        return {
+            tableHeight:window.innerHeight -230
+        };
     },
     computed:{
         tableData(){
@@ -132,15 +138,16 @@ export default {
 <style lang="scss" scoped>
 .spamList {
     .tabE {
-        margin-top: 1%;
-        .tab {
-            height: 100%;
-            overflow-y: auto;
-        }
+        padding-top: 15px;
     }
     .tabPage {
         text-align: center;
-        padding-top: 20px;
     }
+}
+.spamList >>> .el-table::before {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 0;
 }
 </style>

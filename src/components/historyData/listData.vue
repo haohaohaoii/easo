@@ -91,7 +91,7 @@ export default {
     },
     data() {
         return {
-            tableHeight:window.innerHeight -270
+            tableHeight:window.innerHeight -268
         };
     },
     computed:{

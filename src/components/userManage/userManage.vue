@@ -111,10 +111,10 @@ export default {
     height: 100%;
     background: #ffff;
     box-sizing: border-box;
-    padding: 1%;
+    padding: 15px;
     .userTop {
-        margin-top: 1%;
-        margin-bottom: 2%;
+        // margin-top: 1%;
+        // margin-bottom: 2%;
         display: flex;
         flex-direction: column;
         justify-content: space-around;

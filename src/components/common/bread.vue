@@ -21,5 +21,6 @@ export default {
 .bread {
     position: absolute;
     top: 67.5px;
+    height: 15px;
 }
 </style>

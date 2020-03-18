@@ -145,10 +145,8 @@ export default {
     height: 100%;
     background: #ffff;
     box-sizing: border-box;
-    padding: 1%;
+    padding: 15px;
     .baseTop {
-        margin-top: 1%;
-        margin-bottom: 2%;
         .markMsg {
             display: flex;
             position: relative;
@@ -170,6 +168,9 @@ export default {
                 right: 4%;
             }
         }
+    }
+    .tabPage {
+        text-align: center;
     }
 }
 </style>

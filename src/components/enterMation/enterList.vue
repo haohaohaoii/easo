@@ -6,7 +6,10 @@
                 :data="tableData"
                 stripe
                 style="width: 100%"
-                :header-cell-style="{background: 'rgba(237,237,237,1)'}"
+                :row-style="iRowStyle"
+                :cell-style="iCellStyle"
+                :header-row-style="iHeaderRowStyle"
+                :header-cell-style="iHeaderCellStyle"
                 class="tab"
             >
                 <el-table-column align="center" prop="erpName" label="企业名称" width="260"></el-table-column>
@@ -51,9 +54,8 @@
                     </template>
                 </el-table-column>
             </el-table>
+            <slot></slot>
         </div>
-
-        <slot></slot>
     </div>
 </template>
 
@@ -73,10 +75,22 @@ export default {
     },
     data() {
         return {
-            tableHeight: window.innerHeight * 0.6
+            tableHeight:window.innerHeight -230
         };
     },
     computed: {
+        iRowStyle:function ({row, rowIndex}) {
+            return {height:'58px'};
+        },
+        iHeaderRowStyle:function ({row, rowIndex}) {
+            return {height:'58px'};
+        },
+        iCellStyle:function ({row, column, rowIndex, columnIndex}) {
+            return {padding:'0'};
+        },
+        iHeaderCellStyle:function ({row, column, rowIndex, columnIndex}) {
+            return {padding:'0px',background:'rgba(237,237,237,1)'}
+        },
         tableData() {
             if (this.companyList && this.companyList.length > 0) {
                 let companyArr = [];
@@ -133,11 +147,11 @@ export default {
 <style lang="scss" scoped>
 .enterList {
     .tabE {
-        margin-top: 1%;
+        margin-top: 15px;
     }
     .tabPage {
         text-align: center;
-        padding-top: 20px;
+        // padding-top: 20px;
     }
 }
 .enterList >>> .el-table::before {

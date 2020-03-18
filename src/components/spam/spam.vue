@@ -79,10 +79,10 @@ export default {
     height: 100%;
     background: #ffff;
     box-sizing: border-box;
-    padding: 1%;
+    padding: 15px;
     .spamTop {
-        margin-top: 1%;
-        margin-bottom: 2%;
+        // margin-top: 1%;
+        // margin-bottom: 2%;
         .markMsg {
             display: flex;
             position: relative;
@@ -92,6 +92,12 @@ export default {
                 position: relative;
                 right: 1%;
                 top: 10%;
+            }
+            p {
+                font-size: 20px;
+                font-family: Adobe Heiti Std;
+                font-weight: bold;
+                color: rgba(51, 62, 68, 1);
             }
         }
     }
