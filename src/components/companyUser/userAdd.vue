@@ -124,7 +124,7 @@ export default {
         getTypes(){
   
             this.types=[]  //每次都先清空
-            this.$api.company.companyAll().then(res=>{
+            this.$api.company.companyWAll().then(res=>{
                 
                 if(res.data.code == 0){
                     let arr =res.data.data
