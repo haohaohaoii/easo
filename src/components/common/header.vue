@@ -337,11 +337,11 @@ export default {
     }
 }
 .header >>> .el-menu-item {
-    width: 200px;
+    width: 160px;
     text-align: center;
 }
 .header >>> .el-submenu__title {
-    width: 200px;
+    width: 160px;
     text-align: center;
 }
 //多级菜单(第一级)移入

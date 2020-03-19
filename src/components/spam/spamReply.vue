@@ -66,7 +66,13 @@ export default {
         };
     },
     computed: {
-        ...mapState(["spamReply","spamItemlist"])
+        ...mapState(["spamItemlist"]),
+        spamReply:{
+            get(){
+                return this.$store.state.spamReply
+            },
+            set(){}
+        }
     },
     methods: {
        spam() {

@@ -107,7 +107,13 @@ export default {
         };
     },
     computed: {
-        ...mapState(["userEditor","userItem","deparArr","roleList"])
+        ...mapState(["userItem","deparArr","roleList"]),
+        userEditor:{
+            get(){
+                return this.$store.state.userEditor
+            },
+            set(){}
+        }
 
     },
     methods: {

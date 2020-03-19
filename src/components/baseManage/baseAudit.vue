@@ -43,7 +43,13 @@ export default {
         };
     },
     computed: {
-        ...mapState(["baseAudit","siteRowmn"])
+        ...mapState(["siteRowmn"]),
+         baseAudit:{
+            get(){
+               return this.$store.state.baseAudit
+            },
+            set(){}
+        }
     },
     methods:{
         clearForm(){
@@ -57,6 +63,7 @@ export default {
         },
         //点击x号关闭
         closeDialog() {
+           
             this.clearForm()
         },
         //点击审核

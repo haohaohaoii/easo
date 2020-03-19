@@ -168,7 +168,7 @@ export default {
         justify-content: space-around;
         .markMsg {
             display: flex;
-            margin-bottom: 2%;
+
             div {
                 width: 0.15%;
                 background: rgba(30, 135, 240, 1);
@@ -191,7 +191,7 @@ export default {
             display: flex;
             justify-content: space-between;
 
-            margin-bottom: 1%;
+            padding-top: 15px;
             .searchL {
                 width: 42%;
                 display: flex;

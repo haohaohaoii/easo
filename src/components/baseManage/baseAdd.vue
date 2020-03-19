@@ -124,7 +124,13 @@ export default {
         }
     },
     computed: {
-        ...mapState(["baseAdd","Equilist"])
+        ...mapState(["Equilist"]),
+        baseAdd:{
+            get(){
+               return this.$store.state.baseAdd
+            },
+            set(){}
+        }
     },
     methods: {
         companyChoose(val){

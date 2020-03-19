@@ -24,7 +24,13 @@ export default {
         };
     },
     computed: {
-        ...mapState(["baseDetail","siteRowlist"])
+        ...mapState(["siteRowlist"]),
+         baseDetail:{
+            get(){
+               return this.$store.state.baseDetail
+            },
+            set(){}
+        }
     },
     methods:{
         clearForm(){

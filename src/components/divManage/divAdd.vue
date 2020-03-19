@@ -89,7 +89,12 @@ export default {
         };
     },
     computed: {
-        ...mapState(["divAdd"])
+        divAdd:{
+            get(){
+                return this.$store.state.divAdd
+            },
+            set(){}
+        }
     },
     methods: {
         //提交

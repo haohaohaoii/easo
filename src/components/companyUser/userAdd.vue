@@ -117,7 +117,12 @@ export default {
         };
     },
     computed: {
-        ...mapState(["companyUseradd"])
+        companyUseradd:{
+            get(){
+                return this.$store.state.companyUseradd
+            },
+            set(){}
+        }
     },
     methods: {
         //获取企业类型

@@ -78,7 +78,13 @@ export default {
         };
     },
     computed: {
-        ...mapState(["menuE","menuItemD"])
+        ...mapState(["menuItemD"]),
+        menuE:{
+            get(){
+                return this.$store.state.menuE
+            },
+            set(){}
+        }
     },
     methods: {
         closeDialog() {

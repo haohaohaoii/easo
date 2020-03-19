@@ -195,7 +195,13 @@ export default {
         }
     },
     computed: {
-        ...mapState(["userAdddialog"]),
+
+        userAdddialog:{
+            get(){
+                return this.$store.state.userAdddialog
+            },
+            set(){}
+        },
         menuLevel(){
             return this.ruleForm.menuLevel
         }

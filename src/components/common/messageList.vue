@@ -67,7 +67,7 @@ export default {
     },
     data() {
         return {
-           tableHeight:window.innerHeight -300,
+           tableHeight:window.innerHeight -268,
             messageData:[
 
             ]

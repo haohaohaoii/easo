@@ -90,7 +90,15 @@ export default {
         };
     },
     computed: {
-        ...mapState(["divEditor","divItem"])
+        ...mapState(["divItem"]),
+        divEditor:{
+            get(){
+                return  this.$store.state.divEditor
+            },
+            set(){
+                
+            }
+        }
     },
     methods: {
         //提交

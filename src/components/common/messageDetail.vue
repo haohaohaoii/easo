@@ -32,7 +32,15 @@ export default {
         };
     },
     computed: {
-        ...mapState(["messageD","msgRowDetail"])
+        ...mapState(["msgRowDetail"]),
+        messageD:{
+            get(){
+                return this.$store.state.messageD
+            },
+            set(){
+                
+            }
+        }
     },
     methods: {
     //    sure() {

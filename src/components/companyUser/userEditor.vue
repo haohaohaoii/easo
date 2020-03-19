@@ -105,7 +105,13 @@ export default {
         this.getTypes()
     },
     computed: {
-        ...mapState(["companyUseredi","companyUseritem"])
+        ...mapState(["companyUseritem"]),
+        companyUseredi:{
+            get(){
+                return this.$store.state.companyUseredi
+            },
+            set(){}
+        }
     },
     methods: {
         //获取企业类型

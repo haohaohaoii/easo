@@ -138,7 +138,13 @@ export default {
         };
     },
     computed: {
-        ...mapState(["baseEditor","Equilist","companyArr",'baseItemlist'])
+        ...mapState(["Equilist","companyArr",'baseItemlist']),
+        baseEditor:{
+            get(){
+               return this.$store.state.baseEditor
+            },
+            set(){}
+        }
 
     },
     mounted(){

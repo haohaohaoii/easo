@@ -48,12 +48,17 @@ export default {
     },
     computed: {
         ...mapState([
-            "roleEditor",
             "roleTree",
             "roleItem",
             "roleName",
             "roleId"
         ]),
+         roleEditor:{
+            get(){
+                return this.$store.state.roleEditor
+            },
+            set(){}
+        },
         //得到tree树形结构数据
         treeList() {
             if (this.roleTree.length > 0) {

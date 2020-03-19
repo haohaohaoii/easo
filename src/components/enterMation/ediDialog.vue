@@ -181,7 +181,17 @@ export default {
         };
     },
     computed: {
-        ...mapState(["editorDialog", "enterRow"])
+        ...mapState([ "enterRow"]),
+        editorDialog:{
+            get(){
+               return this.$store.state.editorDialog
+            },
+            set(){
+          
+                
+            }
+        }
+
     },
     methods: {
        
@@ -217,8 +227,10 @@ export default {
         },
         //关闭外层dialog
         closeDialog() {
+                 this.imageUrl = [];
+            this.localUrl = []
             this.$store.commit("setEditordialog", false);
-
+       
             this.$refs.ruleForm.resetFields(); //重置from和rules
         },
         //点击删除上传的图片
@@ -248,7 +260,7 @@ export default {
         getCode() {},
         //确定编辑  --关闭dialog
         sureEditor() {
-            debugger
+
             this.$refs["ruleForm"].validate(valid => {
                 if (valid) {
                     // // 表单验证通过之后的操作

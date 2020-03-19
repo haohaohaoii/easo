@@ -17,7 +17,7 @@
             <!-- <el-table-column prop="name" label align="left"></el-table-column> -->
             <el-table-column prop="name" label="描述图片">
                 <template slot-scope="scope">
-                    <el-popover trigger="hover" v-if="scope.row.pictures">
+                    <el-popover trigger="hover" v-if="scope.row.pictures" placement="right">
                         <img
                             v-for="item in scope.row.pictures"
                             :key="item"
@@ -32,7 +32,7 @@
                             v-for="item in scope.row.pictures"
                             :key="item"
                             :src="item"
-                            style="max-height: 500px;max-width: 130px"
+                            style="max-height: 600px;max-width: 330px"
                         />
                     </el-popover>
                     <p v-else>{{scope.row.name}}</p>
@@ -98,7 +98,15 @@ export default {
         // }
     },
     computed: {
-        ...mapState(["enterDialog","comDetail"])
+        ...mapState(["comDetail"]),
+        enterDialog:{
+            get(){
+                return this.$store.state.enterDialog
+            },
+            set(){
+               
+            }
+        }
     },
     watch:{
         comDetail(val){

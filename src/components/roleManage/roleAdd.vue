@@ -45,7 +45,13 @@ export default {
         };
     },
     computed: {
-        ...mapState(["roleAdd", "roleTree"]),
+        ...mapState([ "roleTree"]),
+        roleAdd:{
+            get(){
+                return this.$store.state.roleAdd
+            },
+            set(){}
+        },
         //得到tree树形结构数据
         treeList() {
             if (this.roleTree.length > 0) {

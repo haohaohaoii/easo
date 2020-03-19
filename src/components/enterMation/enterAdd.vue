@@ -174,7 +174,15 @@ export default {
         };
     },
     computed: {
-        ...mapState(["enterAdd"])
+
+         enterAdd:{
+            get(){
+                return this.$store.state.enterAdd
+            },
+            set(val){
+               
+            }
+        }
     },
     methods: {
         //获取企业类型

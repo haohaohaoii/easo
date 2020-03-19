@@ -146,7 +146,12 @@ export default {
         };
     },
     computed: {
-        ...mapState(["userAdddialog"])
+        userAdddialog:{
+            get(){
+                return this.$store.state.userAdddialog
+            },
+            set(){}
+        }
     },
     methods: {
         //点击部门 获取部门列表
