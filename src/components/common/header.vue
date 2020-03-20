@@ -12,7 +12,7 @@
                 <i class="el-icon-s-home" style="font-size:26px"></i>
                 <span slot="title">首页</span>
             </el-menu-item>
-            <!-- <div v-for="(item,index) of createMenu" :key="index"> -->
+
             <el-submenu
                 v-if="item.subMenus && item.subMenus.length>=1"
                 v-for="(item,index) of menulist"
@@ -40,45 +40,6 @@
                     :index="seciem.path"
                 >{{seciem.menuName}}</el-menu-item>
             </el-submenu>
-            <!-- <el-menu-item v-else :index="item.one.path">{{item.one.menuName}}</el-menu-item> -->
-            <!-- </div> -->
-
-            <!-- <el-submenu v-for="item of firstMenu" :key="item.name" :index="item.path" class="upopt">
-                <template slot="title">
-                    <i class="iconfont icon-shuju" style="font-size:20px"></i>
-                    {{item.name}}
-                </template>
-                <el-menu-item
-                    v-for="seciem of item.second"
-                    :key="seciem.path"
-                    :index="seciem.path"
-                    class="opt"
-                >{{seciem.name}}</el-menu-item>
-            </el-submenu>
-            <el-submenu v-for="item of secondMenu" :key="item.name" :index="item.path">
-                <template slot="title">
-                    <i class="iconfont icon-shuju"></i>
-                    {{item.name}}
-                </template>
-                <el-menu-item
-                    v-for="seciem of item.second"
-                    :key="seciem.path"
-                    :index="seciem.path"
-                    class="opt"
-                >{{seciem.name}}</el-menu-item>
-            </el-submenu>
-            <el-submenu v-for="item of thirdMenu" :key="item.name" :index="item.path">
-                <template slot="title">
-                    <i class="iconfont icon-shuju"></i>
-                    {{item.name}}
-                </template>
-                <el-menu-item
-                    v-for="seciem of item.second"
-                    :key="seciem.path"
-                    :index="seciem.path"
-                    class="opt"
-                >{{seciem.name}}</el-menu-item>
-            </el-submenu>-->
         </el-menu>
         <div class="tubiao">
             <theme-picker></theme-picker>
