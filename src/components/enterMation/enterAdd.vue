@@ -64,7 +64,7 @@
                 </el-upload>
             </el-form-item>
 
-            <el-form-item label="排污许可证:" prop="upload">
+            <el-form-item label="排污许可证:" prop="upload2">
                 <el-upload
                     ref="pwPic"
                     action="#"
@@ -96,6 +96,13 @@ export default {
     data() {
         var valiIcon = (rule, value, callback) => { // 图片验证
             if (!this.imageUrl.length>0) {
+                callback(new Error('请上传图片'));
+            } else {
+                callback();
+            }
+        }
+        var valiIcon2 = (rule, value, callback) => { // 图片验证
+            if (!this.imageUrl2.length>0) {
                 callback(new Error('请上传图片'));
             } else {
                 callback();
@@ -184,6 +191,9 @@ export default {
                 ],
                 upload: [
                     {required:true, validator: valiIcon, trigger: 'change' } 
+                ],
+                upload2: [
+                    {required:true, validator: valiIcon2, trigger: 'change' } 
                 ]
             }
         };
@@ -340,7 +350,6 @@ export default {
 
             this.$refs["ruleForm"].validate(valid => {
                 if (valid) {
-                    debugger
                     // 表单验证通过之后的操作
                     let params={
                         erpName:this.ruleForm.firmName,  //企业名称
@@ -354,7 +363,6 @@ export default {
                     }
                     let _this = this
                     this.$api.company.addCompany(params).then(res=>{
-                        debugger
                         if(res.data.code ==0){
                             console.log(res)
                             _this.$message({

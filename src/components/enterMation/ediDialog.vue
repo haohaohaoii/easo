@@ -56,7 +56,7 @@
                     <i class="el-icon-plus"></i>
                 </el-upload>
             </el-form-item>
-            <el-form-item label="排污许可证:" prop="upload">
+            <el-form-item label="排污许可证:" prop="upload2">
                 <el-upload
                     ref="pwPic"
                     action="#"
@@ -95,13 +95,22 @@ export default {
     data() {
         var valiIcon = (rule, value, callback) => {
             // 图片验证
-            if (!this.imageUrl.length > 0 && !this.localUrl.length > 0) {
+            if (!this.allPicnum.length > 0 && !this.allPicnum.length > 0) {
+                callback(new Error("请上传图片"));
+            } else {
+                callback();
+            }
+        };
+        var valiIcon2 = (rule, value, callback) => {
+            // 图片验证
+            if (!this.allPicnum2.length > 0 && !this.allPicnum2.length > 0) {
                 callback(new Error("请上传图片"));
             } else {
                 callback();
             }
         };
         return {
+            auditState:'',
             id: "",
             dialogImageUrl: '',
             dialogVisible: false,
@@ -192,6 +201,9 @@ export default {
                 ],
                 upload: [
                     { required: true, validator: valiIcon, trigger: "change" }
+                ],
+                upload2: [
+                    { required: true, validator: valiIcon2, trigger: "change" }
                 ]
             }
         };
@@ -268,20 +280,63 @@ export default {
         //点击删除上传的图片--营业执照
         handleRemove(file, fileList) {
             let url = file.url;
-            for (let i = 0; i < this.allPicnum.length; i++) {
-                if (this.allPicnum[i].url == url) {
-                    this.allPicnum.splice(i, 1);
-                    break;
+            // for (let i = 0; i < this.allPicnum.length; i++) {
+            //     if (this.allPicnum[i].url == url) {
+            //         this.allPicnum.splice(i, 1);
+            //         break;
+            //     }
+            // }
+             let flag = false
+            if(this.imageUrl && this.imageUrl.length>0){
+                for(let k=0; k<this.imageUrl.length; k++){
+                    if(this.imageUrl[k].url == url){
+                        this.imageUrl.splice(k,1)
+                        flag = true
+                        break;
+                    }
                 }
             }
+           if(!flag){
+                if(this.localUrl && this.localUrl.length>0){
+                    for(let j=0; j<this.localUrl.length; j++){
+                        if(this.localUrl[j].url == url){
+                            this.localUrl.splice(j,1)
+                            flag = true
+                            break;
+                        }
+                    }
+                }
+            }
+            
         },
         //点击删除上传的图片--排污执照
         handleRemove2(file, fileList) {
             let url = file.url;
-            for (let i = 0; i < this.allPicnum2.length; i++) {
-                if (this.allPicnum2[i].url == url) {
-                    this.allPicnum2.splice(i, 1);
-                    break;
+            // for (let i = 0; i < this.allPicnum2.length; i++) {
+            //     if (this.allPicnum2[i].url == url) {
+            //         this.allPicnum2.splice(i, 1);
+            //         break;
+            //     }
+            // }
+            let flag = false
+            if(this.imageUrl2 && this.imageUrl2.length>0){
+                for(let k=0; k<this.imageUrl2.length; k++){
+                    if(this.imageUrl2[k].url == url){
+                        this.imageUrl2.splice(k,1)
+                        flag = true
+                        break;
+                    }
+                }
+            }
+           if(!flag){
+                if(this.localUrl2 && this.localUrl2.length>0){
+                    for(let j=0; j<this.localUrl2.length; j++){
+                        if(this.localUrl2[j].url == url){
+                            this.localUrl2.splice(j,1)
+                            flag = true
+                            break;
+                        }
+                    }
                 }
             }
         },
@@ -315,7 +370,7 @@ export default {
         sureEditor() {
             this.$refs["ruleForm"].validate(valid => {
                 if (valid) {
-                    debugger
+
                     // // 表单验证通过之后的操作
                     let urlArr = this.allPicnum; //合并
                     let urlArr2 = this.allPicnum2; //合并
@@ -324,7 +379,6 @@ export default {
                     let _this = this;
                     async function a() {
                         for (let i = 0; i < urlArr.length; i++) {
-                            debugger
                             var canvas = document.createElement("canvas");
                             var ctx = canvas.getContext("2d");
                             let imgObj = new Image();
@@ -344,6 +398,7 @@ export default {
                                         "image/jpeg",
                                         0.5
                                     );
+                                    img = img.substring(img.indexOf(",")+1);
                                     console.log("触发" + i + "次", img);
                                     base64Arr.push(img);
                                     reslove();
@@ -352,36 +407,39 @@ export default {
                             await promise;
                         }
                         console.log(base64Arr);
-                        for (let i = 0; i < urlArr2.length; i++) {
-                
-                            var canvas2 = document.createElement("canvas");
-                            var ctx2 = canvas2.getContext("2d");
-                            let imgObj = new Image();
-                            imgObj.crossOrigin = '';
-                            // 先设置图片跨域属性
-                            imgObj.setAttribute("crossOrigin", "anonymous");
-                            // 再给image赋值src属性，先后顺序不能颠倒
-                            imgObj.src = urlArr2[i].url;
-                            // 当图片加载完成后，绘制图片到canvas
-                            var promise2 = new Promise(reslove => {
-                                imgObj.onload = async function() {
-                                    // 设置canvas宽高等于图片实际宽高
-                                    canvas2.width = imgObj.width;
-                                    canvas2.height = imgObj.height;
-                                    ctx2.drawImage(imgObj, 0, 0);
-                                    // 将图片转成base64格式
-                                    var img2 = canvas2.toDataURL(
-                                        "image/jpeg",
-                                        0.5
-                                    );
-                                    console.log("触发" + i + "次", img2);
-                                    base64Arr2.push(img2);
-                                    reslove();
-                                };
-                            });
-                            await promise2;
+                        if(urlArr2 && urlArr2.length>0){
+                            for (let i = 0; i < urlArr2.length; i++) {
+                                var canvas2 = document.createElement("canvas");
+                                var ctx2 = canvas2.getContext("2d");
+                                let imgObj = new Image();
+                                imgObj.crossOrigin = '';
+                                // 先设置图片跨域属性
+                                imgObj.setAttribute("crossOrigin", "anonymous");
+                                // 再给image赋值src属性，先后顺序不能颠倒
+                                imgObj.src = urlArr2[i].url;
+                                // 当图片加载完成后，绘制图片到canvas
+                                var promise2 = new Promise(reslove => {
+                                    imgObj.onload = async function() {
+                                        // 设置canvas宽高等于图片实际宽高
+                                        canvas2.width = imgObj.width;
+                                        canvas2.height = imgObj.height;
+                                        ctx2.drawImage(imgObj, 0, 0);
+                                        // 将图片转成base64格式
+                                        var img2 = canvas2.toDataURL(
+                                            "image/jpeg",
+                                            0.5
+                                        );
+
+                                        img2 = img2.substring(img2.indexOf(",")+1);
+                                        console.log("触发" + i + "次", img2);
+                                        base64Arr2.push(img2);
+                                        reslove();
+                                    };
+                                });
+                                await promise2;
+                            }
+                            console.log(base64Arr2);
                         }
-                        console.log(base64Arr2);
             
                         let params = {
                             erpName: _this.ruleForm.firmName, //企业名称
@@ -390,6 +448,7 @@ export default {
                             erpLinkTel: _this.ruleForm.linkPhone, //联系电话
                             erpMail: _this.ruleForm.mail, //邮箱
                             images: base64Arr, //图片base64数组
+                            auditState:_this.auditState,
                             images2: base64Arr2, //图片base64数组
                             erpType: _this.ruleForm.firmType //企业类型
                         };
@@ -422,7 +481,8 @@ export default {
         }
     },
     watch: {
-        enterRow(val) {
+        enterRow(val) {            
+            this.auditState = val.auditState;
             this.types = val.companyType;
             this.id = val.id;
             this.ruleForm.firmName = val.erpName; //企业名称
