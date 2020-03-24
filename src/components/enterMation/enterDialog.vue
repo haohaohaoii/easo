@@ -92,7 +92,7 @@ export default {
         closeDialog(){
             this.$store.commit('getDialogstatus',false)  //关闭dialog
             this.tableData[5].pictures = []
-         
+            this.tableData[6].pictures = []
         },
         // save(){
         //   this.closeDialog()
@@ -121,22 +121,27 @@ export default {
             this.tableData[3].name = val.erpLinkTel;
             this.tableData[4].name = val.erpMail;
             let str = val.erpLicense;
-            str = str.substring(0, str.lastIndexOf(","));
-            let imgArr = str.split(",");
-            if(imgArr && imgArr.length>0){
-                for(let i=0; i<imgArr.length; i++){
-                    this.tableData[5].pictures.push(imgArr[i])
+            if(str){
+                str = str.substring(0, str.lastIndexOf(","));
+                let imgArr = str.split(",");
+                if(imgArr && imgArr.length>0){
+                    for(let i=0; i<imgArr.length; i++){
+                        this.tableData[5].pictures.push(imgArr[i])
+                    }
                 }
             }
-
+            
             let str2 = val.erpLicense2;
-            str2 = str2.substring(0, str2.lastIndexOf(","));
-            let imgArr2 = str2.split(",");
-            if(imgArr2 && imgArr2.length>0){
-                for(let i=0; i<imgArr2.length; i++){
-                    this.tableData[6].pictures.push(imgArr2[i])
+            if(str2){
+                str2 = str2.substring(0, str2.lastIndexOf(","));
+                let imgArr2 = str2.split(",");
+                if(imgArr2 && imgArr2.length>0){
+                    for(let i=0; i<imgArr2.length; i++){
+                        this.tableData[6].pictures.push(imgArr2[i])
+                    }
                 }
             }
+            
     
             // this.tableData[5].pictures.push('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584282637096&di=75fdad3e889cba12738f0855876ebe1e&imgtype=0&src=http%3A%2F%2Fa3.att.hudong.com%2F68%2F61%2F300000839764127060614318218_950.jpg')
             //   this.tableData[].pictures.push('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584282637096&di=81d3ef87fe63235dcd3fc5af6f9fec8c&imgtype=0&src=http%3A%2F%2Fa0.att.hudong.com%2F78%2F52%2F01200000123847134434529793168.jpg')

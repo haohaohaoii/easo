@@ -259,7 +259,9 @@ export default {
         //关闭外层dialog
         closeDialog() {
             this.imageUrl = [];
-            this.localUrl = []
+            this.localUrl = [];
+            this.imageUrl2 = [];
+            this.localUrl2 = []
             this.$store.commit("setEditordialog", false);
             this.$refs.ruleForm.resetFields(); //重置from和rules
         },
@@ -322,7 +324,7 @@ export default {
                     let _this = this;
                     async function a() {
                         for (let i = 0; i < urlArr.length; i++) {
-                 
+                            debugger
                             var canvas = document.createElement("canvas");
                             var ctx = canvas.getContext("2d");
                             let imgObj = new Image();
@@ -355,6 +357,7 @@ export default {
                             var canvas2 = document.createElement("canvas");
                             var ctx2 = canvas2.getContext("2d");
                             let imgObj = new Image();
+                            imgObj.crossOrigin = '';
                             // 先设置图片跨域属性
                             imgObj.setAttribute("crossOrigin", "anonymous");
                             // 再给image赋值src属性，先后顺序不能颠倒
@@ -429,33 +432,39 @@ export default {
             this.ruleForm.userName = ""; //没有这个参数，暂时写空值
             this.ruleForm.mail = val.erpMail; //邮箱
             let str = val.erpLicense;
-            str = str.substring(0, str.lastIndexOf(","));
-            let imgArr = str.split(",");
-            if (imgArr && imgArr.length > 0) {
-                //获取图片地址数组
-                let imgOa = [];
-                for (let i = 0; i < imgArr.length; i++) {
-                    let obj = {
-                        url: imgArr[i]
-                    };
-                    imgOa.push(obj);
+            if(str){
+                str = str.substring(0, str.lastIndexOf(","));
+                let imgArr = str.split(",");
+                if (imgArr && imgArr.length > 0) {
+                    //获取图片地址数组
+                    let imgOa = [];
+                    for (let i = 0; i < imgArr.length; i++) {
+                        let obj = {
+                            url: imgArr[i]
+                        };
+                        imgOa.push(obj);
+                    }
+                    this.imageUrl = imgOa;
                 }
-                this.imageUrl = imgOa;
             }
+           
             let str2 = val.erpLicense2;
-            str2 = str2.substring(0, str2.lastIndexOf(","));
-            let imgArr2 = str2.split(",");
-            if (imgArr2 && imgArr2.length > 0) {
-                //获取图片地址数组
-                let imgOa2 = [];
-                for (let i = 0; i < imgArr2.length; i++) {
-                    let obj2 = {
-                        url: imgArr2[i]
-                    };
-                    imgOa2.push(obj2);
+            if(str2){
+                str2 = str2.substring(0, str2.lastIndexOf(","));
+                let imgArr2 = str2.split(",");
+                if (imgArr2 && imgArr2.length > 0) {
+                    //获取图片地址数组
+                    let imgOa2 = [];
+                    for (let i = 0; i < imgArr2.length; i++) {
+                        let obj2 = {
+                            url: imgArr2[i]
+                        };
+                        imgOa2.push(obj2);
+                    }
+                    this.imageUrl2 = imgOa2;
                 }
-                this.imageUrl2 = imgOa2;
             }
+           
             if (val.companyType && val.companyType.length > 0) {
                 //获取企业类型数组
 
