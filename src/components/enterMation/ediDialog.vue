@@ -56,6 +56,20 @@
                     <i class="el-icon-plus"></i>
                 </el-upload>
             </el-form-item>
+            <el-form-item label="排污许可证:" prop="upload">
+                <el-upload
+                    ref="pwPic"
+                    action="#"
+                    :on-change="handleChange2"
+                    list-type="picture-card"
+                    :file-list="imageUrl2"
+                    :on-preview="handlePictureCardPreview2"
+                    :on-remove="handleRemove2"
+                    :auto-upload="false"
+                >
+                    <i class="el-icon-plus"></i>
+                </el-upload>
+            </el-form-item>
             <!-- <el-form-item label="验证码:">
                 <el-col :span="14">
                     <el-input v-model="ruleForm.veriCode"></el-input>
@@ -91,8 +105,10 @@ export default {
             id: "",
             dialogImageUrl: '',
             dialogVisible: false,
-            imageUrl: [], //上传图片的url地址
+            imageUrl: [], //上传图片的url地址--营业执照
+            imageUrl2:[], //上传图片的url地址--排污执照
             localUrl: [],
+            localUrl2: [],
             types: [], //企业类型
             ruleForm: {
                 firmName: "", //企业名称
@@ -190,14 +206,29 @@ export default {
           
                 
             }
+        },
+        //营业执照总照片
+        allPicnum(){
+            let urlArr = this.imageUrl.concat(this.localUrl);
+            return urlArr;
+        },
+        //排污执照总照片
+        allPicnum2(){
+            let urlArr = this.imageUrl2.concat(this.localUrl2);
+            return urlArr;
         }
 
     },
     methods: {
-       
+       //营业执照
         handleChange(file, fileList) {
             let obj = { url: file.url };
             this.localUrl.push(obj);
+        },
+        //营业执照
+        handleChange2(file, fileList) {
+            let obj = { url: file.url };
+            this.localUrl2.push(obj);
         },
         //服务器图片地址转base64
         getBase64Image(image, i, len) {
@@ -227,28 +258,48 @@ export default {
         },
         //关闭外层dialog
         closeDialog() {
-                 this.imageUrl = [];
+            this.imageUrl = [];
             this.localUrl = []
             this.$store.commit("setEditordialog", false);
-       
             this.$refs.ruleForm.resetFields(); //重置from和rules
         },
-        //点击删除上传的图片
+        //点击删除上传的图片--营业执照
         handleRemove(file, fileList) {
-            for (let i = 0; i < this.imageUrl.length; i++) {
-                if (this.imageUrl[i].uid == file.uid) {
-                    this.imageUrl.splice(i, 1);
+            let url = file.url;
+            for (let i = 0; i < this.allPicnum.length; i++) {
+                if (this.allPicnum[i].url == url) {
+                    this.allPicnum.splice(i, 1);
                     break;
                 }
             }
         },
-        //点击每个url放大的方法
-        handlePictureCardPreview(file) {
-
+        //点击删除上传的图片--排污执照
+        handleRemove2(file, fileList) {
             let url = file.url;
-            let urlArr = this.imageUrl.concat(this.localUrl); //合并
-            for (let i = 0; i <urlArr.length; i++) {
-                if (urlArr[i].url == url) {
+            for (let i = 0; i < this.allPicnum2.length; i++) {
+                if (this.allPicnum2[i].url == url) {
+                    this.allPicnum2.splice(i, 1);
+                    break;
+                }
+            }
+        },
+        //点击每个url放大的方法--营业执照
+        handlePictureCardPreview(file) {
+            let url = file.url;
+            for (let i = 0; i <this.allPicnum.length; i++) {
+                if (this.allPicnum[i].url == url) {
+                    this.dialogImageUrl = file.url;
+                    
+                    this.dialogVisible = true;
+                    break;
+                }
+            }
+        },
+        //点击每个url放大的方法--排污执照
+        handlePictureCardPreview2(file) {
+            let url = file.url;
+            for (let i = 0; i <this.allPicnum2.length; i++) {
+                if (this.allPicnum2[i].url == url) {
                     this.dialogImageUrl = file.url;
                     
                     this.dialogVisible = true;
@@ -260,15 +311,18 @@ export default {
         getCode() {},
         //确定编辑  --关闭dialog
         sureEditor() {
-
             this.$refs["ruleForm"].validate(valid => {
                 if (valid) {
+                    debugger
                     // // 表单验证通过之后的操作
-                    let urlArr = this.imageUrl.concat(this.localUrl); //合并
+                    let urlArr = this.allPicnum; //合并
+                    let urlArr2 = this.allPicnum2; //合并
                     let base64Arr = [];
+                    let base64Arr2 = [];
                     let _this = this;
                     async function a() {
                         for (let i = 0; i < urlArr.length; i++) {
+                 
                             var canvas = document.createElement("canvas");
                             var ctx = canvas.getContext("2d");
                             let imgObj = new Image();
@@ -296,6 +350,35 @@ export default {
                             await promise;
                         }
                         console.log(base64Arr);
+                        for (let i = 0; i < urlArr2.length; i++) {
+                
+                            var canvas2 = document.createElement("canvas");
+                            var ctx2 = canvas2.getContext("2d");
+                            let imgObj = new Image();
+                            // 先设置图片跨域属性
+                            imgObj.setAttribute("crossOrigin", "anonymous");
+                            // 再给image赋值src属性，先后顺序不能颠倒
+                            imgObj.src = urlArr2[i].url;
+                            // 当图片加载完成后，绘制图片到canvas
+                            var promise2 = new Promise(reslove => {
+                                imgObj.onload = async function() {
+                                    // 设置canvas宽高等于图片实际宽高
+                                    canvas2.width = imgObj.width;
+                                    canvas2.height = imgObj.height;
+                                    ctx2.drawImage(imgObj, 0, 0);
+                                    // 将图片转成base64格式
+                                    var img2 = canvas2.toDataURL(
+                                        "image/jpeg",
+                                        0.5
+                                    );
+                                    console.log("触发" + i + "次", img2);
+                                    base64Arr2.push(img2);
+                                    reslove();
+                                };
+                            });
+                            await promise2;
+                        }
+                        console.log(base64Arr2);
             
                         let params = {
                             erpName: _this.ruleForm.firmName, //企业名称
@@ -304,6 +387,7 @@ export default {
                             erpLinkTel: _this.ruleForm.linkPhone, //联系电话
                             erpMail: _this.ruleForm.mail, //邮箱
                             images: base64Arr, //图片base64数组
+                            images2: base64Arr2, //图片base64数组
                             erpType: _this.ruleForm.firmType //企业类型
                         };
                         let erpId = _this.id;
@@ -357,6 +441,20 @@ export default {
                     imgOa.push(obj);
                 }
                 this.imageUrl = imgOa;
+            }
+            let str2 = val.erpLicense2;
+            str2 = str2.substring(0, str2.lastIndexOf(","));
+            let imgArr2 = str2.split(",");
+            if (imgArr2 && imgArr2.length > 0) {
+                //获取图片地址数组
+                let imgOa2 = [];
+                for (let i = 0; i < imgArr2.length; i++) {
+                    let obj2 = {
+                        url: imgArr2[i]
+                    };
+                    imgOa2.push(obj2);
+                }
+                this.imageUrl2 = imgOa2;
             }
             if (val.companyType && val.companyType.length > 0) {
                 //获取企业类型数组

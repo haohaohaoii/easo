@@ -63,6 +63,20 @@
                     <i class="el-icon-plus"></i>
                 </el-upload>
             </el-form-item>
+
+            <el-form-item label="排污许可证:" prop="upload">
+                <el-upload
+                    ref="pwPic"
+                    action="#"
+                    :on-change="getFile2"
+                    list-type="picture-card"
+                    :on-preview="handlePictureCardPreview2"
+                    :on-remove="handleRemove2"
+                    :auto-upload="false"
+                >
+                    <i class="el-icon-plus"></i>
+                </el-upload>
+            </el-form-item>
         </el-form>
         <div slot="footer" class="foot">
             <el-button type="primary" @click="sureEditor" size="mini">添加</el-button>
@@ -91,7 +105,8 @@ export default {
             dialogImageUrl: '',
             dialogVisible: false,
             types:[],   //企业类型集合
-            imageUrl: [], //上传图片的url地址
+            imageUrl: [], //上传图片的url地址--营业执照
+            imageUrl2: [], //上传图片的url地址--排污许可证
             ruleForm: {
                 firmName: "", //企业名称
                 firmAddress: "", //企业地址
@@ -201,6 +216,19 @@ export default {
                 }
             })
         },
+        getFile2(file, fileList){
+             let _this = this;
+
+            this.getBase64(file.raw)
+                .then(res => {                
+                    let str = res.substring(res.indexOf(",")+1);
+
+                    _this.imageUrl2.push(str);
+                })
+                .catch(error => {
+                    this.$message.error("图片上传失败");
+                });
+        },
         //获取照片的base64
         getFile(file, fileList) {
    
@@ -234,7 +262,7 @@ export default {
                 };
             });
         },
-        //点击删除上传的图片
+        //点击删除上传的图片 --营业执照
         handleRemove(file, fileList) {
             let _this = this;
             this.getBase64(file.raw).then(res => {
@@ -250,7 +278,23 @@ export default {
                 }
             });
         },
-        //点击每个url放大的方法
+         //点击删除上传的图片 --排污许可证
+        handleRemove2(file, fileList) {
+            let _this = this;
+            this.getBase64(file.raw).then(res => {
+                console.log(res);
+                   let str = res.substring(res.indexOf(",")+1);
+
+                for (let i = 0; i < _this.imageUrl2.length; i++) {
+                    if (_this.imageUrl2[i] == str) {
+                        _this.imageUrl2.splice(i, 1);
+                       console.log( _this.imageUrl)
+                        break;
+                    }
+                }
+            });
+        },
+        //点击每个url放大的方法--营业执照
         handlePictureCardPreview(file) {
             let _this = this;
             this.getBase64(file.raw).then(res => {
@@ -266,11 +310,29 @@ export default {
                 }
             });
         },
+        //点击每个url放大的方法--排污许可证
+        handlePictureCardPreview2(file) {
+            let _this = this;
+            this.getBase64(file.raw).then(res => {
+                console.log(res);
+                let str = res.substring(res.indexOf(",")+1);
+                for (let i = 0; i < _this.imageUrl2.length; i++) {
+                    if (_this.imageUrl2[i] == str) {
+                        _this.dialogImageUrl = file.url;
+                        
+                        _this.dialogVisible = true;
+                        break;
+                    }
+                }
+            });
+        },
         //关闭外层dialog
         closeDialog() {
             this.$store.commit("changeEnterAdd", false);  //修改dialog窗口
             this.$refs.pic.clearFiles(); //清空文件
+            this.$refs.pwPic.clearFiles(); //清空文件
             this.imageUrl = []  //清空base64数组
+            this.imageUrl2 = []  //清空base64数组
             this.$refs.ruleForm.resetFields();  //重置from和rules
         },
         //确定编辑  --关闭dialog
@@ -278,7 +340,7 @@ export default {
 
             this.$refs["ruleForm"].validate(valid => {
                 if (valid) {
-  
+                    debugger
                     // 表单验证通过之后的操作
                     let params={
                         erpName:this.ruleForm.firmName,  //企业名称
@@ -287,10 +349,12 @@ export default {
                         erpLinkTel:this.ruleForm.linkPhone, //联系电话
                         erpMail:this.ruleForm.mail,  //邮箱
                         images:this.imageUrl,  //图片base64数组
+                        images2:this.imageUrl2,  //图片base64数组
                         erpType:this.ruleForm.firmType  //企业类型
                     }
                     let _this = this
                     this.$api.company.addCompany(params).then(res=>{
+                        debugger
                         if(res.data.code ==0){
                             console.log(res)
                             _this.$message({
