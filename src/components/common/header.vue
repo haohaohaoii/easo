@@ -285,7 +285,7 @@ export default {
         position: absolute;
         right: 0%;
         top: 14px;
-        width: 10%;
+        width: 210px;
         display: flex;
         justify-content: space-around;
         align-items: center;

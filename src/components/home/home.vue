@@ -8,7 +8,7 @@
             <headert></headert>
             <div class="content" ref="heig">
                 <bread></bread>
-                <transition enter-active-class="animated zoomInUp">
+                <transition enter-active-class="animated zoomInUp" mode="out-in">
                     <router-view></router-view>
                 </transition>
             </div>
