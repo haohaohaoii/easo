@@ -46,6 +46,14 @@
             >
                 <el-input v-model="ruleForm.urlAddres"></el-input>
             </el-form-item>
+            <el-form-item v-if="ruleForm.radio==1">
+                <quill-editor
+                    ref="text"
+                    v-model="content"
+                    class="myQuillEditor"
+                    :options="editorOption"
+                />
+            </el-form-item>
             <el-form-item label="封面图片:" prop="upload">
                 <el-upload
                     ref="pic"
@@ -72,10 +80,16 @@
 
 <script>
 
-            
+import { quillEditor } from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'            
 import { mapState, mapMutations } from "vuex";
 export default {
     props:['isShow'],
+    components:{
+         quillEditor
+    },
     data() {
         var valiIcon = (rule, value, callback) => { // 图片验证
             if (!this.imageUrl.length>0) {
@@ -84,7 +98,34 @@ export default {
                 callback();
             }
         }
+                // 工具栏配置
+        const toolbarOptions = [
+        ['bold', 'italic', 'underline', 'strike'], // 加粗 斜体 下划线 删除线 -----['bold', 'italic', 'underline', 'strike']
+        ['blockquote', 'code-block'], // 引用  代码块-----['blockquote', 'code-block']
+        [{ header: 1 }, { header: 2 }], // 1、2 级标题-----[{ header: 1 }, { header: 2 }]
+        [{ list: 'ordered' }, { list: 'bullet' }], // 有序、无序列表-----[{ list: 'ordered' }, { list: 'bullet' }]
+        [{ script: 'sub' }, { script: 'super' }], // 上标/下标-----[{ script: 'sub' }, { script: 'super' }]
+        [{ indent: '-1' }, { indent: '+1' }], // 缩进-----[{ indent: '-1' }, { indent: '+1' }]
+        [{'direction': 'rtl'}], // 文本方向-----[{'direction': 'rtl'}]
+        [{ size: ['small', false, 'large', 'huge'] }], // 字体大小-----[{ size: ['small', false, 'large', 'huge'] }]
+        [{ header: [1, 2, 3, 4, 5, 6, false] }], // 标题-----[{ header: [1, 2, 3, 4, 5, 6, false] }]
+        [{ color: [] }, { background: [] }], // 字体颜色、字体背景颜色-----[{ color: [] }, { background: [] }]
+        [{ font: [] }], // 字体种类-----[{ font: [] }]
+        [{ align: [] }], // 对齐方式-----[{ align: [] }]
+        ['clean'], // 清除文本格式-----['clean']
+        ['image'] // 链接、图片、视频-----['link', 'image', 'video']
+        ]
         return {
+             editorOption: {
+                placeholder: '请输入文本...',
+                theme: 'snow',
+                modules: {
+                    toolbar: {
+                        container: toolbarOptions
+                    }
+                }
+            },
+            content:'',
             newsAdd:'',           //外层dialog是都显示
             dialogImageUrl: '',   //放大的url地址
             dialogVisible:false,  //放大的dialog是都显示
@@ -229,6 +270,8 @@ export default {
         },
         //确定编辑  --关闭dialog
         sureEditor() {
+            debugger
+            console.log(this.content)
             this.$refs["ruleForm"].validate(valid => {
                 debugger
                 if (valid) {
@@ -305,14 +348,18 @@ export default {
     margin-top: 0 !important;
     position: relative;
     margin: 0 auto;
-    height: 46%;
+    // height: 46%;
     overflow-y: auto;
-    top: 50%;
+    top: 54%;
     transition: transform;
     transform: translateY(-50%);
     border: 1px solid #ebeef5;
-
-    width: 32%;
+    left: 4%;
+    width: 50%;
+    overflow-y: auto;
+}
+.dialog >>> .ql-container.ql-snow {
+    height: 260px;
     overflow-y: auto;
 }
 //表单校验的图标颜色
@@ -341,5 +388,148 @@ export default {
 }
 .dialog >>> .el-select {
     width: 100%;
+}
+.dialog >>> .ql-container.ql-snow::-webkit-scrollbar {
+    display: none !important;
+}
+.dialog >>> .ql-editor::-webkit-scrollbar {
+    display: none !important;
+}
+.dialog >>> .ql-snow .ql-tooltip[data-mode="link"]::before {
+    content: "请输入链接地址:" !important;
+}
+.dialog >>> .ql-snow .ql-tooltip.ql-editing a.ql-action::after {
+    border-right: 0px !important;
+    content: "保存" !important;
+    padding-right: 0px !important;
+}
+
+.dialog >>> .ql-snow .ql-tooltip[data-mode="video"]::before {
+    content: "请输入视频地址:" !important;
+}
+
+.dialog >>> .ql-snow .ql-picker.ql-size .ql-picker-label::before,
+.dialog >>> .ql-snow .ql-picker.ql-size .ql-picker-item::before {
+    content: "14px" !important;
+}
+.dialog
+    >>> .ql-snow
+    .ql-picker.ql-size
+    .ql-picker-label[data-value="small"]::before,
+.dialog
+    >>> .ql-snow
+    .ql-picker.ql-size
+    .ql-picker-item[data-value="small"]::before {
+    content: "10px" !important;
+}
+.dialog
+    >>> .ql-snow
+    .ql-picker.ql-size
+    .ql-picker-label[data-value="large"]::before,
+.dialog
+    >>> .ql-snow
+    .ql-picker.ql-size
+    .ql-picker-item[data-value="large"]::before {
+    content: "18px" !important;
+}
+.dialog
+    >>> .ql-snow
+    .ql-picker.ql-size
+    .ql-picker-label[data-value="huge"]::before,
+.dialog
+    >>> .ql-snow
+    .ql-picker.ql-size
+    .ql-picker-item[data-value="huge"]::before {
+    content: "32px" !important;
+}
+
+.dialog >>> .ql-snow .ql-picker.ql-header .ql-picker-label::before,
+.dialog >>> .ql-snow .ql-picker.ql-header .ql-picker-item::before {
+    content: "文本" !important;
+}
+.dialog
+    >>> .ql-snow
+    .ql-picker.ql-header
+    .ql-picker-label[data-value="1"]::before,
+.dialog
+    >>> .ql-snow
+    .ql-picker.ql-header
+    .ql-picker-item[data-value="1"]::before {
+    content: "标题1" !important;
+}
+.dialog
+    >>> .ql-snow
+    .ql-picker.ql-header
+    .ql-picker-label[data-value="2"]::before,
+.dialog
+    >>> .ql-snow
+    .ql-picker.ql-header
+    .ql-picker-item[data-value="2"]::before {
+    content: "标题2" !important;
+}
+.dialog
+    >>> .ql-snow
+    .ql-picker.ql-header
+    .ql-picker-label[data-value="3"]::before,
+.dialog
+    >>> .ql-snow
+    .ql-picker.ql-header
+    .ql-picker-item[data-value="3"]::before {
+    content: "标题3" !important;
+}
+.dialog
+    >>> .ql-snow
+    .ql-picker.ql-header
+    .ql-picker-label[data-value="4"]::before,
+.dialog
+    >>> .ql-snow
+    .ql-picker.ql-header
+    .ql-picker-item[data-value="4"]::before {
+    content: "标题4" !important;
+}
+.dialog
+    >>> .ql-snow
+    .ql-picker.ql-header
+    .ql-picker-label[data-value="5"]::before,
+.dialog
+    >>> .ql-snow
+    .ql-picker.ql-header
+    .ql-picker-item[data-value="5"]::before {
+    content: "标题5" !important;
+}
+.dialog
+    >>> .ql-snow
+    .ql-picker.ql-header
+    .ql-picker-label[data-value="6"]::before,
+.dialog
+    >>> .ql-snow
+    .ql-picker.ql-header
+    .ql-picker-item[data-value="6"]::before {
+    content: "标题6" !important;
+}
+
+.dialog >>> .ql-snow .ql-picker.ql-font .ql-picker-label::before,
+.dialog >>> .ql-snow .ql-picker.ql-font .ql-picker-item::before {
+    content: "标准字体" !important;
+}
+.dialog
+    >>> .ql-snow
+    .ql-picker.ql-font
+    .ql-picker-label[data-value="serif"]::before,
+.dialog
+    >>> .ql-snow
+    .ql-picker.ql-font
+    .ql-picker-item[data-value="serif"]::before {
+    content: "衬线字体" !important;
+}
+.dialog
+    >>> .ql-snow
+    .ql-picker.ql-font
+    .ql-picker-label[data-value="monospace"]::before,
+.dialog
+    >>> .ql-snow
+    .ql-picker.ql-font
+    .ql-picker-item[data-value="monospace"]::before {
+    content: "等宽字体" !important;
 }
 </style>
