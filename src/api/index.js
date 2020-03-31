@@ -12,7 +12,8 @@ import user from '@/api/user.js'  //用户相关
 import depart from '@/api/depart.js' //部门相关
 import spam from '@/api/spam.js'  //留言相关
 import equi from '@/api/equipment.js' //设备相关
-import msg from '@/api/msg.js' //设备相关
+import msg from '@/api/msg.js' //消息相关
+import news from '@/api/news.js' //新闻相关
 export default {
     login,
     menu,
@@ -24,5 +25,6 @@ export default {
     depart,
     spam,
     equi,
-    msg
+    msg,
+    news
 }

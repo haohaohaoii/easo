@@ -116,6 +116,16 @@ export default ({
             path: 'firstPage',     //企业用户
             name: '首页',
             component: resolve => (require(["@/components/firstPage/firstPage"], resolve))
+        },
+        {
+            path: 'newsManage',     //新闻管理
+            name: '新闻管理',
+            component: resolve => (require(["@/components/newsManage/newsManage"], resolve))
+        },
+        {
+            path: 'resManage',     //资源管理
+            name: '资源管理',
+            component: resolve => (require(["@/components/resManage/resManage"], resolve))
         }
     ]
 })

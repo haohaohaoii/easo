@@ -32,7 +32,11 @@
                     <i class="el-icon-set-up" style="font-size:24px"></i>
                     {{item.menuName}}
                 </template>
-
+                <template slot="title" v-else-if="item.menuType==0 && item.menuName=='内容管理'">
+                    <!-- <i class="el-icon-set-up" style="font-size:24px"></i> -->
+                    <img src="../../assets/images/contentico.png" alt style="margin-right: 5px;" />
+                    {{item.menuName}}
+                </template>
                 <el-menu-item
                     v-for="seciem of item.subMenus"
                     :key="seciem.path"
