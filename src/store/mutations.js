@@ -259,6 +259,14 @@ export default ({
     getAdminid(state, adminId) {
         state.adminId = adminId
     },
+    //更改新闻编辑dialog状态
+    changeNewsE(state, status) {
+        state.newsEstatus = status
+    },
+    //获取新闻编辑下的行信息
+    getNewsE(state, item) {
+        state.newsErow = item
+    },
     //根据返回的角色权限，生成路由表
     filters(state, roles) {
         let menuTree = roles  //角色权限

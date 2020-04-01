@@ -121,6 +121,20 @@ export default ({
 
         })
     },
+    //点击新闻编辑
+    getNewsitem(context, id) {
+        api.news.getNewsI(id).then(res => {  //获取角色对应的菜单
+
+            console.log(res)
+            if (res.data.code == 0) {
+                let itemObj = res.data.data[0]
+                context.commit('changeNewsE', true)  //编辑对应的dialog状态
+                context.commit("getNewsE", itemObj); //存储对应id的部门信息
+            }
+        }).catch(error => {
+
+        })
+    },
     //企业管理下的留言管理, 回复
     spamDetail(context, id) {
         api.spam.getSpamitem(id).then(res => {  //获取角色对应的菜单

@@ -26,6 +26,8 @@ export default ({
     // companyType: [],   //企业管理下的企业信息 编辑中需要获取企业类型
     baseAdd: false,  //企业管理下的基站管理中的添加基站 dialog状态
     Equilist: [],  //企业管理下的基站管理中的添加基站  所需的托管设备数组
+    newsEstatus: false,  //内容管理   新闻管理   编辑新闻dialoi状态
+    newsErow: '',       //内容管理  新闻管理  编辑新闻  行数据
     menuItemD: '',   //权限管理下的菜单管理  行信息详情，编辑要用
     baseDetail: false,    //企业管理下的基站管理中的基站详情  dialog状态
     siteRowlist: '',    //企业管理下的基站管理 点击基站详情  row

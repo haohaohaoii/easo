@@ -19,6 +19,18 @@ const news = {
     getNewtypes() {
         let type = 'article_cate'
         return axios.get(`${base.localUrl}/admin/sys/${type}`)
+    },
+    //获取新闻row行情
+    getNewsI(id) {
+        return axios.get(`${base.localUrl}/admin/article/${id}`)
+    },
+    //编辑新闻
+    editorNews(id, params) {
+        return axios.put(`${base.localUrl}/admin/article/${id}`, qs.stringify(params))
+    },
+    //删除新闻
+    deleteNews(id) {
+        return axios.delete(`${base.localUrl}/admin/article/${id}`)
     }
 }
 

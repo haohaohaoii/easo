@@ -1,6 +1,6 @@
 <template>
     <el-dialog
-        :visible.sync="newsAdd"
+        :visible.sync="newsEstatus"
         class="dialog"
         center
         :close-on-click-modal="false"
@@ -9,7 +9,7 @@
     >
         <div slot="title" class="tit">
             <div class="line"></div>
-            <p>添加新闻</p>
+            <p>编辑新闻</p>
         </div>
         <el-form
             :model="ruleForm"
@@ -60,6 +60,7 @@
                     action="#"
                     :on-change="getFile"
                     list-type="picture-card"
+                    :file-list="fileList"
                     :on-preview="handlePictureCardPreview"
                     :on-remove="handleRemove"
                     :auto-upload="false"
@@ -88,13 +89,12 @@ import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'            
 import { mapState, mapMutations } from "vuex";
 export default {
-    props:['isShow'],
     components:{
          quillEditor
     },
     data() {
         var valiIcon = (rule, value, callback) => { // 图片验证
-            if (!this.imageUrl.length>0) {
+            if (!this.fileList.length>0) {
                 callback(new Error('请上传图片'));
             } else {
                 callback();
@@ -127,12 +127,13 @@ export default {
                     }
                 }
             },
-            content:'',   //富文本中的内容
             limitCount:1,  //最大上传几张
-            newsAdd:false,           //外层dialog是都显示
+            id:'',
+            content:'',
             dialogImageUrl: '',   //放大的url地址
             dialogVisible:false,  //放大的dialog是都显示
-            imageUrl:[],  //图片数组
+         
+            fileList:[],  //服务器的图片
             types:[],   //新闻类型集合
             ruleForm: {
                 radio:1,  //0本地  1外部
@@ -177,11 +178,16 @@ export default {
             }
         };
     },
-   computed:{
+    computed:{
+        ...mapState(['newsEstatus','newsErow']),
         hideUpload(){
-            return this.imageUrl.length >= this.limitCount
+            return this.fileList.length >= this.limitCount
         }
-   },
+    },
+    mounted(){
+        this.getTypes()
+        
+    },
     methods: {
         //获取企业类型
         getTypes(){
@@ -200,115 +206,112 @@ export default {
                 }
             })
         },
-        //获取照片的base64
+        //获取照片的url
         getFile(file, fileList) {
-   
-            let _this = this;
-
-            this.getBase64(file.raw)
-                .then(res => {                
-                    let str = res.substring(res.indexOf(",")+1);
-
-                    _this.imageUrl.push(str);
-                })
-                .catch(error => {
-                    this.$message.error("图片上传失败");
-                });
-        },
-
-        //转base64
-        getBase64(file) {
-            return new Promise(function(resolve, reject) {
-                let reader = new FileReader();
-                let imgResult = "";
-                reader.readAsDataURL(file);
-                reader.onload = function() {
-                    imgResult = reader.result;
-                };
-                reader.onerror = function(error) {
-                    reject(error);
-                };
-                reader.onloadend = function() {
-                    resolve(imgResult);
-                };
-            });
+            let obj = { url: file.url };
+            this.fileList.push(obj);
         },
         //点击删除上传的图片 --营业执照
         handleRemove(file, fileList) {
-            let _this = this;
-            this.getBase64(file.raw).then(res => {
-                console.log(res);
-                   let str = res.substring(res.indexOf(",")+1);
-
-                for (let i = 0; i < _this.imageUrl.length; i++) {
-                    if (_this.imageUrl[i] == str) {
-                        _this.imageUrl.splice(i, 1);
-                       console.log( _this.imageUrl)
-                        break;
-                    }
+            
+            let url = file.url
+            for (let i = 0; i < this.fileList.length; i++) {
+                if (this.fileList[i].url == url) {
+                    this.fileList.splice(i, 1);
+                    break;
                 }
-            });
+            }
         },
  
         //点击每个url放大的方法--营业执照
         handlePictureCardPreview(file) {
-            let _this = this;
-            this.getBase64(file.raw).then(res => {
-                console.log(res);
-                let str = res.substring(res.indexOf(",")+1);
-                for (let i = 0; i < _this.imageUrl.length; i++) {
-                    if (_this.imageUrl[i] == str) {
-                        _this.dialogImageUrl = file.url;
-                        
-                        _this.dialogVisible = true;
-                        break;
-                    }
+            let url = file.url;
+            for (let i = 0; i <this.fileList.length; i++) {
+                if (this.fileList[i].url == url) {
+                    this.dialogImageUrl = file.url;
+                    this.dialogVisible = true;
+                    break;
                 }
-            });
+            }
         },
         //关闭外层dialog
         closeDialog(type) {
             if(type){
                 this.$emit('refres')
             }
-            this.$emit('close',false)
+        
+            this.$store.commit('changeNewsE',false)
             this.content = '',    //文章内容清空
             this.$refs.pic.clearFiles(); //清空文件
-            this.imageUrl = []  //清空base64数组
+            this.fileList = []  //清空base64数组
             this.$refs.ruleForm.resetFields();  //重置from和rules
         },
         //确定编辑  --关闭dialog
         sureEditor() {
-            debugger
             console.log(this.content)
             this.$refs["ruleForm"].validate(valid => {
-                debugger
                 if (valid) {
-                    // 表单验证通过之后的操作
-                    let params={
-                        typeId:this.ruleForm.radio,  //新闻来源
-                        title:this.ruleForm.newsTitle,  //新闻标题
-                        cateId:this.ruleForm.firmType,  //新闻类型
-                        imgFile:this.imageUrl[0]  //封面图片
-                    }
-                    if(params.typeId == 0){   //内部
-                        params.content =this.content 
-                    }else if(params.typeId == 1){ //外部
-                        params.refLink = this.ruleForm.urlAddres
-                    }
-                    let _this = this
-                    this.$api.news.addNews(params).then(res=>{
-                        debugger
-                        if(res.data.code ==0){
-                            console.log(res)
-                            _this.$message({
-                                    message: '新闻添加成功',
-                                    type: 'success'
-                                });
-                                let type = true
-                            _this.closeDialog(type)
+                    let urlArr = this.fileList;
+                    let base64Arr = [];
+                    let id = this.id;
+                    let _this = this;
+                    async function a() {
+                        for (let i = 0; i < urlArr.length; i++) {
+                            var canvas = document.createElement("canvas");
+                            var ctx = canvas.getContext("2d");
+                            let imgObj = new Image();
+                            // 先设置图片跨域属性
+                            imgObj.setAttribute("crossOrigin", "anonymous");
+                            // 再给image赋值src属性，先后顺序不能颠倒
+                            imgObj.src = urlArr[i].url;
+                            // 当图片加载完成后，绘制图片到canvas
+                            var promise = new Promise(reslove => {
+                                imgObj.onload = async function() {
+                                    // 设置canvas宽高等于图片实际宽高
+                                    canvas.width = imgObj.width;
+                                    canvas.height = imgObj.height;
+                                    ctx.drawImage(imgObj, 0, 0);
+                                    // 将图片转成base64格式
+                                    var img = canvas.toDataURL(
+                                        "image/jpeg",
+                                        0.5
+                                    );
+                                    img = img.substring(img.indexOf(",")+1);
+                                    console.log("触发" + i + "次", img);
+                                    base64Arr.push(img);
+                                    reslove();
+                                };
+                            });
+                            await promise;
                         }
-                    })
+                        console.log(base64Arr);
+                        // 表单验证通过之后的操作
+                        let params={
+                            typeId:_this.ruleForm.radio,  //新闻来源
+                            title:_this.ruleForm.newsTitle,  //新闻标题
+                            cateId:_this.ruleForm.firmType,  //新闻类型
+                            imgFile:base64Arr[0]  //封面图片
+                        }
+                        if(params.typeId == 0){   //内部
+                            params.content =_this.content 
+                            
+                        }else if(params.typeId == 1){ //外部
+                           params.refLink = _this.ruleForm.urlAddres
+                        }
+                        _this.$api.news.editorNews(id,{params}).then(res=>{
+                            if(res.data.code ==0){
+                                console.log(res)
+                                _this.$message({
+                                        message: '新闻修改成功',
+                                        type: 'success'
+                                    });
+                                    let type = true
+                                _this.closeDialog(type)
+                            }
+                        })
+                        
+                    }
+                    a();
                 } else {
                     this.$message.error("请按照要求填写!");
                     return false;
@@ -323,8 +326,27 @@ export default {
         }
     },
     watch:{
-        isShow(val){
-            this.newsAdd = val;
+        newsErow(val){
+            this.id = val.id
+            this.ruleForm.newsTitle = val.title    //标题
+            this.ruleForm.radio = val.typeId       //来源
+            let obj={
+                url:val.imgUrl
+            }
+            this.fileList.push(obj)
+            if(this.types && this.types.length>0){
+                for(let i=0; i<this.types.length; i++){
+                     if(this.types[i].label == val.cateName){
+                         this.ruleForm.firmType = this.types[i].value   //类型
+                         break;
+                     }
+                }
+            }
+            if(this.ruleForm.radio == 0){ //本地
+                this.content = val.content  
+            }else if(this.ruleForm.radio == 1){  //外部
+                this.ruleForm.urlAddres = val.refLink
+            }
         }
     }
 };

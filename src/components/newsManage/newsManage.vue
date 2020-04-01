@@ -13,7 +13,7 @@
                 >添加新闻</el-button>
             </div>
         </div>
-        <news-list :newsList="newsArr">
+        <news-list :newsList="newsArr" @delSuccess="delSuccess">
             <div class="tabPage">
                 <el-pagination
                     background
@@ -25,7 +25,8 @@
                 ></el-pagination>
             </div>
         </news-list>
-        <news-add :isShow="isAddshow" @close="closeAdd"></news-add>
+        <news-add :isShow="isAddshow" @close="closeAdd" @refres="refQq"></news-add>
+        <news-editor></news-editor>
     </div>
 </template>
 
@@ -33,6 +34,7 @@
 import {mapMutations} from 'vuex'
 import newsList from './newsList'
 import newsAdd from './newsAdd'
+import newsEditor from './newsEditor'
 export default {
    
     data() {
@@ -46,13 +48,26 @@ export default {
     },
     components:{
         newsList,
-        newsAdd
+        newsAdd,
+        newsEditor
     },
      created(){
         let pageNum = this.currentPage;
         this.getNewslist(pageNum)
     },
     methods:{
+        refQq(){
+            let pageNum = this.currentPage;
+            this.getNewslist(pageNum)
+        },
+         //父组件监听，子组件删除成功
+        delSuccess(status) {
+            if (status == true) {
+                //重新请求数据
+                let pageNum = this.currentPage;
+                this.getNewslist(pageNum);
+            }
+        },
         getNewslist(pageNum){
             let pageSize = this.pagesize;
             this.$api.news
