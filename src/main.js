@@ -12,8 +12,10 @@ import has from './utils/direct.js';
 import '../theme/index.css'
 import animate from 'animate.css'
 import "babel-polyfill";
+import axios from 'axios'
 
 Vue.prototype.$api = api; // 将api挂载到vue的原型上
+Vue.prototype.$axios = axios;
 Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false;
 Vue.use(ElementUI)
@@ -24,5 +26,6 @@ new Vue({
     router,
     store,
     components: { App },
-    template: '<App/>'
+    template: '<App/>',
+    axios
 })

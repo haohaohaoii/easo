@@ -14,7 +14,14 @@ var instance = axios.create({ timeout: 1000 * 15 });
 
 // 设置post请求头
 instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+// axios.defaults.transformRequest = [function (data) {
+//     let ret = ''
 
+//     for (let it in data) {
+//         ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+//     }
+//     return ret
+// }]
 /** 
  * 跳转登录页
  * 携带当前页面路由，以期在登录页面完成登录后返回当前页面
