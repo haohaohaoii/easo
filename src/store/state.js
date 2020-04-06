@@ -128,6 +128,21 @@ export default ({
             path: 'resManage',     //资源管理
             name: '资源管理',
             component: resolve => (require(["@/components/resManage/resManage"], resolve))
+        },
+        {
+            path: 'operaDep',     //运维部门管理
+            name: '运维部门管理',
+            component: resolve => (require(["@/components/operation/operaDep"], resolve))
+        },
+        {
+            path: 'addTwo',     //添加运维部门
+            name: '添加运维部门',
+            component: resolve => (require(["@/components/operation/addTwo"], resolve))
+        },
+        {
+            path: 'oPeopleDep',     //运维人员管理
+            name: '运维人员管理',
+            component: resolve => (require(["@/components/operation/oPeopleDep"], resolve))
         }
     ]
 })
