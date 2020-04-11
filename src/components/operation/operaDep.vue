@@ -13,7 +13,45 @@
                 >添加部门</el-button>
             </div>
         </div>
-        <dep-list :companyList="depArr">
+
+        <div class="tabE">
+            <el-table
+                :height="tableHeight"
+                :data="depArr"
+                stripe
+                style="width: 100%"
+                :row-style="iRowStyle"
+                :cell-style="iCellStyle"
+                :header-row-style="iHeaderRowStyle"
+                :header-cell-style="iHeaderCellStyle"
+                class="tab"
+            >
+                <el-table-column align="center" prop="deptName" label="部门名称"></el-table-column>
+                <el-table-column align="center" prop="contactMan" label="负责人"></el-table-column>
+                <el-table-column align="center" prop="contactPhone" label="电话"></el-table-column>
+                <el-table-column align="center" label="区域">
+                    <template slot-scope="scope">
+                        <p>{{scope.row.city}}{{scope.row.county}}</p>
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" prop="addressDetail" label="地址"></el-table-column>
+                <el-table-column align="center" prop="createTime" label="添加时间"></el-table-column>
+
+                <el-table-column label="操作" align="center" width="200" fixed="right">
+                    <template slot-scope="scope">
+                        <el-button
+                            size="mini"
+                            type="primary"
+                            @click="handleEdit(scope.$index, scope.row)"
+                        >编辑</el-button>
+                        <el-button
+                            size="mini"
+                            type="danger"
+                            @click="handleDel(scope.$index, scope.row)"
+                        >删除</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
             <div class="tabPage">
                 <el-pagination
                     background
@@ -24,71 +62,57 @@
                     :page-size="pagesize"
                 ></el-pagination>
             </div>
-        </dep-list>
-        <oper-add :isShow="addIsShow" @changeAddDialog='changeA'></oper-add>
+        </div>
+        <oper-add :isShow="addIsShow" @changeAddDialog="changeA" @addSuccess="addT"></oper-add>
+        <oper-editor
+            :isShow="ediIsShow"
+            @changeEdiDialog="changeE"
+            :item="operItem"
+            @ediSuccess="ediT"
+        ></oper-editor>
     </div>
 </template>
 
 <script>
 import operAdd from "./operAdd";
-import depList from "./depList";
+import operEditor from './operEditor'
+
 import {mapMutations} from 'vuex'
 export default {
     components: {
-        depList,
-        operAdd
+      
+        operAdd,
+        operEditor
     },
     data() {
         return {
-            addIsShow:false,
+            tableHeight:window.innerHeight -230,
+            addIsShow:false, //添加弹窗
+            ediIsShow:false, //编辑弹窗
+            operItem:'',  //行数据详情
             totalLength: 0, //总共多少条数据
             currentPage: 1, //初始页码
             pagesize: 10, //一页多少条数据
-            depArr: [    //所有运维部门数组
-                {
-                    depName:'运维部门',
-                    depPeople:'李亚玲',
-                    linkPhone:'15136156035',
-                    area:'新乡市红旗区',
-                    address:'丁栾沟新起寨',
-                    createTime:'2020/03/26'
-                },
-                  {
-                    depName:'运维部门',
-                    depPeople:'李亚玲',
-                    linkPhone:'15136156035',
-                    area:'新乡市红旗区',
-                    address:'丁栾沟新起寨',
-                    createTime:'2020/03/26'
-                },
-                  {
-                    depName:'运维部门',
-                    depPeople:'李亚玲',
-                    linkPhone:'15136156035',
-                    area:'新乡市红旗区',
-                    address:'丁栾沟新起寨',
-                    createTime:'2020/03/26'
-                },  {
-                    depName:'运维部门',
-                    depPeople:'李亚玲',
-                    linkPhone:'15136156035',
-                    area:'新乡市红旗区',
-                    address:'丁栾沟新起寨',
-                    createTime:'2020/03/26'
-                },  {
-                    depName:'运维部门',
-                    depPeople:'李亚玲',
-                    linkPhone:'15136156035',
-                    area:'新乡市红旗区',
-                    address:'丁栾沟新起寨',
-                    createTime:'2020/03/26'
-                }
-            ],
+            depArr: [], //所有运维部门数组
         };
     },
-     created(){
+    created(){
         let pageNum = this.currentPage;
-        // this.getUserlist(pageNum)
+        this.getUserlist(pageNum)
+    },
+    computed:{
+        iRowStyle:function ({row, rowIndex}) {
+            return {height:'58px'};
+        },
+        iHeaderRowStyle:function ({row, rowIndex}) {
+            return {height:'58px'};
+        },
+        iCellStyle:function ({row, column, rowIndex, columnIndex}) {
+            return {padding:'0'};
+        },
+        iHeaderCellStyle:function ({row, column, rowIndex, columnIndex}) {
+            return {padding:'0px',background:'rgba(237,237,237,1)'}
+        }
     },
     methods:{
         //点击添加运维部门打开dialog弹窗
@@ -99,6 +123,10 @@ export default {
         changeA(){
             this.addIsShow = false
         },
+        //关闭编辑的运维部门弹窗
+        changeE(){
+            this.ediIsShow = false
+        },
         //添加企业成功重新请求页面
         addT(val){
             if(val){
@@ -106,24 +134,75 @@ export default {
                 this.getUserlist(pageNum)
            } 
         },
+        //编辑成功重新请求页面
+        ediT(val){
+            if(val){
+                let pageNum = this.currentPage;
+                this.getUserlist(pageNum)
+            } 
+        },
         getUserlist(pageNum){
             let pageSize = this.pagesize;
-            this.$api.company
-                .companyFyall({
+            this.$api.oper
+                .getOperlist({
                     params: {
                         pageNum: pageNum,
                         pageSize: pageSize,
                     }
                 })
-
                 .then(res => {
                     console.log(res)
                     if(res.data.code ==0){
                         this.totalLength = res.data.pageInfo.total  //获取总条数
+                        let arr  = res.data.pageInfo.list;
                         this.depArr = res.data.pageInfo.list  //获取数据
                     }
                 })
                 .catch(error => {});
+        },
+        //点击编辑--跳转编辑dialog并传递行数据
+        handleEdit(index, row) {
+            console.log(index, row);
+            let resId = row.id;
+            let _this = this;
+            this.$api.oper.getOperitem(resId).then(res => {
+      
+                console.log(res)
+                if (res.data.code == 0) {
+                    _this.operItem = res.data.data[0]
+                    _this.ediIsShow = true
+                }
+            }).catch(error => {
+
+            })
+        },
+        //点击删除
+        handleDel(index,row){
+            this.$confirm("此操作将永久删除该部门, 是否继续?", "提示", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning"
+            })
+                .then(() => {
+                    let newId = row.id;
+                    this.$api.oper.deleteOper(newId).then(res=>{
+                        if(res.data.code == 0){
+                            this.$message({
+                                type: "success",
+                                message: "删除成功!"
+                            });
+                            let pageNum = this.currentPage;
+                            this.getUserlist(pageNum)
+                        }
+                    })
+                })
+                .catch(() => {
+                    this.$message({
+                        type: "info",
+                        message: "已取消删除"
+                    });
+                });
+           
         },
         //点击页码的时候
         handleCurrentChange(currentPage) {
@@ -170,5 +249,18 @@ export default {
             }
         }
     }
+    .tabE {
+        margin-top: 15px;
+    }
+    .tabPage {
+        text-align: center;
+        // padding-top: 20px;
+    }
+}
+.operaDep >>> .el-table::before {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 0;
 }
 </style>

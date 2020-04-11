@@ -233,6 +233,7 @@ export default {
         },
         //发送数据请求(分页)
         sendAxios(pageNum) {
+    
             if (this.startTime != "" && this.endTime != "") {
                 let startTime = this.startTime;
                 let endTime = this.endTime;

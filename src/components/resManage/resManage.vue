@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import {mapMutations} from 'vuex'
+import {mapMutations, mapState} from 'vuex'
 import resList from './resList'
 import resAdd from './resAdd'
 
@@ -51,6 +51,9 @@ export default {
         resAdd,
 
         // newsEditor
+    },
+    computed:{
+        ...mapState(['resIsEditSuccess'])
     },
      created(){
         let pageNum = this.currentPage;
@@ -104,6 +107,14 @@ export default {
             this.getUserlist(pageNum)
         }
         
+    },
+    watch:{
+        //
+        resIsEditSuccess(val){
+            if(val==true){
+                this.refQq()
+            }
+        }
     }
 };
 </script>

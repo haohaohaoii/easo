@@ -42,6 +42,11 @@
                     <img src="../../assets/images/contentico.png" alt style="margin-right: 5px;" />
                     {{item.menuName}}
                 </template>
+                <template slot="title" v-else-if="item.menuType==0 && item.menuName=='数据报表'">
+                    <!-- <i class="el-icon-set-up" style="font-size:24px"></i> -->
+                    <img src="../../assets/images/contentico.png" alt style="margin-right: 5px;" />
+                    {{item.menuName}}
+                </template>
                 <el-menu-item
                     v-for="seciem of item.subMenus"
                     :key="seciem.path"
@@ -307,11 +312,11 @@ export default {
     }
 }
 .header >>> .el-menu-item {
-    // width: 100px;
+    width: 160px;
     text-align: center;
 }
 .header >>> .el-submenu__title {
-    // width: 100px;
+    width: 160px;
     text-align: center;
 }
 //多级菜单(第一级)移入

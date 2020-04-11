@@ -27,6 +27,7 @@ export default ({
     baseAdd: false,  //企业管理下的基站管理中的添加基站 dialog状态
     Equilist: [],  //企业管理下的基站管理中的添加基站  所需的托管设备数组
     newsEstatus: false,  //内容管理   新闻管理   编辑新闻dialoi状态
+    resIsEditSuccess: false,  //内容管理  资源管理 编辑成功
     newsErow: '',       //内容管理  新闻管理  编辑新闻  行数据
     menuItemD: '',   //权限管理下的菜单管理  行信息详情，编辑要用
     baseDetail: false,    //企业管理下的基站管理中的基站详情  dialog状态
@@ -58,6 +59,7 @@ export default ({
     roleName: '',    //角色名称
     roleId: '',       //角色id
     spamIsshow: false,
+    dayDatadetail: [],  //日报表行详情
     wdly: localStorage.wdly ? localStorage.wdly : '',
     menulist: [],  //由角色权限和本地完整路由结合生成的实际菜单表
     defaultMenu: 'hisData',  //默认选中的是历史数据
@@ -143,6 +145,36 @@ export default ({
             path: 'oPeopleDep',     //运维人员管理
             name: '运维人员管理',
             component: resolve => (require(["@/components/operation/oPeopleDep"], resolve))
-        }
+        },
+        {
+            path: 'opetract',     //运维合同管理
+            name: '运维合同管理',
+            component: resolve => (require(["@/components/operation/opetract"], resolve))
+        },
+        {
+            path: 'operRecods',     //运维记录
+            name: '运维记录',
+            component: resolve => (require(["@/components/operation/operRecods"], resolve))
+        },
+        {
+            path: 'dayReport',     //日报表
+            name: '日报表',
+            component: resolve => (require(["@/components/dataReport/dayReport"], resolve))
+        },
+        {
+            path: 'dayDetail',     //日报表--详情
+            name: '日报表详情',
+            component: resolve => (require(["@/components/dataReport/dayDetail"], resolve))
+        },
+        {
+            path: 'monthReport',     //月报表
+            name: '月报表',
+            component: resolve => (require(["@/components/dataReport/monthReport"], resolve))
+        },
+        {
+            path: 'yearReport',     //年报表
+            name: '年报表',
+            component: resolve => (require(["@/components/dataReport/yearReport"], resolve))
+        },
     ]
 })

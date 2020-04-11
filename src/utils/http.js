@@ -14,6 +14,7 @@ var instance = axios.create({ timeout: 1000 * 15 });
 
 // 设置post请求头
 instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+// instance.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
 // axios.defaults.transformRequest = [function (data) {
 //     let ret = ''
 

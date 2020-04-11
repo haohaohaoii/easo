@@ -15,6 +15,11 @@ import equi from '@/api/equipment.js' //设备相关
 import msg from '@/api/msg.js' //消息相关
 import news from '@/api/news.js' //新闻相关
 import resManage from '@/api/resManage.js' //资源相关
+import oper from '@/api/oper.js' //运维管理
+import operp from '@/api/operp.js' //运维人员
+import contarct from '@/api/contarct.js' //运维合同
+import recodes from '@/api/recodes.js' //运维记录
+import dReport from '@/api/dataReport.js' //数据报表
 export default {
     login,
     menu,
@@ -28,5 +33,10 @@ export default {
     equi,
     msg,
     news,
-    resManage
+    resManage,
+    oper,
+    operp,
+    contarct,
+    recodes,
+    dReport
 }

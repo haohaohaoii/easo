@@ -90,6 +90,7 @@ export default {
                 type: "warning"
             })
                 .then(() => {
+                    debugger
                     let roleId = row.id; //获取角色id
                     this.delete(roleId).then(res => {
                         if (res == "success") {

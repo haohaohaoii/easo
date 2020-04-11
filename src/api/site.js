@@ -6,6 +6,10 @@ import base from './base'; // 导入接口域名列表
 import axios from '@/utils/http'; // 导入http中创建的axios实例
 import qs from 'qs'; // 根据需求是否导入qs模块
 const site = {
+    //获取所有站点信息
+    getAlls() {
+        return axios.get(`${base.localUrl}/admin/site/all`)
+    },
     //根据企业ID获取所有站点信息接口
     formComsite(companyId) {
         return axios.get(`${base.localUrl}/admin/site/user/${companyId}`)

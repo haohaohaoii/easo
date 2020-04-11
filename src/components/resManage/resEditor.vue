@@ -9,7 +9,7 @@
     >
         <div slot="title" class="tit">
             <div class="line"></div>
-            <p>上传文件</p>
+            <p>编辑文件</p>
         </div>
         <el-form
             :model="ruleForm"
@@ -27,12 +27,14 @@
             <el-form-item label="资源介绍:" prop="resIntor" placeholder="请输入资源介绍">
                 <el-input v-model="ruleForm.resIntor"></el-input>
             </el-form-item>
-            <el-form-item label="上传文件:">
+            <!-- <el-form-item label="上传文件:" v-if="fil && fil ==''">
                 <div class="fileupload">
                     选择文件
                     <input type="file" @change="fileC" ref="fileess" />
                 </div>
-                <div class="fileList" v-if="fil && fil !=''">
+            </el-form-item>-->
+            <!-- <el-form-item>
+                <div class="fileList">
                     <div class="left">
                         <div class="left-img">
                             <img slot="icon-active" src="../../assets/images/doc.png" />
@@ -42,11 +44,11 @@
                         <div class="text">{{files.fileName}}</div>
                         <div class="date">{{files.fileSize}}M {{files.fileDate}}上传</div>
                     </div>
-                    <div class="right" @click="delFiles">
+                    <div class="right" @click="delFiles" style="display:none">
                         <i class="el-icon-delete"></i>
                     </div>
                 </div>
-            </el-form-item>
+            </el-form-item>-->
         </el-form>
         <div slot="footer" class="foot">
             <el-button type="primary" @click="sureEditor" size="mini">保存</el-button>
@@ -64,13 +66,14 @@ import 'quill/dist/quill.bubble.css'
 import qs from 'qs'; // 根据需求是否导入qs模块            
 import { mapState, mapMutations } from "vuex";
 export default {
-    props:['isShow'],
+    props:['isShow','item'],
     components:{
          quillEditor
     },
     data() {
         return {
             fil:'',
+            id:'',
             files: {
                 fileName: '', // 文件名
                 filesExtension: '', // 扩展名
@@ -151,11 +154,8 @@ export default {
             this.files.fileSize = ''
         },
         //关闭外层dialog
-        closeDialog(type) {
-            if(type){
-                this.$emit('refres')
-            }
-            this.$emit('close',false)
+        closeDialog() {
+            this.$emit('closeEdit',false)
             this.fil = ''
             this.$refs.ruleForm.resetFields();  //重置from和rules
         },
@@ -163,24 +163,23 @@ export default {
         sureEditor() {
             let _this = this
             this.$refs["ruleForm"].validate(valid => {
-                debugger
-                if (valid && _this.fil!='') {
+                if (valid ) {
                     const formData = new FormData()
-                    formData.append('file', _this.fil)
+                    // formData.append('file', _this.fil)
                     formData.append('fileName', _this.ruleForm.resTitle)
                     formData.append('fileDesc', _this.ruleForm.resIntor)
-                 
+                    let id = _this.id
                     _this.$axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-                    _this.$axios.post(`${base.localUrl}/admin/file`,formData,{
+                    _this.$axios.put(`${base.localUrl}/admin/file/${id}`,formData,{
                         'Content-Type':'multipart/form-data'
                     }).then(res=>{
                         if(res.data.code == 0){
                             _this.$message({
-                                message: '资源添加成功',
+                                message: '资源文件修改成功',
                                 type: 'success'
                             });
-                            let type = true
-                            _this.closeDialog(type)
+                            _this.$store.commit('changeReDitor',true)
+                            _this.closeDialog()
                         }
                     })
 
@@ -193,13 +192,18 @@ export default {
         },
         //取消编辑  --关闭dialog
         cancelEditor() {
-            let type = false
-            this.closeDialog(type);
+          
+            this.closeDialog();
         }
     },
     watch:{
         isShow(val){
             this.newsAdd = val;
+        },
+        item(val){
+            this.id = val.id
+            this.ruleForm.resTitle = val.fileName;
+            this.ruleForm.resIntor = val.fileDesc
         }
     }
 };
@@ -285,7 +289,7 @@ export default {
     margin: 0 auto;
     // height: 46%;
     overflow-y: auto;
-    top: 54%;
+    top: 50%;
     transition: transform;
     transform: translateY(-50%);
     border: 1px solid #ebeef5;

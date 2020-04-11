@@ -24,6 +24,67 @@
             <el-form-item label="部门名称:" prop="depName">
                 <el-input v-model="ruleForm.depName"></el-input>
             </el-form-item>
+            <el-form-item label="选择区域:" required>
+                <el-col :span="8">
+                    <el-form-item prop="provinceCode">
+                        <el-select
+                            size="small"
+                            v-model="ruleForm.provinceCode"
+                            @change="changeProvince"
+                            @focus="getProvinces"
+                            placeholder="省份"
+                            filterable
+                        >
+                            <el-option
+                                v-for="item in provinceList"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.id"
+                            ></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+
+                <el-col :span="8">
+                    <el-form-item prop="cityCode">
+                        <el-select
+                            size="small"
+                            v-model="ruleForm.cityCode"
+                            @focus="getCities"
+                            @change="changeCity"
+                            placeholder="城市"
+                            filterable
+                        >
+                            <el-option
+                                v-for="item in cityList"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.id"
+                            ></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+
+                <el-col :span="8">
+                    <el-form-item prop="areaCode">
+                        <el-select
+                            size="small"
+                            v-model="ruleForm.areaCode"
+                            @change="changeArea"
+                            @focus="getAreas"
+                            placeholder="区/县"
+                            filterable
+                        >
+                            <el-option
+                                v-for="item in areaList"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.id"
+                            ></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+            </el-form-item>
             <el-form-item label="详细地址:" prop="address">
                 <el-input v-model="ruleForm.address"></el-input>
             </el-form-item>
@@ -35,7 +96,7 @@
             </el-form-item>
         </el-form>
         <div slot="footer" class="foot">
-            <el-button type="primary" @click="sureEditor" size="mini">添加</el-button>
+            <el-button type="primary" @click="sureEditor" size="mini">保存</el-button>
             <el-button @click="cancelEditor" size="mini">取消</el-button>
         </div>
     </el-dialog>
@@ -49,12 +110,23 @@ export default {
     props:['isShow'],
     data() {
         return {
+            pCode:'', //省份code，提交用
+            cCode:'', //城市code,提交用
+            aCode:'', //区域code,提交用
+            
+            
+            provinceList:[],  //省数组
+            cityList:[], //城市数据
+            areaList:[], //区县数组
             addShow:false,
             ruleForm: {
                 depName: "", //部门名称
                 address: "", //详细地址
                 depPeople: "", //负责人
-                linkPhone: "" //联系电话
+                linkPhone: "", //联系电话
+                provinceCode:'',  //选中的省
+                cityCode:'', //选中的市
+                areaCode:'', //选中的区县
             },
             
             rules: {
@@ -103,11 +175,127 @@ export default {
                         message: "目前只支持中国大陆的手机号码",
                         trigger: "change"
                     }
+                ],
+                provinceCode:[
+                    {   
+                  
+                        required: true,
+                        message: "请选择省份",
+                        trigger: "change"
+                    }
+                ],
+                cityCode:[
+                    {   
+                 
+                        required: true,
+                        message: "请选择城市",
+                        trigger: "change"
+                    }
+                ],
+                areaCode:[
+                    {   
+                     
+                        required: true,
+                        message: "请选择区域",
+                        trigger: "change"
+                    }
                 ]
             }
         };
     },
     methods: {
+        changeProvince(val){  //选择省份
+
+            let arr =   this.provinceList 
+            for(let i=0; i<arr.length;i++){
+                if(arr[i].id == val){
+                    this.pCode = arr[i].value
+                    break;
+                }
+            }
+        },
+        changeCity(val){   //选择城市
+            let arr =   this.cityList 
+            for(let i=0; i<arr.length;i++){
+                if(arr[i].id == val){
+                    this.cCode = arr[i].value
+                    break;
+                }
+            }
+        },
+        changeArea(val){  //选择区县
+            let arr =   this.areaList 
+            for(let i=0; i<arr.length;i++){
+                if(arr[i].id == val){
+                    this.aCode = arr[i].value
+                    break;
+                }
+            }
+
+        },
+        getProvinces(){ //获取全部省份
+            let id = 1
+            this.$api.oper.getArea(id).then(res=>{
+           
+                if(res.data.code == 0){
+                    let arr = res.data.data
+                    let proList = []
+                    for(let i=0; i<arr.length; i++){
+                        let obj={
+                            label:arr[i].name,
+                            value:arr[i].code,
+                            id:arr[i].id
+                        }
+                        proList.push(obj)
+                    }
+                    this.provinceList = proList
+                }
+            })
+        },
+        getCities(){  //根据省份id获取城市列表
+            let id = this.ruleForm.provinceCode;
+            if(id){
+                this.$api.oper.getArea(id).then(res=>{
+                    if(res.data.code == 0){
+                        let arr = res.data.data
+                        let proList = []
+                        for(let i=0; i<arr.length; i++){
+                            let obj={
+                                label:arr[i].name,
+                                value:arr[i].code,
+                                id:arr[i].id
+                            }
+                            proList.push(obj)
+                        }
+                        this.cityList = proList
+                    }
+                })
+            }else{
+                this.$message.error("请先选择对应省份!");
+            }
+        },
+        getAreas(){  //根据城市id获取区域列表
+            let id = this.ruleForm.cityCode;
+            if(id){
+                this.$api.oper.getArea(id).then(res=>{
+                    if(res.data.code == 0){
+                        let arr = res.data.data
+                        let proList = []
+                        for(let i=0; i<arr.length; i++){
+                            let obj={
+                                label:arr[i].name,
+                                value:arr[i].code,
+                                id:arr[i].id
+                            }
+                            proList.push(obj)
+                        }
+                        this.areaList = proList
+                    }
+                })
+            }else{
+                this.$message.error("请先选择对应城市!");
+            }
+        },
         //关闭外层dialog
         closeDialog() {
             this.$refs.ruleForm.resetFields();  //重置from和rules
@@ -115,12 +303,34 @@ export default {
         },
         //确定编辑  --关闭dialog
         sureEditor() {
-
-            this.$refs["ruleForm"].validate(valid => {
-                if (valid) {
+            let _this =this
+            this.$refs["ruleForm"].validate(valid => {  
+                if (valid && _this.pCode && _this.aCode && _this.cCode) {
+                    let params={
+                        deptName:_this.ruleForm.depName, //部门名称
+                        provinceId:_this.pCode,  //省code
+                        cityId: _this.cCode, //城市code
+                        countyId:_this.aCode, //区域code
+                        addressDetail:_this.ruleForm.address,  //详细地址
+                        contactMan:_this.ruleForm.depPeople,  //负责人
+                        contactPhone: _this.ruleForm.linkPhone  //联系电话
+                    }
+                    _this.$api.oper
+                        .addOper(params)
+                        .then(res => {
+                            if (res.data.code == 0) {
+                                _this.$message({
+                                    message: "运维部门添加成功",
+                                    type: "success"
+                                });
+                                _this.$emit('addSuccess',true)
+                                _this.closeDialog();
+                            }
+                        })
+                        .catch(error => {});
                   
                 } else {
-                    this.$message.error("表单校验失败，请重新填写后提交!");
+                    this.$message.error("请按规则填写后再提交!");
                     return false;
                 }
                  
@@ -169,36 +379,34 @@ export default {
 // .dialog >>> .el-dialog {
 //     margin-top: 0 !important;
 //     position: relative;
-   
+
 //     top: 50%;
-    
+
 //     left: calc(50% + 240px);
 //     transition: transform;
 //     transform: translate(-50%,-50%);
-    
+
 //     border: 1px solid #ebeef5;
 
- 
-
 // }
-.dialog>>>.el-dialog{
-          display: flex;
-          flex-direction: column;
-          margin:0 !important;
-          position:absolute;
-          top:50%;
-          left:calc(50% + 120px);
-          transform:translate(-50%,-50%);
-      }
-    
-    .dialog>>>  .el-dialog .el-dialog__body{
-          flex:1;
-          overflow: auto;
-      }
+.dialog >>> .el-dialog {
+    display: flex;
+    flex-direction: column;
+    margin: 0 !important;
+    position: absolute;
+    top: 50%;
+    left: calc(50% + 120px);
+    transform: translate(-50%, -50%);
+    width: 36%;
+}
+
+.dialog >>> .el-dialog .el-dialog__body {
+    flex: 1;
+    overflow: auto;
+}
 
 //表单校验的图标颜色
 .dialog >>> .el-input__suffix {
     color: #67c23a !important;
 }
-
 </style>

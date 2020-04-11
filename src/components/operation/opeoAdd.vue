@@ -20,15 +20,21 @@
             status-icon
             size="mini"
             label-position="right "
-        >   
+        >
             <el-form-item label="运维部门:" prop="ywValue">
-                <el-select v-model="ruleForm.ywValue" placeholder="请选择运维部门">
+                <el-select
+                    size="small"
+                    v-model="ruleForm.ywValue"
+                    @focus="getDep"
+                    placeholder="运维部门"
+                    filterable
+                >
                     <el-option
-                    v-for="item in ywList"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                    </el-option>
+                        v-for="item in depList"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                    ></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="姓名:" prop="name">
@@ -46,7 +52,53 @@
             <el-form-item label="密码:" prop="passWord">
                 <el-input v-model="ruleForm.passWord"></el-input>
             </el-form-item>
+            <el-form-item label="运维站点:" required>
+                <el-col :span="21">
+                    <el-form-item prop="date1" v-if="sitCheckName &&　sitCheckName.length >0">
+                        <span v-if="sitCheckName.length <3">{{sitCheckName.join(',')}}</span>
+                        <span v-else>{{sitCheckName.slice(0,3).join(',')}}......查看更多>>></span>
+                    </el-form-item>
+
+                    <el-form-item v-else>
+                        <span>无</span>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="3">
+                    <el-form-item>
+                        <el-button type="primary" @click="edi">编辑</el-button>
+                    </el-form-item>
+                </el-col>
+            </el-form-item>
         </el-form>
+        <el-dialog
+            title="内层 Dialog"
+            width="25%"
+            class="inlog"
+            :visible.sync="innerVisible"
+            :close-on-click-modal="false"
+            append-to-body
+        >
+            <div slot="title" class="tit">
+                <div class="line"></div>
+                <p>全部运维站点</p>
+            </div>
+            <el-form>
+                <el-form-item>
+                    <el-checkbox-group v-model="form.type">
+                        <el-checkbox
+                            v-for="item of siteList"
+                            :key="item.value"
+                            :label="item.value"
+                            name="type"
+                        >{{item.label}}</el-checkbox>
+                    </el-checkbox-group>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="foot">
+                <el-button type="primary" @click="sureIn" size="mini">确定</el-button>
+                <el-button @click="cancelIn" size="mini">取消</el-button>
+            </div>
+        </el-dialog>
         <div slot="footer" class="foot">
             <el-button type="primary" @click="sureEditor" size="mini">添加</el-button>
             <el-button @click="cancelEditor" size="mini">取消</el-button>
@@ -61,7 +113,13 @@ export default {
     data() {
         return {
             addShow:false,
-            ywList:[],  //运维部门数组
+            innerVisible:false,
+            depList:[], //运维部门数组
+            siteList:[], //站点数组
+            sitCheckName:[],
+            form:{  //内层表单
+                type:[]
+            },
             ruleForm: {
                 ywValue:'', //运维部门
                 name: "", //姓名
@@ -131,6 +189,57 @@ export default {
         };
     },
     methods: {
+        //获取运维部门
+        getDep(){  //获取运维部门
+            this.$api.oper.getOperall().then(depList=>{
+               
+                if(depList.data.code == 0){
+                    let arr = depList.data.data
+                    let list = []
+                    for(let i=0; i<arr.length; i++){
+                        let obj={
+                            label:arr[i].deptName,
+                            value:arr[i].id
+                        }
+                        list.push(obj)
+                    }
+                    this.depList = list
+                }
+            })
+        },
+        //内层的确定dialog
+        sureIn(){
+    
+            console.log(this.form.type)
+            let types = this.form.type
+            let List = this.siteList
+            if(types.length>0 && List.length>0){
+                this.getSiteName(types,List).then(list=>{
+                    this.sitCheckName = list
+                  
+                    console.log(this.sitCheckName.slice(0,3).join(','),this.sitCheckName)
+                })
+            }
+            this.innerVisible = false
+        },
+        getSiteName(types,List){
+            return new Promise(resolve=>{
+          
+                let arrName = []
+                for(let k=0; k<types.length; k++){
+                    for(let j=0;j<List.length; j++){
+                        if(types[k] == List[j].value){
+                            arrName.push(List[j].label)
+                        }
+                    }
+                }
+                 resolve(arrName)
+            })
+        },
+        //内层的取消dialog
+        cancelIn(){
+            this.innerVisible = true
+        },
         //关闭外层dialog
         closeDialog() {
             this.$refs.ruleForm.resetFields();  //重置from和rules
@@ -138,9 +247,32 @@ export default {
         },
         //确定编辑  --关闭dialog
         sureEditor() {
-
+            let _this = this
             this.$refs["ruleForm"].validate(valid => {
                 if (valid) {
+                  let params={
+                        siteMns :_this.form.type.join(','), //站点数组
+                        mtDeptId:_this.ruleForm.ywValue,  //运维id
+                        realName: _this.ruleForm.name, //姓名
+                        phone:_this.ruleForm.phone, //电话
+                        email:_this.ruleForm.email,  //邮箱
+                        username:_this.ruleForm.userName,  //用户名
+                        password: _this.ruleForm.passWord  //密码
+                    }
+                    _this.$api.operp
+                        .addOperp(params)
+                        .then(res => {
+                   
+                            if (res.data.code == 0) {
+                                _this.$message({
+                                    message: "运维人员添加成功",
+                                    type: "success"
+                                });
+                                _this.$emit('addSuccess',true)
+                                _this.closeDialog();
+                            }
+                        })
+                        .catch(error => {});
                   
                 } else {
                     this.$message.error("表单校验失败，请重新填写后提交!");
@@ -153,6 +285,27 @@ export default {
         //取消编辑  --关闭dialog
         cancelEditor() {
             this.closeDialog();
+        },
+        //点击编辑弹出内层dialog 并获取到所有站点
+        edi(){
+            this.$api.site.getAlls().then(res=>{
+              
+                if(res.data.code == 0){
+                    let arr = res.data.data
+                    let list = []
+                    for(let i=0; i<arr.length; i++){
+                        let obj={
+                            label:arr[i].siteName,
+                            value:arr[i].mn
+                        }
+                        list.push(obj)
+                    }
+                    this.siteList = []
+                    this.sitCheckName=[]
+                    this.siteList = list
+                    this.innerVisible = true
+                }
+            })
         }
     },
     watch:{
@@ -164,8 +317,39 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dialog >>> .el-select{
+.dialog >>> .el-select {
     width: 100%;
+}
+.inlog >>> .el-dialog {
+    height: 42%;
+
+    left: 22%;
+    top: 23%;
+}
+.inlog >>> .el-dialog__body {
+    height: 55%;
+    overflow-y: auto;
+}
+.inlog {
+    .tit {
+        display: flex;
+        align-items: center;
+        .line {
+            background: #1e87f0;
+            width: 0.5%;
+            height: 20px;
+            position: relative;
+            left: 0;
+        }
+        p {
+            margin-left: 2%;
+        }
+    }
+    .foot {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
 .dialog {
     .tit {
@@ -195,36 +379,34 @@ export default {
 // .dialog >>> .el-dialog {
 //     margin-top: 0 !important;
 //     position: relative;
-   
+
 //     top: 50%;
-    
+
 //     left: calc(50% + 240px);
 //     transition: transform;
 //     transform: translate(-50%,-50%);
-    
+
 //     border: 1px solid #ebeef5;
 
- 
-
 // }
-.dialog>>>.el-dialog{
-          display: flex;
-          flex-direction: column;
-          margin:0 !important;
-          position:absolute;
-          top:50%;
-          left:calc(50% + 120px);
-          transform:translate(-50%,-50%);
-      }
-    
-    .dialog>>>  .el-dialog .el-dialog__body{
-          flex:1;
-          overflow: auto;
-      }
+.dialog >>> .el-dialog {
+    display: flex;
+    flex-direction: column;
+    margin: 0 !important;
+    position: absolute;
+    top: 50%;
+    left: calc(50% + 120px);
+    transform: translate(-50%, -50%);
+    width: 32% !important;
+}
+
+.dialog >>> .el-dialog .el-dialog__body {
+    flex: 1;
+    overflow: auto;
+}
 
 //表单校验的图标颜色
 .dialog >>> .el-input__suffix {
     color: #67c23a !important;
 }
-
 </style>

@@ -255,6 +255,10 @@ export default ({
     getToken(state, token) {
         state.token = token
     },
+    //内容管理下的资源管理 编辑成功 告知主页面
+    changeReDitor(state, status) {
+        state.resIsEditSuccess = status;
+    },
     //获取登陆后的角色id
     getAdminid(state, adminId) {
         state.adminId = adminId
@@ -307,6 +311,8 @@ export default ({
                     if (routeItem.name == '消息') {
                         res.push(routeItem)
                     } else if (routeItem.name == '首页') {
+                        res.push(routeItem)
+                    } else if (routeItem.name == '日报表详情') {
                         res.push(routeItem)
                     }
                 }
