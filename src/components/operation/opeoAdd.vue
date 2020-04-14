@@ -50,13 +50,19 @@
                 <el-input v-model="ruleForm.userName"></el-input>
             </el-form-item>
             <el-form-item label="密码:" prop="passWord">
-                <el-input v-model="ruleForm.passWord"></el-input>
+                <el-input v-model="ruleForm.passWord" show-password></el-input>
             </el-form-item>
             <el-form-item label="运维站点:" required>
                 <el-col :span="21">
                     <el-form-item prop="date1" v-if="sitCheckName &&　sitCheckName.length >0">
                         <span v-if="sitCheckName.length <3">{{sitCheckName.join(',')}}</span>
-                        <span v-else>{{sitCheckName.slice(0,3).join(',')}}......查看更多>>></span>
+                        <span v-else>
+                            {{sitCheckName.slice(0,3).join(',')}}...
+                            <span
+                                @click="edi"
+                                style="color:#5B8CFF;cursor:pointer"
+                            >查看更多>>></span>
+                        </span>
                     </el-form-item>
 
                     <el-form-item v-else>
@@ -169,6 +175,12 @@ export default {
                         required: true,
                         message: "请输入正确的邮箱格式",
                         trigger: "change"
+                    },
+                    {
+                        pattern:
+                           /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/,
+                        message: "请输入正确的邮箱格式",
+                        trigger: "change"
                     }
                 ],
                 userName: [
@@ -220,6 +232,8 @@ export default {
                     console.log(this.sitCheckName.slice(0,3).join(','),this.sitCheckName)
                 })
             }
+            this.siteList = []
+            this.sitCheckName=[]
             this.innerVisible = false
         },
         getSiteName(types,List){
@@ -238,7 +252,7 @@ export default {
         },
         //内层的取消dialog
         cancelIn(){
-            this.innerVisible = true
+            this.innerVisible = false
         },
         //关闭外层dialog
         closeDialog() {
@@ -300,8 +314,7 @@ export default {
                         }
                         list.push(obj)
                     }
-                    this.siteList = []
-                    this.sitCheckName=[]
+                   
                     this.siteList = list
                     this.innerVisible = true
                 }
@@ -324,7 +337,7 @@ export default {
     height: 42%;
 
     left: 22%;
-    top: 23%;
+    top: 20%;
 }
 .inlog >>> .el-dialog__body {
     height: 55%;
@@ -404,7 +417,18 @@ export default {
     flex: 1;
     overflow: auto;
 }
+.dialog >>> .el-dialog--center .el-dialog__body {
+    text-align: initial;
+    padding: 25px 45px 30px;
+}
 
+.inlog >>> .el-checkbox {
+    width: 142px;
+    margin-right: 0;
+}
+.dialog >>> .el-dialog--center .el-dialog__body {
+    padding: 25px 25px 5px;
+}
 //表单校验的图标颜色
 .dialog >>> .el-input__suffix {
     color: #67c23a !important;

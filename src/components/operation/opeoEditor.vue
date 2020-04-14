@@ -49,14 +49,20 @@
             <el-form-item label="用户名:" prop="userName">
                 <el-input v-model="ruleForm.userName"></el-input>
             </el-form-item>
-            <el-form-item label="密码:" prop="passWord" placeholder="不填写的话,使用原密码">
-                <el-input v-model="ruleForm.passWord"></el-input>
+            <el-form-item label="密码:" prop="passWord">
+                <el-input v-model="ruleForm.passWord" placeholder="不填写的话,使用原密码" show-password></el-input>
             </el-form-item>
             <el-form-item label="运维站点:" required>
                 <el-col :span="21">
                     <el-form-item prop="date1" v-if="sitCheckName &&　sitCheckName.length >0">
                         <span v-if="sitCheckName.length <3">{{sitCheckName.join(',')}}</span>
-                        <span v-else>{{sitCheckName.slice(0,3).join(',')}}......查看更多>>></span>
+                        <span v-else>
+                            {{sitCheckName.slice(0,3).join(',')}}
+                            <span
+                                @click="edi"
+                                style="color:#5B8CFF;cursor:pointer"
+                            >查看更多>>></span>
+                        </span>
                     </el-form-item>
 
                     <el-form-item v-else>
@@ -171,6 +177,12 @@ export default {
                         required: true,
                         message: "请输入正确的邮箱格式",
                         trigger: "change"
+                    },
+                    {
+                        pattern:
+                           /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/,
+                        message: "请输入正确的邮箱格式",
+                        trigger: "change"
                     }
                 ],
                 userName: [
@@ -179,14 +191,8 @@ export default {
                         message: "请输入用户名",
                         trigger: "change"
                     }
-                ],
-                passWord:[
-                    {
-                        required: true,
-                        message: "请输入密码",
-                        trigger: "change"
-                    }
                 ]
+               
                
             }
         };
@@ -426,6 +432,9 @@ export default {
         justify-content: center;
     }
 }
+.dialog >>> .el-dialog--center .el-dialog__body {
+    padding: 25px 25px 5px;
+}
 //最外层弹窗
 // .dialog >>> .el-dialog {
 //     margin-top: 0 !important;
@@ -455,7 +464,10 @@ export default {
     flex: 1;
     overflow: auto;
 }
-
+.inlog >>> .el-checkbox {
+    width: 142px;
+    margin-right: 0;
+}
 //表单校验的图标颜色
 .dialog >>> .el-input__suffix {
     color: #67c23a !important;

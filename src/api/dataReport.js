@@ -18,18 +18,18 @@ const dReport = {
     exportDay(params) {
         return axios.get(`${base.localUrl}/admin/report/day/export`, params)
     },
-    //根据部门id获取部门信息
-    deptDetail(deptId) {
-        return axios.get(`${base.localUrl}/admin/dept/${deptId}`)
+    //分页获取所有月报表
+    getMonthlist(params) {
+        return axios.get(`${base.localUrl}/admin/report/month`, params)
     },
-    //修改部门
-    changeDeptitem(params, deptId) {
-        return axios.put(`${base.localUrl}/admin/dept/${deptId}`, qs.stringify(params))
+    //获取月报表详情
+    getMonthDetail(mn, params) {
+        return axios.get(`${base.localUrl}/admin//report/month/detail/${mn}`, params)
     },
-    //删除部门
-    deletDept(deptId) {
-        return axios.delete(`${base.localUrl}/admin/dept/${deptId}`)
-    }
+    //分页获取所有年报表
+    getYearlist(params) {
+        return axios.get(`${base.localUrl}/admin/report/year`, params)
+    },
 }
 
 

@@ -23,7 +23,7 @@
         >
             <el-form-item label="运维部门:" required>
                 <el-col :span="6">
-                    <el-form-item prop="provinceCode">
+                    <el-form-item prop="provinceCode" class="it">
                         <el-select
                             v-model="ruleForm.provinceCode"
                             @change="changeProvince"
@@ -42,7 +42,7 @@
                 </el-col>
 
                 <el-col :span="6">
-                    <el-form-item prop="cityCode">
+                    <el-form-item prop="cityCode" class="it">
                         <el-select
                             v-model="ruleForm.cityCode"
                             @focus="getCities"
@@ -61,7 +61,7 @@
                 </el-col>
 
                 <el-col :span="6">
-                    <el-form-item prop="areaCode">
+                    <el-form-item prop="areaCode" class="it">
                         <el-select
                             v-model="ruleForm.areaCode"
                             @change="changeArea"
@@ -80,7 +80,7 @@
                 </el-col>
 
                 <el-col :span="6">
-                    <el-form-item prop="depCode">
+                    <el-form-item prop="depCode" class="it">
                         <el-select
                             v-model="ruleForm.depCode"
                             @focus="getDep"
@@ -115,7 +115,7 @@
             </el-form-item>
             <el-form-item label="企业:" required>
                 <el-col :span="6">
-                    <el-form-item prop="provinceCode2">
+                    <el-form-item prop="provinceCode2" class="it">
                         <el-select
                             v-model="ruleForm.provinceCode2"
                             @change="changeProvince2"
@@ -134,7 +134,7 @@
                 </el-col>
 
                 <el-col :span="6">
-                    <el-form-item prop="cityCode2">
+                    <el-form-item prop="cityCode2" class="it">
                         <el-select
                             v-model="ruleForm.cityCode2"
                             @focus="getCities2"
@@ -153,7 +153,7 @@
                 </el-col>
 
                 <el-col :span="6">
-                    <el-form-item prop="areaCode2">
+                    <el-form-item prop="areaCode2" class="it">
                         <el-select
                             v-model="ruleForm.areaCode2"
                             @change="changeArea2"
@@ -172,7 +172,7 @@
                 </el-col>
 
                 <el-col :span="6">
-                    <el-form-item prop="enterprise">
+                    <el-form-item prop="enterprise" class="it">
                         <el-select
                             v-model="ruleForm.enterprise"
                             @change="getSites"
@@ -1053,8 +1053,7 @@ export default {
         isShow(val){
             this.addShow = val
         },
-        item(val){
-          
+        item(val){     
             this.id =val.id
             this.pCode = val.mtDept.provinceId   //部门下的省code
             this.cCode = val.mtDept.cityId  //部门下城市code
@@ -1197,7 +1196,7 @@ export default {
 .dialog {
     .tit {
         display: flex;
-        align-items: center;
+        align-items: flex-end;
         .line {
             background: #1e87f0;
             width: 0.5%;
@@ -1218,26 +1217,16 @@ export default {
         justify-content: center;
     }
 }
-//最外层弹窗
-// .dialog >>> .el-dialog {
-//     margin-top: 0 !important;
-//     position: relative;
-
-//     top: 50%;
-
-//     left: calc(50% + 240px);
-//     transition: transform;
-//     transform: translate(-50%,-50%);
-
-//     border: 1px solid #ebeef5;
-
-// }
+.it {
+    margin-bottom: 0px !important;
+}
 .dialog >>> .el-dialog {
     display: flex;
     flex-direction: column;
     margin: 0 !important;
     position: absolute;
     top: 50%;
+    width: 36% !important;
     left: calc(50% + 120px);
     transform: translate(-50%, -50%);
 }
@@ -1245,6 +1234,13 @@ export default {
 .dialog >>> .el-dialog .el-dialog__body {
     flex: 1;
     overflow: auto;
+}
+.dialog >>> .el-date-editor.el-input,
+.el-date-editor.el-input__inner {
+    width: 100%;
+}
+.dialog >>> .el-dialog--center .el-dialog__body {
+    padding: 25px 40px 30px !important;
 }
 //表单校验的图标颜色
 .dialog >>> .el-input__suffix {

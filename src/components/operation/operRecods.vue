@@ -104,7 +104,7 @@
                         placeholder="开始时间"
                         time-arrow-control
                     ></el-date-picker>
-                    <span>至</span>
+                    <!-- <span>至</span> -->
                     <el-date-picker
                         format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss"
@@ -115,8 +115,14 @@
                         placeholder="结束时间"
                         time-arrow-control
                     ></el-date-picker>
-                    <el-button type="primary" class="changeW" size="mini" @click="chooseSb">选择设备</el-button>
-                    <el-button type="primary" class="changeW" size="mini" @click="search">搜索</el-button>
+                    <!-- <el-button type="primary" class="changeW" size="mini" @click="chooseSb">选择设备</el-button> -->
+                    <el-button
+                        type="primary"
+                        class="changeW"
+                        size="mini"
+                        @click="search"
+                        style="width:110px"
+                    >搜索</el-button>
                 </div>
                 <div>
                     <el-button
@@ -156,7 +162,7 @@
                         >编辑</el-button>
                         <el-button
                             size="mini"
-                            type="warning"
+                            type="danger"
                             @click="handleDelete(scope.$index, scope.row)"
                         >删除</el-button>
                     </template>
@@ -304,7 +310,10 @@ export default {
             this.detailPeodilaog = val
         },
         changeProvince(val){  //选择省份
-
+            this.areaCode = '';
+            this.aCode = '';
+            this.cityCode = '';
+            this.cCode = ''
             let arr =   this.provinceList 
             for(let i=0; i<arr.length;i++){
                 if(arr[i].id == val){
@@ -314,6 +323,8 @@ export default {
             }
         },
         changeCity(val){   //选择城市
+            this.areaCode = '';
+            this.aCode = '';
             let arr =   this.cityList 
             for(let i=0; i<arr.length;i++){
                 if(arr[i].id == val){
@@ -549,7 +560,7 @@ export default {
 
 <style lang="scss" scoped>
 .opetract >>> .el-input {
-    width: 120px !important;
+    width: 140px !important;
 }
 .opetract >>> .el-table::before {
     left: 0;
@@ -592,9 +603,6 @@ export default {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-            }
-            .changeW {
-                margin-right: 2%;
             }
         }
     }

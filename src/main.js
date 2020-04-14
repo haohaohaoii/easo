@@ -13,6 +13,7 @@ import '../theme/index.css'
 import animate from 'animate.css'
 import "babel-polyfill";
 import axios from 'axios'
+import './assets/iconfont/iconfont.css'
 
 Vue.prototype.$api = api; // 将api挂载到vue的原型上
 Vue.prototype.$axios = axios;

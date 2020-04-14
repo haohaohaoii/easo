@@ -81,7 +81,7 @@
 </template>
 
 <script>
-
+import base from '../../api/base.js'
 import { quillEditor } from 'vue-quill-editor'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
@@ -169,6 +169,11 @@ export default {
                         required: true,
                         message: "请输入链接地址",
                         trigger: "blur"
+                    },
+                     {
+                        pattern: /^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/,
+                        message: "请填写正确的外部链接地址",
+                        trigger: "change"
                     }
                 ],
                 upload: [
@@ -279,36 +284,65 @@ export default {
         },
         //确定编辑  --关闭dialog
         sureEditor() {
-            debugger
+     
             console.log(this.content)
             this.$refs["ruleForm"].validate(valid => {
-                debugger
+       
                 if (valid) {
                     // 表单验证通过之后的操作
-                    let params={
-                        typeId:this.ruleForm.radio,  //新闻来源
-                        title:this.ruleForm.newsTitle,  //新闻标题
-                        cateId:this.ruleForm.firmType,  //新闻类型
-                        imgFile:this.imageUrl[0]  //封面图片
+                    debugger
+                    let formData = new FormData()
+                    formData.append('typeId', this.ruleForm.radio)
+                      if(this.ruleForm.radio == 0){   //内部
+                        formData.append('content', this.content)
+                    }else if(this.ruleForm.radio == 1){ //外部
+                        formData.append('refLink', this.ruleForm.urlAddres)
                     }
-                    if(params.typeId == 0){   //内部
-                        params.content =this.content 
-                    }else if(params.typeId == 1){ //外部
-                        params.refLink = this.ruleForm.urlAddres
-                    }
-                    let _this = this
-                    this.$api.news.addNews(params).then(res=>{
-                        debugger
-                        if(res.data.code ==0){
-                            console.log(res)
-                            _this.$message({
-                                    message: '新闻添加成功',
-                                    type: 'success'
-                                });
-                                let type = true
-                            _this.closeDialog(type)
+                    formData.append('title', this.ruleForm.newsTitle)
+                    formData.append('cateId', this.ruleForm.firmType)
+                    formData.append('imgFile', this.imageUrl[0])
+                  
+
+                    this.$axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+                    this.$axios.post(`${base.localUrl}/admin/article`,formData,{
+                        'Content-Type':'multipart/form-data'
+                    }).then(res=>{
+                 
+                        if(res.data.code == 0){
+                            this.$message({
+                                message: '新闻添加成功',
+                                type: 'success'
+                            });
+                            let type = true
+                            this.closeDialog(type)
                         }
                     })
+
+
+                    // let params={
+                    //     typeId:this.ruleForm.radio,  //新闻来源
+                    //     title:this.ruleForm.newsTitle,  //新闻标题
+                    //     cateId:this.ruleForm.firmType,  //新闻类型
+                    //     imgFile:this.imageUrl[0]  //封面图片
+                    // }
+                    // if(params.typeId == 0){   //内部
+                    //     params.content =this.content 
+                    // }else if(params.typeId == 1){ //外部
+                    //     params.refLink = this.ruleForm.urlAddres
+                    // }
+                    // let _this = this
+                    // this.$api.news.addNews(params).then(res=>{
+                    //     debugger
+                    //     if(res.data.code ==0){
+                    //         console.log(res)
+                    //         _this.$message({
+                    //                 message: '新闻添加成功',
+                    //                 type: 'success'
+                    //             });
+                    //             let type = true
+                    //         _this.closeDialog(type)
+                    //     }
+                    // })
                 } else {
                     this.$message.error("请按照要求填写!");
                     return false;

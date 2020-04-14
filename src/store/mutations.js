@@ -314,6 +314,8 @@ export default ({
                         res.push(routeItem)
                     } else if (routeItem.name == '日报表详情') {
                         res.push(routeItem)
+                    } else if (routeItem.name == '月报表详情') {
+                        res.push(routeItem)
                     }
                 }
             })

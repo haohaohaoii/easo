@@ -157,7 +157,7 @@ export default {
             month = month + 1;
             month = month.toString().padStart(2, "0");
             date = date.toString().padStart(2, "0");
-            let defaultDate = `${year}-${month}-${date} :${hour}:00:00`;
+            let defaultDate = `${year}-${month}-${date} ${hour}:00:00`;
             this.endTime  =defaultDate
         },
         getCurrentMonthFirst(){
@@ -173,7 +173,7 @@ export default {
             if (day < 10) {
                 day = '0' + day
             }
-           let firstData= date.getFullYear() + '-' + month + '-' + day +':'+hour +':00:00';
+           let firstData= `${date.getFullYear()}-${month}-${day} ${hour}:00:00`;
            this.startTime = firstData
         },
 

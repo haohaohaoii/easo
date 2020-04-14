@@ -111,10 +111,10 @@ export default {
 .dialog {
     .tit {
         display: flex;
-        align-items: center;
+        align-items: flex-end;
         .line {
             background: #1e87f0;
-            width: 0.5%;
+            width: 0.4%;
             height: 20px;
             position: relative;
             left: 0;
@@ -128,7 +128,7 @@ export default {
     margin-top: 0 !important;
     position: relative;
     margin: 0 auto;
-    width: 36%;
+    width: 34%;
     top: 50%;
     transition: transform;
     transform: translateY(-50%);

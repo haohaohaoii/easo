@@ -138,7 +138,7 @@ export default ({
         },
         {
             path: 'addTwo',     //添加运维部门
-            name: '添加运维部门',
+            name: '运维部门添加',
             component: resolve => (require(["@/components/operation/addTwo"], resolve))
         },
         {
@@ -147,9 +147,19 @@ export default ({
             component: resolve => (require(["@/components/operation/oPeopleDep"], resolve))
         },
         {
+            path: 'addPeop',     //运维人员添加
+            name: '运维人员添加',
+            component: resolve => (require(["@/components/operation/addPeop"], resolve))
+        },
+        {
             path: 'opetract',     //运维合同管理
             name: '运维合同管理',
             component: resolve => (require(["@/components/operation/opetract"], resolve))
+        },
+        {
+            path: 'addRact',     //运维合同管理
+            name: '运维合同添加',
+            component: resolve => (require(["@/components/operation/addRact"], resolve))
         },
         {
             path: 'operRecods',     //运维记录
@@ -172,9 +182,14 @@ export default ({
             component: resolve => (require(["@/components/dataReport/monthReport"], resolve))
         },
         {
-            path: 'yearReport',     //年报表
-            name: '年报表',
-            component: resolve => (require(["@/components/dataReport/yearReport"], resolve))
+            path: 'monthDetail',     //月报表详情
+            name: '月报表详情',
+            component: resolve => (require(["@/components/dataReport/monthDetail"], resolve))
         },
+        // {
+        //     path: 'yearReport',     //年报表
+        //     name: '年报表',
+        //     component: resolve => (require(["@/components/dataReport/yearReport"], resolve))
+        // },
     ]
 })

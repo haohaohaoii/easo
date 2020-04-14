@@ -66,7 +66,13 @@
                             :value="item.value"
                         ></el-option>
                     </el-select>
-                    <el-button type="primary" class="changeW" @click="search">查询</el-button>
+                    <el-button
+                        type="primary"
+                        class="changeW"
+                        @click="search"
+                        size="small"
+                        style="width:120px"
+                    >查询</el-button>
                 </div>
                 <div>
                     <el-button
@@ -108,7 +114,7 @@
                         >编辑</el-button>
                         <el-button
                             size="mini"
-                            type="warning"
+                            type="danger"
                             @click="handleDelete(scope.$index, scope.row)"
                         >删除</el-button>
                     </template>
@@ -216,7 +222,10 @@ export default {
             }
         },
         changeProvince(val){  //选择省份
-
+             this.cityCode = ''
+            this.cCode = ''
+            this.areaCode = ''
+            this.aCode = ''
             let arr =   this.provinceList 
             for(let i=0; i<arr.length;i++){
                 if(arr[i].id == val){
@@ -226,6 +235,8 @@ export default {
             }
         },
         changeCity(val){   //选择城市
+            this.areaCode = ''
+            this.aCode = ''
             let arr =   this.cityList 
             for(let i=0; i<arr.length;i++){
                 if(arr[i].id == val){

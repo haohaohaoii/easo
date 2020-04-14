@@ -79,7 +79,13 @@
                             :value="item.value"
                         ></el-option>
                     </el-select>
-                    <el-button type="primary" class="changeW" @click="search">查询</el-button>
+                    <el-button
+                        type="primary"
+                        class="changeW"
+                        @click="search"
+                        size="small"
+                        style="width:120px"
+                    >查询</el-button>
                 </div>
                 <div>
                     <el-button

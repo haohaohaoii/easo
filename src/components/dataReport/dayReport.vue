@@ -12,6 +12,7 @@
                         @focus="getSites"
                         placeholder="选择站点"
                         filterable
+                        clearable
                         size="small"
                     >
                         <el-option
@@ -21,29 +22,38 @@
                             :value="item.value"
                         ></el-option>
                     </el-select>
-                    <el-date-picker
-                        format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss"
-                        size="small"
-                        type="datetime"
+                    <div class="dateD">
+                        <el-date-picker
+                            format="yyyy-MM-dd HH:mm:ss"
+                            value-format="yyyy-MM-dd HH:mm:ss"
+                            size="small"
+                            type="datetime"
+                            class="changeW"
+                            v-model="startTime"
+                            placeholder="开始时间"
+                            time-arrow-control
+                        ></el-date-picker>
+                        <span>至</span>
+                        <el-date-picker
+                            format="yyyy-MM-dd HH:mm:ss"
+                            value-format="yyyy-MM-dd HH:mm:ss"
+                            size="small"
+                            type="datetime"
+                            class="changeW"
+                            v-model="endTime"
+                            placeholder="结束时间"
+                            time-arrow-control
+                        ></el-date-picker>
+                    </div>
+
+                    <el-button
+                        type="primary"
                         class="changeW"
-                        v-model="startTime"
-                        placeholder="开始时间"
-                        time-arrow-control
-                    ></el-date-picker>
-                    <span>至</span>
-                    <el-date-picker
-                        format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss"
-                        size="small"
-                        type="datetime"
-                        class="changeW"
-                        v-model="endTime"
-                        placeholder="结束时间"
-                        time-arrow-control
-                    ></el-date-picker>
-                    <el-button type="primary" class="changeW" size="mini" @click="search">查询</el-button>
-                    <el-button type="primary" class="changeW" size="mini">导出EXL表</el-button>
+                        size="mini"
+                        @click="search"
+                        style="width:100px"
+                    >查询</el-button>
+                    <!-- <el-button type="primary" class="changeW" size="mini">导出EXL表</el-button> -->
                 </div>
             </div>
         </div>
@@ -95,6 +105,7 @@
 
 <script>
 import noData from "../common/noData";
+import base from '../../api/base.js'; // 导入接口域名列表
 import { mapState, mapMutations } from "vuex";
 export default {
     components: {
@@ -104,7 +115,7 @@ export default {
     data() {
         return {
             id:'',
-            tableHeight:window.innerHeight -260,
+            tableHeight:window.innerHeight -270,
             siteStateVal:'', //选中的站点
             dayList:[],   //数据数组
             startTime:'', //开始时间
@@ -133,6 +144,7 @@ export default {
     mounted(){
         this.getNowTime().then(eTime=>{
             this.getCurrentMonthFirst().then(sTime=>{
+           
                 this.endTime = eTime
                 this.startTime = sTime
                 this.search()
@@ -153,7 +165,7 @@ export default {
                 month = month + 1;
                 month = month.toString().padStart(2, "0");
                 date = date.toString().padStart(2, "0");
-                let defaultDate = `${year}-${month}-${date} :${hour}:00:00`;
+                let defaultDate = `${year}-${month}-${date} ${hour}:00:00`;
               
                 resolve(defaultDate)
             })
@@ -173,7 +185,7 @@ export default {
                 if (day < 10) {
                     day = '0' + day
                 }
-                let firstData= date.getFullYear() + '-' + month + '-' + day +':'+hour +':00:00';
+                let firstData= `${date.getFullYear()}-${month}-${day} ${hour}:00:00`;
             
                 resolve(firstData)
             })
@@ -224,7 +236,6 @@ export default {
                     }
                 })
                 .then(res => {
-                    debugger
                     console.log(res)
                     if(res.data.code ==0){
                         this.totalLength = res.data.pageInfo.total  //获取总条数
@@ -236,6 +247,8 @@ export default {
                                     id:arr[k].id,    //id
                                     siteName:arr[k].siteName, //基站名
                                     numDate:arr[k].createTime, //数据时间
+                                    ioType:arr[k].ioType?'进水口':'排水口',
+                                    createTime:arr[k].createTime
                                 }
                                 let yzArr = arr[k].reports
                                 for(let j=0; j<yzArr.length; j++){
@@ -269,9 +282,20 @@ export default {
         },
         //详情
         handleDetails(index, row){
-     
+            
             console.log(index, row);
             let mn = row.mn;
+            let siteName = row.siteName
+            let ioType = row.ioType
+            let createTime = row.createTime
+            let day1 = createTime;
+            let preDate = new Date(new Date(day1).getTime() -24*60*60*1000)
+            let month = preDate.getMonth()+1
+            let date = preDate.getDate()
+            if (month < 10) month = "0" + month;
+            if (date < 10) date = "0" + date;
+            let s1 = preDate.getFullYear()+"-" +month+ "-" +date + " " + '00' + ":" + '00'  ;
+            let s2 = preDate.getFullYear()+"-" +month+ "-" +date + " " + '23' + ":" + '59'  ;
             let params = {
                 date:row.numDate
             }
@@ -280,7 +304,14 @@ export default {
             
                     // this.detailPeodilaog = true;
                     let item = res.data.data[0]
+                    let obj = {
+                        siteName:siteName,
+                        ioType:ioType,
+                        sTime:s1,
+                        eTime:s2
+                    }
                     localStorage.item = JSON.stringify(res.data.data[0])
+                    localStorage.itemXy = JSON.stringify(obj)
                     this.$router.push({path:'/dayDetail'})
                 }
             })
@@ -291,16 +322,12 @@ export default {
                 date:row.numDate,
                 mn :row.mn
             }
-            this.$api.dReport.exportDay({params}).then(res=>{
-                debugger
-                if(res.data.code == 0){
-            
-                    // this.detailPeodilaog = true;
-                    let item = res.data.data[0]
-                    localStorage.item = JSON.stringify(res.data.data[0])
-                    this.$router.push({path:'/dayDetail'})
+            if ('ActiveXObject' in window) {
+                    var url = `${base.localUrl}/admin/report/day/export?date=${params.date}&mn=${params.mn}`
+                } else {
+                    var url = `${base.localUrl}/admin/report/day/export?date=${params.date}&mn=${params.mn}`
                 }
-            })
+                window.location.href = url;
         }
     },
 
@@ -352,9 +379,12 @@ export default {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-            }
-            .changeW {
-                margin-right: 2%;
+                .dateD {
+                    width: 55%;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
             }
         }
     }

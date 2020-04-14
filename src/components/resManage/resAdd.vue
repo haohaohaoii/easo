@@ -34,8 +34,29 @@
                 </div>
                 <div class="fileList" v-if="fil && fil !=''">
                     <div class="left">
-                        <div class="left-img">
+                        <div class="left-img" v-if="files.filesExtensions == 'pdf'">
+                            <img slot="icon-active" src="../../assets/images/pdf.png" />
+                        </div>
+                        <div class="left-img" v-if="files.filesExtensions == 'doc'">
                             <img slot="icon-active" src="../../assets/images/doc.png" />
+                        </div>
+                        <div class="left-img" v-if="files.filesExtensions == 'docx'">
+                            <img slot="icon-active" src="../../assets/images/docx.png" />
+                        </div>
+                        <div class="left-img" v-if="files.filesExtensions == 'xlsx'">
+                            <img slot="icon-active" src="../../assets/images/xlsx.png" />
+                        </div>
+                        <div class="left-img" v-if="files.filesExtensions == 'rar'">
+                            <img slot="icon-active" src="../../assets/images/rar.png" />
+                        </div>
+                        <div class="left-img" v-if="files.filesExtensions == 'zip'">
+                            <img slot="icon-active" src="../../assets/images/zip.png" />
+                        </div>
+                        <div class="left-img" v-if="files.filesExtensions == 'xls'">
+                            <img slot="icon-active" src="../../assets/images/xls.png" />
+                        </div>
+                        <div class="left-img" v-if="files.filesExtensions == 'ppt'">
+                            <img slot="icon-active" src="../../assets/images/ppt.png" />
                         </div>
                     </div>
                     <div class="cont">
@@ -74,6 +95,7 @@ export default {
             files: {
                 fileName: '', // 文件名
                 filesExtension: '', // 扩展名
+                filesExtensions:'',
                 fileDate: '', // 上传时间
                 fileSize: '', // 上传大小
                 fileData: '' // 文件数据
@@ -109,11 +131,15 @@ export default {
             if (myfile.files[0] == undefined) {
                 
             } else {
+          
                 var filevalue = myfile.value;
                 var index = filevalue.lastIndexOf('.');
                 this.files.filesExtension = filevalue.substring(index)
+              
                 this.isAssetTypeAnImage(this.files.filesExtension).then(res=>{
+                     
                     if(res){
+                         this.files.filesExtensions = filevalue.substring(index+1)
                         let date = new Date()
                         const Y = date.getFullYear()
                         let m = date.getMonth() + 1

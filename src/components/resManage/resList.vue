@@ -97,7 +97,7 @@ export default {
                     }else if(filesExtension == 'doc'){
                         url = require('../../assets/images/doc.png')
                     }else if(filesExtension == 'docx'){
-                        url = require('../../assets/images/contentico.png')
+                        url = require('../../assets/images/docx.png')
                     }else if(filesExtension == 'xlsx'){
                         url = require('../../assets/images/xlsx.png')
                     }else if(filesExtension == 'rar'){

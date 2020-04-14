@@ -26,7 +26,7 @@
             </el-form-item>
             <el-form-item label="选择区域:" required>
                 <el-col :span="8">
-                    <el-form-item prop="provinceCode">
+                    <el-form-item prop="provinceCode" class="it">
                         <el-select
                             size="small"
                             v-model="ruleForm.provinceCode"
@@ -46,7 +46,7 @@
                 </el-col>
 
                 <el-col :span="8">
-                    <el-form-item prop="cityCode">
+                    <el-form-item prop="cityCode" class="it">
                         <el-select
                             size="small"
                             v-model="ruleForm.cityCode"
@@ -66,7 +66,7 @@
                 </el-col>
 
                 <el-col :span="8">
-                    <el-form-item prop="areaCode">
+                    <el-form-item prop="areaCode" class="it">
                         <el-select
                             size="small"
                             v-model="ruleForm.areaCode"
@@ -147,6 +147,10 @@ export default {
                         required: true,
                         message: "请输入详细地址",
                         trigger: "change"
+                    },{
+                        pattern: "^(?=.*?[\u4E00-\u9FA5]){5,100}",
+                        message: "不能少于5个字符，不能都是数字和字母，必须有汉字",
+                        trigger: "change"
                     }
                 ],
                 depPeople: [
@@ -205,7 +209,10 @@ export default {
     },
     methods: {
         changeProvince(val){  //选择省份
-
+            this.ruleForm.cityCode = ''
+            this.cCode = ''
+            this.ruleForm.areaCode = ''
+            this.aCode = ''
             let arr =   this.provinceList 
             for(let i=0; i<arr.length;i++){
                 if(arr[i].id == val){
@@ -215,6 +222,8 @@ export default {
             }
         },
         changeCity(val){   //选择城市
+            this.ruleForm.areaCode = ''
+            this.aCode = ''
             let arr =   this.cityList 
             for(let i=0; i<arr.length;i++){
                 if(arr[i].id == val){
@@ -354,7 +363,7 @@ export default {
 .dialog {
     .tit {
         display: flex;
-        align-items: center;
+        align-items: flex-end;
         .line {
             background: #1e87f0;
             width: 0.5%;
@@ -389,6 +398,9 @@ export default {
 //     border: 1px solid #ebeef5;
 
 // }
+.it {
+    margin-bottom: 0px !important;
+}
 .dialog >>> .el-dialog {
     display: flex;
     flex-direction: column;
@@ -397,7 +409,7 @@ export default {
     top: 50%;
     left: calc(50% + 120px);
     transform: translate(-50%, -50%);
-    width: 36%;
+    width: 34%;
 }
 
 .dialog >>> .el-dialog .el-dialog__body {

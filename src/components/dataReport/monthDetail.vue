@@ -1,6 +1,6 @@
 <template>
     <div class="opetract">
-        <div class="conTit">{{siteName}}(日报表)</div>
+        <div class="conTit">{{siteName}}(月报表)</div>
         <div class="opetracttop">
             <p>
                 <span>
@@ -92,11 +92,10 @@ export default {
             this.startTime = itemT.sTime
             this.endTime = itemT.eTime
         },
-        getItem(){
-            
+        getItem(){  
             let itemDetail = JSON.parse(localStorage.item)
-            let itemUp = itemDetail.dataRecordList
-            let itemDown = itemDetail.reportDayList
+            let itemUp = itemDetail.reportDayList
+            let itemDown = itemDetail.reportMonthList
             let arr =[]
             if(itemUp && itemUp.length>0){
              
@@ -104,22 +103,22 @@ export default {
                     let obj={
                         siteName:itemUp[i].createTime
                     }
-                    let yzList = itemUp[i].dataInfoList
+                    let yzList = itemUp[i].reports
                     for(let k=0; k<yzList.length; k++){
                         if(yzList[k].factorCode == '011'){   //cod
-                            obj.cod = yzList[k].factorValue
+                            obj.cod = yzList[k].avgValue
                         }
                         if(yzList[k].factorCode == '101'){  //氨氮
-                            obj.ad = yzList[k].factorValue
+                            obj.ad = yzList[k].avgValue
                         }
                         if(yzList[k].factorCode == '060'){  //总磷
-                            obj.zl = yzList[k].factorValue
+                            obj.zl = yzList[k].avgValue
                         }
                         if(yzList[k].factorCode == '065'){  //总氮
-                            obj.zd = yzList[k].factorValue
+                            obj.zd = yzList[k].avgValue
                         }
                         if(yzList[k].factorCode == 'B01'){  //流量
-                            obj.ll = yzList[k].factorValue
+                            obj.ll = yzList[k].avgValue
                         }
                       
                     }

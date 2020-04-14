@@ -20,7 +20,7 @@
                 </el-form-item>
                 <el-form-item label="选择区域:" required>
                     <el-col :span="8">
-                        <el-form-item prop="provinceCode">
+                        <el-form-item prop="provinceCode" class="it">
                             <el-select
                                 size="small"
                                 v-model="ruleForm.provinceCode"
@@ -39,8 +39,8 @@
                         </el-form-item>
                     </el-col>
 
-                    <el-col :span="8">
-                        <el-form-item prop="cityCode">
+                    <el-col :span="7" :offset="1">
+                        <el-form-item prop="cityCode" class="it">
                             <el-select
                                 size="small"
                                 v-model="ruleForm.cityCode"
@@ -59,8 +59,8 @@
                         </el-form-item>
                     </el-col>
 
-                    <el-col :span="8">
-                        <el-form-item prop="areaCode">
+                    <el-col :span="7" :offset="1">
+                        <el-form-item prop="areaCode" class="it">
                             <el-select
                                 size="small"
                                 v-model="ruleForm.areaCode"
@@ -198,7 +198,10 @@ export default {
     },
     methods: {
         changeProvince(val){  //选择省份
-
+            this.ruleForm.cityCode = ''
+            this.cCode = ''
+            this.ruleForm.areaCode = ''
+            this.aCode = ''
             let arr =   this.provinceList 
             for(let i=0; i<arr.length;i++){
                 if(arr[i].id == val){
@@ -208,6 +211,8 @@ export default {
             }
         },
         changeCity(val){   //选择城市
+            this.ruleForm.areaCode = ''
+            this.aCode = ''
             let arr =   this.cityList 
             for(let i=0; i<arr.length;i++){
                 if(arr[i].id == val){
@@ -337,8 +342,8 @@ export default {
     height: 100%;
     position: relative;
     .dialog {
-        width: 480px;
-        height: 350px;
+        width: 46%;
+        height: 58%;
         background: white;
         position: absolute;
         top: 50%;
@@ -348,7 +353,7 @@ export default {
         .tit {
             margin-top: 10px;
             display: flex;
-            align-items: center;
+            align-items: flex-end;
             .line {
                 background: #1e87f0;
                 width: 0.5%;
@@ -369,13 +374,26 @@ export default {
             padding-left: 10px;
             padding-right: 25px;
         }
+        .demo-ruleForm {
+            height: 68%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            margin-top: 25px;
+            padding-left: 64px;
+            padding-right: 76px;
+        }
         .foot {
+            margin-top: 30px;
             display: flex;
             justify-content: center;
         }
     }
 }
 
+.it {
+    margin-bottom: 0px !important;
+}
 //表单校验的图标颜色
 .addTwo >>> .el-input__suffix {
     color: #67c23a !important;

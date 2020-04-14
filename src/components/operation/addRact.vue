@@ -1,250 +1,245 @@
 <template>
-    <el-dialog
-        :visible.sync="addShow"
-        class="dialog"
-        center
-        :close-on-click-modal="false"
-        append-to-body
-        @close="closeDialog"
-    >
-        <div slot="title" class="tit">
-            <div class="line"></div>
-            <p>添加运维合同</p>
+    <div class="addPeop">
+        <div class="dialog">
+            <div slot="title" class="tit">
+                <div class="line"></div>
+                <p>添加运维人员</p>
+            </div>
+            <el-form
+                size="small"
+                :model="ruleForm"
+                :rules="rules"
+                ref="ruleForm"
+                label-width="110px"
+                class="demo-ruleForm"
+                status-icon
+                label-position="right "
+            >
+                <el-form-item label="运维部门:" required>
+                    <el-col :span="6">
+                        <el-form-item prop="provinceCode" class="it">
+                            <el-select
+                                v-model="ruleForm.provinceCode"
+                                @change="changeProvince"
+                                @focus="getProvinces"
+                                placeholder="省份"
+                                filterable
+                            >
+                                <el-option
+                                    v-for="item in provinceList"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.id"
+                                ></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+
+                    <el-col :span="6">
+                        <el-form-item prop="cityCode" class="it">
+                            <el-select
+                                v-model="ruleForm.cityCode"
+                                @focus="getCities"
+                                @change="changeCity"
+                                placeholder="城市"
+                                filterable
+                            >
+                                <el-option
+                                    v-for="item in cityList"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.id"
+                                ></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+
+                    <el-col :span="6">
+                        <el-form-item prop="areaCode" class="it">
+                            <el-select
+                                v-model="ruleForm.areaCode"
+                                @change="changeArea"
+                                @focus="getAreas"
+                                placeholder="区/县"
+                                filterable
+                            >
+                                <el-option
+                                    v-for="item in areaList"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.id"
+                                ></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+
+                    <el-col :span="6">
+                        <el-form-item prop="depCode" class="it">
+                            <el-select
+                                v-model="ruleForm.depCode"
+                                @focus="getDep"
+                                placeholder="运维部门"
+                                filterable
+                            >
+                                <el-option
+                                    v-for="item in depList"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value"
+                                ></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                </el-form-item>
+                <el-form-item label="合同编号:" prop="contractN">
+                    <el-input v-model="ruleForm.contractN"></el-input>
+                </el-form-item>
+                <el-form-item label="合同名称:" prop="contractName">
+                    <el-input v-model="ruleForm.contractName"></el-input>
+                </el-form-item>
+                <el-form-item label="合同状态:" prop="contractStatus">
+                    <el-select v-model="ruleForm.contractStatus" placeholder="请选择合同状态" filterable>
+                        <el-option
+                            v-for="item in contractStatusList"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value"
+                        ></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="企业:" required>
+                    <el-col :span="6">
+                        <el-form-item prop="provinceCode2" class="it">
+                            <el-select
+                                v-model="ruleForm.provinceCode2"
+                                @change="changeProvince2"
+                                @focus="getProvinces2"
+                                placeholder="省份"
+                                filterable
+                            >
+                                <el-option
+                                    v-for="item in provinceList2"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.id"
+                                ></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+
+                    <el-col :span="6">
+                        <el-form-item prop="cityCode2" class="it">
+                            <el-select
+                                v-model="ruleForm.cityCode2"
+                                @focus="getCities2"
+                                @change="changeCity2"
+                                placeholder="城市"
+                                filterable
+                            >
+                                <el-option
+                                    v-for="item in cityList2"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.id"
+                                ></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+
+                    <el-col :span="6">
+                        <el-form-item prop="areaCode2" class="it">
+                            <el-select
+                                v-model="ruleForm.areaCode2"
+                                @change="changeArea2"
+                                @focus="getAreas2"
+                                placeholder="区/县"
+                                filterable
+                            >
+                                <el-option
+                                    v-for="item in areaList2"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.id"
+                                ></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+
+                    <el-col :span="6">
+                        <el-form-item prop="enterprise" class="it">
+                            <el-select
+                                v-model="ruleForm.enterprise"
+                                @change="getSites"
+                                @focus="getEnterprise"
+                                placeholder="企业"
+                                filterable
+                            >
+                                <el-option
+                                    v-for="item in enterpriseList"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value"
+                                ></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                </el-form-item>
+                <el-form-item label="站点:" prop="type">
+                    <el-checkbox-group v-model="ruleForm.type" v-if="siteList && siteList.length>0">
+                        <el-checkbox
+                            v-for="item of siteList"
+                            :key="item.value"
+                            :label="item.value"
+                            name="type"
+                        >{{item.label}}</el-checkbox>
+                    </el-checkbox-group>
+                    <p v-else>无</p>
+                </el-form-item>
+                <el-form-item label="开始日期:" prop="startTime">
+                    <el-date-picker
+                        format="yyyy-MM-dd HH:mm:ss"
+                        value-format="yyyy-MM-dd HH:mm:ss"
+                        type="datetime"
+                        class="changeW"
+                        v-model="ruleForm.startTime"
+                        placeholder="开始时间"
+                        time-arrow-control
+                    ></el-date-picker>
+                </el-form-item>
+                <el-form-item label="结束日期:" prop="endTime">
+                    <el-date-picker
+                        format="yyyy-MM-dd HH:mm:ss"
+                        value-format="yyyy-MM-dd HH:mm:ss"
+                        type="datetime"
+                        class="changeW"
+                        v-model="ruleForm.endTime"
+                        placeholder="结束时间"
+                        time-arrow-control
+                    ></el-date-picker>
+                </el-form-item>
+                <el-form-item prop="inputVal" label="合同文件">
+                    <el-upload
+                        ref="pic"
+                        action="#"
+                        :on-change="getFile"
+                        list-type="picture-card"
+                        :on-preview="handlePictureCardPreview"
+                        :on-remove="handleRemove"
+                        :auto-upload="false"
+                    >
+                        <i class="el-icon-plus"></i>
+                    </el-upload>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="foot">
+                <el-button type="primary" @click="sureEditor" size="mini">保存</el-button>
+                <el-button @click="cancelEditor" size="mini">取消</el-button>
+            </div>
+            <el-dialog append-to-body :visible.sync="dialogVisible" width="50%">
+                <img width="100%" :src="dialogImageUrl" alt />
+            </el-dialog>
         </div>
-        <el-form
-            size="small"
-            :model="ruleForm"
-            :rules="rules"
-            ref="ruleForm"
-            label-width="110px"
-            class="demo-ruleForm"
-            status-icon
-            label-position="right "
-        >
-            <el-form-item label="运维部门:" required>
-                <el-col :span="6">
-                    <el-form-item prop="provinceCode" class="it">
-                        <el-select
-                            v-model="ruleForm.provinceCode"
-                            @change="changeProvince"
-                            @focus="getProvinces"
-                            placeholder="省份"
-                            filterable
-                        >
-                            <el-option
-                                v-for="item in provinceList"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.id"
-                            ></el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-
-                <el-col :span="6">
-                    <el-form-item prop="cityCode" class="it">
-                        <el-select
-                            v-model="ruleForm.cityCode"
-                            @focus="getCities"
-                            @change="changeCity"
-                            placeholder="城市"
-                            filterable
-                        >
-                            <el-option
-                                v-for="item in cityList"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.id"
-                            ></el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-
-                <el-col :span="6">
-                    <el-form-item prop="areaCode" class="it">
-                        <el-select
-                            v-model="ruleForm.areaCode"
-                            @change="changeArea"
-                            @focus="getAreas"
-                            placeholder="区/县"
-                            filterable
-                        >
-                            <el-option
-                                v-for="item in areaList"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.id"
-                            ></el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-
-                <el-col :span="6">
-                    <el-form-item prop="depCode" class="it">
-                        <el-select
-                            v-model="ruleForm.depCode"
-                            @focus="getDep"
-                            placeholder="运维部门"
-                            filterable
-                        >
-                            <el-option
-                                v-for="item in depList"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value"
-                            ></el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-            </el-form-item>
-            <el-form-item label="合同编号:" prop="contractN">
-                <el-input v-model="ruleForm.contractN"></el-input>
-            </el-form-item>
-            <el-form-item label="合同名称:" prop="contractName">
-                <el-input v-model="ruleForm.contractName"></el-input>
-            </el-form-item>
-            <el-form-item label="合同状态:" prop="contractStatus">
-                <el-select v-model="ruleForm.contractStatus" placeholder="请选择合同状态" filterable>
-                    <el-option
-                        v-for="item in contractStatusList"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                    ></el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item label="企业:" required>
-                <el-col :span="6">
-                    <el-form-item prop="provinceCode2" class="it">
-                        <el-select
-                            v-model="ruleForm.provinceCode2"
-                            @change="changeProvince2"
-                            @focus="getProvinces2"
-                            placeholder="省份"
-                            filterable
-                        >
-                            <el-option
-                                v-for="item in provinceList2"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.id"
-                            ></el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-
-                <el-col :span="6">
-                    <el-form-item prop="cityCode2" class="it">
-                        <el-select
-                            v-model="ruleForm.cityCode2"
-                            @focus="getCities2"
-                            @change="changeCity2"
-                            placeholder="城市"
-                            filterable
-                        >
-                            <el-option
-                                v-for="item in cityList2"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.id"
-                            ></el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-
-                <el-col :span="6">
-                    <el-form-item prop="areaCode2" class="it">
-                        <el-select
-                            v-model="ruleForm.areaCode2"
-                            @change="changeArea2"
-                            @focus="getAreas2"
-                            placeholder="区/县"
-                            filterable
-                        >
-                            <el-option
-                                v-for="item in areaList2"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.id"
-                            ></el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-
-                <el-col :span="6">
-                    <el-form-item prop="enterprise" class="it">
-                        <el-select
-                            v-model="ruleForm.enterprise"
-                            @change="getSites"
-                            @focus="getEnterprise"
-                            placeholder="企业"
-                            filterable
-                        >
-                            <el-option
-                                v-for="item in enterpriseList"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value"
-                            ></el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-            </el-form-item>
-            <el-form-item label="站点:" prop="type">
-                <el-checkbox-group v-model="ruleForm.type" v-if="siteList && siteList.length>0">
-                    <el-checkbox
-                        v-for="item of siteList"
-                        :key="item.value"
-                        :label="item.value"
-                        name="type"
-                    >{{item.label}}</el-checkbox>
-                </el-checkbox-group>
-                <p v-else>无</p>
-            </el-form-item>
-            <el-form-item label="开始日期:" prop="startTime">
-                <el-date-picker
-                    format="yyyy-MM-dd HH:mm:ss"
-                    value-format="yyyy-MM-dd HH:mm:ss"
-                    type="datetime"
-                    class="changeW"
-                    v-model="ruleForm.startTime"
-                    placeholder="开始时间"
-                    time-arrow-control
-                ></el-date-picker>
-            </el-form-item>
-            <el-form-item label="结束日期:" prop="endTime">
-                <el-date-picker
-                    format="yyyy-MM-dd HH:mm:ss"
-                    value-format="yyyy-MM-dd HH:mm:ss"
-                    type="datetime"
-                    class="changeW"
-                    v-model="ruleForm.endTime"
-                    placeholder="结束时间"
-                    time-arrow-control
-                ></el-date-picker>
-            </el-form-item>
-            <el-form-item prop="inputVal" label="合同文件">
-                <el-upload
-                    ref="pic"
-                    action="#"
-                    :on-change="getFile"
-                    list-type="picture-card"
-                    :on-preview="handlePictureCardPreview"
-                    :on-remove="handleRemove"
-                    :auto-upload="false"
-                >
-                    <i class="el-icon-plus"></i>
-                </el-upload>
-            </el-form-item>
-        </el-form>
-        <div slot="footer" class="foot">
-            <el-button type="primary" @click="sureEditor" size="mini">保存</el-button>
-            <el-button @click="cancelEditor" size="mini">取消</el-button>
-        </div>
-        <el-dialog append-to-body :visible.sync="dialogVisible" width="50%">
-            <img width="100%" :src="dialogImageUrl" alt />
-        </el-dialog>
-    </el-dialog>
+    </div>
 </template>
 
 <script>
@@ -252,8 +247,6 @@
             
 import { mapState, mapMutations } from "vuex";
 export default {
-    
-    props:['isShow'],
     data() {
         var valiIcon = (rule, value, callback) => { // 图片验证
             if (!this.imageUrl.length>0) {
@@ -422,7 +415,7 @@ export default {
         };
     },
     methods: {
-         //获取照片的base64
+        //获取照片的base64
         getFile(file, fileList) {
    
             let _this = this;
@@ -756,7 +749,7 @@ export default {
         //关闭外层dialog
         closeDialog() {
             this.$refs.ruleForm.resetFields();  //重置from和rules
-            this.$emit('changeAddDialog',false)
+            this.imageUrl = []
         },
         //确定编辑  --关闭dialog
         sureEditor() {
@@ -783,7 +776,6 @@ export default {
                                     message: "运维合同添加成功",
                                     type: "success"
                                 });
-                                _this.$emit('addSuccess',true)
                                 _this.closeDialog();
                             }
                         })
@@ -802,102 +794,99 @@ export default {
             this.closeDialog();
         }
     },
-    watch:{
-        isShow(val){
-            this.addShow = val
-        }
-    }
 };
 </script>
 
 <style lang="scss" scoped>
-.dialog {
-    .tit {
-        display: flex;
-        align-items: flex-end;
-        .line {
-            background: #1e87f0;
-            width: 0.5%;
-            height: 20px;
-            position: relative;
-            left: 0;
-        }
-        p {
-            margin-left: 2%;
-        }
-    }
-    .codeBtn {
-        display: block;
-        width: 100%;
-    }
-    .foot {
-        display: flex;
-        justify-content: center;
-    }
-}
-//最外层弹窗
-// .dialog >>> .el-dialog {
-//     margin-top: 0 !important;
-//     position: relative;
-
-//     top: 50%;
-
-//     left: calc(50% + 240px);
-//     transition: transform;
-//     transform: translate(-50%,-50%);
-
-//     border: 1px solid #ebeef5;
-
-// }
 .it {
     margin-bottom: 0px !important;
-}
-.dialog >>> .el-dialog {
-    display: flex;
-    flex-direction: column;
-    margin: 0 !important;
-    position: absolute;
-    top: 50%;
-    width: 36% !important;
-    left: calc(50% + 120px);
-    transform: translate(-50%, -50%);
 }
 .dialog >>> .el-date-editor.el-input,
 .el-date-editor.el-input__inner {
     width: 100%;
 }
+.dialog >>> .el-select {
+    width: 100%;
+}
 .dialog >>> .el-dialog--center .el-dialog__body {
-    padding: 25px 40px 30px !important;
+    padding: 25px 40px 0px !important;
 }
-.dialog >>> .el-dialog .el-dialog__body {
-    flex: 1;
-    overflow: auto;
-}
-//表单校验的图标颜色
-.dialog >>> .el-input__suffix {
-    color: #67c23a !important;
+.addPeop {
+    height: 100%;
+    position: relative;
+    .dialog {
+        width: 55%;
+        height: auto;
+        background: white;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-sizing: border-box;
+        .tit {
+            margin-top: 10px;
+            display: flex;
+            align-items: flex-end;
+            .line {
+                background: #1e87f0;
+                width: 0.3%;
+                height: 20px;
+                position: relative;
+                left: 0;
+            }
+            p {
+                margin-left: 2%;
+            }
+        }
+        .codeBtn {
+            display: block;
+            width: 100%;
+        }
+        .el-form {
+            margin-top: 25px;
+            padding-left: 10px;
+            padding-right: 25px;
+        }
+        .demo-ruleForm {
+            height: 68%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            margin-top: 35px;
+            padding-left: 64px;
+            padding-right: 76px;
+        }
+        .foot {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+    }
 }
 //上传图片框
-.dialog >>> .el-upload--picture-card {
+.addPeop >>> .el-upload--picture-card {
     width: 90px;
     height: 90px;
     border: 2px solid rgba(153, 153, 153, 1);
     border-radius: 10px;
 }
 //上传图片 +框
-.dialog >>> .el-upload--picture-card i {
+.addPeop >>> .el-upload--picture-card i {
     position: relative;
     top: -22px;
     color: #999999;
 }
 //已上传的图片框
-.dialog >>> .el-upload-list--picture-card .el-upload-list__item {
+.addPeop >>> .el-upload-list--picture-card .el-upload-list__item {
     width: 90px;
     height: 90px;
     border: 2px solid rgba(153, 153, 153, 1);
     border-radius: 10px;
 }
-.dialog >>> .el-select {
-    width: 100%;
+
+//表单校验的图标颜色
+.addTwo >>> .el-input__suffix {
+    color: #67c23a !important;
 }
 </style>

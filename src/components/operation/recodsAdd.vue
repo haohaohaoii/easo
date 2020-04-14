@@ -252,8 +252,7 @@
 </template>
 
 <script>
-
-            
+import base from '../../api/base.js'; // 导入接口域名列表           
 import { mapState, mapMutations } from "vuex";
 export default {
     props:['isShow'],
@@ -410,71 +409,80 @@ export default {
             let _this =this
             this.$refs["ruleForm"].validate(valid => {  
                 if (valid) {
-                    let factorCode = ''
-                    let actionType = ''
-                    let actionDesc = ''
-                    let arr=[]
-                    if(this.ruleForm.codIsC){  //选中的是cod
-                        let obj={
-                            factorCode:'011',
-                            actionType:this.ruleForm.codTypes,
-                            actionDesc:this.ruleForm.codDesc
+                    if((this.ruleForm.anIsC&&this.ruleForm.codTypes &&this.ruleForm.codDesc) || 
+                    (this.ruleForm.zlIsC &&this.ruleForm.zlTypes &&this.ruleForm.zlDesc) || 
+                    (this.ruleForm.anIsC &&　this.ruleForm.anTypes && this.ruleForm.anDesc) || 
+                    (this.ruleForm.zdIsC || this.ruleForm.zdTypes || this.ruleForm.zdDesc) || 
+                    (this.ruleForm.llIsC && this.ruleForm.llTypes && this.ruleForm.llDesc)){
+                        let factorCode = ''
+                        let actionType = ''
+                        let actionDesc = ''
+                        let arr=[]
+                        if(this.ruleForm.codIsC){  //选中的是cod
+                            let obj={
+                                factorCode:'011',
+                                actionType:this.ruleForm.codTypes,
+                                actionDesc:this.ruleForm.codDesc
+                            }
+                            arr.push(obj)
                         }
-                        arr.push(obj)
-                    }
-                    if(this.ruleForm.anIsC){  //选中的是氨氮
-                        let obj = {
-                            factorCode:'101',
-                            actionType:this.ruleForm.anTypes,
-                            actionDesc:this.ruleForm.anDesc
+                        if(this.ruleForm.anIsC){  //选中的是氨氮
+                            let obj = {
+                                factorCode:'101',
+                                actionType:this.ruleForm.anTypes,
+                                actionDesc:this.ruleForm.anDesc
+                            }
+                            arr.push(obj)
                         }
-                        arr.push(obj)
-                    }
-                    if(this.ruleForm.zlIsC){  //选中的是总磷
-                        let obj = {
-                            factorCode:'060',
-                            actionType:this.ruleForm.zlTypes,
-                            actionDesc:this.ruleForm.zlDesc
+                        if(this.ruleForm.zlIsC){  //选中的是总磷
+                            let obj = {
+                                factorCode:'060',
+                                actionType:this.ruleForm.zlTypes,
+                                actionDesc:this.ruleForm.zlDesc
+                            }
+                            arr.push(obj)
                         }
-                        arr.push(obj)
-                    }
-                    if(this.ruleForm.zdIsC){  //选中的是总氮
-                        let obj = {
-                            factorCode:'065',
-                            actionType:this.ruleForm.zdTypes,
-                            actionDesc:this.ruleForm.zdDesc
+                        if(this.ruleForm.zdIsC){  //选中的是总氮
+                            let obj = {
+                                factorCode:'065',
+                                actionType:this.ruleForm.zdTypes,
+                                actionDesc:this.ruleForm.zdDesc
+                            }
+                            arr.push(obj)
                         }
-                        arr.push(obj)
-                    }
-                    if(this.ruleForm.llIsC){  //选中的是流量
-                        let obj = {
-                            factorCode:'B01',
-                            actionType:this.ruleForm.llTypes,
-                            actionDesc:this.ruleForm.llDesc
+                        if(this.ruleForm.llIsC){  //选中的是流量
+                            let obj = {
+                                factorCode:'B01',
+                                actionType:this.ruleForm.llTypes,
+                                actionDesc:this.ruleForm.llDesc
+                            }
+                            arr.push(obj)
                         }
-                        arr.push(obj)
-                    }
-                    let params={
-                        mn:_this.ruleForm.siteVal, //站点mn
-                        mtUserId:_this.ruleForm.ywPeople,  //运维人员
-                        mtTime: _this.ruleForm.ywTime, //运维时间
-                        mtCode:_this.ruleForm.ywNum, //运维单号
-                        recordDetails:arr
+                        let params={
+                            mn:_this.ruleForm.siteVal, //站点mn
+                            mtUserId:_this.ruleForm.ywPeople,  //运维人员
+                            mtTime: _this.ruleForm.ywTime, //运维时间
+                            mtCode:_this.ruleForm.ywNum, //运维单号
+                            recordDetails:arr
 
-                    }
-                     _this.$axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-                    _this.$axios.post("http://172.16.23.18:8081/admin/mtRecord",params,{
-                        'Content-Type':'application/json'
-                    }).then(res=>{
-                        if(res.data.code == 0){
-                            _this.$message({
-                                message: '运维记录添加成功',
-                                type: 'success'
-                            });
-                            _this.$emit('addSuccess',true)
-                            _this.closeDialog()
                         }
-                    })
+                        _this.$axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+                        _this.$axios.post(`${base.localUrl}/admin/mtRecord`,params,{
+                            'Content-Type':'application/json'
+                        }).then(res=>{
+                            if(res.data.code == 0){
+                                _this.$message({
+                                    message: '运维记录添加成功',
+                                    type: 'success'
+                                });
+                                _this.$emit('addSuccess',true)
+                                _this.closeDialog()
+                            }
+                        })
+                    }else{
+                        this.$message.error("请选择因子、并填写运维类型和运维详情!");
+                    }
+                    
                   
                 } else {
                     this.$message.error("请按规则填写后再提交!");
@@ -501,7 +509,7 @@ export default {
 .dialog {
     .tit {
         display: flex;
-        align-items: center;
+        align-items: flex-end;
         .line {
             background: #1e87f0;
             width: 0.5%;
@@ -542,8 +550,19 @@ export default {
     margin: 0 !important;
     position: absolute;
     top: 50%;
+    width: 38% !important;
     left: calc(50% + 120px);
     transform: translate(-50%, -50%);
+}
+.dialog >>> .el-date-editor.el-input,
+.el-date-editor.el-input__inner {
+    width: 100%;
+}
+.dialog >>> .el-dialog--center .el-dialog__body {
+    padding: 25px 45px 5px !important;
+}
+.dialog >>> .el-select {
+    width: 100%;
 }
 
 .dialog >>> .el-dialog .el-dialog__body {

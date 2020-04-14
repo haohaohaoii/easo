@@ -9,8 +9,8 @@
             @select="handleSelect"
         >
             <el-menu-item index="firstPage">
-                <i class="el-icon-s-home" style="font-size:26px"></i>
-                <span slot="title">首页</span>
+                <span class="iconfont" style="font-size:26px">&#xe723;</span>
+                <span slot="title" style="font-size:15px">首页</span>
             </el-menu-item>
 
             <el-submenu
@@ -21,31 +21,34 @@
                 :index="item.createTime"
             >
                 <template slot="title" v-if="item.menuType==0 && item.menuName=='数据管理'">
-                    <i class="iconfont icon-shuju" style="font-size:28px"></i>
+                    <span class="iconfont" style="font-size:26px">&#xe6b8;</span>
                     {{item.menuName}}
+                    <span class="iconfont">&#xe648;</span>
                 </template>
                 <template slot="title" v-else-if="item.menuType==0 && item.menuName=='企业管理'">
-                    <i class="el-icon-office-building" style="font-size:24px"></i>
+                    <span class="iconfont">&#xe626;</span>
                     <span>{{item.menuName}}</span>
+                    <span class="iconfont">&#xe648;</span>
                 </template>
                 <template slot="title" v-else-if="item.menuType==0 && item.menuName=='权限管理'">
-                    <i class="el-icon-set-up" style="font-size:24px"></i>
+                    <span class="iconfont" style="font-size:26px">&#xe63b;</span>
                     {{item.menuName}}
+                    <span class="iconfont">&#xe648;</span>
                 </template>
                 <template slot="title" v-else-if="item.menuType==0 && item.menuName=='内容管理'">
-                    <!-- <i class="el-icon-set-up" style="font-size:24px"></i> -->
-                    <img src="../../assets/images/contentico.png" alt style="margin-right: 5px;" />
+                    <span class="iconfont" style="font-size:22px">&#xe646;</span>
                     {{item.menuName}}
+                    <span class="iconfont">&#xe648;</span>
                 </template>
                 <template slot="title" v-else-if="item.menuType==0 && item.menuName=='运维管理'">
-                    <!-- <i class="el-icon-set-up" style="font-size:24px"></i> -->
-                    <img src="../../assets/images/contentico.png" alt style="margin-right: 5px;" />
+                    <span class="iconfont" style="font-size:20px">&#xe604;</span>
                     {{item.menuName}}
+                    <span class="iconfont">&#xe648;</span>
                 </template>
                 <template slot="title" v-else-if="item.menuType==0 && item.menuName=='数据报表'">
-                    <!-- <i class="el-icon-set-up" style="font-size:24px"></i> -->
-                    <img src="../../assets/images/contentico.png" alt style="margin-right: 5px;" />
+                    <span class="iconfont" style="font-size:22px">&#xe646;</span>
                     {{item.menuName}}
+                    <span class="iconfont">&#xe648;</span>
                 </template>
                 <el-menu-item
                     v-for="seciem of item.subMenus"
@@ -102,6 +105,7 @@ export default {
     },
     data() {
         return {
+
             cusObj: {
                 //头部右侧小人
                 background: "",
@@ -121,69 +125,8 @@ export default {
                 //头部右侧退出登录
                 background: "",
                 color: ""
-            },
-            createMenu: [
-                {
-                    one: { id: "2", menuName: "数据查看" },
-                    two: [
-                        { id: "5", menuName: "实时数据", path: "realData" },
-                        { id: "6", menuName: "历史数据", path: "hisData" }
-                    ]
-                },
-                {
-                    one: { id: "3", menuName: "企业管理" },
-                    two: [
-                        { id: "7", menuName: "企业信息", path: "enterMation" },
-                        { id: "8", menuName: "留言管理", path: "spam" },
-                        { id: "9", menuName: "基站管理", path: "baseManage" }
-                    ]
-                }
-            ],
-            firstMenu: [
-                {
-                    name: "数据查看",
-                    path: "/a",
-                    second: [
-                        { name: "历史数据", path: "hisData" },
-                        { name: "实时数据", path: "realData" }
-                    ]
-                }
-            ],
-            secondMenu: [
-                {
-                    name: "企业管理",
-                    path: "/b",
-                    second: [
-                        {
-                            name: "企业信息",
-                            path: "enterMation"
-                        },
-                        {
-                            name: "留言管理",
-                            path: "spam"
-                        },
-                        {
-                            name: "基站管理",
-                            path: "baseManage"
-                        }
-                    ]
-                }
-            ],
-            thirdMenu: [
-                {
-                    name: "权限管理",
-                    path: "/c",
-                    second: [
-                        { name: "角色管理", path: "roleManage" },
-                        { name: "用户管理", path: "userManage" },
-                        { name: "部门管理", path: "divManage" },
-                        {
-                            name: "菜单管理",
-                            path: "menuManage"
-                        }
-                    ]
-                }
-            ]
+            }
+            
         };
     },
     computed: {
@@ -191,6 +134,8 @@ export default {
     },
     methods: {
         handleSelect(key, keyPath) {
+         
+            
             this.$store.commit("changeDefaultmenu", key);
             this.$router.push({ path: "/" + key });
         },
@@ -294,6 +239,7 @@ export default {
     right: 0;
     .el-menu-demo {
         display: flex;
+        align-items: center;
     }
     .tubiao {
         position: absolute;
@@ -311,41 +257,62 @@ export default {
         }
     }
 }
+
+//一级菜单
 .header >>> .el-menu-item {
     width: 160px;
     text-align: center;
+    border-radius: 20px;
+    margin: 10px 0;
+    height: 40px;
+    line-height: 40px;
 }
+//多级菜单
 .header >>> .el-submenu__title {
     width: 160px;
     text-align: center;
+    border-radius: 20px !important;
+    margin: 10px 0;
+    height: 40px !important;
+    line-height: 40px !important;
 }
-//多级菜单(第一级)移入
+//一级菜单移入 修改椭圆样式
 .header >>> .el-submenu__title:hover {
+    border: 1px solid #409eff;
     background-color: #1f87e7 !important; //改变背景颜色
     color: #ffffff !important; //改变字体颜色
 }
-.header >>> .el-menu-item i:hover {
-    color: white !important;
-}
-.header >>> .el-submenu__title i:hover {
-    color: white !important;
+
+//多级菜单父级点击修改椭圆样式
+.header >>> .el-menu--horizontal > .el-submenu.is-active .el-submenu__title {
+    border: 1px solid #409eff;
+    background-color: #1f87e7 !important;
+    color: #ffffff !important; //改变字体颜色
 }
 //二级菜单移入的背景颜色
 .opt:hover {
     background-color: #1f87e7 !important; //改变背景颜色
     color: #ffffff !important; //改变字体颜色
 }
-//二级菜单选中的背景颜色--可以
+//二级菜单选中的本身背景颜色--可以
 .opt.is-active {
     background-color: #1f87e7 !important;
     color: #ffffff !important; //改变字体颜色
 }
+
+//一级菜单选中
 .header >>> .el-menu-item.is-active {
     background-color: #1f87e7 !important;
     color: #ffffff !important; //改变字体颜色
 }
+
+//一级菜单
 .header >>> .el-menu-item:hover {
     background-color: #1f87e7 !important;
     color: #ffffff !important; //改变字体颜色
+}
+//消除自带的箭头
+.header >>> .el-menu--horizontal > .el-submenu .el-submenu__icon-arrow {
+    display: none;
 }
 </style>
