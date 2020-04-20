@@ -1,88 +1,47 @@
 <template>
     <div class="firstPage">
         <div class="contentLeft">
-            <!-- <div class="tit">
-                <span>
-                    用户登陆信息
-                    <span>当前登陆时间:2019/1/8 11:40</span>
-                    <span>上次登陆时间:2019/1/8 11:40</span>
-                </span>
-            </div>-->
             <div class="contentL">
-                <div class="itemL">
-                    <div>
-                        <img src="../../assets/images/addicon.png" alt />
-                        <p>
-                            <span class>本月新增企业</span>
-                            <span class="lsd">{{xzqy}}</span>
-                        </p>
-                    </div>
-                    <div>
-                        <img src="../../assets/images/siteicon.png" alt />
-                        <p>
-                            <span class="lsu">本月新增站点</span>
-                            <span class="lsd">{{xzzd}}</span>
-                        </p>
-                    </div>
-                    <div>
-                        <img src="../../assets/images/ccicon.png" alt />
-                        <p>
-                            <span class="lsu">超标企业</span>
-                            <span class="lsd">{{cbqy}}</span>
-                        </p>
-                    </div>
+                <img class="tps" src="../../assets/images/treicon.png" alt />
+                <div class="date">
+                    <el-date-picker
+                        format="yyyy"
+                        value-format="yyyy"
+                        class="sT"
+                        v-model="yearV"
+                        size="mini"
+                        type="year"
+                        placeholder="选择年"
+                    ></el-date-picker>
                 </div>
-                <div class="itemL">
-                    <div>
-                        <img src="../../assets/images/csicon.png" alt />
-                        <p>
-                            <span class="lsu">超标站点</span>
-                            <span class="lsd">{{cbzd}}</span>
-                        </p>
-                    </div>
-                    <div>
-                        <img src="../../assets/images/ycqyicon.png" alt />
-                        <p>
-                            <span class="lsu">异常企业</span>
-                            <span class="lsd">{{ycqy}}</span>
-                        </p>
-                    </div>
-                    <div>
-                        <img src="../../assets/images/yczdicon.png" alt />
-                        <p>
-                            <span class="lsu">异常站点</span>
-                            <span class="lsd">{{yczd}}</span>
-                        </p>
-                    </div>
-                </div>
-                <div class="itemL">
-                    <div>
-                        <img src="../../assets/images/yjqyicon.png" alt />
-                        <p>
-                            <span class="lsu">预警企业</span>
-                            <span class="lsd">{{yjqy}}</span>
-                        </p>
-                    </div>
-                    <div>
-                        <img src="../../assets/images/yjzdicon.png" alt />
-                        <p>
-                            <span class="lsu">预警站点</span>
-                            <span class="lsd">{{yjzd}}</span>
-                        </p>
-                    </div>
-                    <div>
-                        <img src="../../assets/images/zdzsicon.png" alt />
-                        <p>
-                            <span class="lsu">站点总数</span>
-                            <span class="lsd">{{zdzs}}</span>
-                        </p>
-                    </div>
-                </div>
+                <site-in :zuData="zuData" :nowY="yearV"></site-in>
             </div>
 
             <div class="footer">
-                <img class="tps" src="../../assets/images/treicon.png" alt />
-                <bar-page :zxData="zxData"></bar-page>
+                <img class="tps" src="../../assets/images/cb.png" alt />
+                <div class="date">
+                    <el-date-picker
+                        size="mini"
+                        format="yyyy-MM-dd"
+                        value-format="yyyy-MM-dd"
+                        type="date"
+                        v-model="startTime"
+                        placeholder="开始时间"
+                        class="sT"
+                    ></el-date-picker>
+                    <el-date-picker
+                        size="mini"
+                        format="yyyy-MM-dd"
+                        value-format="yyyy-MM-dd"
+                        type="date"
+                        v-model="endTime"
+                        placeholder="结束时间"
+                        class="sT"
+                    ></el-date-picker>
+                    <el-button size="mini" type="primary" @click="searchSiteover">查询</el-button>
+                </div>
+
+                <site-over :zxData="zxData"></site-over>
             </div>
         </div>
         <div class="contentRight">
@@ -150,17 +109,23 @@
 </template>
 
 <script>
-import barPage from './barPage'
+import siteOver from './siteOver'
+import siteIn from './siteIn'
 import cakePage from './cakePage'
 export default {
     components:{
-        barPage,
-        cakePage
+        siteOver,
+        cakePage,
+        siteIn
     },
     data() {
         return {
+            yearV:'',  //按年查询
+            startTime:'', //开始时间
+            endTime:'', //结束时间
             firstArr:[],
-            zxData:[],
+            zxData:[],  //超标站点
+            zuData:[],  //接入站点
             xzqy:'',  //本月新增企业
             xzzd:'',  //本月新增站点
             cbqy:'',  //超标企业
@@ -181,8 +146,12 @@ export default {
         };
     },
     mounted(){
-       this.sendAxios()
+
+       this.sendAxios()   //首页
+       this.getzdcb()  //超标站点
+       this.getzdjr()   //站点接入
     },
+
     computed:{
         zxzd(){  //在线站点
             return  this.zdzs - this.lxzd
@@ -196,6 +165,18 @@ export default {
         }
     },
     methods:{
+        //超标站点点击查询
+        searchSiteover(){
+            if(this.startTime && this.endTime){
+                this.getzdcb2()
+            }else{
+                this.$message({
+                    message: "请选择查询时间",
+                    type: "success"
+                });
+            }
+        },
+        //首页接口
         sendAxios(){
             this.getNowTime().then(end=>{
                 this.getCurrentMonthFirst().then(start=>{
@@ -223,9 +204,9 @@ export default {
                                 this.cbxc = firstObj.pushOver  //超标消息
                                 this.ycxc = firstObj.pushEx  //异常消息
                                 this.yjxx = firstObj.pushWarn  //预警消息
-                                if(firstObj.countAndCreateTimeByDate && firstObj.countAndCreateTimeByDate.length>0){    //获取柱状图数组
-                                    this.zxData = firstObj.countAndCreateTimeByDate
-                                }
+                                // if(firstObj.countAndCreateTimeByDate && firstObj.countAndCreateTimeByDate.length>0){    //获取柱状图数组
+                                //     this.zxData = firstObj.countAndCreateTimeByDate
+                                // }
                                 this.lxzd = firstObj.siteCountOff   //离线站点总数
                                 this.$store.commit('getWDLY', this.wdly)
                                 localStorage.setItem('wdly',this.wdly)
@@ -235,6 +216,68 @@ export default {
                 })
             })
             
+        },
+        //获取站点超标(首次进入)
+        getzdcb(){
+            this.getNowTime().then(endT=>{
+                this.getCurrentMonthFirst().then(startT=>{
+                    if(endT && startT){
+                        this.startTime = startT;
+                        this.endTime = endT
+                        let params = {
+                            start: this.startTime,
+                            end: this.endTime 
+                        }
+                        this.$api.user.zdcb({params}).then(res=>{
+                     
+                            if(res.data.code ==0){
+                                if(res.data.data && res.data.data.length>0){
+                                  
+                                    this.zxData = res.data.data    //获取柱状图数组
+                                }
+                            }
+                        })
+                    }
+                })
+            })
+           
+        },
+        getzdjr(){        
+            let now = new Date();
+            let year = now.getFullYear(); //得到年份
+            console.log(year)
+            this.yearV =JSON.stringify(year)
+        },
+        getzdjr2(year){        
+            let startY = `${year}-01-01`
+            let endY = `${year+1}-01-01`
+            let params={
+                start: startY,
+                end: endY 
+            }
+            this.$api.user.zdjr({params}).then(res=>{
+
+                if(res.data.code ==0){
+                   this.zuData = res.data.data
+                  
+                }
+            })
+        },
+        //点击搜索
+        getzdcb2(){
+            let params = {
+                start: this.startTime,
+                end: this.endTime 
+            }
+            this.$api.user.zdcb({params}).then(res=>{
+            
+                if(res.data.code ==0){
+                    if(res.data.data && res.data.data.length>0){
+                        
+                        this.zxData = res.data.data    //获取柱状图数组
+                    }
+                }
+            })
         },
         getNowTime() {
             return new Promise(resolve=>{
@@ -246,7 +289,7 @@ export default {
                 month = month + 1;
                 month = month.toString().padStart(2, "0");
                 date = date.toString().padStart(2, "0");
-                let defaultDate = `${year}-${month}-${date} :${hour}:00:00`;
+                let defaultDate = `${year}-${month}-${date}`;
                 resolve(defaultDate)
             })
             
@@ -264,80 +307,78 @@ export default {
                 if (day < 10) {
                     day = '0' + day
                 }
-                let firstData= date.getFullYear() + '-' + month + '-' + day +':'+hour +':00:00';
+                let firstData= `${date.getFullYear()}-${month}-${day}`;;
                 resolve(firstData)
             })
             
         }
 
+    },
+    watch:{
+        yearV(val){
+            this.getzdjr2(val)
+        }
     }
 };
 </script>
 
 <style lang="scss" scoped>
+// .el-picker-panel .el-date-picker .el-popper .has-time > .el-picker-panel__body {
+//     height: 200px !important;
+//     overflow-y: auto;
+// }
+// .firstPage >>> .el-input--mini .el-input__inner {
+//     width: 160px;
+// }
+.sT {
+    width: 145px !important;
+}
+.firstPage >>> .el-date-editor.el-input,
+.el-date-editor.el-input__inner {
+    width: 180px;
+}
 .firstPage {
     height: 100%;
-    // background: rgb(255, 255, 255);
     box-sizing: border-box;
-
     display: flex;
     justify-content: space-between;
+
     .contentLeft {
         height: 100%;
-        // border: 1px solid;
         width: 60%;
-
         .contentL {
             height: 50%;
-            // border: 1px solid;
-            display: flex;
-
-            flex-direction: column;
-            justify-content: space-between;
-            .itemL {
-                display: flex;
-                justify-content: space-between;
-                div {
-                    width: 32.2%;
-                    height: 128px;
-                    // border: 1px solid;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    background: rgba(255, 255, 255, 1);
-                    border-radius: 5px;
-                    img {
-                        width: 70px;
-                    }
-                    p {
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        padding-left: 10px;
-                        .lsu {
-                            font-size: 18px;
-                            font-family: Microsoft YaHei;
-                            font-weight: 400;
-                            color: rgba(102, 102, 102, 1);
-                        }
-                        .lsd {
-                            font-size: 36px;
-                            font-family: Microsoft YaHei;
-                            font-weight: 400;
-                        }
-                    }
-                }
-            }
-        }
-        .footer {
-            height: 48.5%;
-            margin-top: 15px;
-            background: rgba(255, 255, 255, 1);
+            background: #fff;
             position: relative;
             .tps {
                 position: absolute;
-                top: 3.5%;
+                top: 3.2%;
                 left: 3%;
+                width: 22px;
+            }
+            .date {
+                position: absolute;
+                right: 4%;
+                top: 10px;
+                z-index: 999;
+            }
+        }
+        .footer {
+            height: 48%;
+            margin-top: 15px;
+            background: #fff;
+            position: relative;
+            .tps {
+                position: absolute;
+                top: 3.2%;
+                left: 3%;
+                width: 22px;
+            }
+            .date {
+                position: absolute;
+                right: 4%;
+                top: 10px;
+                z-index: 999;
             }
         }
     }
@@ -405,7 +446,7 @@ export default {
         }
         .site {
             position: relative;
-            height: 48.5%;
+            height: 48%;
             background: rgba(255, 255, 255, 1);
             display: flex;
             flex-direction: column;

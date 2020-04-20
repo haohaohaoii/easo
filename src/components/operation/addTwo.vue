@@ -140,6 +140,10 @@ export default {
                         required: true,
                         message: "请输入详细地址",
                         trigger: "change"
+                    },{
+                        pattern: "^(?=.*?[\u4E00-\u9FA5]){5,100}",
+                        message: "不能少于5个字符，不能都是数字和字母，必须有汉字",
+                        trigger: "change"
                     }
                 ],
                 depPeople: [

@@ -74,7 +74,7 @@ export default {
         getZx() {
 
             let myCharts = this.$echarts.init(this.$refs.myCharts);
-            myCharts.showLoading(); //加载动画
+            // myCharts.showLoading(); //加载动画
             this.options.series[0].data = this.pieList
             let _this = this
             this.options.series[0].label.normal.formatter=function (argument) {
@@ -89,9 +89,9 @@ export default {
                                         // html='2356'+'总数\r\n\r\n';
                                         return html;
                                     },
-            setTimeout(function() {
-                myCharts.hideLoading(); //隐藏加载动画
-            }, 2000);
+            // setTimeout(function() {
+            //     myCharts.hideLoading(); //隐藏加载动画
+            // }, 2000);
             myCharts.setOption(this.options);
         },
     },

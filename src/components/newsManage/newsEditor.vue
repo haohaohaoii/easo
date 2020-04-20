@@ -88,6 +88,7 @@ import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'            
 import { mapState, mapMutations } from "vuex";
+import base from '../../api/base.js'
 export default {
     components:{
          quillEditor
@@ -285,30 +286,56 @@ export default {
                             await promise;
                         }
                         console.log(base64Arr);
-                        // 表单验证通过之后的操作
-                        let params={
-                            typeId:_this.ruleForm.radio,  //新闻来源
-                            title:_this.ruleForm.newsTitle,  //新闻标题
-                            cateId:_this.ruleForm.firmType,  //新闻类型
-                            imgFile:base64Arr[0]  //封面图片
+                        let formData = new FormData()
+                        formData.append('typeId', _this.ruleForm.radio)
+                        if(_this.ruleForm.radio == 0){   //内部
+                            formData.append('content', _this.content)
+                        }else if(_this.ruleForm.radio == 1){ //外部
+                            formData.append('refLink', _this.ruleForm.urlAddres)
                         }
-                        if(params.typeId == 0){   //内部
-                            params.content =_this.content 
-                            
-                        }else if(params.typeId == 1){ //外部
-                           params.refLink = _this.ruleForm.urlAddres
-                        }
-                        _this.$api.news.editorNews(id,{params}).then(res=>{
-                            if(res.data.code ==0){
-                                console.log(res)
+                        formData.append('title', _this.ruleForm.newsTitle)
+                        formData.append('cateId', _this.ruleForm.firmType)
+                        formData.append('imgFile', base64Arr[0])
+                    
+
+                        _this.$axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+                        _this.$axios.put(`${base.localUrl}/admin/article/${id}`,formData,{
+                            'Content-Type':'multipart/form-data'
+                        }).then(res=>{
+                    
+                            if(res.data.code == 0){
                                 _this.$message({
-                                        message: '新闻修改成功',
-                                        type: 'success'
-                                    });
-                                    let type = true
+                                    message: '新闻修改成功',
+                                    type: 'success'
+                                });
+                                let type = true
                                 _this.closeDialog(type)
                             }
                         })
+                        // 表单验证通过之后的操作
+                        // let params={
+                        //     typeId:_this.ruleForm.radio,  //新闻来源
+                        //     title:_this.ruleForm.newsTitle,  //新闻标题
+                        //     cateId:_this.ruleForm.firmType,  //新闻类型
+                        //     imgFile:base64Arr[0]  //封面图片
+                        // }
+                        // if(params.typeId == 0){   //内部
+                        //     params.content =_this.content 
+                            
+                        // }else if(params.typeId == 1){ //外部
+                        //    params.refLink = _this.ruleForm.urlAddres
+                        // }
+                        // _this.$api.news.editorNews(id,{params}).then(res=>{
+                        //     if(res.data.code ==0){
+                        //         console.log(res)
+                        //         _this.$message({
+                        //                 message: '新闻修改成功',
+                        //                 type: 'success'
+                        //             });
+                        //             let type = true
+                        //         _this.closeDialog(type)
+                        //     }
+                        // })
                         
                     }
                     a();
@@ -378,19 +405,35 @@ export default {
     }
 }
 //最外层弹窗
+// .dialog >>> .el-dialog {
+//     margin-top: 0 !important;
+//     position: relative;
+//     margin: 0 auto;
+//     // height: 46%;
+//     overflow-y: auto;
+//     top: 54%;
+//     transition: transform;
+//     transform: translateY(-50%);
+//     border: 1px solid #ebeef5;
+//     left: 4%;
+//     width: 50%;
+//     overflow-y: auto;
+// }
 .dialog >>> .el-dialog {
-    margin-top: 0 !important;
-    position: relative;
-    margin: 0 auto;
-    // height: 46%;
-    overflow-y: auto;
-    top: 54%;
-    transition: transform;
-    transform: translateY(-50%);
-    border: 1px solid #ebeef5;
-    left: 4%;
-    width: 50%;
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    margin: 0 !important;
+    position: absolute;
+    top: 50%;
+    left: calc(50% + 120px);
+    transform: translate(-50%, -50%);
+    width: 34%;
+    height: 55%;
+}
+
+.dialog >>> .el-dialog .el-dialog__body {
+    flex: 1;
+    overflow: auto;
 }
 .dialog >>> .hide .el-upload--picture-card {
     display: none;

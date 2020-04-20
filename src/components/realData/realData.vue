@@ -9,6 +9,7 @@
             <div class="search">
                 <div class="searchL">
                     <el-select
+                        size="small"
                         v-model="enterValue"
                         filterable
                         clearable
@@ -22,7 +23,7 @@
                             :value="item.value"
                         ></el-option>
                     </el-select>
-                    <el-select v-model="baseValue" filterable placeholder="选择基站">
+                    <el-select size="small" v-model="baseValue" filterable placeholder="选择基站">
                         <el-option
                             v-for="item of baseArr"
                             :key="item.value"
@@ -30,7 +31,13 @@
                             :value="item.value"
                         ></el-option>
                     </el-select>
-                    <el-button type="primary" class="changeW" @click="search">查询</el-button>
+                    <el-button
+                        type="primary"
+                        class="changeW"
+                        @click="search"
+                        size="mini"
+                        style="width:120px"
+                    >查询</el-button>
                 </div>
             </div>
         </div>

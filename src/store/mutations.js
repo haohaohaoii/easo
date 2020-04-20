@@ -149,7 +149,7 @@ export default ({
     },
     //企业管理下的留言回复 dialog状态
     spamReply(state, spamDialog) {
-        state.spamReply = spamDialog;
+        state.spamReplys = spamDialog;
     },
     //企业管理下的留言回复 单个留言id对应的内容
     getspamDetail(state, content) {

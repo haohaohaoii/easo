@@ -33,7 +33,15 @@ const user = {
     firstP(params) {
 
         return axios.get(`${base.localUrl}/admin/index`, params)
-    }
+    },
+    //首页站点超标
+    zdcb(params) {
+        return axios.get(`${base.localUrl}/admin/index/siteOver`, params)
+    },
+    //首页站点接入
+    zdjr(params) {
+        return axios.get(`${base.localUrl}/admin/index/siteIn`, params)
+    },
 }
 
 

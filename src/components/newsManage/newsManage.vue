@@ -26,7 +26,7 @@
             </div>
         </news-list>
         <news-add :isShow="isAddshow" @close="closeAdd" @refres="refQq"></news-add>
-        <news-editor></news-editor>
+        <news-editor @refres="refQq"></news-editor>
     </div>
 </template>
 

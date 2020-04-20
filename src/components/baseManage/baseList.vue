@@ -38,8 +38,7 @@
                         <el-button
                             size="mini"
                             @click="audit(scope.$index, scope.row)"
-                            style="background:#36B6F3;color:white"
-                            v-if="scope.row.siteState==0"
+                            :disabled="!scope.row.siteState==0"
                             v-has="'审核'"
                         >审核</el-button>
                         <el-button
@@ -114,6 +113,8 @@ export default {
                                 yinZarr[k].factorName = '总氮'
                             }else if(yinZarr[k].factorName == 'TP'){
                                 yinZarr[k].factorName = '总磷'
+                            }else if(yinZarr[k].factorName == 'FLOW'){
+                                yinZarr[k].factorName = '流量'
                             }
                             if(yinZ == ''){
                                 yinZ = yinZarr[k].factorName
@@ -140,7 +141,9 @@ export default {
                         yinZ:yinZ,  //因子名称
                         siteState:this.baseAll[i].siteState, //站点状态
                         updateTime:this.baseAll[i].updateTime, //更新时间
-                        stateMsg:stateMsg
+                        stateMsg:stateMsg,
+                        siteD:this.baseAll[i].siteDevices
+
                     }
                     baseList.push(obj)
                 }

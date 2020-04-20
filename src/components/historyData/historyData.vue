@@ -45,7 +45,7 @@
                         placeholder="结束时间"
                         time-arrow-control
                     ></el-date-picker>
-                    <el-button type="primary" class="changeW" @click="search">查询</el-button>
+                    <el-button type="primary" class="changeW" @click="search" style="width:120px">查询</el-button>
                 </div>
                 <div>
                     <el-radio-group v-model="btnMsg">

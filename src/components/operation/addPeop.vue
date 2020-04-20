@@ -53,7 +53,7 @@
                             <span v-else>
                                 {{sitCheckName.slice(0,3).join(',')}}...
                                 <span
-                                    @click="edi"
+                                    @click="over"
                                     style="color:#5B8CFF;cursor:pointer"
                                 >查看更多>>></span>
                             </span>
@@ -99,8 +99,30 @@
                     <el-button @click="cancelIn" size="mini">取消</el-button>
                 </div>
             </el-dialog>
+            <el-dialog
+                title="内层 Dialog"
+                width="25%"
+                class="inlog"
+                :visible.sync="innerOver"
+                :close-on-click-modal="false"
+                append-to-body
+            >
+                <div slot="title" class="tit">
+                    <div class="line"></div>
+                    <p>已选择的运维站点</p>
+                </div>
+                <el-form>
+                    <el-form-item v-model="form.sitCheckName">
+                        <span
+                            v-for="(item,index) of sitCheckName"
+                            :key="index"
+                            style="width: 33.3%;display: inline-block;"
+                        >{{item}}</span>
+                    </el-form-item>
+                </el-form>
+            </el-dialog>
             <div slot="footer" class="foot">
-                <el-button type="primary" @click="sureEditor" size="mini">添加</el-button>
+                <el-button type="primary" @click="sureEditor" size="mini">保存</el-button>
                 <el-button @click="cancelEditor" size="mini">取消</el-button>
             </div>
         </div>
@@ -116,6 +138,7 @@ export default {
         return {
             addShow:false,
             innerVisible:false,
+            innerOver:false,   //已选择的站点
             depList:[], //运维部门数组
             siteList:[], //站点数组
             sitCheckName:[],
@@ -197,6 +220,9 @@ export default {
         };
     },
     methods: {
+        over(){
+            this.innerOver = true
+        },
         //获取运维部门
         getDep(){  //获取运维部门
             this.$api.oper.getOperall().then(depList=>{
@@ -254,7 +280,8 @@ export default {
         closeDialog() {
             this.$refs.ruleForm.resetFields();  //重置from和rules
             this.form.type = []
-            this.$emit('changeAddDialog',false)
+             this.siteList = []
+            this.sitCheckName=[]
         },
         //确定编辑  --关闭dialog
         sureEditor() {
@@ -364,8 +391,8 @@ export default {
     height: 100%;
     position: relative;
     .dialog {
-        width: 45%;
-        height: 58%;
+        width: 50%;
+        height: 65%;
         background: white;
         position: absolute;
         top: 50%;

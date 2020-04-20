@@ -139,11 +139,12 @@ export default {
                                     obj.cod = '/'
                                 }
                             }
-                            if(realData[i].dataInfoList[k].factorCode == '101'){
+                            if(realData[i].dataInfoList[k].factorCode == '101'){ //总磷
                                 flag =true
-                                obj.nh3n = realData[i].dataInfoList[k].factorValue
-                                obj.nh3nOverflag = realData[i].dataInfoList[k].overFlag  //nh3n超标字段
-                                obj.nh3nExceptionFlag= realData[i].dataInfoList[k].exceptionFlag //nh3n异常字段
+                                obj.tp = realData[i].dataInfoList[k].factorValue
+                                obj.tpOverflag = realData[i].dataInfoList[k].overFlag  //tp超标字段
+                                obj.tpExceptionFlag= realData[i].dataInfoList[k].exceptionFlag //tp异常字段
+                               
                             }else{
                                 if(k==realData[i].dataInfoList[k].length -1 && !flag){
                                     obj.nh3n = '/'
@@ -158,10 +159,12 @@ export default {
                                     obj.tn = '/'
                                 }
                             }
-                            if(realData[i].dataInfoList[k].factorCode == '060'){
-                                obj.tp = realData[i].dataInfoList[k].factorValue
-                                obj.tpOverflag = realData[i].dataInfoList[k].overFlag  //tp超标字段
-                                obj.tpExceptionFlag= realData[i].dataInfoList[k].exceptionFlag //tp异常字段
+                            if(realData[i].dataInfoList[k].factorCode == '060'){  //氨氮
+                                flag =true
+                                obj.nh3n = realData[i].dataInfoList[k].factorValue
+                                obj.nh3nOverflag = realData[i].dataInfoList[k].overFlag  //nh3n超标字段
+                                obj.nh3nExceptionFlag= realData[i].dataInfoList[k].exceptionFlag //nh3n异常字段
+                                
                             }else{
                                 if(k==realData[i].dataInfoList[k].length -1 && !flag){
                                     obj.tp = '/'

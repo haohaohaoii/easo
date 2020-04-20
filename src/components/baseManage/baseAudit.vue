@@ -27,7 +27,7 @@
 </template>
 
 <script>
-
+import base from '../../api/base.js'; // 导入接口域名列表  
 import { mapState,mapMutations} from "vuex";
 export default {
     data() {
@@ -101,6 +101,7 @@ export default {
             }
             
         },
+
         changeAudit(){
             return new Promise((resolve,reject)=>{
                 let mn = this.siteRowmn
@@ -111,16 +112,28 @@ export default {
                     auditNote:this.form.textarea,
                     auditManId:auditManId
                 }
-                this.$api.site
-                .changeSitedetail(params,mn)
-                .then(res => {
-                   if(res.data.code == 0){
+                let _this = this
+                this.$axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+                this.$axios.put(`${base.localUrl}/admin/site/${mn}`,params,{
+                    'Content-Type':'application/json'
+                }).then(res=>{
+                    
+                    if(res.data.code == 0){
                         resolve('success')
                     }
-                })
-                .catch(error => {
+                }).catch(error => {
                     reject(error)
                 });
+                // this.$api.site
+                // .changeSitedetail(params,mn)
+                // .then(res => {
+                //    if(res.data.code == 0){
+                //         resolve('success')
+                //     }
+                // })
+                // .catch(error => {
+                //     reject(error)
+                // });
             })
         },
     },

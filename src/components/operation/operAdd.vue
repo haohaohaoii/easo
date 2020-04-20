@@ -44,7 +44,6 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
-
                 <el-col :span="8">
                     <el-form-item prop="cityCode" class="it">
                         <el-select
@@ -401,6 +400,7 @@ export default {
 .it {
     margin-bottom: 0px !important;
 }
+
 .dialog >>> .el-dialog {
     display: flex;
     flex-direction: column;

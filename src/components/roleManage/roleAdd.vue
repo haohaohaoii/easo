@@ -186,15 +186,30 @@ export default {
         }
     }
 }
+// .dialog >>> .el-dialog {
+//     margin-top: 0 !important;
+//     position: absolute;
+//     left: 38%;
+//     width: 40% !important;
+//     top: 50%;
+//     transition: transform;
+//     transform: translateY(-50%);
+//     border: 1px solid #ebeef5;
+// }
 .dialog >>> .el-dialog {
-    margin-top: 0 !important;
+    display: flex;
+    flex-direction: column;
+    margin: 0 !important;
     position: absolute;
-    left: 38%;
-    width: 40% !important;
     top: 50%;
-    transition: transform;
-    transform: translateY(-50%);
-    border: 1px solid #ebeef5;
+    left: calc(50% + 120px);
+    transform: translate(-50%, -50%);
+    width: 34%;
+}
+
+.dialog >>> .el-dialog .el-dialog__body {
+    flex: 1;
+    overflow: auto;
 }
 
 //输入框的背景颜色

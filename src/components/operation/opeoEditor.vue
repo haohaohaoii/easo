@@ -59,7 +59,7 @@
                         <span v-else>
                             {{sitCheckName.slice(0,3).join(',')}}
                             <span
-                                @click="edi"
+                                @click="over"
                                 style="color:#5B8CFF;cursor:pointer"
                             >查看更多>>></span>
                         </span>
@@ -105,6 +105,28 @@
                 <el-button @click="cancelIn" size="mini">取消</el-button>
             </div>
         </el-dialog>
+        <el-dialog
+            title="内层 Dialog"
+            width="25%"
+            class="inlog"
+            :visible.sync="innerOver"
+            :close-on-click-modal="false"
+            append-to-body
+        >
+            <div slot="title" class="tit">
+                <div class="line"></div>
+                <p>已选择的运维站点</p>
+            </div>
+            <el-form>
+                <el-form-item v-model="form.sitCheckName">
+                    <span
+                        v-for="(item,index) of sitCheckName"
+                        :key="index"
+                        style="width: 33.3%;display: inline-block;"
+                    >{{item}}</span>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
         <div slot="footer" class="foot">
             <el-button type="primary" @click="sureEditor" size="mini">保存</el-button>
             <el-button @click="cancelEditor" size="mini">取消</el-button>
@@ -120,7 +142,8 @@ export default {
         return {
             id:'',
             addShow:false,
-            innerVisible:false,
+            innerVisible:false, //所有的站点
+            innerOver:false,   //已选择的站点
             depList:[], //运维部门数组
             siteList:[], //站点数组
             sitCheckName:[],
@@ -198,6 +221,10 @@ export default {
         };
     },
     methods: {
+        //打开已选择的站点dialog
+        over(){
+            this.innerOver = true
+        },
         //获取运维部门
         getDep(){  //获取运维部门
             this.$api.oper.getOperall().then(depList=>{
@@ -433,7 +460,7 @@ export default {
     }
 }
 .dialog >>> .el-dialog--center .el-dialog__body {
-    padding: 25px 25px 5px;
+    padding: 25px 40px 5px;
 }
 //最外层弹窗
 // .dialog >>> .el-dialog {
@@ -457,7 +484,7 @@ export default {
     top: 50%;
     left: calc(50% + 120px);
     transform: translate(-50%, -50%);
-    width: 32% !important;
+    width: 30% !important;
 }
 
 .dialog >>> .el-dialog .el-dialog__body {

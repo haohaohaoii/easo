@@ -127,7 +127,6 @@ export default {
         
         //跳转基站
         base(index,row) {
-            debugger
             let companyId = row.id;
             let companyName = row.erpName
         

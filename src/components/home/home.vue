@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import base from '../../api/base.js'; // 导入接口域名列表  
 import spamReply from './spamReply'
 import SockJS from  'sockjs-client';
 import  Stomp from 'stompjs';
@@ -53,7 +54,7 @@ export default {
     methods:{
         connection() {
             // 建立连接对象
-            let socket = new SockJS('http://172.16.23.5:8080/steward');
+            let socket = new SockJS(`${base.webUrl}:8080/steward`);
             // 获取STOMP子协议的客户端对象
             
             this.stompClient = Stomp.over(socket);

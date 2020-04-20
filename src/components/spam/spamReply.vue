@@ -1,6 +1,6 @@
 <template>
     <el-dialog
-        :visible.sync="spamReply"
+        :visible.sync="spamReplys"
         class="dialog"
         center
         @close="closeDialog"
@@ -24,18 +24,20 @@
                 {{spamContent}}
                 <span></span>
             </p>
-            <el-divider></el-divider>
-            <div style="height: 260px;overflow: auto;">
-                <div class="left neir" v-for="item of hisReplymsg " :key="item.id">
-                    <div v-if="item.type ==1" class="f">
-                        企业回复：
-                        {{item.content}}
-                        <p class="rep">--{{item.createTime}}</p>
-                    </div>
-                    <div v-else-if="item.type ==0" class="f">
-                        我的回复：
-                        {{item.content}}
-                        <p class="rep">--{{item.createTime}}</p>
+            <div v-if="hisReplymsg &&hisReplymsg.length>0">
+                <el-divider></el-divider>
+                <div style="height: 260px;overflow: auto;">
+                    <div class="left neir" v-for="item of hisReplymsg " :key="item.id">
+                        <div v-if="item.type ==1" class="f">
+                            企业回复：
+                            {{item.content}}
+                            <p class="rep">--{{item.createTime}}</p>
+                        </div>
+                        <div v-else-if="item.type ==0" class="f">
+                            我的回复：
+                            {{item.content}}
+                            <p class="rep">--{{item.createTime}}</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -67,9 +69,9 @@ export default {
     },
     computed: {
         ...mapState(["spamItemlist"]),
-        spamReply:{
+        spamReplys:{
             get(){
-                return this.$store.state.spamReply
+                return this.$store.state.spamReplys
             },
             set(){}
         }
@@ -124,7 +126,7 @@ export default {
     },
     watch: {
         spamItemlist(val){
-        
+            
                 let arr = Object.keys(val);
 
                 if(arr && arr.length>0){
@@ -182,14 +184,31 @@ export default {
         }
     }
 }
+// .dialog >>> .el-dialog {
+//     margin-top: 0 !important;
+//     position: relative;
+//     margin: 0 auto;
+//     width: 32%;
+//     top: 50%;
+//     left: 10%;
+//     transition: transform;
+//     transform: translateY(-50%);
+//     border: 1px solid #ebeef5;
+// }
 .dialog >>> .el-dialog {
-    margin-top: 0 !important;
-    position: relative;
-    margin: 0 auto;
-    width: 32%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 !important;
+    position: absolute;
     top: 50%;
-    transition: transform;
-    transform: translateY(-50%);
-    border: 1px solid #ebeef5;
+    left: calc(50% + 120px);
+    transform: translate(-50%, -50%);
+
+    width: 34%;
+}
+
+.dialog >>> .el-dialog .el-dialog__body {
+    flex: 1;
+    overflow: auto;
 }
 </style>

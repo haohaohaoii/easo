@@ -24,6 +24,15 @@
                     </el-select>
                     <div class="dateD">
                         <el-date-picker
+                            v-model="startTime"
+                            type="month"
+                            size="mini"
+                            placeholder="选择月"
+                            format="yyyy-MM"
+                            value-format="yyyy-MM"
+                            @change="changeT"
+                        ></el-date-picker>
+                        <!-- <el-date-picker
                             format="yyyy-MM-dd "
                             value-format="yyyy-MM-dd"
                             size="small"
@@ -43,7 +52,7 @@
                             v-model="endTime"
                             placeholder="结束时间"
                             time-arrow-control
-                        ></el-date-picker>
+                        ></el-date-picker>-->
                     </div>
 
                     <el-button
@@ -70,11 +79,26 @@
                 class="tab"
             >
                 <el-table-column align="center" prop="siteName" label="基站名"></el-table-column>
-                <el-table-column align="center" prop="cod" label="COD(mg/L)"></el-table-column>
-                <el-table-column align="center" prop="ad" label="氨氮(mg/L)"></el-table-column>
-                <el-table-column align="center" prop="zl" label="总磷(mg/L)"></el-table-column>
-                <el-table-column align="center" prop="zd" label="总氮(mg/L)"></el-table-column>
-                <el-table-column align="center" prop="ll" label="流量"></el-table-column>
+                <el-table-column align="center" label="COD(mg/L)">
+                    <el-table-column align="center" prop="cod" label="平均值"></el-table-column>
+                    <el-table-column align="center" prop="pfl" label="排放量"></el-table-column>
+                </el-table-column>
+                <el-table-column align="center" label="氨氮(mg/L)">
+                    <el-table-column align="center" prop="ad" label="平均值"></el-table-column>
+                    <el-table-column align="center" prop="pfl" label="排放量"></el-table-column>
+                </el-table-column>
+                <el-table-column align="center" label="总磷(mg/L)">
+                    <el-table-column align="center" prop="zl" label="平均值"></el-table-column>
+                    <el-table-column align="center" prop="pfl" label="排放量"></el-table-column>
+                </el-table-column>
+                <el-table-column align="center" label="总氮(mg/L)">
+                    <el-table-column align="center" prop="zd" label="平均值"></el-table-column>
+                    <el-table-column align="center" prop="pfl" label="排放量"></el-table-column>
+                </el-table-column>
+                <el-table-column align="center" label="流量">
+                    <el-table-column align="center" prop="ll" label="平均值"></el-table-column>
+                    <el-table-column align="center" prop="pfl" label="排放量"></el-table-column>
+                </el-table-column>
                 <el-table-column align="center" prop="numDate" label="数据时间(月)"></el-table-column>
 
                 <el-table-column label="操作" align="center" width="220" fixed="right">
@@ -119,6 +143,7 @@ export default {
             siteStateVal:'', //选中的站点
             dayList:[],   //数据数组
             startTime:'', //开始时间
+            startTime2:'',
             endTime:'',  //结束时间
             siteList:[],  //站点数组
             totalLength: 0, //总共多少条数据
@@ -138,22 +163,61 @@ export default {
             return {padding:'0'};
         },
         iHeaderCellStyle:function ({row, column, rowIndex, columnIndex}) {
-            return {padding:'0px',background:'rgba(237,237,237,1)'}
+            return {padding:'0px'}
         },
     },
     mounted(){
         this.getNowTime().then(eTime=>{
             this.getCurrentMonthFirst().then(sTime=>{
-                this.endTime = eTime
-                this.startTime = sTime
+      
+                this.endTime = sTime
+                this.startTime2 = eTime
                 this.search()
             })
         })
     },
     
     methods: {
-
+        changeT(val){
+            this.startTime = val
+            this.startTime2 = `${val}-01`
+            let _this = this
+            this.getNextMonth(val).then(res=>{
+              
+                _this.endTime = res
+                _this.search()
+            })
+        },
         //开始时间
+        getNextMonth(date) {
+            return new Promise(resolve=>{
+                var arr = date.split('-');
+                var year = arr[0]; //获取当前日期的年份
+                var month = arr[1]; //获取当前日期的月份
+                var day = arr[2]; //获取当前日期的日
+                var days = new Date(year, month, 0);
+                days = days.getDate(); //获取当前日期中的月的天数
+                var year2 = year;
+                var month2 = parseInt(month) + 1;
+                if (month2 == 13) {
+                    year2 = parseInt(year2) + 1;
+                    month2 = 1;
+                }
+                var day2 = day;
+                var days2 = new Date(year2, month2, 0);
+                days2 = days2.getDate();
+                if (day2 > days2) {
+                    day2 = days2;
+                }
+                if (month2 < 10) {
+                    month2 = '0' + month2;
+                }
+            
+                var t2 = year2 + '-' + month2 + '-' + '01';
+                resolve (t2)
+            })
+            
+        },
         getNowTime() {
             return new Promise(resolve=>{
                 let now = new Date();
@@ -164,8 +228,8 @@ export default {
                 month = month + 1;
                 month = month.toString().padStart(2, "0");
                 date = date.toString().padStart(2, "0");
-                let defaultDate = `${year}-${month}-${date}`;
-              
+                let defaultDate = `${year}-${month}-01`;
+                this.startTime =`${year}-${month}`
                 resolve(defaultDate)
             })
            
@@ -175,7 +239,7 @@ export default {
             return new Promise(resolve=>{
                 let date = new Date();
                 date.setDate(1);
-                let month = parseInt(date.getMonth()+1);
+                let month = parseInt(date.getMonth()+2);
                 let day = date.getDate();
                 let hour = date.getHours();//得到小时
                 if (month < 10) {
@@ -184,8 +248,8 @@ export default {
                 if (day < 10) {
                     day = '0' + day
                 }
-                let firstData= date.getFullYear() + '-' + month + '-' + day;
-            
+                let firstData= date.getFullYear() + '-' + month + '-' + '01';
+           
                 resolve(firstData)
             })
         },
@@ -209,7 +273,7 @@ export default {
         },
         //点击查询
         search() {
-            if(this.startTime || this.endTime ){
+            if(this.startTime){
                 this.currentPage = 1;
                 let pageNum = this.currentPage;
                 this.sendAxios(pageNum);
@@ -235,7 +299,7 @@ export default {
                         pageNum: pageNum,
                         pageSize: pageSize,
                         mn:this.siteStateVal, //选中的站点
-                        start:this.startTime,  //开始时间
+                        start:this.startTime2,  //开始时间
                         end:this.endTime  //结束时间
                     }
                 })
@@ -265,20 +329,31 @@ export default {
                                 let yzArr = arr[k].reports
                                 for(let j=0; j<yzArr.length; j++){
                                     obj.mn = yzArr[j].mn
+                                    let x = String(yzArr[j].avgValue).indexOf('.') + 1; //小数点的位置
+                                    let y = String(yzArr[j].avgValue).length - x; //小数的位数
+                                    if(y>4){
+                                         yzArr[j].avgValue = yzArr[j].avgValue.toFixed(4)
+                                    }
                                     if(yzArr[j].factorCode == '011'){   //cod
                                         obj.cod = yzArr[j].avgValue
+                                        obj.pfl = yzArr[j].avgDay
                                     }
                                     if(yzArr[j].factorCode == '101'){   //氨氮
-                                        obj.ad = yzArr[j].avgValue
+                                        obj.zl = yzArr[j].avgValue
+                                        obj.pfl = yzArr[j].avgDay
+                                     
                                     }
                                     if(yzArr[j].factorCode == '060'){   //总磷
-                                        obj.zl = yzArr[j].avgValue
+                                        obj.ad = yzArr[j].avgValue
+                                        obj.pfl = yzArr[j].avgDay
                                     }
                                     if(yzArr[j].factorCode == '065'){   //总氮
                                         obj.zd = yzArr[j].avgValue
+                                        obj.pfl = yzArr[j].avgDay
                                     }
                                     if(yzArr[j].factorCode == 'B01'){   //流量
                                         obj.ll = yzArr[j].avgValue
+                                        obj.pfl = yzArr[j].avgDay
                                     }
                                 }
                                 listA.push(obj)
@@ -368,6 +443,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.opetract >>> .el-table--border,
+.el-table--group {
+    border: none;
+}
+.opetract >>> .el-table__header-wrapper th:nth-last-of-type(2) {
+    border-right: none;
+}
+.opetract >>> .el-table--border td:nth-last-of-type(1) {
+    border-right: none;
+}
+.opetract >>> .el-table--border::after,
+.el-table--group::after {
+    width: 0;
+}
+
+.opetract >>> .el-table::before {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 0;
+}
 .opetract >>> .el-input {
     width: 200px !important;
 }
@@ -408,12 +504,11 @@ export default {
             display: flex;
             justify-content: space-between;
             .searchL {
-                width: 60%;
+                width: 36%;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 .dateD {
-                    width: 55%;
                     display: flex;
                     justify-content: space-between;
                     align-items: center;

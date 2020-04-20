@@ -34,11 +34,26 @@
                 class="tab"
             >
                 <el-table-column align="center" prop="siteName" label="检测时间"></el-table-column>
-                <el-table-column align="center" prop="cod" label="COD(mg/L)"></el-table-column>
-                <el-table-column align="center" prop="ad" label="氨氮(mg/L)"></el-table-column>
-                <el-table-column align="center" prop="zl" label="总磷(mg/L)"></el-table-column>
-                <el-table-column align="center" prop="zd" label="总氮(mg/L)"></el-table-column>
-                <el-table-column align="center" prop="ll" label="流量"></el-table-column>
+                <el-table-column align="center" label="COD(mg/L)">
+                    <el-table-column align="center" prop="cod" label="平均值"></el-table-column>
+                    <el-table-column align="center" prop="pfl" label="排放量"></el-table-column>
+                </el-table-column>
+                <el-table-column align="center" label="氨氮(mg/L)">
+                    <el-table-column align="center" prop="ad" label="平均值"></el-table-column>
+                    <el-table-column align="center" prop="pfl" label="排放量"></el-table-column>
+                </el-table-column>
+                <el-table-column align="center" label="总磷(mg/L)">
+                    <el-table-column align="center" prop="zl" label="平均值"></el-table-column>
+                    <el-table-column align="center" prop="pfl" label="排放量"></el-table-column>
+                </el-table-column>
+                <el-table-column align="center" label="总氮(mg/L)">
+                    <el-table-column align="center" prop="zd" label="平均值"></el-table-column>
+                    <el-table-column align="center" prop="pfl" label="排放量"></el-table-column>
+                </el-table-column>
+                <el-table-column align="center" label="流量">
+                    <el-table-column align="center" prop="ll" label="平均值"></el-table-column>
+                    <el-table-column align="center" prop="pfl" label="排放量"></el-table-column>
+                </el-table-column>
             </el-table>
         </div>
         <no-data v-else></no-data>
@@ -74,7 +89,7 @@ export default {
             return {padding:'0'};
         },
         iHeaderCellStyle:function ({row, column, rowIndex, columnIndex}) {
-            return {padding:'0px',background:'rgba(237,237,237,1)'}
+            return {padding:'0px'}
         },
     },
     mounted(){
@@ -93,7 +108,7 @@ export default {
             this.endTime = itemT.eTime
         },
         getItem(){
-            
+  
             let itemDetail = JSON.parse(localStorage.item)
             let itemUp = itemDetail.dataRecordList
             let itemDown = itemDetail.reportDayList
@@ -108,18 +123,24 @@ export default {
                     for(let k=0; k<yzList.length; k++){
                         if(yzList[k].factorCode == '011'){   //cod
                             obj.cod = yzList[k].factorValue
+                            obj.pfl =  yzList[k].weightVal
                         }
                         if(yzList[k].factorCode == '101'){  //氨氮
-                            obj.ad = yzList[k].factorValue
+                         
+                            obj.zl = yzList[k].factorValue
+                            obj.pfl =  yzList[k].weightVal
                         }
                         if(yzList[k].factorCode == '060'){  //总磷
-                            obj.zl = yzList[k].factorValue
+                            obj.ad = yzList[k].factorValue
+                            obj.pfl =  yzList[k].weightVal
                         }
                         if(yzList[k].factorCode == '065'){  //总氮
                             obj.zd = yzList[k].factorValue
+                            obj.pfl =  yzList[k].weightVal
                         }
                         if(yzList[k].factorCode == 'B01'){  //流量
                             obj.ll = yzList[k].factorValue
+                            obj.pfl =  yzList[k].weightVal
                         }
                       
                     }
@@ -137,18 +158,24 @@ export default {
                 
                 if(itemDown[m].factorCode == '011'){   //cod
                     objb.cod = itemDown[m].maxValue
+                    objb.pfl = itemDown[m].maxDay
                 }
                 if(itemDown[m].factorCode == '101'){  //氨氮
-                    objb.ad = itemDown[m].maxValue
+                    
+                    objb.zl =itemDown[m].maxValue
+                    objb.pfl = itemDown[m].maxDay
                 }
                 if(itemDown[m].factorCode == '060'){  //总磷
-                    objb.zl =itemDown[m].maxValue
+                    objb.ad = itemDown[m].maxValue
+                    objb.pfl = itemDown[m].maxDay
                 }
                 if(itemDown[m].factorCode == '065'){  //总氮
                     objb.zd = itemDown[m].maxValue
+                    objb.pfl = itemDown[m].maxDay
                 }
                 if(itemDown[m].factorCode == 'B01'){  //流量
                     objb.ll = itemDown[m].maxValue
+                    objb.pfl = itemDown[m].maxDay
                 }
                  
             }
@@ -160,18 +187,24 @@ export default {
                 
                 if(itemDown[t].factorCode == '011'){   //cod
                     objm.cod = itemDown[t].minValue
+                    objm.pfl = itemDown[t].minDay
                 }
                 if(itemDown[t].factorCode == '101'){  //氨氮
-                    objm.ad = itemDown[t].minValue
+                    objm.zl =itemDown[t].minValue
+                    objm.pfl = itemDown[t].minDay
                 }
                 if(itemDown[t].factorCode == '060'){  //总磷
-                    objm.zl =itemDown[t].minValue
+                   
+                    objm.ad = itemDown[t].minValue
+                    objm.pfl = itemDown[t].minDay
                 }
                 if(itemDown[t].factorCode == '065'){  //总氮
                     objm.zd = itemDown[t].minValue
+                    objm.pfl = itemDown[t].minDay
                 }
                 if(itemDown[t].factorCode == 'B01'){  //流量
                     objm.ll = itemDown[t].minValue
+                    objm.pfl = itemDown[t].minDay
                 }
                 
             }
@@ -184,18 +217,24 @@ export default {
                 
                 if(itemDown[h].factorCode == '011'){   //cod
                     objp.cod = itemDown[h].avgValue
+                    objp.pfl = itemDown[h].avgDay
                 }
                 if(itemDown[h].factorCode == '101'){  //氨氮
-                    objp.ad = itemDown[h].avgValue
+                    
+                    objp.zl =itemDown[h].avgValue
+                    objp.pfl = itemDown[h].avgDay
                 }
                 if(itemDown[h].factorCode == '060'){  //总磷
-                    objp.zl =itemDown[h].avgValue
+                    objp.ad = itemDown[h].avgValue
+                    objp.pfl = itemDown[h].avgDay
                 }
                 if(itemDown[h].factorCode == '065'){  //总氮
                     objp.zd = itemDown[h].avgValue
+                    objp.pfl = itemDown[h].avgDay
                 }
                 if(itemDown[h].factorCode == 'B01'){  //流量
                     objp.ll = itemDown[h].avgValue
+                    objp.pfl = itemDown[h].avgDay
                 }
                 
             }

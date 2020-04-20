@@ -3,7 +3,7 @@
         <div class="dialog">
             <div slot="title" class="tit">
                 <div class="line"></div>
-                <p>添加运维人员</p>
+                <p>添加运维合同</p>
             </div>
             <el-form
                 size="small"
@@ -308,6 +308,12 @@ export default {
                     {
                         required: true,
                         message: "请输入合同编号",
+                        trigger: "blur"
+                    },
+                    {
+                        pattern:
+                            /^([A-Z]{4})-([A-Z]{2})-([0-9]{8})-([0-9]{2})$/,
+                        message: "请按照正确的格式填写合同编号",
                         trigger: "blur"
                     }
                 ],

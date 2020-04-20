@@ -290,7 +290,7 @@ export default {
        
                 if (valid) {
                     // 表单验证通过之后的操作
-                    debugger
+    
                     let formData = new FormData()
                     formData.append('typeId', this.ruleForm.radio)
                       if(this.ruleForm.radio == 0){   //内部
@@ -390,19 +390,35 @@ export default {
     }
 }
 //最外层弹窗
+// .dialog >>> .el-dialog {
+//     margin-top: 0 !important;
+//     position: relative;
+//     margin: 0 auto;
+//     // height: 46%;
+//     overflow-y: auto;
+//     top: 54%;
+//     transition: transform;
+//     transform: translateY(-50%);
+//     border: 1px solid #ebeef5;
+//     left: 4%;
+//     width: 50%;
+//     overflow-y: auto;
+// }
 .dialog >>> .el-dialog {
-    margin-top: 0 !important;
-    position: relative;
-    margin: 0 auto;
-    // height: 46%;
-    overflow-y: auto;
-    top: 54%;
-    transition: transform;
-    transform: translateY(-50%);
-    border: 1px solid #ebeef5;
-    left: 4%;
-    width: 50%;
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    margin: 0 !important;
+    position: absolute;
+    top: 50%;
+    left: calc(50% + 120px);
+    transform: translate(-50%, -50%);
+    width: 34%;
+    height: 55%;
+}
+
+.dialog >>> .el-dialog .el-dialog__body {
+    flex: 1;
+    overflow: auto;
 }
 .dialog >>> .hide .el-upload--picture-card {
     display: none;

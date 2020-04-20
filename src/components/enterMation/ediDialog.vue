@@ -80,8 +80,8 @@
             </el-form-item>-->
         </el-form>
         <div slot="footer" class="foot">
-            <el-button type="primary" @click="sureEditor">编辑</el-button>
-            <el-button @click="cancelEditor">取消</el-button>
+            <el-button type="primary" @click="sureEditor" size="mini">保存</el-button>
+            <el-button @click="cancelEditor" size="mini">取消</el-button>
         </div>
         <el-dialog append-to-body :visible.sync="dialogVisible" width="28%">
             <img width="100%" :src="dialogImageUrl" alt />
@@ -566,19 +566,35 @@ export default {
     }
 }
 //最外层弹窗
+// .dialog >>> .el-dialog {
+//     margin-top: 0 !important;
+//     position: relative;
+//     margin: 0 auto;
+
+//     top: 50%;
+//     transition: transform;
+//     transform: translateY(-50%);
+//     border: 1px solid #ebeef5;
+
+//     width: 38%;
+//     height: 55%;
+//     overflow-y: auto;
+// }
 .dialog >>> .el-dialog {
-    margin-top: 0 !important;
-    position: relative;
-    margin: 0 auto;
-
+    display: flex;
+    flex-direction: column;
+    margin: 0 !important;
+    position: absolute;
     top: 50%;
-    transition: transform;
-    transform: translateY(-50%);
-    border: 1px solid #ebeef5;
-
-    width: 38%;
+    left: calc(50% + 120px);
+    transform: translate(-50%, -50%);
     height: 55%;
-    overflow-y: auto;
+    width: 34%;
+}
+
+.dialog >>> .el-dialog .el-dialog__body {
+    flex: 1;
+    overflow: auto;
 }
 //表单校验的图标颜色
 .dialog >>> .el-input__suffix {

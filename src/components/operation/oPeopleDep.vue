@@ -105,8 +105,9 @@
                 <el-table-column align="center" prop="ywzd" label="运维站点"></el-table-column>
                 <el-table-column align="center" prop="createTime" label="添加时间"></el-table-column>
 
-                <el-table-column label="操作" align="center" width="200" fixed="right">
+                <el-table-column label="操作" align="center" width="220" fixed="right">
                     <template slot-scope="scope">
+                        <el-button size="mini" @click="handleDetail(scope.$index, scope.row)">详情</el-button>
                         <el-button
                             size="mini"
                             type="primary"
@@ -139,6 +140,7 @@
             :item="operpItem"
             @ediSuccess="ediT"
         ></opeo-editor>
+        <opeo-detail :isShow="detailPeodilaog" :item="operpItem" @closeDetail="closeD"></opeo-detail>
     </div>
 </template>
 
@@ -146,12 +148,14 @@
 import noData from "../common/noData";
 import opeoAdd from './opeoAdd'
 import opeoEditor from './opeoEditor'
+import opeoDetail from './opeoDetail'
 import { mapState, mapMutations } from "vuex";
 export default {
     components: {
         opeoAdd,
         noData,
-        opeoEditor
+        opeoEditor,
+        opeoDetail
     },
 
     data() {
@@ -160,6 +164,7 @@ export default {
             tableHeight:window.innerHeight -260,
             addPeodilaog:false,   //添加运维人员dialog弹窗状态
             ediDilog:false,       //编辑运维人员dialog弹窗状态
+            detailPeodilaog:false,  //详情 dialog状态
             operpItem:'',  //运维人员行数据
             pCode:'', //省份code，提交用
             cCode:'', //城市code,提交用
@@ -199,12 +204,31 @@ export default {
         this.search()
     },
     methods: {
+        handleDetail(index,row){
+            console.log(index, row);
+            let id = row.id;
+            this.$api.operp.getOperpitem(id).then(res => {
+                
+                console.log(res)
+                if (res.data.code == 0) {
+                    this.operpItem = res.data.data[0]
+                    this.detailPeodilaog = true
+                }
+            }).catch(error => {
+
+            })
+           
+        },
         addPeople(){  //添加运维人员dialog
             this.addPeodilaog = true
         },
         //关闭添加运维人员diglog
         changeAdd(val){
             this.addPeodilaog = val
+        },
+        //关闭详情dialog
+        closeD(val){
+            this.detailPeodilaog =val
         },
         changeEdi(val){
             this.ediDilog = val

@@ -26,7 +26,7 @@
             </el-form-item>
             <el-form-item label="选择区域:" required>
                 <el-col :span="8">
-                    <el-form-item prop="provinceCode">
+                    <el-form-item prop="provinceCode" class="it">
                         <el-select
                             size="small"
                             v-model="ruleForm.provinceCode"
@@ -46,7 +46,7 @@
                 </el-col>
 
                 <el-col :span="8">
-                    <el-form-item prop="cityCode">
+                    <el-form-item prop="cityCode" class="it">
                         <el-select
                             size="small"
                             v-model="ruleForm.cityCode"
@@ -66,7 +66,7 @@
                 </el-col>
 
                 <el-col :span="8">
-                    <el-form-item prop="areaCode">
+                    <el-form-item prop="areaCode" class="it">
                         <el-select
                             size="small"
                             v-model="ruleForm.areaCode"
@@ -96,7 +96,7 @@
             </el-form-item>
         </el-form>
         <div slot="footer" class="foot">
-            <el-button type="primary" @click="sureEditor" size="mini">添加</el-button>
+            <el-button type="primary" @click="sureEditor" size="mini">保存</el-button>
             <el-button @click="cancelEditor" size="mini">取消</el-button>
         </div>
     </el-dialog>
@@ -518,13 +518,16 @@ export default {
     top: 50%;
     left: calc(50% + 120px);
     transform: translate(-50%, -50%);
+    width: 34%;
 }
 
 .dialog >>> .el-dialog .el-dialog__body {
     flex: 1;
     overflow: auto;
 }
-
+.it {
+    margin-bottom: 0px !important;
+}
 //表单校验的图标颜色
 .dialog >>> .el-input__suffix {
     color: #67c23a !important;

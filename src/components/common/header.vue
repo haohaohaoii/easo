@@ -15,12 +15,12 @@
 
             <el-submenu
                 v-if="item.subMenus && item.subMenus.length>=1"
-                v-for="(item,index) of menulist"
+                v-for="(item,index) of menuList"
                 :key="index"
                 class="upopt"
                 :index="item.createTime"
             >
-                <template slot="title" v-if="item.menuType==0 && item.menuName=='数据管理'">
+                <template slot="title" v-if="item.menuType==0 && item.menuName=='数据查看'">
                     <span class="iconfont" style="font-size:26px">&#xe6b8;</span>
                     {{item.menuName}}
                     <span class="iconfont">&#xe648;</span>
@@ -46,7 +46,12 @@
                     <span class="iconfont">&#xe648;</span>
                 </template>
                 <template slot="title" v-else-if="item.menuType==0 && item.menuName=='数据报表'">
-                    <span class="iconfont" style="font-size:22px">&#xe646;</span>
+                    <span class="iconfont" style="font-size:22px;">&#xe707;</span>
+                    {{item.menuName}}
+                    <span class="iconfont">&#xe648;</span>
+                </template>
+                <template slot="title" v-else-if="item.menuType==0 && item.menuName=='设置'">
+                    <span class="iconfont" style="font-size:20px;">&#xe615;</span>
                     {{item.menuName}}
                     <span class="iconfont">&#xe648;</span>
                 </template>
@@ -130,7 +135,34 @@ export default {
         };
     },
     computed: {
-        ...mapState(["menulist", "defaultMenu","wdly"])
+        ...mapState(["menulist", "defaultMenu","wdly"]),
+        menuList(){
+            
+            let arr= []
+            if(this.menulist && this.menulist.length>0){
+                
+                for(let k=0; k<this.menulist.length;k++){
+                    if(this.menulist[k].menuName == '企业管理'){
+                        arr[0] = this.menulist[k]
+                    }else if(this.menulist[k].menuName == '数据查看'){
+                        arr[1] = this.menulist[k]
+                    }else if(this.menulist[k].menuName == '数据报表'){
+                        arr[2]=this.menulist[k]
+                    }else if(this.menulist[k].menuName == '内容管理'){
+                        arr[3]=this.menulist[k]
+                    }else if(this.menulist[k].menuName == '运维管理'){
+                        arr[4]=this.menulist[k]
+                    }else if(this.menulist[k].menuName == '权限管理'){
+                        arr[5]=this.menulist[k]
+                    }else if(this.menulist[k].menuName == '设置'){
+                        arr[6]=this.menulist[k]
+                    }
+                }
+          
+               
+            }
+             return arr
+        }
     },
     methods: {
         handleSelect(key, keyPath) {

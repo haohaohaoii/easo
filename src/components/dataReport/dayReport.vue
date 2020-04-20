@@ -70,14 +70,29 @@
                 class="tab"
             >
                 <el-table-column align="center" prop="siteName" label="基站名"></el-table-column>
-                <el-table-column align="center" prop="cod" label="COD(mg/L)"></el-table-column>
-                <el-table-column align="center" prop="ad" label="氨氮(mg/L)"></el-table-column>
-                <el-table-column align="center" prop="zl" label="总磷(mg/L)"></el-table-column>
-                <el-table-column align="center" prop="zd" label="总氮(mg/L)"></el-table-column>
-                <el-table-column align="center" prop="ll" label="流量"></el-table-column>
-                <el-table-column align="center" prop="numDate" label="数据时间(月)"></el-table-column>
+                <el-table-column align="center" label="COD(mg/L)">
+                    <el-table-column align="center" prop="cod" label="平均值"></el-table-column>
+                    <el-table-column align="center" prop="pfl" label="排放量"></el-table-column>
+                </el-table-column>
+                <el-table-column align="center" label="氨氮(mg/L)">
+                    <el-table-column align="center" prop="ad" label="平均值"></el-table-column>
+                    <el-table-column align="center" prop="pfl" label="排放量"></el-table-column>
+                </el-table-column>
+                <el-table-column align="center" label="总磷(mg/L)">
+                    <el-table-column align="center" prop="zl" label="平均值"></el-table-column>
+                    <el-table-column align="center" prop="pfl" label="排放量"></el-table-column>
+                </el-table-column>
+                <el-table-column align="center" label="总氮(mg/L)">
+                    <el-table-column align="center" prop="zd" label="平均值"></el-table-column>
+                    <el-table-column align="center" prop="pfl" label="排放量"></el-table-column>
+                </el-table-column>
+                <el-table-column align="center" label="流量">
+                    <el-table-column align="center" prop="ll" label="平均值"></el-table-column>
+                    <el-table-column align="center" prop="pfl" label="排放量"></el-table-column>
+                </el-table-column>
+                <el-table-column align="center" prop="numDate" label="数据时间(月)" width="180"></el-table-column>
 
-                <el-table-column label="操作" align="center" width="220" fixed="right">
+                <el-table-column label="操作" align="center" width="180" fixed="right">
                     <template slot-scope="scope">
                         <el-button size="mini" @click="handleDetails(scope.$index, scope.row)">详情</el-button>
                         <el-button
@@ -138,7 +153,7 @@ export default {
             return {padding:'0'};
         },
         iHeaderCellStyle:function ({row, column, rowIndex, columnIndex}) {
-            return {padding:'0px',background:'rgba(237,237,237,1)'}
+            return {padding:'0px'}
         },
     },
     mounted(){
@@ -255,18 +270,25 @@ export default {
                                     obj.mn = yzArr[j].mn
                                     if(yzArr[j].factorCode == '011'){   //cod
                                         obj.cod = yzArr[j].avgValue
+                                        obj.pfl = yzArr[j].avgDay
                                     }
                                     if(yzArr[j].factorCode == '101'){   //氨氮
-                                        obj.ad = yzArr[j].avgValue
+
+                                        obj.zl = yzArr[j].avgValue
+                                        obj.pfl = yzArr[j].avgDay
+                                      
                                     }
                                     if(yzArr[j].factorCode == '060'){   //总磷
-                                        obj.zl = yzArr[j].avgValue
+                                          obj.ad = yzArr[j].avgValue
+                                        obj.pfl = yzArr[j].avgDay
                                     }
                                     if(yzArr[j].factorCode == '065'){   //总氮
                                         obj.zd = yzArr[j].avgValue
+                                        obj.pfl = yzArr[j].avgDay
                                     }
                                     if(yzArr[j].factorCode == 'B01'){   //流量
                                         obj.ll = yzArr[j].avgValue
+                                        obj.pfl = yzArr[j].avgDay
                                     }
                                 }
                                 listA.push(obj)
@@ -335,6 +357,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.opetract >>> .el-table--border,
+.el-table--group {
+    border: none;
+}
+.opetract >>> .el-table__header-wrapper th:nth-last-of-type(2) {
+    border-right: none;
+}
+.opetract >>> .el-table--border td:nth-last-of-type(1) {
+    border-right: none;
+}
+.opetract >>> .el-table--border::after,
+.el-table--group::after {
+    width: 0;
+}
 .opetract >>> .el-input {
     width: 200px !important;
 }
@@ -344,6 +380,7 @@ export default {
     width: 100%;
     height: 0;
 }
+
 .opetract {
     height: 100%;
     background: rgb(255, 255, 255);
@@ -393,6 +430,8 @@ export default {
     }
     .tabPage {
         text-align: center;
+        margin-top: 10px;
+
         // padding-top: 20px;
     }
 }

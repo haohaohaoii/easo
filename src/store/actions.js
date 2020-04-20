@@ -219,18 +219,18 @@ export default ({
             if (res[0].data.code == 0) {
 
                 let itemObj = res[0].data.data[0]
-                let siteDevarr = []
-                if (itemObj.siteDevices && itemObj.siteDevices.length > 0) {
-                    for (let i = 0; i < itemObj.siteDevices.length; i++) {
-                        siteDevarr.push(itemObj.siteDevices[i].factorCode)
-                    }
-                }
+                // let siteDevarr = []
+                // if (itemObj.siteDevices && itemObj.siteDevices.length > 0) {
+                //     for (let i = 0; i < itemObj.siteDevices.length; i++) {
+                //         siteDevarr.push(itemObj.siteDevices[i].factorCode)
+                //     }
+                // }
                 let obj = {
                     mn: itemObj.mn,
                     siteName: itemObj.siteName,  //基站名称
                     ioType: itemObj.ioType,  // 进口/出口
                     erpId: itemObj.erpId,  //企业id
-                    siteDevices: siteDevarr, //托管设备对应的id
+                    siteDevices: itemObj.siteDevices, //设备对应的数组
                     siteS: itemObj.siteState,  //站点状态
                 }
                 context.commit('getBaseitemList', obj)
@@ -272,6 +272,7 @@ export default ({
 
         })
     },
+
     //基站详情(传递行数据 更改 dialog状态)
     openSitedetail(context, rowMsg) {
         context.commit('baseDetail', true)   //改变dialog状态
@@ -362,11 +363,12 @@ export default ({
                                 if (arr[i].dataInfoList[j].factorCode == '011') {   //cod
                                     obj.yDatacod.push(arr[i].dataInfoList[j].factorValue)
                                 } else if (arr[i].dataInfoList[j].factorCode == '101') {   //氨氮
-                                    obj.yDataandan.push(arr[i].dataInfoList[j].factorValue)
+                                    obj.yDatazolin.push(arr[i].dataInfoList[j].factorValue)
+
                                 } else if (arr[i].dataInfoList[j].factorCode == '065') {//总氮
                                     obj.yDatazodan.push(arr[i].dataInfoList[j].factorValue)
                                 } else if (arr[i].dataInfoList[j].factorCode == '060') {//总磷
-                                    obj.yDatazolin.push(arr[i].dataInfoList[j].factorValue)
+                                    obj.yDataandan.push(arr[i].dataInfoList[j].factorValue)
                                 } else if (arr[i].dataInfoList[j].factorCode == '001') {//ph
                                     obj.yDataph.push(arr[i].dataInfoList[j].factorValue)
                                 } else if (arr[i].dataInfoList[j].factorCode == 'B01') {//流量

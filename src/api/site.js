@@ -37,7 +37,12 @@ const site = {
     //根据企业ID查看站点信息(分页)
     getSitess(companyId, params) {
         return axios.get(`${base.localUrl}/admin/site/sites/${companyId}`, params)
-    }
+    },
+    //获取设备类型
+    getTypes() {
+        let type = 'device_type'
+        return axios.get(`${base.localUrl}/admin/sys/${type}`)
+    },
 }
 
 export default site

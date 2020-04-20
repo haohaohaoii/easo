@@ -42,8 +42,21 @@ export default {
         
         //判断用户上一次操作是否是记住密码
         this.getPaw();
+        //绑定事件
+     window.addEventListener('keydown',this.keyDown);
     },
+    destroyed(){
+        window.removeEventListener('keydown',this.keyDown,false);
+    },
+
     methods: {
+        keyDown(e){
+        //如果是回车则执行登录方法
+            if(e.keyCode == 13){
+                this.login();
+            }
+        },
+
         login() {
             if (this.userName && this.userPaw) {
                 //调用登陆接口

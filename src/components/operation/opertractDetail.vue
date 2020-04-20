@@ -11,11 +11,11 @@
             <p>运维合同详情</p>
         </div>
         <el-table :data="tableData" border style="width: 100%" :show-header="false">
-            <el-table-column prop="date" label width="180" align="right"></el-table-column>
+            <el-table-column prop="date" width="180" align="right"></el-table-column>
             <!-- <el-table-column prop="image" v-if="row.image" label="图片" min-width="20%"> -->
 
             <!-- <el-table-column prop="name" label align="left"></el-table-column> -->
-            <el-table-column prop="name" label="描述图片">
+            <el-table-column prop="name">
                 <template slot-scope="scope">
                     <el-popover trigger="hover" v-if="scope.row.pictures" placement="right">
                         <img
@@ -167,15 +167,25 @@ export default {
         }
     }
 }
+// .dialog >>> .el-dialog {
+//     margin-top: 0 !important;
+//     position: relative;
+//     margin: 0 auto;
+//     width: 36%;
+//     top: 50%;
+//     transition: transform;
+//     transform: translateY(-50%);
+//     border: 1px solid #ebeef5;
+// }
 .dialog >>> .el-dialog {
-    margin-top: 0 !important;
-    position: relative;
-    margin: 0 auto;
-    width: 36%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 !important;
+    position: absolute;
     top: 50%;
-    transition: transform;
-    transform: translateY(-50%);
-    border: 1px solid #ebeef5;
+    width: 36% !important;
+    left: calc(50% + 120px);
+    transform: translate(-50%, -50%);
 }
 .dialog >>> .el-table td.is-right {
     background: #ebf2fb;

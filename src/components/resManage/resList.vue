@@ -136,7 +136,7 @@ export default {
             let resId = row.id;
             let _this = this;
            this.$api.resManage.getResI(resId).then(res => {
-                debugger
+           
                 console.log(res)
                 if (res.data.code == 0) {
                     _this.roWI = res.data.data[0]
@@ -157,7 +157,7 @@ export default {
                 .then(() => {
                     let newId = row.id;
                     this.$api.resManage.deleteRes(newId).then(res=>{
-                        debugger
+               
                         if(res.data.code == 0){
                             this.$message({
                                 type: "success",

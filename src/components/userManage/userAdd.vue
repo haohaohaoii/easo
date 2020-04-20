@@ -283,14 +283,19 @@ export default {
     }
 }
 .dialog >>> .el-dialog {
-    margin-top: 0 !important;
-    position: relative;
-    margin: 0 auto;
-    width: 30%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 !important;
+    position: absolute;
     top: 50%;
-    transition: transform;
-    transform: translateY(-50%);
-    border: 1px solid #ebeef5;
+    left: calc(50% + 120px);
+    transform: translate(-50%, -50%);
+    width: 30%;
+}
+
+.dialog >>> .el-dialog .el-dialog__body {
+    flex: 1;
+    overflow: auto;
 }
 .dialog >>> .el-select {
     width: 100%;

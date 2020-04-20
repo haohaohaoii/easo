@@ -75,6 +75,7 @@
                         <el-checkbox v-model="ruleForm.codIsC" @change="changeCod">COD</el-checkbox>
                     </el-form-item>
                 </el-col>
+
                 <el-col :span="4">
                     <el-form-item prop="codType">
                         <el-select
