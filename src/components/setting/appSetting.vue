@@ -12,49 +12,29 @@
                     :model="ruleForm"
                     :rules="rules"
                     ref="ruleForm"
-                    label-width="100px"
+                    label-width="120px"
                     size="mini"
                     class="demo-ruleForm"
+                    status-icon
                 >
-                    <el-form-item label="版本名称" prop="name">
+                    <el-form-item label="版本名称:" prop="name">
                         <el-input v-model="ruleForm.name"></el-input>
                     </el-form-item>
-                    <el-form-item label="版本号" prop="num">
-                        <el-input v-model="ruleForm.name"></el-input>
+                    <el-form-item label="版本号:" prop="num">
+                        <el-input v-model.number="ruleForm.num"></el-input>
                     </el-form-item>
-                    <el-form-item label="描述" prop="desc">
+                    <el-form-item label="描述:" prop="desc">
                         <el-input type="textarea" v-model="ruleForm.desc"></el-input>
                     </el-form-item>
-                    <el-form-item label="上传文件:">
+                    <el-form-item label="上传apk文件:" prop="fil">
                         <div class="fileupload">
                             选择文件
                             <input type="file" @change="fileC" ref="fileess" />
                         </div>
-                        <div class="fileList" v-if="fil && fil !=''">
+                        <div class="fileList" v-if="ruleForm.fil && ruleForm.fil !=''">
                             <div class="left">
-                                <div class="left-img" v-if="files.filesExtensions == 'pdf'">
-                                    <img slot="icon-active" src="../../assets/images/pdf.png" />
-                                </div>
-                                <div class="left-img" v-if="files.filesExtensions == 'doc'">
-                                    <img slot="icon-active" src="../../assets/images/doc.png" />
-                                </div>
-                                <div class="left-img" v-if="files.filesExtensions == 'docx'">
-                                    <img slot="icon-active" src="../../assets/images/docx.png" />
-                                </div>
-                                <div class="left-img" v-if="files.filesExtensions == 'xlsx'">
-                                    <img slot="icon-active" src="../../assets/images/xlsx.png" />
-                                </div>
-                                <div class="left-img" v-if="files.filesExtensions == 'rar'">
-                                    <img slot="icon-active" src="../../assets/images/rar.png" />
-                                </div>
-                                <div class="left-img" v-if="files.filesExtensions == 'zip'">
-                                    <img slot="icon-active" src="../../assets/images/zip.png" />
-                                </div>
-                                <div class="left-img" v-if="files.filesExtensions == 'xls'">
-                                    <img slot="icon-active" src="../../assets/images/xls.png" />
-                                </div>
-                                <div class="left-img" v-if="files.filesExtensions == 'ppt'">
-                                    <img slot="icon-active" src="../../assets/images/ppt.png" />
+                                <div class="left-img" v-if="files.filesExtensions == 'apk'">
+                                    <img slot="icon-active" src="../../assets/images/apk.png" />
                                 </div>
                             </div>
                             <div class="cont">
@@ -77,11 +57,17 @@
 </template>
 
 <script>
-
+import base from '../../api/base.js'
 export default {
     data() {
+        var valiIcon = (rule, value, callback) => { // 文件校验
+            if (!this.ruleForm.fil) {
+                callback(new Error('请上传文件'));
+            } else {
+                callback();
+            }
+        }
         return {
-            fil:'',
             files: {
                 fileName: '', // 文件名
                 filesExtension: '', // 扩展名
@@ -91,6 +77,7 @@ export default {
                 fileData: '' // 文件数据
             },
             ruleForm: {
+                fil:'',
                 name: '',
                 num:'',
                 desc: ''
@@ -98,17 +85,24 @@ export default {
             rules: {
                 name: [
                     { required: true, message: '请填写版本名称', trigger: 'blur' },
+                     {
+                        pattern: /^\d{1,2}(\.\d{1,2}){2,3}$/,
+                        message: "请填写正确的版本名称格式",
+                        trigger: "blur"
+                    }
                 ],
                 num: [
-                    { required: true, message: '请填写版本号', trigger: 'blur' }
-                ]
+                    { type: 'number', message: '版本号必须为整数类型'}
+                ],
+                fil: [
+                    {required:true, validator: valiIcon, trigger: 'change' } 
+                ],
                 
             }
         };
     },
     methods:{
       fileC() {
-          debugger
             let myfile = this.$refs.fileess
             if (myfile.files[0] == undefined) {
                 
@@ -136,7 +130,7 @@ export default {
                         s = s < 10 ? '0' + s : s
                         this.files.fileDate = Y + '-' + m + '-' + d + ' ' + H + ':' + i + ':' + s
                         this.files.fileSize = parseFloat(myfile.files[0].size / 1024 / 1024).toPrecision(2)
-                        this.fil = myfile.files[0]
+                        this.ruleForm.fil = myfile.files[0]
                         this.files.fileName = myfile.files[0].name
                     }else{
                         this.$message.error(`暂不支持${this.files.filesExtension}类型的文件`)
@@ -147,22 +141,51 @@ export default {
         },
         isAssetTypeAnImage(ext) {
             return new Promise(resolve =>{
-                let arr = ['.pdf','.doc','.docx','.xls','.xlsx','.rar','.zip','.ppt']
+                let arr = ['.apk']
                 resolve(arr.indexOf(ext.toLowerCase()) !== -1)
             })
         },
         delFiles(){  //点击删除
-            this.fil = '';
+            this.ruleForm.fil = '';
             this.files.fileName = '';
             this.files.filesExtension = '';
             this.files.fileDate = ''
             this.files.fileSize = ''
         },
         sureEditor(){  //保存
+            this.$refs.ruleForm.validate((valid) => {
 
+                if (valid) {
+                    let adminId = localStorage.adminId
+                    const formData = new FormData()
+                    formData.append('file', this.ruleForm.fil)  //文件
+                    formData.append('versionCode', this.ruleForm.num)  //版本号
+                    formData.append('versionName', this.ruleForm.name) //版本名称
+                    formData.append('description', this.ruleForm.desc) //描述
+                    formData.append('createBy',adminId)  //当前admin id
+
+                    this.$axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+                    this.$axios.post(`${base.localUrl}/admin/app`,formData,{
+                        'Content-Type':'multipart/form-data'
+                    }).then(res=>{
+          
+                        if(res.data.code == 0){
+                            this.$message({
+                                message: 'app更新成功',
+                                type: 'success'
+                            });
+                            this.cancelEditor()
+                        }
+                    })
+                } else {
+                    this.$message.error("请按照要求填写!");
+                    return false;
+                }
+            });
         },
         cancelEditor(){  //取消
-
+            this.ruleForm.fil = ''
+            this.$refs.ruleForm.resetFields();  //重置from和rules
         }
     }
 };
@@ -230,22 +253,21 @@ export default {
     .fileupload {
         position: relative;
         width: 75px;
-        height: 34px;
-        line-height: 34px;
+        height: 28px;
+        line-height: 28px;
         text-align: center;
-        line-height: 34px;
         color: #fff;
         background-color: #409eff;
         border-color: #409eff;
         border-radius: 4px;
 
-        line-height: 35px;
+        line-height: 28px;
         overflow: hidden;
     }
     .fileupload input {
         position: absolute;
         width: 75px;
-        height: 34px;
+        height: 28px;
         right: 0;
         top: 0;
         opacity: 0;
@@ -253,9 +275,12 @@ export default {
         -ms-filter: "alpha(opacity=0)";
     }
     .foot {
-        margin-top: 40px;
-        display: flex;
-        justify-content: center;
+        position: absolute;
+        left: 50%;
+        bottom: 15%;
     }
+}
+.appS >>> .el-input__suffix {
+    color: #67c23a !important;
 }
 </style>
