@@ -1,0 +1,153 @@
+/*首页*/
+
+@charset "UTF-8";
+
+@mixin addPeop-xl() {
+    .addPeop{
+        /deep/ .dialog{
+            width: 55%;
+            height: auto;
+            overflow-y: auto;
+            background: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-sizing: border-box;
+        };
+        /deep/ .foot{
+          
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+        }
+        
+    }
+    .inlog{
+        /deep/ .el-dialog {
+            height: auto;
+            left: 80%;
+            top: 58%;
+            width: 28%;
+        }
+        /deep/ .el-checkbox {
+            width: 150px;
+            margin-right: 0;
+        }
+        /deep/ .el-dialog__footer{
+            padding-bottom: 15px;
+        }
+    } 
+};
+@mixin addPeop-lg() {
+    .addPeop{
+        /deep/ .dialog{
+            width: 55%;
+            height: auto;
+            overflow-y: auto;
+            background: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-sizing: border-box;
+        };
+        /deep/ .foot{
+          
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+        }
+        
+    }
+    .inlog{
+        /deep/ .el-dialog {
+            height: auto;
+            left: 22%;
+            top: 20%;
+            width: 30%;
+        }
+        /deep/ .el-checkbox {
+            width: 140px;
+            margin-right: 0;
+        }
+        /deep/ .el-dialog__footer{
+            padding-bottom: 15px;
+        }
+    } 
+};
+@mixin addPeop-md() {
+    .addPeop{
+        /deep/ .dialog{
+            width: 55%;
+            height: 75%;
+            overflow-y: auto;
+            background: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-sizing: border-box;
+        };
+        /deep/ .foot{
+          
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+        }
+        
+    }
+    .inlog{
+        /deep/ .el-dialog {
+            height: 48%;
+            left: 22%;
+            top: 20%;
+            width: 25%;
+        }
+        /deep/ .el-checkbox {
+            width: 128px;
+            margin-right: 0;
+        }
+        /deep/ .el-dialog__footer{
+            padding: 0;
+        }
+    } 
+};
+@mixin addPeop-sm() {
+    .addPeop{
+        /deep/ .dialog{
+            width: 55%;
+            height: auto;
+            overflow-y: auto;
+            background: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-sizing: border-box;
+        };
+        /deep/ .foot{
+          
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+        }
+        
+    }
+    .inlog{
+        /deep/ .el-dialog {
+            height: 55%;
+            left: 22%;
+            top: 20%;
+            width: 25%;
+        }
+        /deep/ .el-checkbox {
+            width: 128px;
+            margin-right: 0;
+        }
+        /deep/ .el-dialog__footer{
+            padding: 0;
+        }
+    } 
+    
+}

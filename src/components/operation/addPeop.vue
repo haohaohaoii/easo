@@ -72,7 +72,6 @@
             </el-form>
             <el-dialog
                 title="内层 Dialog"
-                width="25%"
                 class="inlog"
                 :visible.sync="innerVisible"
                 :close-on-click-modal="false"
@@ -101,7 +100,6 @@
             </el-dialog>
             <el-dialog
                 title="内层 Dialog"
-                width="25%"
                 class="inlog"
                 :visible.sync="innerOver"
                 :close-on-click-modal="false"
@@ -352,20 +350,20 @@ export default {
 .addPeop >>> .el-select {
     width: 100%;
 }
-.inlog >>> .el-dialog {
-    height: 42%;
+// .inlog >>> .el-dialog {
+//     height: 42%;
 
-    left: 22%;
-    top: 20%;
-}
+//     left: 22%;
+//     top: 20%;
+// }
 .inlog >>> .el-dialog__body {
     height: 55%;
     overflow-y: auto;
 }
-.inlog >>> .el-checkbox {
-    width: 142px;
-    margin-right: 0;
-}
+// .inlog >>> .el-checkbox {
+//     width: 142px;
+//     margin-right: 0;
+// }
 .inlog {
     .tit {
         display: flex;
@@ -391,14 +389,14 @@ export default {
     height: 100%;
     position: relative;
     .dialog {
-        width: 50%;
-        height: 65%;
-        background: white;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        box-sizing: border-box;
+        // width: 50%;
+        // height: 65%;
+        // background: white;
+        // position: absolute;
+        // top: 50%;
+        // left: 50%;
+        // transform: translate(-50%, -50%);
+        // box-sizing: border-box;
         .tit {
             margin-top: 10px;
             display: flex;
@@ -424,7 +422,7 @@ export default {
             padding-right: 25px;
         }
         .demo-ruleForm {
-            height: 68%;
+            // height: 68%;
             display: flex;
             flex-direction: column;
             justify-content: space-around;
@@ -432,16 +430,16 @@ export default {
             padding-left: 64px;
             padding-right: 76px;
         }
-        .foot {
-            margin-top: 30px;
-            display: flex;
-            justify-content: center;
-        }
+        // .foot {
+        //     margin-top: 30px;
+        //     display: flex;
+        //     justify-content: center;
+        // }
     }
 }
 
 //表单校验的图标颜色
-.addTwo >>> .el-input__suffix {
+.addPeop >>> .el-input__suffix {
     color: #67c23a !important;
 }
 </style>
