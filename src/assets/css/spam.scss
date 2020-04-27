@@ -1,0 +1,87 @@
+/*首页*/
+
+@charset "UTF-8";
+
+@mixin spam-xl() {
+    /deep/ .el-dialog {
+        display: flex;
+        flex-direction: column;
+        margin: 0 !important;
+        position: absolute;
+        top: 50%;
+        left: calc(50% + 120px);
+        transform: translate(-50%, -50%);
+      
+        width: 34%;
+ 
+    }
+    
+    /deep/ .el-dialog .el-dialog__body {
+        flex: 1;
+        overflow: auto;
+    }
+};
+@mixin spam-lg() {
+    .spamReplys{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            height: 70%;
+            width: 34%;
+            overflow-y: auto;
+        }
+        
+        /deep/ .el-dialog .el-dialog__body {
+            flex: 1;
+            overflow: auto;
+        }
+    }
+};
+@mixin spam-md() {
+    .spamReplys{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            height: 70%;
+            width: 34%;
+            overflow-y: auto;
+        }
+        
+        /deep/ .el-dialog .el-dialog__body {
+            flex: 1;
+            overflow: auto;
+        }
+    }
+};
+@mixin spam-sm() {
+    .spamReplys{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            height: 70%;
+            width: 34%;
+            overflow-y: auto;
+        }
+        
+        /deep/ .el-dialog .el-dialog__body {
+            flex: 1;
+            overflow: auto;
+        }
+    }
+    
+}

@@ -5,20 +5,23 @@
 @import './fpage.scss';    //首页
 @import './login.scss';    //登陆
 @import './baseManage.scss';  //企业管理-基站管理
+@import './spam.scss';  //企业管理-留言管理
 
 @media (min-width: 1900px) {
     @include header-xl();
     @include homeLeft-xl();
     @include fpage-xl();
     @include login-xl();
-    @include baseManage-xl(); 
+    @include baseManage-xl();
+    @include spam-xl();
 }
 @media (min-width: 1600px) and (max-width: 1899px) {
     @include header-lg();
     @include homeLeft-lg();
     @include fpage-lg();
     @include login-lg();
-    @include baseManage-lg(); 
+    @include baseManage-lg();
+    @include spam-lg();
 };
 @media (min-width: 1400px) and (max-width: 1599px) {
     @include header-md();
@@ -26,6 +29,7 @@
     @include fpage-md();
     @include login-md();
     @include baseManage-md();
+    @include spam-md();
 }
 @media (min-width: 1200px) and (max-width: 1399px) {
     @include header-sm();
@@ -33,4 +37,5 @@
     @include fpage-sm();
     @include login-sm();
     @include baseManage-sm();
+    @include spam-sm();
 }

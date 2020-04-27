@@ -1,7 +1,7 @@
 <template>
     <el-dialog
         :visible.sync="spamReplys"
-        class="dialog"
+        class="spamReplys"
         center
         @close="closeDialog"
         :close-on-click-modal="false"
@@ -146,7 +146,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dialog {
+.spamReplys {
     .tit {
         display: flex;
         align-items: center;
@@ -195,20 +195,20 @@ export default {
 //     transform: translateY(-50%);
 //     border: 1px solid #ebeef5;
 // }
-.dialog >>> .el-dialog {
-    display: flex;
-    flex-direction: column;
-    margin: 0 !important;
-    position: absolute;
-    top: 50%;
-    left: calc(50% + 120px);
-    transform: translate(-50%, -50%);
+// .spamReplys >>> .el-dialog {
+//     display: flex;
+//     flex-direction: column;
+//     margin: 0 !important;
+//     position: absolute;
+//     top: 50%;
+//     left: calc(50% + 120px);
+//     transform: translate(-50%, -50%);
 
-    width: 34%;
-}
+//     width: 34%;
+// }
 
-.dialog >>> .el-dialog .el-dialog__body {
-    flex: 1;
-    overflow: auto;
-}
+// .spamReplys >>> .el-dialog .el-dialog__body {
+//     flex: 1;
+//     overflow: auto;
+// }
 </style>
