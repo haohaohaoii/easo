@@ -1,7 +1,7 @@
 <template>
     <el-dialog
         :visible.sync="enterDialog"
-        class="dialog"
+        class="enterDetail"
         center
         @close="closeDialog"
         :close-on-click-modal="false"
@@ -152,7 +152,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dialog {
+.enterDetail {
     .tit {
         display: flex;
         align-items: center;
@@ -178,26 +178,26 @@ export default {
 //     transform: translateY(-50%);
 //     border: 1px solid #ebeef5;
 // }
-.dialog >>> .el-dialog {
-    display: flex;
-    flex-direction: column;
-    margin: 0 !important;
-    position: absolute;
-    top: 50%;
-    left: calc(50% + 120px);
-    transform: translate(-50%, -50%);
+// .enterDetail >>> .el-dialog {
+//     display: flex;
+//     flex-direction: column;
+//     margin: 0 !important;
+//     position: absolute;
+//     top: 50%;
+//     left: calc(50% + 120px);
+//     transform: translate(-50%, -50%);
 
-    width: 34%;
-}
+//     width: 34%;
+// }
 
-.dialog >>> .el-dialog .el-dialog__body {
+.enterDetail >>> .el-dialog .el-dialog__body {
     flex: 1;
     overflow: auto;
 }
-.dialog >>> .el-table td.is-right {
+.enterDetail >>> .el-table td.is-right {
     background: #ebf2fb;
 }
-.dialog >>> .el-table th.is-right {
+.enterDetail >>> .el-table th.is-right {
     background: #ebf2fb;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
     <el-dialog
         :visible.sync="enterAdd"
-        class="dialog"
+        class="enterAdd"
         center
         :close-on-click-modal="false"
         append-to-body
@@ -276,13 +276,13 @@ export default {
         handleRemove(file, fileList) {
             let _this = this;
             this.getBase64(file.raw).then(res => {
-                console.log(res);
+              
                    let str = res.substring(res.indexOf(",")+1);
 
                 for (let i = 0; i < _this.imageUrl.length; i++) {
                     if (_this.imageUrl[i] == str) {
                         _this.imageUrl.splice(i, 1);
-                       console.log( _this.imageUrl)
+                     
                         break;
                     }
                 }
@@ -292,13 +292,13 @@ export default {
         handleRemove2(file, fileList) {
             let _this = this;
             this.getBase64(file.raw).then(res => {
-                console.log(res);
+              
                    let str = res.substring(res.indexOf(",")+1);
 
                 for (let i = 0; i < _this.imageUrl2.length; i++) {
                     if (_this.imageUrl2[i] == str) {
                         _this.imageUrl2.splice(i, 1);
-                       console.log( _this.imageUrl)
+                   
                         break;
                     }
                 }
@@ -308,7 +308,7 @@ export default {
         handlePictureCardPreview(file) {
             let _this = this;
             this.getBase64(file.raw).then(res => {
-                console.log(res);
+              
                 let str = res.substring(res.indexOf(",")+1);
                 for (let i = 0; i < _this.imageUrl.length; i++) {
                     if (_this.imageUrl[i] == str) {
@@ -324,7 +324,7 @@ export default {
         handlePictureCardPreview2(file) {
             let _this = this;
             this.getBase64(file.raw).then(res => {
-                console.log(res);
+       
                 let str = res.substring(res.indexOf(",")+1);
                 for (let i = 0; i < _this.imageUrl2.length; i++) {
                     if (_this.imageUrl2[i] == str) {
@@ -364,7 +364,7 @@ export default {
                     let _this = this
                     this.$api.company.addCompany(params).then(res=>{
                         if(res.data.code ==0){
-                            console.log(res)
+                  
                             _this.$message({
                                     message: '企业添加成功',
                                     type: 'success'
@@ -390,7 +390,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dialog {
+.enterAdd {
     .tit {
         display: flex;
         align-items: center;
@@ -429,47 +429,47 @@ export default {
 //     width: 30%;
 //     overflow-y: auto;
 // }
-.dialog >>> .el-dialog {
-    display: flex;
-    flex-direction: column;
-    margin: 0 !important;
-    position: absolute;
-    top: 50%;
-    left: calc(50% + 120px);
-    transform: translate(-50%, -50%);
-    width: 34%;
-    height: 55%;
-}
+// .enterAdd >>> .el-dialog {
+//     display: flex;
+//     flex-direction: column;
+//     margin: 0 !important;
+//     position: absolute;
+//     top: 50%;
+//     left: calc(50% + 120px);
+//     transform: translate(-50%, -50%);
+//     width: 34%;
+//     height: 55%;
+// }
 
-.dialog >>> .el-dialog .el-dialog__body {
+.enterAdd >>> .el-dialog .el-dialog__body {
     flex: 1;
     overflow: auto;
 }
 //表单校验的图标颜色
-.dialog >>> .el-input__suffix {
+.enterAdd >>> .el-input__suffix {
     color: #67c23a !important;
 }
 //上传图片框
-.dialog >>> .el-upload--picture-card {
+.enterAdd >>> .el-upload--picture-card {
     width: 90px;
     height: 90px;
     border: 2px solid rgba(153, 153, 153, 1);
     border-radius: 10px;
 }
 //上传图片 +框
-.dialog >>> .el-upload--picture-card i {
+.enterAdd >>> .el-upload--picture-card i {
     position: relative;
     top: -22px;
     color: #999999;
 }
 //已上传的图片框
-.dialog >>> .el-upload-list--picture-card .el-upload-list__item {
+.enterAdd >>> .el-upload-list--picture-card .el-upload-list__item {
     width: 90px;
     height: 90px;
     border: 2px solid rgba(153, 153, 153, 1);
     border-radius: 10px;
 }
-.dialog >>> .el-select {
+.enterAdd >>> .el-select {
     width: 100%;
 }
 </style>

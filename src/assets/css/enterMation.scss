@@ -1,0 +1,168 @@
+/*首页*/
+
+@charset "UTF-8";
+
+@mixin enterMation-xl() {
+    .enterAdd{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 34%;
+            height: 65%;
+        }
+    }
+    .enterEditor{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            height: 65%;
+            width: 34%;
+        }
+    }
+    .enterDetail{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            height: 65%;
+            width: 30%;
+        }
+    } 
+};
+@mixin enterMation-lg() {
+    .enterAdd{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 34%;
+            height: 70%;
+        }
+    }
+    .enterEditor{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            height: 70%;
+            width: 34%;
+        }
+    }
+    .enterDetail{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            height: 65%;
+            width: 30%;
+        }
+    } 
+};
+@mixin enterMation-md() {
+    .enterAdd{
+        /deep/ .el-dialog {
+             display: flex;
+             flex-direction: column;
+             margin: 0 !important;
+             position: absolute;
+             top: 50%;
+             left: calc(50% + 120px);
+             transform: translate(-50%, -50%);
+             width: 34%;
+             height: 70%;
+         }
+     }
+     .enterEditor{
+         /deep/ .el-dialog {
+             display: flex;
+             flex-direction: column;
+             margin: 0 !important;
+             position: absolute;
+             top: 50%;
+             left: calc(50% + 120px);
+             transform: translate(-50%, -50%);
+             height: 70%;
+             width: 34%;
+         }
+     }
+     .enterDetail{
+         /deep/ .el-dialog {
+             display: flex;
+             flex-direction: column;
+             margin: 0 !important;
+             position: absolute;
+             top: 50%;
+             left: calc(50% + 120px);
+             transform: translate(-50%, -50%);
+             height: 65%;
+             width: 30%;
+         }
+     }   
+};
+@mixin enterMation-sm() {
+    .enterAdd{
+       /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 34%;
+            height: 70%;
+        }
+    }
+    .enterEditor{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            height: 70%;
+            width: 34%;
+        }
+    }
+    .enterDetail{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            height: 70%;
+            width: 34%;
+        }
+    }
+}

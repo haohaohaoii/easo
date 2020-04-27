@@ -1,7 +1,7 @@
 <template>
     <el-dialog
         :visible.sync="editorDialog"
-        class="dialog"
+        class="enterEditor"
         center
         @close="closeDialog"
         :close-on-click-modal="false"
@@ -260,13 +260,13 @@ export default {
                 ctx.drawImage(imgObj, 0, 0);
                 // 将图片转成base64格式
                 var img = canvas.toDataURL("image/jpeg", 0.5);
-                console.log("触发" + i + "次", img);
+         
                 i = i + 1;
                 if (i < len) {
                     _this.getBase64Image(image, i, len);
                 }
             };
-            console.log("内外部");
+    
         },
         //关闭外层dialog
         closeDialog() {
@@ -399,14 +399,14 @@ export default {
                                         0.5
                                     );
                                     img = img.substring(img.indexOf(",")+1);
-                                    console.log("触发" + i + "次", img);
+                                 
                                     base64Arr.push(img);
                                     reslove();
                                 };
                             });
                             await promise;
                         }
-                        console.log(base64Arr);
+                    
                         if(urlArr2 && urlArr2.length>0){
                             for (let i = 0; i < urlArr2.length; i++) {
                                 var canvas2 = document.createElement("canvas");
@@ -431,14 +431,14 @@ export default {
                                         );
 
                                         img2 = img2.substring(img2.indexOf(",")+1);
-                                        console.log("触发" + i + "次", img2);
+                                    
                                         base64Arr2.push(img2);
                                         reslove();
                                     };
                                 });
                                 await promise2;
                             }
-                            console.log(base64Arr2);
+                       
                         }
             
                         let params = {
@@ -458,7 +458,7 @@ export default {
                             .companyEditor(erpId, params)
                             .then(res => {
                                 if (res.data.code == 0) {
-                                    console.log(res);
+                                  
                                     _this.$message({
                                         message: "企业信息修改成功",
                                         type: "success"
@@ -541,7 +541,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dialog {
+.enterEditor {
     .tit {
         display: flex;
         align-items: center;
@@ -580,41 +580,41 @@ export default {
 //     height: 55%;
 //     overflow-y: auto;
 // }
-.dialog >>> .el-dialog {
-    display: flex;
-    flex-direction: column;
-    margin: 0 !important;
-    position: absolute;
-    top: 50%;
-    left: calc(50% + 120px);
-    transform: translate(-50%, -50%);
-    height: 55%;
-    width: 34%;
-}
+// .enterEditor >>> .el-dialog {
+//     display: flex;
+//     flex-direction: column;
+//     margin: 0 !important;
+//     position: absolute;
+//     top: 50%;
+//     left: calc(50% + 120px);
+//     transform: translate(-50%, -50%);
+//     height: 55%;
+//     width: 34%;
+// }
 
-.dialog >>> .el-dialog .el-dialog__body {
+.enterEditor >>> .el-dialog .el-dialog__body {
     flex: 1;
     overflow: auto;
 }
 //表单校验的图标颜色
-.dialog >>> .el-input__suffix {
+.enterEditor >>> .el-input__suffix {
     color: #67c23a !important;
 }
 //上传图片框
-.dialog >>> .el-upload--picture-card {
+.enterEditor >>> .el-upload--picture-card {
     width: 90px;
     height: 90px;
     border: 2px solid rgba(153, 153, 153, 1);
     border-radius: 10px;
 }
 //上传图片 +框
-.dialog >>> .el-upload--picture-card i {
+.enterEditor >>> .el-upload--picture-card i {
     position: relative;
     top: -22px;
     color: #999999;
 }
 //已上传的图片框
-.dialog >>> .el-upload-list--picture-card .el-upload-list__item {
+.enterEditor >>> .el-upload-list--picture-card .el-upload-list__item {
     width: 90px;
     height: 90px;
     border: 2px solid rgba(153, 153, 153, 1);

@@ -5,7 +5,6 @@
                 :height="tableHeight"
                 :data="tableData"
                 stripe
-                style="width: 100%"
                 :row-style="iRowStyle"
                 :cell-style="iCellStyle"
                 :header-row-style="iHeaderRowStyle"
@@ -14,8 +13,8 @@
             >
                 <el-table-column align="center" prop="erpName" label="企业名称" width="260"></el-table-column>
                 <el-table-column align="center" prop="erpLinkMan" label="联系人"></el-table-column>
-                <el-table-column align="center" prop="erpLinkTel" label="联系电话"></el-table-column>
-                <el-table-column align="center" prop="erpAddr" label="企业地址"></el-table-column>
+                <el-table-column align="center" prop="erpLinkTel" min-width="120px" label="联系电话"></el-table-column>
+                <el-table-column align="center" prop="erpAddr" min-width="200px" label="企业地址"></el-table-column>
                 <el-table-column align="center" prop="userSection" label="审核状态">
                     <template slot-scope="scope">
                         <span v-if="scope.row.userSection==0">审核中</span>
@@ -23,7 +22,7 @@
                         <span v-else-if="scope.row.userSection==2">审核未通过</span>
                     </template>
                 </el-table-column>
-                <el-table-column align="center" prop="turnTime" label="注册时间"></el-table-column>
+                <el-table-column align="center" prop="turnTime" min-width="160px" label="注册时间"></el-table-column>
                 <el-table-column label="操作" align="center" width="300" fixed="right">
                     <template slot-scope="scope">
                         <el-button
@@ -120,7 +119,7 @@ export default {
         },
         //点击编辑--跳转编辑dialog
         handleEdit(index, row) {
-            console.log(index, row);
+          
             let erpId = row.id;
             this.$store.dispatch("getEnteritem", erpId);
         },
