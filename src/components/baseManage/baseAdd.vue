@@ -7,7 +7,7 @@
         <!-- <p v-if="!isFromcom">{{companyName}}</p> -->
         <el-form ref="form" :model="form" :rules="rules" label-width="100px" size="mini">
             <el-form-item label="当前企业:" v-if="!isFromcom">
-                <el-input v-model="companyName" readonly="true"></el-input>
+                <el-input v-model="companyName" :readonly="true"></el-input>
             </el-form-item>
             <el-form-item label="基站名称:" prop="siteName">
                 <el-input v-model="form.siteName"></el-input>
@@ -261,6 +261,7 @@ export default {
     data() {
         return {
             types:[],
+
             isFromcom:true,
             status: false, //控制表头不显示
             companyName:'',
@@ -342,6 +343,18 @@ export default {
         if(this.$route.query.companyId && this.$route.query.companyName){
            this.isFromcom = false
            this.companyName = this.$route.query.companyName
+           let _this =this
+           this.companyP().then(comArr=>{
+
+               if(comArr && comArr.length>0){
+                   for(let k=0; k<comArr.length; k++){
+                       if(comArr[k].label ==_this.companyName){
+                           _this.form.erpId=JSON.parse(comArr[k].value);
+                           break;
+                       }
+                   }
+               }
+           })
         }else{
              this.isFromcom = true
         }
@@ -414,9 +427,29 @@ export default {
                 })
             }
         },
+        companyP(){
+            return new Promise(resolve=>{
+                this.$api.company.companyAll().then(res=>{
+                    if(res.data.code == 0){
+                        if(res.data.data && res.data.data.length>0){
+                            let itemArr = []
+                            for(let i=0; i<res.data.data.length; i++){
+                                let roleItem={
+                                    label:res.data.data[i].erpName,
+                                    value:res.data.data[i].id
+                                }
+                                itemArr.push(roleItem)
+                            }
+                            this.companyArr=itemArr
+                            resolve(itemArr)
+                        }
+                    }
+                })
+            })
+        },
         //添加基站
         addBase() {
-            
+  
             let siteName = this.form.siteName  //基站名称
             let ioType = this.form.ioType  //基站状态
             let erpId = this.form.erpId  //企业选择

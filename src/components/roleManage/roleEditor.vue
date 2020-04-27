@@ -146,9 +146,9 @@ export default {
                                 }
                             }
                         }
-                        // else{ //取第一层的id(不取第一层)
-                        //     arrId.push(this.roleItem[i].id)
-                        // }
+                        else{ //取第一层的id(不取第一层)
+                            arrId.push(this.roleItem[i].id)
+                        }
                     }
                     this.checkedArr = arrId;
                 }

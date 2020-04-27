@@ -147,8 +147,13 @@ export default ({
     getSiterowMn(state, mn) {
         state.siteRowmn = mn
     },
-    //企业管理下的留言回复 dialog状态
+    //企业管理下的留言回复 dialog状态 ---从右下弹窗过来的
     spamReply(state, spamDialog) {
+        state.spamReply = spamDialog;
+    },
+    //从列表中过来的
+    spamReplys(state, spamDialog) {
+
         state.spamReplys = spamDialog;
     },
     //企业管理下的留言回复 单个留言id对应的内容
@@ -273,6 +278,7 @@ export default ({
     },
     //根据返回的角色权限，生成路由表
     filters(state, roles) {
+
         let menuTree = roles  //角色权限
         let asyncRoutes = state.asyncRoutes //本地完整路由
         let res = []
@@ -315,6 +321,7 @@ export default ({
                     } else if (routeItem.name == '日报表详情') {
                         res.push(routeItem)
                     } else if (routeItem.name == '月报表详情') {
+
                         res.push(routeItem)
                     }
                 }

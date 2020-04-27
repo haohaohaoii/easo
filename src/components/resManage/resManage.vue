@@ -10,6 +10,7 @@
                     size="mini"
                     class="add"
                     @click="addNews"
+                    v-has="'上传文件'"
                 >上传文件</el-button>
             </div>
         </div>

@@ -35,12 +35,14 @@
                             size="mini"
                             type="primary"
                             @click="handleEdit(scope.$index, scope.row)"
+                            v-has="'编辑'"
                         >编辑</el-button>
 
                         <el-button
                             size="mini"
                             type="danger"
                             @click="handleDel(scope.$index, scope.row)"
+                            v-has="'删除'"
                         >删除</el-button>
                     </template>
                 </el-table-column>

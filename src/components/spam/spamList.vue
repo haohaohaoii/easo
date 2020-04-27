@@ -129,7 +129,7 @@ export default {
         handleReply(index, row) {
             console.log(index, row);
             let id = row.id
-            this.$store.dispatch('spamDetail',id)
+            this.$store.dispatch('spamDetails',id)
         }
     }
 };

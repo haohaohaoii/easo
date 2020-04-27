@@ -124,24 +124,10 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: center;
-
-        .titName {
-            font-size: 26px;
-            font-family: MFLiHei;
-            font-weight: 400;
-            color: rgba(255, 255, 255, 1);
-            line-height: 64px;
-        }
-
         .userLog {
             display: flex;
             flex-direction: column;
             align-items: center;
-            img {
-                width: 68px;
-                height: 68px;
-            }
-
             .name {
                 color: rgba(255, 255, 255, 1);
                 font-family: Microsoft YaHei;
@@ -150,23 +136,7 @@ export default {
         }
     }
 }
-//修改el-menu的背景颜色
-.menuNav >>> .el-menu {
-    border-right: 0;
-    background-color: transparent !important;
-}
-menuNav >>> .el-menu-item {
-    background-color: red !important;
-}
-.menuNav >>> .el-menu-item:hover {
-    background-color: #1f87e7 !important;
-}
-.menuNav >>> .el-submenu__title:hover {
-    background-color: #1f87e7 !important;
-}
-.menuNav >>> .el-menu-item.is-active {
-    background-color: #1f87e7 !important;
-}
+
 //解决左侧菜单折叠卡顿的问题
 .menuNav >>> .collapse-transition {
     -webkit-transition: 0s height, 0s padding-top, 0s padding-bottom;

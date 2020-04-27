@@ -1,0 +1,66 @@
+
+@charset "UTF-8";
+@mixin login-xl() {
+    .login{
+        /deep/ .tit{
+            p{
+              font-size: 50px;
+            }
+            div{
+              top: 24%;
+            }
+        }
+        /deep/ .el-input__inner{
+            height: 42px !important;
+            line-height: 42px !important;
+        }
+    }
+};
+@mixin login-lg() {
+    .login{
+        /deep/ .tit{
+            p{
+              font-size: 44px;
+            }
+            div{
+              top: 24%;
+            }
+        }
+        /deep/ .el-input__inner{
+            height: 38px !important;
+            line-height: 38px !important;
+        }
+    }
+};
+@mixin login-md() {
+    .login{
+        /deep/ .tit{
+            p{
+              font-size: 40px;
+            }
+            div{
+              top: 23%;
+            }
+        }
+        /deep/ .el-input__inner{
+            height: 35px !important;
+            line-height: 35px !important;
+        }
+    }
+};
+@mixin login-sm() {
+    .login{
+        /deep/ .tit{
+            p{
+              font-size: 36px;
+            }
+            div{
+              top: 25%;
+            }
+        }
+        /deep/ .el-input__inner{
+            height: 30px !important;
+            line-height: 30px !important;
+        }
+    }
+}

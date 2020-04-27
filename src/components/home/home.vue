@@ -73,7 +73,8 @@ export default {
                         title: msgObj.title,
                         position: 'bottom-right',
                         offset: 60,
-                        duration: 6000,
+                        duration: 15000,
+                        type:'warning',
                         dangerouslyUseHTMLString: true,
                         message: `<p style="height:80px;overflow: hidden;">${msgObj.content}</p>`,
                         onClick: () => {
@@ -83,13 +84,12 @@ export default {
                     });
                 },headers);
             }, (err) => {
-                // 连接发生错误时的处理函数
+
                 console.log('失败')
                 console.log(err);
             });
         },
-        toSpam(id){
-            debugger
+        toSpam(id){         
             this.$store.dispatch('spamDetail',id)
         }
     },
@@ -114,6 +114,7 @@ export default {
     .homeRight {
         height: 100%;
         background: #ededed;
+
         .content {
             background: #ededed;
 

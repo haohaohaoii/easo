@@ -1,1 +1,31 @@
-$red:red
+
+@charset "UTF-8";
+@import './header.scss';
+@import './homeLeft.scss';
+@import './fpage.scss';
+@import './login.scss';
+
+@media (min-width: 1900px) {
+    @include header-xl();
+    @include homeLeft-xl();
+    @include fpage-xl();
+    @include login-xl();
+}
+@media (min-width: 1600px) and (max-width: 1899px) {
+    @include header-lg();
+    @include homeLeft-lg();
+    @include fpage-lg();
+    @include login-lg(); 
+};
+@media (min-width: 1400px) and (max-width: 1599px) {
+    @include header-md();
+    @include homeLeft-md();
+    @include fpage-md();
+    @include login-md();
+}
+@media (min-width: 1200px) and (max-width: 1399px) {
+    @include header-sm();
+    @include homeLeft-sm();
+    @include fpage-sm();
+    @include login-sm();
+}

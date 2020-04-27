@@ -94,11 +94,16 @@
 
                 <el-table-column label="操作" align="center" width="180" fixed="right">
                     <template slot-scope="scope">
-                        <el-button size="mini" @click="handleDetails(scope.$index, scope.row)">详情</el-button>
+                        <el-button
+                            size="mini"
+                            @click="handleDetails(scope.$index, scope.row)"
+                            v-has="'详情'"
+                        >详情</el-button>
                         <el-button
                             size="mini"
                             type="primary"
                             @click="handleExport(scope.$index, scope.row)"
+                            v-has="'导出'"
                         >导出</el-button>
                     </template>
                 </el-table-column>

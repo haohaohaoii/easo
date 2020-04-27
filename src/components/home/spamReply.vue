@@ -1,5 +1,11 @@
 <template>
-    <el-dialog :visible.sync="spamReply" class="dialog" center @close="closeDialog">
+    <el-dialog
+        :visible.sync="spamReply"
+        class="dialog"
+        center
+        @close="closeDialog"
+        :close-on-click-modal="false"
+    >
         <div slot="title" class="tit">
             <div class="line"></div>
             <p>留言回复</p>
@@ -13,19 +19,31 @@
                 留言者分类：
                 <span>{{spamType}}</span>
             </p>
-            <div class="left neir">
-                留言者内容：
-                <p>{{spamContent}}</p>
-            </div>
             <p class="left">
-                回复内容：
-                <el-input
-                    type="textarea"
-                    autosize
-                    placeholder="请输入内容"
-                    v-model="spamReplymsg"
-                    style="margin-top: 13px;"
-                ></el-input>
+                留言内容：
+                {{spamContent}}
+                <span></span>
+            </p>
+            <div v-if="hisReplymsg &&hisReplymsg.length>0">
+                <el-divider></el-divider>
+                <div style="height: 260px;overflow: auto;">
+                    <div class="left neir" v-for="item of hisReplymsg " :key="item.id">
+                        <div v-if="item.type ==1" class="f">
+                            企业回复：
+                            {{item.content}}
+                            <p class="rep">--{{item.createTime}}</p>
+                        </div>
+                        <div v-else-if="item.type ==0" class="f">
+                            我的回复：
+                            {{item.content}}
+                            <p class="rep">--{{item.createTime}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="left">
+                <el-input type="textarea" placeholder="请输入回复内容" :rows="4" v-model="spamReplymsg"></el-input>
             </p>
         </div>
         <div slot="footer" class="footer">
@@ -44,24 +62,31 @@ export default {
             spamType:'', //留言分类
             spamContent:'', //留言内容
             spamReplymsg:'',  //回复内容
+            hisReplymsg:[],  //留言回复的历史
             id:''   //留言id
         };
     },
     computed: {
-        ...mapState(["spamReply","spamItemlist"])
+        ...mapState(["spamReply","spamItemlist"]),
+        spamReply:{
+            get(){
+                return this.$store.state.spamReply
+            },
+            set(){}
+        }
     },
     methods: {
        spam() {
-            let spamReplay = this.spamReplymsg
+            let replyContent = this.spamReplymsg
             let id = this.id
-            if(spamReplay){
+            if(replyContent){
                 let params={
-                   spamReplay:spamReplay,
+                   replyContent:replyContent,
                    messageId:id
                 }
                 let _this = this
                 this.$api.spam.spamReplay(params).then(res=>{
-                    debugger
+  
                     if(res.data.code == 0){
                         _this.$message({
                             message: '留言回复成功',
@@ -99,6 +124,7 @@ export default {
     },
     watch: {
         spamItemlist(val){
+
             let arr = Object.keys(val);
            
             if(arr && arr.length>0){
@@ -106,7 +132,13 @@ export default {
                 this.spamType= val.messageType  //留言类型
                 this.spamContent = val.content   //留言内容
                 this.id = val.id //留言id
+            
+                
             }
+                let replies = val.replies;
+            if(replies && replies.length>0){
+                    this.hisReplymsg = replies
+                }
         }
     },
 };
@@ -139,16 +171,32 @@ export default {
                 width: 21%;
             }
         }
+        .f {
+            position: relative;
+            width: 100%;
+            .rep {
+                position: absolute;
+                right: 0;
+                font-size: 12px;
+                color: #ccc;
+            }
+        }
     }
 }
 .dialog >>> .el-dialog {
-    margin-top: 0 !important;
-    position: relative;
-    margin: 0 auto;
-    width: 32%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 !important;
+    position: absolute;
     top: 50%;
-    transition: transform;
-    transform: translateY(-50%);
-    border: 1px solid #ebeef5;
+    left: calc(50% + 120px);
+    transform: translate(-50%, -50%);
+
+    width: 34%;
+}
+
+.dialog >>> .el-dialog .el-dialog__body {
+    flex: 1;
+    overflow: auto;
 }
 </style>

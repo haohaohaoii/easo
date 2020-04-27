@@ -2,7 +2,7 @@
     <div class="firstPage">
         <div class="contentLeft">
             <div class="contentL">
-                <img class="tps" src="../../assets/images/treicon.png" alt />
+                <img class="tpsu" src="../../assets/images/treicon.png" alt />
                 <div class="date">
                     <el-date-picker
                         format="yyyy"
@@ -18,7 +18,7 @@
             </div>
 
             <div class="footer">
-                <img class="tps" src="../../assets/images/cb.png" alt />
+                <img class="tpsd" src="../../assets/images/cb.png" alt />
                 <div class="date">
                     <el-date-picker
                         size="mini"
@@ -53,29 +53,29 @@
                     </div>
                     <div class="contentR">
                         <div class="itemR">
-                            <div>
+                            <div class="itemRi">
                                 <p class="t">全部留言</p>
                                 <p class="nu">{{qbly}}</p>
                             </div>
-                            <div>
+                            <div class="itemRi">
                                 <p class="t">最新回复</p>
                                 <p class="nu">{{zxhf}}</p>
                             </div>
-                            <div>
+                            <div class="itemRi">
                                 <p class="t">未读留言</p>
                                 <p class="nu">{{wdly}}</p>
                             </div>
                         </div>
                         <div class="itemR">
-                            <div>
+                            <div class="itemRi">
                                 <p class="t">超标消息</p>
                                 <p class="nu">{{cbxc}}</p>
                             </div>
-                            <div>
+                            <div class="itemRi">
                                 <p class="t">异常消息</p>
                                 <p class="nu">{{ycxc}}</p>
                             </div>
-                            <div>
+                            <div class="itemRi">
                                 <p class="t">预警消息</p>
                                 <p class="nu">{{yjxx}}</p>
                             </div>
@@ -330,9 +330,9 @@ export default {
 // .firstPage >>> .el-input--mini .el-input__inner {
 //     width: 160px;
 // }
-.sT {
-    width: 145px !important;
-}
+// .sT {
+//     width: 145px !important;
+// }
 .firstPage >>> .el-date-editor.el-input,
 .el-date-editor.el-input__inner {
     width: 180px;
@@ -350,16 +350,16 @@ export default {
             height: 50%;
             background: #fff;
             position: relative;
-            .tps {
-                position: absolute;
-                top: 3.2%;
-                left: 3%;
-                width: 22px;
-            }
+            // .tps {
+            //     position: absolute;
+            //     top: 3.2%;
+            //     left: 3%;
+            //     width: 22px;
+            // }
             .date {
                 position: absolute;
                 right: 4%;
-                top: 10px;
+                top: 2%;
                 z-index: 999;
             }
         }
@@ -368,16 +368,16 @@ export default {
             margin-top: 15px;
             background: #fff;
             position: relative;
-            .tps {
-                position: absolute;
-                top: 3.2%;
-                left: 3%;
-                width: 22px;
-            }
+            // .tps {
+            //     position: absolute;
+            //     top: 3.2%;
+            //     left: 3%;
+            //     width: 22px;
+            // }
             .date {
                 position: absolute;
                 right: 4%;
-                top: 10px;
+                top: 2%;
                 z-index: 999;
             }
         }
@@ -391,12 +391,11 @@ export default {
             height: 50%;
             // border: 1px solid;
             .box-card {
-                height: 99.5%;
+                height: 100%;
                 .titRU {
-                    height: 15%;
                     display: flex;
                     align-items: center;
-                    width: 30%;
+                    padding-left: 2.7%;
                     p {
                         padding-left: 3%;
                         font-family: SimHei;
@@ -415,25 +414,25 @@ export default {
                     .itemR {
                         display: flex;
                         justify-content: space-around;
-                        div {
-                            width: 25%;
-                            height: 120px;
+                        .itemRi {
+                            // width: 25%;
+                            // height: 120px;
                             background: rgba(255, 255, 255, 1);
                             box-shadow: 0px 6px 20px 0px rgba(90, 94, 253, 0.24);
                             border-radius: 10px;
-                            // border: 1px solid;
+
                             display: flex;
                             flex-direction: column;
                             justify-content: center;
                             align-items: center;
                             .nu {
-                                font-size: 27px;
+                                // font-size: 27px;
                                 font-family: Microsoft YaHei;
                                 font-weight: 400;
                                 color: rgba(46, 101, 253, 1);
                             }
                             .t {
-                                font-size: 18px;
+                                // font-size: 18px;
                                 font-family: Microsoft YaHei;
                                 font-weight: 400;
                                 color: rgba(51, 51, 51, 1);
@@ -452,7 +451,7 @@ export default {
             flex-direction: column;
             margin-top: 15px;
             .sm {
-                height: 120px;
+                height: 35px;
                 display: flex;
                 justify-content: space-around;
                 .smItem {
@@ -467,21 +466,25 @@ export default {
                     }
                 }
             }
-            .titp {
-                position: absolute;
-                top: 2.5%;
-                left: 4%;
-            }
+            // .titp {
+            //     position: absolute;
+            //     top: 2.5%;
+            //     left: 4%;
+            // }
         }
     }
 }
 .firstPage >>> .el-card__header {
+    display: flex;
+    align-items: center;
+    height: 15%;
     background: linear-gradient(
         142deg,
         rgba(90, 94, 253, 1) 0%,
         rgba(103, 182, 253, 1) 100%
     );
     border-radius: 5px 5px 0px 0px;
+    padding: 0 !important;
 }
 .firstPage >>> .el-card__body {
     height: 85%;

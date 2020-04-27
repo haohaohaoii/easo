@@ -56,7 +56,7 @@ export default {
                     y:'3%'
                 },
                 grid: {
-                    top: 80,
+                    top: 60,
                     left: '2%',
                     right: '4%',
                     bottom: '2%',

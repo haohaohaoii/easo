@@ -19,10 +19,10 @@ export default {
                         
                     },
                     x:'5.5%',
-                    y:'3%'
+                    y:'2%'
                 },
                 grid: {
-                    top: 80,
+                    top: 60,
                     left: '2%',
                     right: '4%',
                     bottom: '2%',

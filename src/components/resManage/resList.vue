@@ -21,18 +21,20 @@
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="createTime" label="发布时间"></el-table-column>
-                <el-table-column label="操作" align="center">
+                <el-table-column label="操作" align="center" fixed="right">
                     <template slot-scope="scope">
                         <el-button
                             size="mini"
                             type="primary"
                             @click="handleEdit(scope.$index, scope.row)"
+                            v-has="'编辑'"
                         >编辑</el-button>
 
                         <el-button
                             size="mini"
                             type="danger"
                             @click="handleDel(scope.$index, scope.row)"
+                            v-has="'删除'"
                         >删除</el-button>
                     </template>
                 </el-table-column>

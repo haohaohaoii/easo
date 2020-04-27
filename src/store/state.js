@@ -37,7 +37,8 @@ export default ({
     siteRowmn: '',     //企业管理下的 基站管理  审核  mn参数
     companyArr: [],       //企业管理中的基站管理中的编辑 所需的全部企业
     baseItemlist: '',   //企业管理下的基站管理中的编辑 所需的信息
-    spamReplys: false,   //企业管理下的留言回复
+    spamReplys: false,   //企业管理下的留言回复 --从列表过来
+    spamReply: false,    //从右下过来的
     enterAud: false,   //企业信息审核弹窗
     msgRowDetail: '',    //消息列表 单行数据详情
     spamItemlist: [],    //企业管理写的 留言回复  单个留言id对应的内容

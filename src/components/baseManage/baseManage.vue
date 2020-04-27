@@ -79,7 +79,6 @@ export default {
             }
         },
         fromWitch(){
-    
             if(this.$route.query.companyId && this.$route.query.companyName){  //说明是从企业信息过来的
                 let companyId = this.$route.query.companyId
                 let pageNum = this.currentPage;

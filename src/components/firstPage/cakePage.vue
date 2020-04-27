@@ -9,6 +9,7 @@ export default {
     data() {
         return {
             pieList:[],
+             screenWidth: 0,  //给它赋值个（个人理解为网页的宽度）
             options: {
                 title: {
                     text: '站点状态',//标题
@@ -17,7 +18,7 @@ export default {
                         
                     },
                     x:'8%',
-                    y:'3%'
+                    y:'2%'
                 },
                
 
@@ -46,8 +47,8 @@ export default {
                                     position: 'center',
                                    
                                     textStyle:{
-                                       fontSize: 25,
-                                        color:'rgba(51,51,51,1)'
+                                     
+                                       
                                     }
                                 }
                         },
@@ -64,12 +65,18 @@ export default {
     },
     mounted() {
         this.$nextTick(() => {
+      
             this.getZx();
+            this.getWidth()
         });
+        
     },
 
     methods: {
-        
+        getWidth(){
+            window.screenWidth = document.body.clientWidth;
+            this.screenWidth = window.screenWidth;
+        },
         //折线图方法
         getZx() {
 
@@ -99,6 +106,35 @@ export default {
         list(val){
             this.pieList = val
             this.getZx()
+        },
+        screenWidth(val){
+             
+            console.log(val)
+            if(val >1199 && val<1399){
+        
+                this.options.series[0].label.normal.textStyle={
+                    fontSize:18,
+                    color:'rgba(51,51,51,1)'
+                }
+                this.getZx()
+            }else if(val >1399 && val<1599){
+                this.options.series[0].label.normal.textStyle={
+                    fontSize:22,
+                    color:'rgba(51,51,51,1)'
+                }
+                this.getZx()
+            }else if(val >1599 && val<1899){
+                this.options.series[0].label.normal.textStyle={
+                    fontSize:24,
+                    color:'rgba(51,51,51,1)'
+                }
+                this.getZx()
+            }else if(val >1900){
+                 this.options.series[0].label.normal.textStyle={
+                    fontSize:26,
+                    color:'rgba(51,51,51,1)'
+                }
+            }
         }
     }
 };

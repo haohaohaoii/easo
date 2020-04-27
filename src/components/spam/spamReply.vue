@@ -70,7 +70,7 @@ export default {
     computed: {
         ...mapState(["spamItemlist"]),
         spamReplys:{
-            get(){
+            get(){    
                 return this.$store.state.spamReplys
             },
             set(){}
@@ -113,7 +113,7 @@ export default {
             this.spamContent = ''
             this.spamReplymsg = '',
             this.id = ''
-            this.$store.commit("spamReply", false); //关闭dialog
+            this.$store.commit("spamReplys", false); //关闭dialog
         },
         //取消
         // cancel() {

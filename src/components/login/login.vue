@@ -253,7 +253,7 @@ export default {
             align-items: center;
             .tit {
                 p {
-                    font-size: 54px;
+                    // font-size: 54px;
                     font-family: "MFLiHei";
                     font-weight: 400;
                     color: rgba(255, 255, 255, 1);
@@ -263,7 +263,7 @@ export default {
                     height: 0.5%;
                     position: absolute;
                     left: 71%;
-                    top: 23%;
+                    // top: 23%;
                     background: #fff;
                 }
             }
@@ -284,6 +284,7 @@ export default {
                 width: 40%;
                 height: 8%;
                 margin-top: -15%;
+                line-height: 8%;
             }
         }
         //记住密码的时候改变字体颜色

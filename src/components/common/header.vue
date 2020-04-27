@@ -9,8 +9,9 @@
             @select="handleSelect"
         >
             <el-menu-item index="firstPage">
-                <span class="iconfont" style="font-size:26px">&#xe723;</span>
-                <span slot="title" style="font-size:15px">首页</span>
+                <!-- <span class="iconfont" style="font-size:26px">&#xe723;</span> -->
+                <span class="iconfont sy">&#xe723;</span>
+                <span slot="title">首页</span>
             </el-menu-item>
 
             <el-submenu
@@ -21,37 +22,41 @@
                 :index="item.createTime"
             >
                 <template slot="title" v-if="item.menuType==0 && item.menuName=='数据查看'">
-                    <span class="iconfont" style="font-size:26px">&#xe6b8;</span>
+                    <!-- <span class="iconfont sjck" style="font-size:26px">&#xe6b8;</span> -->
+                    <span class="iconfont sjck">&#xe6b8;</span>
                     {{item.menuName}}
                     <span class="iconfont">&#xe648;</span>
                 </template>
                 <template slot="title" v-else-if="item.menuType==0 && item.menuName=='企业管理'">
-                    <span class="iconfont">&#xe626;</span>
+                    <span class="iconfont qygl">&#xe626;</span>
                     <span>{{item.menuName}}</span>
                     <span class="iconfont">&#xe648;</span>
                 </template>
                 <template slot="title" v-else-if="item.menuType==0 && item.menuName=='权限管理'">
-                    <span class="iconfont" style="font-size:26px">&#xe63b;</span>
+                    <!-- <span class="iconfont qxgl" style="font-size:26px">&#xe63b;</span> -->
+                    <span class="iconfont qxgl">&#xe63b;</span>
                     {{item.menuName}}
                     <span class="iconfont">&#xe648;</span>
                 </template>
                 <template slot="title" v-else-if="item.menuType==0 && item.menuName=='内容管理'">
-                    <span class="iconfont" style="font-size:22px">&#xe646;</span>
+                    <!-- <span class="iconfont nrgl" style="font-size:22px">&#xe646;</span> -->
+                    <span class="iconfont nrgl">&#xe646;</span>
                     {{item.menuName}}
                     <span class="iconfont">&#xe648;</span>
                 </template>
                 <template slot="title" v-else-if="item.menuType==0 && item.menuName=='运维管理'">
-                    <span class="iconfont" style="font-size:20px">&#xe604;</span>
+                    <!-- <span class="iconfont ywgl" style="font-size:20px">&#xe604;</span> -->
+                    <span class="iconfont ywgl">&#xe604;</span>
                     {{item.menuName}}
                     <span class="iconfont">&#xe648;</span>
                 </template>
                 <template slot="title" v-else-if="item.menuType==0 && item.menuName=='数据报表'">
-                    <span class="iconfont" style="font-size:22px;">&#xe707;</span>
+                    <span class="iconfont sjbb">&#xe707;</span>
                     {{item.menuName}}
                     <span class="iconfont">&#xe648;</span>
                 </template>
                 <template slot="title" v-else-if="item.menuType==0 && item.menuName=='设置'">
-                    <span class="iconfont" style="font-size:20px;">&#xe615;</span>
+                    <span class="iconfont sz">&#xe615;</span>
                     {{item.menuName}}
                     <span class="iconfont">&#xe648;</span>
                 </template>
@@ -273,41 +278,8 @@ export default {
         display: flex;
         align-items: center;
     }
-    .tubiao {
-        position: absolute;
-        right: 0%;
-        top: 14px;
-        width: 210px;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        .ic {
-            font-size: 22px;
-            color: #3a8ee6;
-            font-weight: bolder;
-            // padding: 6px 10px;
-        }
-    }
 }
 
-//一级菜单
-.header >>> .el-menu-item {
-    width: 160px;
-    text-align: center;
-    border-radius: 20px;
-    margin: 10px 0;
-    height: 40px;
-    line-height: 40px;
-}
-//多级菜单
-.header >>> .el-submenu__title {
-    width: 160px;
-    text-align: center;
-    border-radius: 20px !important;
-    margin: 10px 0;
-    height: 40px !important;
-    line-height: 40px !important;
-}
 //一级菜单移入 修改椭圆样式
 .header >>> .el-submenu__title:hover {
     border: 1px solid #409eff;

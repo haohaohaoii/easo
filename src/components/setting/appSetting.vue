@@ -49,7 +49,7 @@
                 </el-form>
             </div>
             <div class="foot">
-                <el-button type="primary" @click="sureEditor" size="mini">保存</el-button>
+                <el-button type="primary" @click="sureEditor" size="mini" v-has="'保存'">保存</el-button>
                 <el-button @click="cancelEditor" size="mini">取消</el-button>
             </div>
         </div>

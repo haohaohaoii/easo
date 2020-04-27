@@ -1,0 +1,64 @@
+
+@charset "UTF-8";
+
+@mixin homeLeft-xl() {
+    .titName {
+        font-size: 26px;
+        font-family: MFLiHei;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 1);
+        line-height: 64px;
+    }
+    .userLog{
+        img {
+            width: 68px;
+            height: 68px;
+        } 
+    }
+};
+@mixin homeLeft-lg() {
+    .titName {
+        font-size: 26px;
+        font-family: MFLiHei;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 1);
+        line-height: 64px;
+    }
+    .userLog{
+        img {
+            width: 68px;
+            height: 68px;
+        } 
+    }
+};
+@mixin homeLeft-md() {
+    .titName {
+        font-size: 26px;
+        font-family: MFLiHei;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 1);
+        line-height: 64px;
+    }
+    .userLog{
+        img {
+            width: 68px;
+            height: 68px;
+        } 
+    }
+};
+@mixin homeLeft-sm() {
+    .titName {
+        font-size: 22px;
+        font-family: MFLiHei;
+        font-weight: 400;
+        color: #fff;
+        line-height: 50px;
+    }
+    .userLog{
+        img {
+            width: 48px;
+            height: 48px;
+        } 
+    }
+ 
+}

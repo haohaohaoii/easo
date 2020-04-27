@@ -10,6 +10,7 @@
                     size="mini"
                     class="add"
                     @click="addNews"
+                    v-has="'添加新闻'"
                 >添加新闻</el-button>
             </div>
         </div>

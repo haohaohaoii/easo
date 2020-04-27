@@ -135,7 +135,7 @@ export default ({
 
         })
     },
-    //企业管理下的留言管理, 回复
+    //右下留言过来的
     spamDetail(context, id) {
         api.spam.getSpamitem(id).then(res => {  //获取角色对应的菜单
             console.log(res)
@@ -149,7 +149,32 @@ export default ({
                     id: itemArr.id,
                     replies: itemArr.replies
                 }
+
                 context.commit("spamReply", true) //留言回复对应的dialog状态
+                context.commit("getspamDetail", obj); //存储对应id的留言信息
+            }
+
+
+        }).catch(error => {
+
+        })
+    },
+    //从列表中过来的
+    spamDetails(context, id) {
+        api.spam.getSpamitem(id).then(res => {  //获取角色对应的菜单
+            console.log(res)
+            if (res.data.code == 0) {
+
+                let itemArr = res.data.data[0]
+                let obj = {
+                    title: itemArr.title,  //留言标题
+                    content: itemArr.content, //留言内容
+                    messageType: itemArr.messageType, //留言类型
+                    id: itemArr.id,
+                    replies: itemArr.replies
+                }
+
+                context.commit("spamReplys", true) //留言回复对应的dialog状态
                 context.commit("getspamDetail", obj); //存储对应id的留言信息
             }
 
