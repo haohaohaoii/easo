@@ -9,6 +9,7 @@ export default {
     props:['zuData','nowY'],
     data() {
         return {
+            maxNum:'',
             xDatas:[],
             yDatas:[],
             options: {
@@ -61,7 +62,7 @@ export default {
                 }],
                 yAxis: [{
                         type: 'value',
-                        max:5,
+                        max:'',
                         axisTick: {
                             show: false
                         },
@@ -178,11 +179,22 @@ export default {
         //折线图方法
         getZx() {
             let myCharts = this.$echarts.init(this.$refs.myCharts);
-            
+
+            this.options.yAxis[0].max = this.maxNum
             this.options.xAxis[0].data = this.xDatas //设置x轴坐标
             this.options.series[0].data = this.yDatas  //设置y轴坐标
             myCharts.setOption(this.options);
         },
+        getMaxnum(arr){
+            return new Promise(resolve=>{
+                let max = arr[0];
+                for (let i = 0; i < arr.length - 1; i++) {
+                    max = max < arr[i+1] ? arr[i+1] : max
+                }
+                resolve(max)
+
+            })
+        }
     },
     watch:{
         zuData(val){
@@ -201,7 +213,11 @@ export default {
                 }
                 this.xDatas = x
                 this.yDatas = y
-                this.getZx()
+                this.getMaxnum(y).then(maxNum=>{
+                    this.maxNum =maxNum;
+                    this.getZx()
+                })
+              
             }
         }
     }

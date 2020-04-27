@@ -11,6 +11,7 @@ export default {
     props:['zxData'],
     data() {
         return {
+            maxNum:'',
             chart:null,
             xDatas:[],
             yDatas:[],
@@ -95,7 +96,7 @@ export default {
                 }],
                 yAxis: [{
                         type: 'value',
-                        max:5,
+                        max:this.maxNum,
                         axisTick: {
                             show: false
                         },
@@ -158,6 +159,16 @@ export default {
                 
            });
         },
+        getMaxnum(arr){
+            return new Promise(resolve=>{
+                let max = arr[0];
+                for (let i = 0; i < arr.length - 1; i++) {
+                    max = max < arr[i+1] ? arr[i+1] : max
+                }
+                resolve(max)
+
+            })
+        }
     },
     watch:{
         zxData(val){
@@ -175,8 +186,10 @@ export default {
                 this.xDatas = x
                 this.yDatas = y
    
-                this.getZx();
-                console.log(x,y)
+                this.getMaxnum(y).then(maxNum=>{
+                    this.maxNum =maxNum;
+                    this.getZx()
+                })
             }else{
                  this.xDatas =[]
                   this.yDatas = []
