@@ -1,0 +1,67 @@
+/*首页*/
+
+@charset "UTF-8";
+
+@mixin addRact-xl() {
+    .addRact{
+        /deep/ .dialog{
+             width: 55%;
+             height: auto;
+            //  height: 85%;
+            //  overflow-y: auto;
+             background: white;
+             position: absolute;
+             top: 50%;
+             left: 50%;
+             transform: translate(-50%, -50%);
+             box-sizing: border-box;
+        }
+    }
+};
+@mixin addRact-lg() {
+    .addRact{
+        /deep/ .dialog{
+             width: 55%;
+             height: auto;
+            //  height: 85%;
+            //  overflow-y: auto;
+             background: white;
+             position: absolute;
+             top: 50%;
+             left: 50%;
+             transform: translate(-50%, -50%);
+             box-sizing: border-box;
+        }
+    }
+};
+@mixin addRact-md() {
+    .addRact{
+        /deep/ .dialog{
+             width: 55%;
+             height: 85%;
+             overflow-y: auto;
+             background: white;
+             position: absolute;
+             top: 50%;
+             left: 50%;
+             transform: translate(-50%, -50%);
+             box-sizing: border-box;
+        }
+    }
+};
+@mixin addRact-sm() {
+   .addRact{
+       /deep/ .dialog{
+            width: 55%;
+            height: 85%;
+            overflow-y: auto;
+            background: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-sizing: border-box;
+       }
+   }
+    
+}

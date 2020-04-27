@@ -1,5 +1,5 @@
 <template>
-    <div class="addPeop">
+    <div class="addRact">
         <div class="dialog">
             <div slot="title" class="tit">
                 <div class="line"></div>
@@ -817,18 +817,19 @@ export default {
 .dialog >>> .el-dialog--center .el-dialog__body {
     padding: 25px 40px 0px !important;
 }
-.addPeop {
+.addRact {
     height: 100%;
     position: relative;
     .dialog {
-        width: 55%;
-        height: auto;
-        background: white;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        box-sizing: border-box;
+        // width: 55%;
+        // height: 85%;
+        // overflow: auto;
+        // background: white;
+        // position: absolute;
+        // top: 50%;
+        // left: 50%;
+        // transform: translate(-50%, -50%);
+        // box-sizing: border-box;
         .tit {
             margin-top: 10px;
             display: flex;
@@ -854,7 +855,7 @@ export default {
             padding-right: 25px;
         }
         .demo-ruleForm {
-            height: 68%;
+            // height: 68%;
             display: flex;
             flex-direction: column;
             justify-content: space-around;
@@ -871,20 +872,20 @@ export default {
     }
 }
 //上传图片框
-.addPeop >>> .el-upload--picture-card {
+.addRact >>> .el-upload--picture-card {
     width: 90px;
     height: 90px;
     border: 2px solid rgba(153, 153, 153, 1);
     border-radius: 10px;
 }
 //上传图片 +框
-.addPeop >>> .el-upload--picture-card i {
+.addRact >>> .el-upload--picture-card i {
     position: relative;
     top: -22px;
     color: #999999;
 }
 //已上传的图片框
-.addPeop >>> .el-upload-list--picture-card .el-upload-list__item {
+.addRact >>> .el-upload-list--picture-card .el-upload-list__item {
     width: 90px;
     height: 90px;
     border: 2px solid rgba(153, 153, 153, 1);
