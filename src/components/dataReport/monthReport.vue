@@ -26,7 +26,7 @@
                         <el-date-picker
                             v-model="startTime"
                             type="month"
-                            size="mini"
+                            size="small"
                             placeholder="选择月"
                             format="yyyy-MM"
                             value-format="yyyy-MM"
@@ -58,7 +58,7 @@
                     <el-button
                         type="primary"
                         class="changeW"
-                        size="mini"
+                        size="small"
                         @click="search"
                         style="width:100px"
                     >查询</el-button>
@@ -509,7 +509,7 @@ export default {
             display: flex;
             justify-content: space-between;
             .searchL {
-                width: 36%;
+                width: 40%;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;

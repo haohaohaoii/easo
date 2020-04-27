@@ -49,7 +49,7 @@
                     <el-button
                         type="primary"
                         class="changeW"
-                        size="mini"
+                        size="small"
                         @click="search"
                         style="width:100px"
                     >查询</el-button>

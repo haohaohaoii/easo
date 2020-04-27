@@ -20,8 +20,8 @@
                         <img :src="scope.row.imgPath" alt style="width: 50px;height: 50px" />
                     </template>
                 </el-table-column>
-                <el-table-column align="center" prop="createTime" label="发布时间"></el-table-column>
-                <el-table-column label="操作" align="center" fixed="right">
+                <el-table-column align="center" prop="createTime" label="发布时间" width="160px"></el-table-column>
+                <el-table-column label="操作" align="center" fixed="right" width="180px">
                     <template slot-scope="scope">
                         <el-button
                             size="mini"

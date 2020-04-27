@@ -1,7 +1,7 @@
 <template>
     <el-dialog
         :visible.sync="newsAdd"
-        class="dialog"
+        class="resAdd"
         center
         :close-on-click-modal="false"
         append-to-body
@@ -232,7 +232,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dialog {
+.resAdd {
     .tit {
         display: flex;
         align-items: center;
@@ -305,42 +305,42 @@ export default {
     }
 }
 //最外层弹窗
-.dialog >>> .el-dialog {
-    display: flex;
-    flex-direction: column;
-    margin: 0 !important;
-    position: absolute;
-    top: 50%;
-    left: calc(50% + 120px);
-    transform: translate(-50%, -50%);
-    width: 28%;
-}
+// .resAdd >>> .el-dialog {
+//     display: flex;
+//     flex-direction: column;
+//     margin: 0 !important;
+//     position: absolute;
+//     top: 50%;
+//     left: calc(50% + 120px);
+//     transform: translate(-50%, -50%);
+//     width: 28%;
+// }
 
-.dialog >>> .el-dialog .el-dialog__body {
+.resAdd >>> .el-dialog .el-dialog__body {
     flex: 1;
     overflow: auto;
 }
-.dialog >>> .el-upload {
+.resAdd >>> .el-upload {
     display: flex;
 }
-.dialog >>> .hide .el-upload--picture-card {
+.resAdd >>> .hide .el-upload--picture-card {
     display: none;
 }
-.dialog >>> .ql-container.ql-snow {
+.resAdd >>> .ql-container.ql-snow {
     height: 260px;
     overflow-y: auto;
 }
 //表单校验的图标颜色
-.dialog >>> .el-input__suffix {
+.resAdd >>> .el-input__suffix {
     color: #67c23a !important;
 }
-.dialog >>> .el-list-enter-active,
-.el-list-leave-active {
+.resAdd >>> .el-list-enter-active,
+.resAdd >>> .el-list-leave-active {
     transition: none !important;
 }
 
-.dialog >>> .el-list-enter,
-.dialog >>> .el-list-leave-active {
+.resAdd >>> .el-list-enter,
+.resAdd >>> .el-list-leave-active {
     opacity: 0 !important;
 }
 </style>

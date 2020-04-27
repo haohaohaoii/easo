@@ -67,7 +67,7 @@
                         <span v-else>{{ scope.row.ph}}</span>
                     </template>
                 </el-table-column>
-                <el-table-column align="center" prop="createTime" label="更新时间" width="auto"></el-table-column>
+                <el-table-column align="center" prop="createTime" label="更新时间" width="160px"></el-table-column>
             </el-table>
             <slot></slot>
         </div>
