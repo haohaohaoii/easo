@@ -9,6 +9,7 @@
 @import './enterMation.scss'; //企业管理-企业信息
 @import './historyData.scss'; //数据查看-历史数据
 @import './resManage.scss';   //内容管理下的资源管理
+@import './newsManage.scss';  //内容管理下的新闻管理
 
 @media (min-width: 1900px) {
     @include header-xl();
@@ -20,6 +21,7 @@
     @include enterMation-xl();
     @include historyData-xl();
     @include resManage-xl();
+    @include newsManage-xl();
 }
 @media (min-width: 1600px) and (max-width: 1899px) {
     @include header-lg();
@@ -31,6 +33,7 @@
     @include enterMation-lg();
     @include historyData-lg();
     @include resManage-lg();
+    @include newsManage-lg();
 };
 @media (min-width: 1400px) and (max-width: 1599px) {
     @include header-md();
@@ -42,6 +45,7 @@
     @include enterMation-md();
     @include historyData-md();
     @include resManage-md();
+    @include newsManage-md();
 }
 @media (min-width: 1200px) and (max-width: 1399px) {
     @include header-sm();
@@ -53,4 +57,5 @@
     @include enterMation-sm();
     @include historyData-sm();
     @include resManage-sm();
+    @include newsManage-sm();
 }

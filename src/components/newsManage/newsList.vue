@@ -18,7 +18,7 @@
                     <template slot-scope="scope">
                         <el-popover trigger="hover" placement="right">
                             <img :src="scope.row.imgUrl" width="50" height="50" slot="reference" />
-                            <img :src="scope.row.imgUrl" style="max-width: 680px" />
+                            <img :src="scope.row.imgUrl" style="max-width: 480px" />
                         </el-popover>
                     </template>
                 </el-table-column>
@@ -28,8 +28,8 @@
                         <span v-else-if="scope.row.typeId==0">内部</span>
                     </template>
                 </el-table-column>
-                <el-table-column align="center" prop="createTime" label="发布时间"></el-table-column>
-                <el-table-column label="操作" align="center">
+                <el-table-column align="center" prop="createTime" label="发布时间" width="160px"></el-table-column>
+                <el-table-column label="操作" align="center" width="180px">
                     <template slot-scope="scope">
                         <el-button
                             size="mini"

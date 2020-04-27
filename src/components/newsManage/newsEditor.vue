@@ -1,7 +1,7 @@
 <template>
     <el-dialog
         :visible.sync="newsEstatus"
-        class="dialog"
+        class="newsEditor"
         center
         :close-on-click-modal="false"
         append-to-body
@@ -46,14 +46,14 @@
             >
                 <el-input v-model="ruleForm.urlAddres"></el-input>
             </el-form-item>
-            <el-form-item v-if="ruleForm.radio==0">
-                <quill-editor
-                    ref="text"
-                    v-model="content"
-                    class="myQuillEditor"
-                    :options="editorOption"
-                />
-            </el-form-item>
+            <quill-editor
+                v-if="ruleForm.radio==0"
+                style="    margin-left: 30px;margin-bottom:18px"
+                ref="text"
+                v-model="content"
+                class="myQuillEditor"
+                :options="editorOption"
+            />
             <el-form-item label="封面图片:" prop="upload">
                 <el-upload
                     ref="pic"
@@ -380,7 +380,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dialog {
+.newsEditor {
     .tit {
         display: flex;
         align-items: center;
@@ -419,194 +419,194 @@ export default {
 //     width: 50%;
 //     overflow-y: auto;
 // }
-.dialog >>> .el-dialog {
-    display: flex;
-    flex-direction: column;
-    margin: 0 !important;
-    position: absolute;
-    top: 50%;
-    left: calc(50% + 120px);
-    transform: translate(-50%, -50%);
-    width: 34%;
-    height: 55%;
-}
+// .newsEditor >>> .el-dialog {
+//     display: flex;
+//     flex-direction: column;
+//     margin: 0 !important;
+//     position: absolute;
+//     top: 50%;
+//     left: calc(50% + 120px);
+//     transform: translate(-50%, -50%);
+//     width: 34%;
+//     height: 55%;
+// }
 
-.dialog >>> .el-dialog .el-dialog__body {
+.newsEditor >>> .el-dialog .el-dialog__body {
     flex: 1;
     overflow: auto;
 }
-.dialog >>> .hide .el-upload--picture-card {
+.newsEditor >>> .hide .el-upload--picture-card {
     display: none;
 }
-.dialog >>> .ql-container.ql-snow {
+.newsEditor >>> .ql-container.ql-snow {
     height: 260px;
     overflow-y: auto;
 }
 //表单校验的图标颜色
-.dialog >>> .el-input__suffix {
+.newsEditor >>> .el-input__suffix {
     color: #67c23a !important;
 }
 //上传图片框
-.dialog >>> .el-upload--picture-card {
+.newsEditor >>> .el-upload--picture-card {
     width: 90px;
     height: 90px;
     border: 2px solid rgba(153, 153, 153, 1);
     border-radius: 10px;
 }
 //上传图片 +框
-.dialog >>> .el-upload--picture-card i {
+.newsEditor >>> .el-upload--picture-card i {
     position: relative;
     top: -22px;
     color: #999999;
 }
 //已上传的图片框
-.dialog >>> .el-upload-list--picture-card .el-upload-list__item {
+.newsEditor >>> .el-upload-list--picture-card .el-upload-list__item {
     width: 90px;
     height: 90px;
     border: 2px solid rgba(153, 153, 153, 1);
     border-radius: 10px;
 }
-.dialog >>> .el-select {
+.newsEditor >>> .el-select {
     width: 100%;
 }
-.dialog >>> .ql-container.ql-snow::-webkit-scrollbar {
+.newsEditor >>> .ql-container.ql-snow::-webkit-scrollbar {
     display: none !important;
 }
-.dialog >>> .ql-editor::-webkit-scrollbar {
+.newsEditor >>> .ql-editor::-webkit-scrollbar {
     display: none !important;
 }
-.dialog >>> .ql-snow .ql-tooltip[data-mode="link"]::before {
+.newsEditor >>> .ql-snow .ql-tooltip[data-mode="link"]::before {
     content: "请输入链接地址:" !important;
 }
-.dialog >>> .ql-snow .ql-tooltip.ql-editing a.ql-action::after {
+.newsEditor >>> .ql-snow .ql-tooltip.ql-editing a.ql-action::after {
     border-right: 0px !important;
     content: "保存" !important;
     padding-right: 0px !important;
 }
 
-.dialog >>> .ql-snow .ql-tooltip[data-mode="video"]::before {
+.newsEditor >>> .ql-snow .ql-tooltip[data-mode="video"]::before {
     content: "请输入视频地址:" !important;
 }
 
-.dialog >>> .ql-snow .ql-picker.ql-size .ql-picker-label::before,
-.dialog >>> .ql-snow .ql-picker.ql-size .ql-picker-item::before {
+.newsEditor >>> .ql-snow .ql-picker.ql-size .ql-picker-label::before,
+.newsEditor >>> .ql-snow .ql-picker.ql-size .ql-picker-item::before {
     content: "14px" !important;
 }
-.dialog
+.newsEditor
     >>> .ql-snow
     .ql-picker.ql-size
     .ql-picker-label[data-value="small"]::before,
-.dialog
+.newsEditor
     >>> .ql-snow
     .ql-picker.ql-size
     .ql-picker-item[data-value="small"]::before {
     content: "10px" !important;
 }
-.dialog
+.newsEditor
     >>> .ql-snow
     .ql-picker.ql-size
     .ql-picker-label[data-value="large"]::before,
-.dialog
+.newsEditor
     >>> .ql-snow
     .ql-picker.ql-size
     .ql-picker-item[data-value="large"]::before {
     content: "18px" !important;
 }
-.dialog
+.newsEditor
     >>> .ql-snow
     .ql-picker.ql-size
     .ql-picker-label[data-value="huge"]::before,
-.dialog
+.newsEditor
     >>> .ql-snow
     .ql-picker.ql-size
     .ql-picker-item[data-value="huge"]::before {
     content: "32px" !important;
 }
 
-.dialog >>> .ql-snow .ql-picker.ql-header .ql-picker-label::before,
-.dialog >>> .ql-snow .ql-picker.ql-header .ql-picker-item::before {
+.newsEditor >>> .ql-snow .ql-picker.ql-header .ql-picker-label::before,
+.newsEditor >>> .ql-snow .ql-picker.ql-header .ql-picker-item::before {
     content: "文本" !important;
 }
-.dialog
+.newsEditor
     >>> .ql-snow
     .ql-picker.ql-header
     .ql-picker-label[data-value="1"]::before,
-.dialog
+.newsEditor
     >>> .ql-snow
     .ql-picker.ql-header
     .ql-picker-item[data-value="1"]::before {
     content: "标题1" !important;
 }
-.dialog
+.newsEditor
     >>> .ql-snow
     .ql-picker.ql-header
     .ql-picker-label[data-value="2"]::before,
-.dialog
+.newsEditor
     >>> .ql-snow
     .ql-picker.ql-header
     .ql-picker-item[data-value="2"]::before {
     content: "标题2" !important;
 }
-.dialog
+.newsEditor
     >>> .ql-snow
     .ql-picker.ql-header
     .ql-picker-label[data-value="3"]::before,
-.dialog
+.newsEditor
     >>> .ql-snow
     .ql-picker.ql-header
     .ql-picker-item[data-value="3"]::before {
     content: "标题3" !important;
 }
-.dialog
+.newsEditor
     >>> .ql-snow
     .ql-picker.ql-header
     .ql-picker-label[data-value="4"]::before,
-.dialog
+.newsEditor
     >>> .ql-snow
     .ql-picker.ql-header
     .ql-picker-item[data-value="4"]::before {
     content: "标题4" !important;
 }
-.dialog
+.newsEditor
     >>> .ql-snow
     .ql-picker.ql-header
     .ql-picker-label[data-value="5"]::before,
-.dialog
+.newsEditor
     >>> .ql-snow
     .ql-picker.ql-header
     .ql-picker-item[data-value="5"]::before {
     content: "标题5" !important;
 }
-.dialog
+.newsEditor
     >>> .ql-snow
     .ql-picker.ql-header
     .ql-picker-label[data-value="6"]::before,
-.dialog
+.newsEditor
     >>> .ql-snow
     .ql-picker.ql-header
     .ql-picker-item[data-value="6"]::before {
     content: "标题6" !important;
 }
 
-.dialog >>> .ql-snow .ql-picker.ql-font .ql-picker-label::before,
-.dialog >>> .ql-snow .ql-picker.ql-font .ql-picker-item::before {
+.newsEditor >>> .ql-snow .ql-picker.ql-font .ql-picker-label::before,
+.newsEditor >>> .ql-snow .ql-picker.ql-font .ql-picker-item::before {
     content: "标准字体" !important;
 }
-.dialog
+.newsEditor
     >>> .ql-snow
     .ql-picker.ql-font
     .ql-picker-label[data-value="serif"]::before,
-.dialog
+.newsEditor
     >>> .ql-snow
     .ql-picker.ql-font
     .ql-picker-item[data-value="serif"]::before {
     content: "衬线字体" !important;
 }
-.dialog
+.newsEditor
     >>> .ql-snow
     .ql-picker.ql-font
     .ql-picker-label[data-value="monospace"]::before,
-.dialog
+.newsEditor
     >>> .ql-snow
     .ql-picker.ql-font
     .ql-picker-item[data-value="monospace"]::before {
