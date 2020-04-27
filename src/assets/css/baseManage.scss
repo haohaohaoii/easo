@@ -1,0 +1,281 @@
+/*首页*/
+
+@charset "UTF-8";
+
+@mixin baseManage-xl() {
+    .baseAdd{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 34% !important;
+            // height: 70%;
+            // overflow-y: auto;
+        }
+        /deep/ .el-dialog--center .el-dialog__body {
+            padding: 25px 70px 0px;
+        }
+    }
+    .baseEditor{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 34% !important;
+            // height: 70%;
+            // overflow-y: auto;
+        }
+        /deep/ .el-dialog--center .el-dialog__body {
+            padding: 25px 70px 0px;
+        }
+    }
+    .baseDetail{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            min-height: 460px;
+            // height: 70%;
+            overflow-y: auto;
+            width: 34%;
+        }
+        
+        .dialog >>> .el-dialog .el-dialog__body {
+            flex: 1;
+            overflow: auto;
+        }
+    }
+    .baseAudit{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 30% !important;
+   
+        }
+    }
+};
+@mixin baseManage-lg() {
+    .baseAdd{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 34% !important;
+            height: 70%;
+            overflow-y: auto;
+        }
+        /deep/ .el-dialog--center .el-dialog__body {
+            padding: 25px 20px 0px;
+        }
+    }
+    .baseEditor{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 34% !important;
+            height: 70%;
+            overflow-y: auto;
+        }
+        /deep/ .el-dialog--center .el-dialog__body {
+            padding: 25px 20px 0px;
+        }
+    }
+    .baseDetail{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            min-height: 460px;
+            // height: 70%;
+            overflow-y: auto;
+            width: 34%;
+        }
+        
+        .dialog >>> .el-dialog .el-dialog__body {
+            flex: 1;
+            overflow: auto;
+        }
+    }
+    .baseAudit{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 34% !important;
+   
+        }
+    }
+};
+@mixin baseManage-md() {
+    .baseAdd{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 34% !important;
+            height: 70%;
+            overflow-y: auto;
+        }
+        /deep/ .el-dialog--center .el-dialog__body {
+            padding: 25px 20px 0px;
+        }
+    }
+    .baseEditor{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 34% !important;
+            height: 70%;
+            overflow-y: auto;
+        }
+        /deep/ .el-dialog--center .el-dialog__body {
+            padding: 25px 20px 0px;
+        }
+    }
+    .baseDetail{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            min-height: 460px;
+            // height: 70%;
+            overflow-y: auto;
+            width: 34%;
+        }
+        
+        .dialog >>> .el-dialog .el-dialog__body {
+            flex: 1;
+            overflow: auto;
+        }
+    }
+    .baseAudit{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 34% !important;
+   
+        }
+    }
+};
+@mixin baseManage-sm() {
+    .baseAdd{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 34% !important;
+            height: 70%;
+            overflow-y: auto;
+        }
+        /deep/ .el-dialog--center .el-dialog__body {
+            padding: 25px 20px 0px;
+        }
+    }
+    .baseEditor{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 34% !important;
+            height: 70%;
+            overflow-y: auto;
+        }
+        /deep/ .el-dialog--center .el-dialog__body {
+            padding: 25px 20px 0px;
+        }
+    }
+    .baseDetail{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            min-height: 460px;
+            // height: 70%;
+            overflow-y: auto;
+            width: 34%;
+        }
+        
+        .dialog >>> .el-dialog .el-dialog__body {
+            flex: 1;
+            overflow: auto;
+        }
+    }
+    .baseAudit{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 34% !important;
+   
+        }
+    }
+ 
+}

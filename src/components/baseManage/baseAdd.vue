@@ -593,16 +593,16 @@ export default {
         }
     }
 }
-.baseAdd >>> .el-dialog {
-    display: flex;
-    flex-direction: column;
-    margin: 0 !important;
-    position: absolute;
-    top: 50%;
-    left: calc(50% + 120px);
-    transform: translate(-50%, -50%);
-    width: 34% !important;
-}
+// .baseAdd >>> .el-dialog {
+//     display: flex;
+//     flex-direction: column;
+//     margin: 0 !important;
+//     position: absolute;
+//     top: 50%;
+//     left: calc(50% + 120px);
+//     transform: translate(-50%, -50%);
+//     width: 34% !important;
+// }
 .baseAdd >>> .el-select {
     width: 100%;
 }
@@ -610,7 +610,7 @@ export default {
 .el-date-editor.el-input__inner {
     width: -webkit-fill-available !important;
 }
-.baseAdd >>> .el-dialog--center .el-dialog__body {
-    padding: 25px 70px 0px;
-}
+// .baseAdd >>> .el-dialog--center .el-dialog__body {
+//     padding: 25px 70px 0px;
+// }
 </style>

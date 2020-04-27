@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :visible.sync="baseEditor" class="baseAdd" center @close="closeDialog">
+    <el-dialog :visible.sync="baseEditor" class="baseEditor" center @close="closeDialog">
         <div slot="title" class="tit">
             <div class="line"></div>
             <p>基站编辑</p>
@@ -633,7 +633,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.baseAdd {
+.baseEditor {
     .tit {
         display: flex;
         align-items: center;
@@ -649,21 +649,21 @@ export default {
         }
     }
 }
-.baseAdd >>> .el-dialog {
-    display: flex;
-    flex-direction: column;
-    margin: 0 !important;
-    position: absolute;
-    top: 50%;
-    left: calc(50% + 120px);
-    transform: translate(-50%, -50%);
-    width: 34% !important;
-}
-.baseAdd >>> .el-date-editor.el-input,
+// .baseEditor >>> .el-dialog {
+//     display: flex;
+//     flex-direction: column;
+//     margin: 0 !important;
+//     position: absolute;
+//     top: 50%;
+//     left: calc(50% + 120px);
+//     transform: translate(-50%, -50%);
+//     width: 34% !important;
+// }
+.baseEditor >>> .el-date-editor.el-input,
 .el-date-editor.el-input__inner {
     width: -webkit-fill-available !important;
 }
-.baseAdd >>> .el-select {
+.baseEditor >>> .el-select {
     width: 100%;
 }
 </style>

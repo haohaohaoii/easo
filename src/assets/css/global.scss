@@ -1,31 +1,36 @@
 
 @charset "UTF-8";
-@import './header.scss';
-@import './homeLeft.scss';
-@import './fpage.scss';
-@import './login.scss';
+@import './header.scss';   //头部
+@import './homeLeft.scss';  //导航左侧
+@import './fpage.scss';    //首页
+@import './login.scss';    //登陆
+@import './baseManage.scss';  //企业管理-基站管理
 
 @media (min-width: 1900px) {
     @include header-xl();
     @include homeLeft-xl();
     @include fpage-xl();
     @include login-xl();
+    @include baseManage-xl(); 
 }
 @media (min-width: 1600px) and (max-width: 1899px) {
     @include header-lg();
     @include homeLeft-lg();
     @include fpage-lg();
-    @include login-lg(); 
+    @include login-lg();
+    @include baseManage-lg(); 
 };
 @media (min-width: 1400px) and (max-width: 1599px) {
     @include header-md();
     @include homeLeft-md();
     @include fpage-md();
     @include login-md();
+    @include baseManage-md();
 }
 @media (min-width: 1200px) and (max-width: 1399px) {
     @include header-sm();
     @include homeLeft-sm();
     @include fpage-sm();
     @include login-sm();
+    @include baseManage-sm();
 }

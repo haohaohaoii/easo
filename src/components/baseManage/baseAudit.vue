@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :visible.sync="baseAudit" class="dialog" center @close="closeDialog">
+    <el-dialog :visible.sync="baseAudit" class="baseAudit" center @close="closeDialog">
         <div slot="title" class="tit">
             <div class="line"></div>
             <p>基站审核</p>
@@ -144,7 +144,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dialog {
+.baseAudit {
     .tit {
         display: flex;
         align-items: center;
@@ -160,20 +160,20 @@ export default {
         }
     }
 }
-.dialog >>> .el-dialog {
-    margin-top: 0 !important;
-    position: relative;
-    margin: 0 auto;
-    width: 35%;
-    top: 50%;
-    transition: transform;
-    transform: translateY(-50%);
-    border: 1px solid #ebeef5;
-}
-.dialog >>> .el-table td.is-right {
+// .baseAudit >>> .el-dialog {
+//     margin-top: 0 !important;
+//     position: relative;
+//     margin: 0 auto;
+//     width: 35%;
+//     top: 50%;
+//     transition: transform;
+//     transform: translateY(-50%);
+//     border: 1px solid #ebeef5;
+// }
+.baseAudit >>> .el-table td.is-right {
     background: #ebf2fb;
 }
-.dialog >>> .el-table th.is-right {
+.baseAudit >>> .el-table th.is-right {
     background: #ebf2fb;
 }
 </style>
