@@ -13,6 +13,7 @@
                         v-model="companyValue"
                         filterable
                         clearable
+                        size="small"
                         @change="changeVal"
                     >
                         <el-option
@@ -22,7 +23,13 @@
                             :value="item.value"
                         ></el-option>
                     </el-select>
-                    <el-select placeholder="选择基站" class="changeW" filterable v-model="baseValue">
+                    <el-select
+                        placeholder="选择基站"
+                        class="changeW"
+                        size="small"
+                        filterable
+                        v-model="baseValue"
+                    >
                         <el-option
                             v-for="item of baseArr"
                             :key="item.value"
@@ -31,6 +38,7 @@
                         ></el-option>
                     </el-select>
                     <el-date-picker
+                        size="small"
                         type="datetime"
                         class="changeW"
                         v-model="startTime"
@@ -39,16 +47,23 @@
                     ></el-date-picker>
                     <span style="padding-right: 2%;">至</span>
                     <el-date-picker
+                        size="small"
                         type="datetime"
                         class="changeW"
                         v-model="endTime"
                         placeholder="结束时间"
                         time-arrow-control
                     ></el-date-picker>
-                    <el-button type="primary" class="changeW" @click="search" style="width:120px">查询</el-button>
+                    <el-button
+                        type="primary"
+                        size="small"
+                        class="changeW"
+                        @click="search"
+                        style="width:120px"
+                    >查询</el-button>
                 </div>
                 <div>
-                    <el-radio-group v-model="btnMsg">
+                    <el-radio-group v-model="btnMsg" size="small">
                         <el-radio-button label="列表"></el-radio-button>
                         <el-radio-button label="折线"></el-radio-button>
                         <el-radio-button label="柱状"></el-radio-button>
@@ -381,7 +396,7 @@ export default {
             display: flex;
             justify-content: space-between;
             .searchL {
-                width: 68%;
+                // width: 68%;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;

@@ -1,0 +1,50 @@
+/*首页*/
+
+@charset "UTF-8";
+
+@mixin historyData-xl() {
+    .historyD{
+        .historyTop{
+            .search{
+                .searchL{
+                    width: 75%;
+                }
+            }
+        }
+    }
+};
+@mixin historyData-lg() {
+    .historyD{
+        .historyTop{
+            .search{
+                .searchL{
+                    width: 75%;
+                }
+            }
+        }
+    }
+};
+@mixin historyData-md() {
+    .historyD{
+        .historyTop{
+            .search{
+                .searchL{
+                    width: 78%;
+                }
+            }
+            
+        }
+    }
+};
+@mixin historyData-sm() {
+    .historyD{
+        .historyTop{
+            .search{
+                .searchL{
+                    width: 80%;
+                }
+            }
+           
+        }
+    }
+}

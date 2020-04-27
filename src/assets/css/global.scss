@@ -7,6 +7,7 @@
 @import './baseManage.scss';  //企业管理-基站管理
 @import './spam.scss';  //企业管理-留言管理
 @import './enterMation.scss'; //企业管理-企业信息
+@import './historyData.scss'; //数据查看-历史数据
 
 @media (min-width: 1900px) {
     @include header-xl();
@@ -16,6 +17,7 @@
     @include baseManage-xl();
     @include spam-xl();
     @include enterMation-xl();
+    @include historyData-xl();
 }
 @media (min-width: 1600px) and (max-width: 1899px) {
     @include header-lg();
@@ -25,6 +27,7 @@
     @include baseManage-lg();
     @include spam-lg();
     @include enterMation-lg();
+    @include historyData-lg();
 };
 @media (min-width: 1400px) and (max-width: 1599px) {
     @include header-md();
@@ -34,6 +37,7 @@
     @include baseManage-md();
     @include spam-md();
     @include enterMation-md();
+    @include historyData-md();
 }
 @media (min-width: 1200px) and (max-width: 1399px) {
     @include header-sm();
@@ -43,4 +47,5 @@
     @include baseManage-sm();
     @include spam-sm();
     @include enterMation-sm();
+    @include historyData-sm();
 }
