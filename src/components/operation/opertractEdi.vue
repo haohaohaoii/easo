@@ -1,7 +1,7 @@
 <template>
     <el-dialog
         :visible.sync="addShow"
-        class="dialog"
+        class="opertractEdi"
         center
         :close-on-click-modal="false"
         append-to-body
@@ -1198,7 +1198,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dialog {
+.opertractEdi {
     .tit {
         display: flex;
         align-items: flex-end;
@@ -1225,53 +1225,53 @@ export default {
 .it {
     margin-bottom: 0px !important;
 }
-.dialog >>> .el-dialog {
-    display: flex;
-    flex-direction: column;
-    margin: 0 !important;
-    position: absolute;
-    top: 50%;
-    width: 36% !important;
-    left: calc(50% + 120px);
-    transform: translate(-50%, -50%);
-}
+// .opertractEdi >>> .el-dialog {
+//     display: flex;
+//     flex-direction: column;
+//     margin: 0 !important;
+//     position: absolute;
+//     top: 50%;
+//     width: 36% !important;
+//     left: calc(50% + 120px);
+//     transform: translate(-50%, -50%);
+// }
 
-.dialog >>> .el-dialog .el-dialog__body {
+.opertractEdi >>> .el-dialog .el-dialog__body {
     flex: 1;
     overflow: auto;
 }
-.dialog >>> .el-date-editor.el-input,
-.el-date-editor.el-input__inner {
+.opertractEdi >>> .el-date-editor.el-input,
+.opertractEdi >>> .el-date-editor.el-input__inner {
     width: 100%;
 }
-.dialog >>> .el-dialog--center .el-dialog__body {
-    padding: 25px 40px 30px !important;
-}
+// .opertractEdi >>> .el-dialog--center .el-dialog__body {
+//     padding: 25px 40px 30px !important;
+// }
 //表单校验的图标颜色
-.dialog >>> .el-input__suffix {
+.opertractEdi >>> .el-input__suffix {
     color: #67c23a !important;
 }
 //上传图片框
-.dialog >>> .el-upload--picture-card {
+.opertractEdi >>> .el-upload--picture-card {
     width: 90px;
     height: 90px;
     border: 2px solid rgba(153, 153, 153, 1);
     border-radius: 10px;
 }
 //上传图片 +框
-.dialog >>> .el-upload--picture-card i {
+.opertractEdi >>> .el-upload--picture-card i {
     position: relative;
     top: -22px;
     color: #999999;
 }
 //已上传的图片框
-.dialog >>> .el-upload-list--picture-card .el-upload-list__item {
+.opertractEdi >>> .el-upload-list--picture-card .el-upload-list__item {
     width: 90px;
     height: 90px;
     border: 2px solid rgba(153, 153, 153, 1);
     border-radius: 10px;
 }
-.dialog >>> .el-select {
+.opertractEdi >>> .el-select {
     width: 100%;
 }
 </style>

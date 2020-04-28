@@ -1,7 +1,7 @@
 <template>
     <el-dialog
         :visible.sync="detailIsshow"
-        class="dialog"
+        class="opertractDetail"
         center
         @close="closeDialog"
         :close-on-click-modal="false"
@@ -151,7 +151,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dialog {
+.opertractDetail {
     .tit {
         display: flex;
         align-items: center;
@@ -167,7 +167,7 @@ export default {
         }
     }
 }
-// .dialog >>> .el-dialog {
+// .opertractDetail >>> .el-dialog {
 //     margin-top: 0 !important;
 //     position: relative;
 //     margin: 0 auto;
@@ -177,20 +177,20 @@ export default {
 //     transform: translateY(-50%);
 //     border: 1px solid #ebeef5;
 // }
-.dialog >>> .el-dialog {
-    display: flex;
-    flex-direction: column;
-    margin: 0 !important;
-    position: absolute;
-    top: 50%;
-    width: 36% !important;
-    left: calc(50% + 120px);
-    transform: translate(-50%, -50%);
-}
-.dialog >>> .el-table td.is-right {
+// .opertractDetail >>> .el-dialog {
+//     display: flex;
+//     flex-direction: column;
+//     margin: 0 !important;
+//     position: absolute;
+//     top: 50%;
+//     width: 36% !important;
+//     left: calc(50% + 120px);
+//     transform: translate(-50%, -50%);
+// }
+.opertractDetail >>> .el-table td.is-right {
     background: #ebf2fb;
 }
-.dialog >>> .el-table th.is-right {
+.opertractDetail >>> .el-table th.is-right {
     background: #ebf2fb;
 }
 </style>

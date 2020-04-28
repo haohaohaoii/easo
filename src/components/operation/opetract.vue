@@ -91,7 +91,7 @@
                     <el-button
                         type="primary"
                         icon="el-icon-circle-plus-outline"
-                        size="mini"
+                        size="small"
                         class="add"
                         @click="addTract"
                         v-has="'添加合同'"
@@ -111,12 +111,12 @@
                 :header-cell-style="iHeaderCellStyle"
                 class="tab"
             >
-                <el-table-column align="center" prop="tractNum" label="合同编号"></el-table-column>
+                <el-table-column align="center" prop="tractNum" width="160px" label="合同编号"></el-table-column>
                 <el-table-column align="center" prop="tractName" label="合同名称"></el-table-column>
-                <el-table-column align="center" prop="priseName" label="企业名称"></el-table-column>
-                <el-table-column align="center" prop="operations" label="运维部门"></el-table-column>
-                <el-table-column align="center" prop="startTime" label="开始日期"></el-table-column>
-                <el-table-column align="center" prop="endTime" label="截止日期"></el-table-column>
+                <el-table-column align="center" prop="priseName" width="200px" label="企业名称"></el-table-column>
+                <el-table-column align="center" prop="operations" width="100px" label="运维部门"></el-table-column>
+                <el-table-column align="center" prop="startTime" width="180px" label="开始日期"></el-table-column>
+                <el-table-column align="center" prop="endTime" width="180px" label="截止日期"></el-table-column>
                 <el-table-column align="center" prop="tStatus" label="时效状态">
                     <template slot-scope="scope">
                         <span v-if="scope.row.tStatus==0">未到期</span>
@@ -130,7 +130,7 @@
                         <span v-if="scope.row.tractStatus==1">终止</span>
                     </template>
                 </el-table-column>
-                <el-table-column align="center" prop="createTime" label="签订日期"></el-table-column>
+                <el-table-column align="center" prop="createTime" width="180px" label="签订日期"></el-table-column>
 
                 <el-table-column label="操作" align="center" width="220" fixed="right">
                     <template slot-scope="scope">
@@ -509,9 +509,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.opetract >>> .el-input {
-    width: 180px !important;
-}
+// .opetract >>> .el-input {
+//     width: 180px !important;
+// }
 .opetract >>> .el-table::before {
     left: 0;
     bottom: 0;
@@ -553,9 +553,6 @@ export default {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-            }
-            .changeW {
-                margin-right: 2%;
             }
         }
     }

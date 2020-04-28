@@ -1,0 +1,215 @@
+/*首页*/
+
+@charset "UTF-8";
+
+@mixin opetract-xl() {
+    .opetract{
+        /deep/ .el-input {
+            width: 180px !important;
+        }
+    }
+    .opertractAdd{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            width: 37% !important;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+
+        }
+        /deep/ .el-dialog--center .el-dialog__body {
+            padding: 15px 40px 10px 10px !important;
+        }
+    }
+    .opertractEdi{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            width: 37% !important;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+
+        }
+        /deep/ .el-dialog--center .el-dialog__body {
+            padding: 15px 40px 10px 10px !important;
+        }
+    }
+    .opertractDetail{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            width: 36% !important;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+
+        }
+    }
+};
+@mixin opetract-lg() {
+    .opetract{
+        /deep/ .el-input {
+            width: 150px !important;
+        }
+    }
+    .opertractAdd{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            width: 39% !important;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            height: 70%;
+        }
+        /deep/ .el-dialog--center .el-dialog__body {
+            padding: 15px 25px 15px 10px!important;
+        }
+    }
+    .opertractEdi{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            width: 39% !important;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            height: 70%;
+        }
+        /deep/ .el-dialog--center .el-dialog__body {
+            padding: 15px 25px 15px 10px!important;
+        }
+    }
+    .opertractDetail{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            width: 36% !important;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            height: 70%;
+            overflow-y: auto;
+        }
+    }
+};
+@mixin opetract-md() {
+    .opetract{
+        /deep/ .el-input {
+            width: 125px !important;
+        }
+    }
+    .opertractAdd{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            width: 40% !important;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            height: 70%;
+        }
+        /deep/ .el-dialog--center .el-dialog__body {
+            padding: 10px 15px 10px 0!important;
+        }
+    }
+    .opertractEdi{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            width: 40% !important;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            height: 70%;
+        }
+        /deep/ .el-dialog--center .el-dialog__body {
+            padding: 10px 15px 10px 0!important;
+        }
+    }
+    .opertractDetail{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            width: 36% !important;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            height: 70%;
+            overflow-y: auto;
+        }
+    }
+};
+@mixin opetract-sm() {
+    .opetract{
+        /deep/ .el-input {
+            width: 110px !important;
+        }
+    }
+    .opertractAdd{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            width: 45% !important;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            height: 70%;
+        }
+        /deep/ .el-dialog--center .el-dialog__body {
+            padding: 0 5px 0 0!important;
+        }
+    }
+    .opertractEdi{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            width: 45% !important;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            height: 70%;
+        }
+        /deep/ .el-dialog--center .el-dialog__body {
+            padding: 0 5px 0 0!important;
+        }
+    }
+    .opertractDetail{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            width: 36% !important;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            height: 70%;
+            overflow-y: auto;
+        }
+    }
+}

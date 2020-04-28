@@ -1,7 +1,7 @@
 <template>
     <el-dialog
         :visible.sync="addShow"
-        class="dialog"
+        class="opertractAdd"
         center
         :close-on-click-modal="false"
         append-to-body
@@ -22,7 +22,7 @@
             label-position="right "
         >
             <el-form-item label="运维部门:" required>
-                <el-col :span="6">
+                <el-col :lg="6">
                     <el-form-item prop="provinceCode" class="it">
                         <el-select
                             v-model="ruleForm.provinceCode"
@@ -41,7 +41,7 @@
                     </el-form-item>
                 </el-col>
 
-                <el-col :span="6">
+                <el-col :lg="6">
                     <el-form-item prop="cityCode" class="it">
                         <el-select
                             v-model="ruleForm.cityCode"
@@ -60,7 +60,7 @@
                     </el-form-item>
                 </el-col>
 
-                <el-col :span="6">
+                <el-col :lg="6">
                     <el-form-item prop="areaCode" class="it">
                         <el-select
                             v-model="ruleForm.areaCode"
@@ -79,7 +79,7 @@
                     </el-form-item>
                 </el-col>
 
-                <el-col :span="6">
+                <el-col :lg="6">
                     <el-form-item prop="depCode" class="it">
                         <el-select
                             v-model="ruleForm.depCode"
@@ -817,7 +817,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dialog {
+.opertractAdd {
     .tit {
         display: flex;
         align-items: flex-end;
@@ -842,7 +842,7 @@ export default {
     }
 }
 //最外层弹窗
-// .dialog >>> .el-dialog {
+// .opertractAdd >>> .el-dialog {
 //     margin-top: 0 !important;
 //     position: relative;
 
@@ -858,52 +858,52 @@ export default {
 .it {
     margin-bottom: 0px !important;
 }
-.dialog >>> .el-dialog {
-    display: flex;
-    flex-direction: column;
-    margin: 0 !important;
-    position: absolute;
-    top: 50%;
-    width: 36% !important;
-    left: calc(50% + 120px);
-    transform: translate(-50%, -50%);
-}
-.dialog >>> .el-date-editor.el-input,
-.el-date-editor.el-input__inner {
+// .opertractAdd >>> .el-dialog {
+//     display: flex;
+//     flex-direction: column;
+//     margin: 0 !important;
+//     position: absolute;
+//     top: 50%;
+//     width: 36% !important;
+//     left: calc(50% + 120px);
+//     transform: translate(-50%, -50%);
+// }
+.opertractAdd >>> .el-date-editor.el-input,
+.opertractAdd >>> .el-date-editor.el-input__inner {
     width: 100%;
 }
-.dialog >>> .el-dialog--center .el-dialog__body {
-    padding: 25px 40px 30px !important;
-}
-.dialog >>> .el-dialog .el-dialog__body {
+// .opertractAdd >>> .el-dialog--center .el-dialog__body {
+//     padding: 25px 40px 30px !important;
+// }
+.opertractAdd >>> .el-dialog .el-dialog__body {
     flex: 1;
     overflow: auto;
 }
 //表单校验的图标颜色
-.dialog >>> .el-input__suffix {
+.opertractAdd >>> .el-input__suffix {
     color: #67c23a !important;
 }
 //上传图片框
-.dialog >>> .el-upload--picture-card {
+.opertractAdd >>> .el-upload--picture-card {
     width: 90px;
     height: 90px;
     border: 2px solid rgba(153, 153, 153, 1);
     border-radius: 10px;
 }
 //上传图片 +框
-.dialog >>> .el-upload--picture-card i {
+.opertractAdd >>> .el-upload--picture-card i {
     position: relative;
     top: -22px;
     color: #999999;
 }
 //已上传的图片框
-.dialog >>> .el-upload-list--picture-card .el-upload-list__item {
+.opertractAdd >>> .el-upload-list--picture-card .el-upload-list__item {
     width: 90px;
     height: 90px;
     border: 2px solid rgba(153, 153, 153, 1);
     border-radius: 10px;
 }
-.dialog >>> .el-select {
+.opertractAdd >>> .el-select {
     width: 100%;
 }
 </style>
