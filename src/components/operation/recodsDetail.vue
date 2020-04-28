@@ -1,7 +1,7 @@
 <template>
     <el-dialog
         :visible.sync="detailIsshow"
-        class="dialog"
+        class="recodsDetail"
         center
         @close="closeDialog"
         :close-on-click-modal="false"
@@ -108,7 +108,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dialog {
+.recodsDetail {
     .tit {
         display: flex;
         align-items: flex-end;
@@ -124,7 +124,7 @@ export default {
         }
     }
 }
-// .dialog >>> .el-dialog {
+// .recodsDetail >>> .el-dialog {
 //     margin-top: 0 !important;
 //     position: relative;
 //     margin: 0 auto;
@@ -134,7 +134,7 @@ export default {
 //     transform: translateY(-50%);
 //     border: 1px solid #ebeef5;
 // }
-.dialog >>> .el-dialog {
+.recodsDetail >>> .el-dialog {
     display: flex;
     flex-direction: column;
     margin: 0 !important;
@@ -145,14 +145,14 @@ export default {
     transform: translate(-50%, -50%);
 }
 
-.dialog >>> .el-dialog .el-dialog__body {
+.recodsDetail >>> .el-dialog .el-dialog__body {
     flex: 1;
     overflow: auto;
 }
-.dialog >>> .el-table td.is-right {
+.recodsDetail >>> .el-table td.is-right {
     background: #ebf2fb;
 }
-.dialog >>> .el-table th.is-right {
+.recodsDetail >>> .el-table th.is-right {
     background: #ebf2fb;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
     <el-dialog
         :visible.sync="addShow"
-        class="dialog"
+        class="addRecods"
         center
         :close-on-click-modal="false"
         append-to-body
@@ -76,7 +76,7 @@
                     </el-form-item>
                 </el-col>
 
-                <el-col :span="4">
+                <el-col :lg="10" :xl="10">
                     <el-form-item prop="codType">
                         <el-select
                             v-model="ruleForm.codTypes"
@@ -94,7 +94,7 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
-                <el-col :span="18" :offset="2">
+                <el-col :lg="12" :xl="12" :offset="2">
                     <el-form-item prop="codDesc">
                         <el-input
                             :disabled="!ruleForm.codIsC"
@@ -111,7 +111,7 @@
                         <el-checkbox v-model="ruleForm.anIsC" @change="changeAn">氨氮</el-checkbox>
                     </el-form-item>
                 </el-col>
-                <el-col :span="4">
+                <el-col :lg="10" :xl="10">
                     <el-form-item prop="anType">
                         <el-select
                             v-model="ruleForm.anTypes"
@@ -129,7 +129,7 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
-                <el-col :span="18" :offset="2">
+                <el-col :lg="12" :xl="12" :offset="2">
                     <el-form-item prop="anDesc">
                         <el-input
                             :disabled="!ruleForm.anIsC"
@@ -146,7 +146,7 @@
                         <el-checkbox v-model="ruleForm.zlIsC" @change="changeZl">总磷</el-checkbox>
                     </el-form-item>
                 </el-col>
-                <el-col :span="4">
+                <el-col :lg="10" :xl="10">
                     <el-form-item prop="zlType">
                         <el-select
                             v-model="ruleForm.zlTypes"
@@ -164,7 +164,7 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
-                <el-col :span="18" :offset="2">
+                <el-col :lg="12" :xl="12" :offset="2">
                     <el-form-item prop="zlDesc">
                         <el-input
                             :disabled="!ruleForm.zlIsC"
@@ -181,7 +181,7 @@
                         <el-checkbox v-model="ruleForm.zdIsC" @change="changeZd">总氮</el-checkbox>
                     </el-form-item>
                 </el-col>
-                <el-col :span="4">
+                <el-col :lg="10" :xl="10">
                     <el-form-item prop="zdType">
                         <el-select
                             v-model="ruleForm.zdTypes"
@@ -199,7 +199,7 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
-                <el-col :span="18" :offset="2">
+                <el-col :lg="12" :xl="12" :offset="2">
                     <el-form-item prop="zdDesc">
                         <el-input
                             :disabled="!ruleForm.zdIsC"
@@ -216,7 +216,7 @@
                         <el-checkbox v-model="ruleForm.llIsC" @change="changeLl">流量</el-checkbox>
                     </el-form-item>
                 </el-col>
-                <el-col :span="4">
+                <el-col :lg="10" :xl="10">
                     <el-form-item prop="llType">
                         <el-select
                             v-model="ruleForm.llTypes"
@@ -234,7 +234,7 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
-                <el-col :span="18" :offset="2">
+                <el-col :lg="12" :xl="12" :offset="2">
                     <el-form-item prop="llDesc">
                         <el-input
                             :disabled="!ruleForm.llIsC"
@@ -507,7 +507,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dialog {
+.addRecods {
     .tit {
         display: flex;
         align-items: flex-end;
@@ -532,7 +532,7 @@ export default {
     }
 }
 //最外层弹窗
-// .dialog >>> .el-dialog {
+// addRecods >>> .el-dialog {
 //     margin-top: 0 !important;
 //     position: relative;
 
@@ -545,34 +545,34 @@ export default {
 //     border: 1px solid #ebeef5;
 
 // }
-.dialog >>> .el-dialog {
-    display: flex;
-    flex-direction: column;
-    margin: 0 !important;
-    position: absolute;
-    top: 50%;
-    width: 38% !important;
-    left: calc(50% + 120px);
-    transform: translate(-50%, -50%);
-}
-.dialog >>> .el-date-editor.el-input,
-.el-date-editor.el-input__inner {
+// .addRecods >>> .el-dialog {
+//     display: flex;
+//     flex-direction: column;
+//     margin: 0 !important;
+//     position: absolute;
+//     top: 50%;
+//     width: 38% !important;
+//     left: calc(50% + 120px);
+//     transform: translate(-50%, -50%);
+// }
+.addRecods >>> .el-date-editor.el-input,
+.addRecods >>> .el-date-editor.el-input__inner {
     width: 100%;
 }
-.dialog >>> .el-dialog--center .el-dialog__body {
+.addRecods >>> .el-dialog--center .el-dialog__body {
     padding: 25px 45px 5px !important;
 }
-.dialog >>> .el-select {
+.addRecods >>> .el-select {
     width: 100%;
 }
 
-.dialog >>> .el-dialog .el-dialog__body {
+.addRecods >>> .el-dialog .el-dialog__body {
     flex: 1;
     overflow: auto;
 }
 
 //表单校验的图标颜色
-.dialog >>> .el-input__suffix {
+.addRecods >>> .el-input__suffix {
     color: #67c23a !important;
 }
 </style>

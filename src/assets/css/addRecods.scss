@@ -1,0 +1,116 @@
+/*首页*/
+
+@charset "UTF-8";
+
+@mixin addRecods-xl() {
+    .addRecods{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            width: 34% !important;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+        }
+    }
+    .recodsEditor{
+        /deep/ .el-dialog{
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            width: 34% !important;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+
+        }
+    }
+};
+@mixin addRecods-lg() {
+    .addRecods{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            width: 34% !important;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            height: 75%;
+        }
+    }
+    .recodsEditor{
+        /deep/ .el-dialog{
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            width: 34% !important;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            height: 75%;
+        }
+    }
+};
+@mixin addRecods-md() {
+    .addRecods{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            width: 34% !important;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            height: 75%;
+        }
+    }
+    .recodsEditor{
+        /deep/ .el-dialog{
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            width: 34% !important;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            height: 75%;
+        }
+    }
+};
+@mixin addRecods-sm() {
+    .addRecods{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            width: 34% !important;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            height: 75%;
+        }
+    }
+    .recodsEditor{
+        /deep/ .el-dialog{
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            width: 34% !important;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            height: 75%;
+        }
+    }
+    
+}

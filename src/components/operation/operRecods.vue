@@ -119,7 +119,7 @@
                     <el-button
                         type="primary"
                         class="changeW"
-                        size="mini"
+                        size="small"
                         @click="search"
                         style="width:110px"
                     >搜索</el-button>
@@ -128,7 +128,7 @@
                     <el-button
                         type="primary"
                         icon="el-icon-circle-plus-outline"
-                        size="mini"
+                        size="small"
                         class="add"
                         @click="addTract"
                         v-has="'添加运维记录'"
@@ -610,6 +610,12 @@ export default {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                flex-wrap: wrap;
+            }
+            .searchL:after {
+                content: "";
+                width: 430px;
+                border: 1px solid transparent;
             }
         }
     }
