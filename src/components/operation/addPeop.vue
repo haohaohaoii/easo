@@ -360,6 +360,9 @@ export default {
     height: 55%;
     overflow-y: auto;
 }
+.inlog >>> .el-form-item {
+    margin-bottom: 0;
+}
 // .inlog >>> .el-checkbox {
 //     width: 142px;
 //     margin-right: 0;
