@@ -196,8 +196,8 @@ export default {
     height: 100%;
     position: relative;
     .adda {
-        width: 50%;
-        height: 50%;
+        width: 45%;
+
         background: white;
         position: absolute;
         top: 50%;
@@ -222,7 +222,7 @@ export default {
         }
         .content {
             .demo-ruleForm {
-                width: 68%;
+                width: 80%;
                 margin: 0 auto;
             }
         }
@@ -236,6 +236,7 @@ export default {
         border-top: 1px solid #f0f0f0;
         border-bottom: 1px solid #f0f0f0;
         margin-top: 15px;
+
         .left-img {
             img {
                 width: 55%;
@@ -275,9 +276,8 @@ export default {
         -ms-filter: "alpha(opacity=0)";
     }
     .foot {
-        position: absolute;
-        left: 50%;
-        bottom: 15%;
+        text-align: center;
+        margin: 30px 0;
     }
 }
 .appS >>> .el-input__suffix {
