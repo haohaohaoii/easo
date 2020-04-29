@@ -346,14 +346,14 @@ export default {
     height: 100%;
     position: relative;
     .dialog {
-        width: 46%;
-        height: 58%;
-        background: white;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        box-sizing: border-box;
+        // width: 46%;
+        // height: 58%;
+        // background: white;
+        // position: absolute;
+        // top: 50%;
+        // left: 50%;
+        // transform: translate(-50%, -50%);
+        // box-sizing: border-box;
         .tit {
             margin-top: 10px;
             display: flex;
