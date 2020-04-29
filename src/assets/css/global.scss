@@ -16,6 +16,7 @@
 @import './opetract.scss'; //运维管理下 -运维合同
 @import './opeopleDep.scss'; //运维管理下 -运维人员管理
 @import './addTwo.scss'; //运维管理下 - 运维部门添加
+@import './operaDep.scss'; //运维管理下 - 运维部门管理
 
 @media (min-width: 1900px) {
     @include header-xl();
@@ -34,6 +35,7 @@
     @include opetract-xl();
     @include opeopleDep-xl();
     @include addTwo-xl();
+    @include operaDep-xl();
 }
 @media (min-width: 1600px) and (max-width: 1899px) {
     @include header-lg();
@@ -52,6 +54,7 @@
     @include opetract-lg();
     @include opeopleDep-lg();
     @include addTwo-lg();
+    @include operaDep-lg();
 };
 @media (min-width: 1400px) and (max-width: 1599px) {
     @include header-md();
@@ -70,6 +73,7 @@
     @include opetract-md();
     @include opeopleDep-md();
     @include addTwo-md();
+    @include operaDep-md();
 }
 @media (min-width: 1200px) and (max-width: 1399px) {
     @include header-sm();
@@ -88,4 +92,5 @@
     @include opetract-sm();
     @include opeopleDep-sm();
     @include addTwo-sm();
+    @include operaDep-sm();
 }

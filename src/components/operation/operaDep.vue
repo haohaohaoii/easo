@@ -27,16 +27,16 @@
                 :header-cell-style="iHeaderCellStyle"
                 class="tab"
             >
-                <el-table-column align="center" prop="deptName" label="部门名称"></el-table-column>
-                <el-table-column align="center" prop="contactMan" label="负责人"></el-table-column>
-                <el-table-column align="center" prop="contactPhone" label="电话"></el-table-column>
-                <el-table-column align="center" label="区域">
+                <el-table-column align="center" prop="deptName" label="部门名称" min-width="140px"></el-table-column>
+                <el-table-column align="center" prop="contactMan" min-width="120px" label="负责人"></el-table-column>
+                <el-table-column align="center" prop="contactPhone" min-width="140px" label="电话"></el-table-column>
+                <el-table-column align="center" min-width="140px" label="区域">
                     <template slot-scope="scope">
                         <p>{{scope.row.city}}{{scope.row.county}}</p>
                     </template>
                 </el-table-column>
-                <el-table-column align="center" prop="addressDetail" label="地址"></el-table-column>
-                <el-table-column align="center" prop="createTime" label="添加时间"></el-table-column>
+                <el-table-column align="center" prop="addressDetail" min-width="200px" label="地址"></el-table-column>
+                <el-table-column align="center" prop="createTime" min-width="160px" label="添加时间"></el-table-column>
 
                 <el-table-column label="操作" align="center" width="200" fixed="right">
                     <template slot-scope="scope">

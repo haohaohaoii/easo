@@ -1,7 +1,7 @@
 <template>
     <el-dialog
         :visible.sync="addShow"
-        class="dialog"
+        class="operEditor"
         center
         :close-on-click-modal="false"
         append-to-body
@@ -25,7 +25,7 @@
                 <el-input v-model="ruleForm.depName"></el-input>
             </el-form-item>
             <el-form-item label="选择区域:" required>
-                <el-col :span="8">
+                <el-col :lg="8" :xl="8">
                     <el-form-item prop="provinceCode" class="it">
                         <el-select
                             size="small"
@@ -45,7 +45,7 @@
                     </el-form-item>
                 </el-col>
 
-                <el-col :span="8">
+                <el-col :lg="8" :xl="8">
                     <el-form-item prop="cityCode" class="it">
                         <el-select
                             size="small"
@@ -65,7 +65,7 @@
                     </el-form-item>
                 </el-col>
 
-                <el-col :span="8">
+                <el-col :lg="8" :xl="8">
                     <el-form-item prop="areaCode" class="it">
                         <el-select
                             size="small"
@@ -472,7 +472,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dialog {
+.operEditor {
     .tit {
         display: flex;
         align-items: center;
@@ -497,7 +497,7 @@ export default {
     }
 }
 //最外层弹窗
-// .dialog >>> .el-dialog {
+// .operEditor >>> .el-dialog {
 //     margin-top: 0 !important;
 //     position: relative;
 
@@ -510,18 +510,18 @@ export default {
 //     border: 1px solid #ebeef5;
 
 // }
-.dialog >>> .el-dialog {
-    display: flex;
-    flex-direction: column;
-    margin: 0 !important;
-    position: absolute;
-    top: 50%;
-    left: calc(50% + 120px);
-    transform: translate(-50%, -50%);
-    width: 34%;
-}
+// .operEditor >>> .el-dialog {
+//     display: flex;
+//     flex-direction: column;
+//     margin: 0 !important;
+//     position: absolute;
+//     top: 50%;
+//     left: calc(50% + 120px);
+//     transform: translate(-50%, -50%);
+//     width: 34%;
+// }
 
-.dialog >>> .el-dialog .el-dialog__body {
+.operEditor >>> .el-dialog .el-dialog__body {
     flex: 1;
     overflow: auto;
 }
@@ -529,7 +529,7 @@ export default {
     margin-bottom: 0px !important;
 }
 //表单校验的图标颜色
-.dialog >>> .el-input__suffix {
+.operEditor >>> .el-input__suffix {
     color: #67c23a !important;
 }
 </style>
