@@ -78,7 +78,7 @@
                     <el-button
                         type="primary"
                         icon="el-icon-circle-plus-outline"
-                        size="mini"
+                        size="small"
                         class="add"
                         @click="addPeople"
                         v-has="'添加人员'"
@@ -98,13 +98,13 @@
                 :header-cell-style="iHeaderCellStyle"
                 class="tab"
             >
-                <el-table-column align="center" prop="name" label="姓名"></el-table-column>
-                <el-table-column align="center" prop="linkPhone" label="电话"></el-table-column>
-                <el-table-column align="center" prop="email" label="邮箱"></el-table-column>
-                <el-table-column align="center" prop="userName" label="用户名"></el-table-column>
-                <el-table-column align="center" prop="ywbm" label="运维部门"></el-table-column>
-                <el-table-column align="center" prop="ywzd" label="运维站点"></el-table-column>
-                <el-table-column align="center" prop="createTime" label="添加时间"></el-table-column>
+                <el-table-column align="center" prop="name" label="姓名" min-width="100px"></el-table-column>
+                <el-table-column align="center" prop="linkPhone" min-width="120px" label="电话"></el-table-column>
+                <el-table-column align="center" prop="email" min-width="165px" label="邮箱"></el-table-column>
+                <el-table-column align="center" prop="userName" min-width="100px" label="用户名"></el-table-column>
+                <el-table-column align="center" prop="ywbm" label="运维部门" min-width="100px"></el-table-column>
+                <el-table-column align="center" prop="ywzd" min-width="200px" label="运维站点"></el-table-column>
+                <el-table-column align="center" prop="createTime" min-width="160px" label="添加时间"></el-table-column>
 
                 <el-table-column label="操作" align="center" width="220" fixed="right">
                     <template slot-scope="scope">
@@ -484,9 +484,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.oPeopleDep >>> .el-input {
-    width: 180px !important;
-}
+// .oPeopleDep >>> .el-input {
+//     width: 180px !important;
+// }
 .oPeopleDep >>> .el-table::before {
     left: 0;
     bottom: 0;
@@ -524,7 +524,7 @@ export default {
             display: flex;
             justify-content: space-between;
             .searchL {
-                width: 60%;
+                // width: 60%;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;

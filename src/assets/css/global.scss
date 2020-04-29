@@ -14,6 +14,7 @@
 @import './addPeop.scss';  //运维管理下 -添加运维人员
 @import './addRecods.scss'; //运维管理下 -运维记录
 @import './opetract.scss'; //运维管理下 -运维合同
+@import './opeopleDep.scss'; //运维管理下 -运维人员管理
 
 @media (min-width: 1900px) {
     @include header-xl();
@@ -30,6 +31,7 @@
     @include addPeop-xl();
     @include addRecods-xl();
     @include opetract-xl();
+    @include opeopleDep-xl();
 }
 @media (min-width: 1600px) and (max-width: 1899px) {
     @include header-lg();
@@ -46,6 +48,7 @@
     @include addPeop-lg();
     @include addRecods-lg();
     @include opetract-lg();
+    @include opeopleDep-lg();
 };
 @media (min-width: 1400px) and (max-width: 1599px) {
     @include header-md();
@@ -62,6 +65,7 @@
     @include addPeop-md();
     @include addRecods-md();
     @include opetract-md();
+    @include opeopleDep-md();
 }
 @media (min-width: 1200px) and (max-width: 1399px) {
     @include header-sm();
@@ -78,4 +82,5 @@
     @include addPeop-sm();
     @include addRecods-sm();
     @include opetract-sm();
+    @include opeopleDep-sm();
 }

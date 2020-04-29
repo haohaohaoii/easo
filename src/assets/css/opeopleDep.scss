@@ -1,0 +1,208 @@
+/*首页*/
+
+@charset "UTF-8";
+
+@mixin opeopleDep-xl() {
+    .oPeopleDep{
+        /deep/ .el-input {
+            width: 180px !important;
+        }
+        /deep/ .searchL{
+            width: 60%;
+        }
+    }
+    .opeoAdd{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 30% !important;
+         
+        }
+    }
+    .inlog{
+        /deep/ .el-dialog {
+            height: 42%;
+            left: 22%;
+            top: 20%;
+            width: 30%;
+        }
+        /deep/ .el-checkbox {
+            width: 142px;
+            margin-right: 0;
+        }
+        /deep/ .el-dialog__footer{
+            padding-bottom: 15px;
+        }
+    }
+    .opeoEditor{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 30% !important;
+          
+        }
+    }
+};
+@mixin opeopleDep-lg() {
+    .oPeopleDep{
+        /deep/ .el-input {
+            width: 165px !important;
+        }
+        /deep/ .searchL{
+            width: 65%;
+        }
+    }
+    .opeoAdd{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 32% !important;
+         
+        }
+    }
+    .inlog{
+        /deep/ .el-dialog {
+            height: 48%;
+            left: 22%;
+            top: 20%;
+            width: 30%;
+        }
+        /deep/ .el-checkbox {
+            width: 198px;
+            margin-right: 0;
+        }
+        /deep/ .el-dialog__footer{
+            padding-bottom: 15px;
+        }
+    }
+    .opeoEditor{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 32% !important;
+          
+        }
+    }
+};
+@mixin opeopleDep-md() {
+    .oPeopleDep{
+        /deep/ .el-input {
+            width: 150px !important;
+        }
+        /deep/ .searchL{
+            width: 68%;
+        }
+    }
+    .opeoAdd{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 35% !important;
+            height: 60%;
+        }
+    }
+    .inlog{
+        /deep/ .el-dialog {
+            height: 48%;
+            left: 28%;
+            top: 20%;
+            width: 30%;
+        }
+        /deep/ .el-checkbox {
+            width: 175px;
+            margin-right: 0;
+        }
+        /deep/ .el-dialog__footer{
+            padding: 0;
+        }
+    }
+    .opeoEditor{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 35% !important;
+            height: 60%;
+        }
+    }
+}
+@mixin opeopleDep-sm() {
+    .oPeopleDep{
+        /deep/ .el-input {
+            width: 130px !important;
+        }
+        /deep/ .searchL{
+            width: 70%;
+        }
+    }
+    .opeoAdd{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 35% !important;
+            height: 60%;
+        }
+    }
+    .inlog{
+        /deep/ .el-dialog {
+            height: 55%;
+            left: 28%;
+            top: 12%;
+            width: 35%;
+        }
+        /deep/ .el-checkbox {
+            width: 175px;
+            margin-right: 0;
+        }
+        /deep/ .el-dialog__footer{
+            padding: 0;
+        }
+    }
+    .opeoEditor{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 35% !important;
+            height: 60%;
+        }
+    }
+}

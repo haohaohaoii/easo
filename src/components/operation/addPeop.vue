@@ -72,7 +72,7 @@
             </el-form>
             <el-dialog
                 title="内层 Dialog"
-                class="inlog"
+                class="inlogs"
                 :visible.sync="innerVisible"
                 :close-on-click-modal="false"
                 append-to-body
@@ -100,7 +100,7 @@
             </el-dialog>
             <el-dialog
                 title="内层 Dialog"
-                class="inlog"
+                class="inlogs"
                 :visible.sync="innerOver"
                 :close-on-click-modal="false"
                 append-to-body
@@ -114,7 +114,7 @@
                         <span
                             v-for="(item,index) of sitCheckName"
                             :key="index"
-                            style="width: 33.3%;display: inline-block;"
+                            style="display: inline-block;margin-left:20px"
                         >{{item}}</span>
                     </el-form-item>
                 </el-form>
@@ -350,24 +350,24 @@ export default {
 .addPeop >>> .el-select {
     width: 100%;
 }
-// .inlog >>> .el-dialog {
+// .inlogs >>> .el-dialog {
 //     height: 42%;
 
 //     left: 22%;
 //     top: 20%;
 // }
-.inlog >>> .el-dialog__body {
+.inlogs >>> .el-dialog__body {
     height: 55%;
     overflow-y: auto;
 }
-.inlog >>> .el-form-item {
+.inlogs >>> .el-form-item {
     margin-bottom: 0;
 }
-// .inlog >>> .el-checkbox {
+// .inlogs >>> .el-checkbox {
 //     width: 142px;
 //     margin-right: 0;
 // }
-.inlog {
+.inlogs {
     .tit {
         display: flex;
         align-items: center;

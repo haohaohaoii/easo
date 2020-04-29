@@ -1,7 +1,7 @@
 <template>
     <el-dialog
         :visible.sync="addShow"
-        class="dialog"
+        class="opeoEditor"
         center
         :close-on-click-modal="false"
         append-to-body
@@ -78,7 +78,6 @@
         </el-form>
         <el-dialog
             title="内层 Dialog"
-            width="25%"
             class="inlog"
             :visible.sync="innerVisible"
             :close-on-click-modal="false"
@@ -107,7 +106,6 @@
         </el-dialog>
         <el-dialog
             title="内层 Dialog"
-            width="25%"
             class="inlog"
             :visible.sync="innerOver"
             :close-on-click-modal="false"
@@ -401,15 +399,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dialog >>> .el-select {
+.opeoEditor >>> .el-select {
     width: 100%;
 }
-.inlog >>> .el-dialog {
-    height: 42%;
+// .inlog >>> .el-dialog {
+//     height: 42%;
 
-    left: 22%;
-    top: 23%;
-}
+//     left: 22%;
+//     top: 23%;
+// }
 .inlog >>> .el-dialog__body {
     height: 55%;
     overflow-y: auto;
@@ -435,7 +433,7 @@ export default {
         align-items: center;
     }
 }
-.dialog {
+.opeoEditor {
     .tit {
         display: flex;
         align-items: center;
@@ -459,11 +457,11 @@ export default {
         justify-content: center;
     }
 }
-.dialog >>> .el-dialog--center .el-dialog__body {
+.opeoEditor >>> .el-dialog--center .el-dialog__body {
     padding: 25px 40px 5px;
 }
 //最外层弹窗
-// .dialog >>> .el-dialog {
+// .opeoEditor >>> .el-dialog {
 //     margin-top: 0 !important;
 //     position: relative;
 
@@ -476,27 +474,27 @@ export default {
 //     border: 1px solid #ebeef5;
 
 // }
-.dialog >>> .el-dialog {
-    display: flex;
-    flex-direction: column;
-    margin: 0 !important;
-    position: absolute;
-    top: 50%;
-    left: calc(50% + 120px);
-    transform: translate(-50%, -50%);
-    width: 30% !important;
-}
+// .opeoEditor >>> .el-dialog {
+//     display: flex;
+//     flex-direction: column;
+//     margin: 0 !important;
+//     position: absolute;
+//     top: 50%;
+//     left: calc(50% + 120px);
+//     transform: translate(-50%, -50%);
+//     width: 30% !important;
+// }
 
-.dialog >>> .el-dialog .el-dialog__body {
+.opeoEditor >>> .el-dialog .el-dialog__body {
     flex: 1;
     overflow: auto;
 }
-.inlog >>> .el-checkbox {
-    width: 142px;
-    margin-right: 0;
-}
+// .inlog >>> .el-checkbox {
+//     width: 142px;
+//     margin-right: 0;
+// }
 //表单校验的图标颜色
-.dialog >>> .el-input__suffix {
+.opeoEditor >>> .el-input__suffix {
     color: #67c23a !important;
 }
 </style>

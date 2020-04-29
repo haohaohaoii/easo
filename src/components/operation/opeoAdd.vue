@@ -1,7 +1,7 @@
 <template>
     <el-dialog
         :visible.sync="addShow"
-        class="dialog"
+        class="opeoAdd"
         center
         :close-on-click-modal="false"
         append-to-body
@@ -78,7 +78,6 @@
         </el-form>
         <el-dialog
             title="内层 Dialog"
-            width="25%"
             class="inlog"
             :visible.sync="innerVisible"
             :close-on-click-modal="false"
@@ -108,7 +107,6 @@
 
         <el-dialog
             title="内层 Dialog"
-            width="25%"
             class="inlog"
             :visible.sync="innerOver"
             :close-on-click-modal="false"
@@ -123,7 +121,7 @@
                     <span
                         v-for="(item,index) of sitCheckName"
                         :key="index"
-                        style="width: 33.3%;display: inline-block;"
+                        style="display: inline-block;margin-left:20px"
                     >{{item}}</span>
                 </el-form-item>
             </el-form>
@@ -359,15 +357,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dialog >>> .el-select {
+.opeoAdd >>> .el-select {
     width: 100%;
 }
-.inlog >>> .el-dialog {
-    height: 42%;
+// .inlog >>> .el-dialog {
+//     height: 42%;
 
-    left: 22%;
-    top: 20%;
-}
+//     left: 22%;
+//     top: 20%;
+// }
 .inlog >>> .el-dialog__body {
     height: 55%;
     overflow-y: auto;
@@ -393,7 +391,7 @@ export default {
         align-items: center;
     }
 }
-.dialog {
+.opeoAdd {
     .tit {
         display: flex;
         align-items: center;
@@ -418,7 +416,7 @@ export default {
     }
 }
 //最外层弹窗
-// .dialog >>> .el-dialog {
+// .opeoAdd >>> .el-dialog {
 //     margin-top: 0 !important;
 //     position: relative;
 
@@ -431,35 +429,35 @@ export default {
 //     border: 1px solid #ebeef5;
 
 // }
-.dialog >>> .el-dialog {
-    display: flex;
-    flex-direction: column;
-    margin: 0 !important;
-    position: absolute;
-    top: 50%;
-    left: calc(50% + 120px);
-    transform: translate(-50%, -50%);
-    width: 30% !important;
-}
+// .opeoAdd >>> .el-dialog {
+//     display: flex;
+//     flex-direction: column;
+//     margin: 0 !important;
+//     position: absolute;
+//     top: 50%;
+//     left: calc(50% + 120px);
+//     transform: translate(-50%, -50%);
+//     width: 30% !important;
+// }
 
-.dialog >>> .el-dialog .el-dialog__body {
+.opeoAdd >>> .el-dialog .el-dialog__body {
     flex: 1;
     overflow: auto;
 }
-.dialog >>> .el-dialog--center .el-dialog__body {
+.opeoAdd >>> .el-dialog--center .el-dialog__body {
     text-align: initial;
     padding: 25px 45px 30px;
 }
 
-.inlog >>> .el-checkbox {
-    width: 142px;
-    margin-right: 0;
-}
-.dialog >>> .el-dialog--center .el-dialog__body {
+// .inlog >>> .el-checkbox {
+//     width: 142px;
+//     margin-right: 0;
+// }
+.opeoAdd >>> .el-dialog--center .el-dialog__body {
     padding: 25px 25px 5px;
 }
 //表单校验的图标颜色
-.dialog >>> .el-input__suffix {
+.opeoAdd >>> .el-input__suffix {
     color: #67c23a !important;
 }
 </style>
