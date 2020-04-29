@@ -1,0 +1,53 @@
+/*首页*/
+
+@charset "UTF-8";
+
+@mixin roleManage-xl() {
+    .roleAdd{
+        /deep/ .right{
+            height: 325px;
+        }
+    }
+    .roleEditor{
+        /deep/ .right{
+            height: 325px;
+        }
+    }
+};
+@mixin roleManage-lg() {
+    .roleAdd{
+        /deep/ .right{
+            height: 300px;
+        }
+    }
+    .roleEditor{
+        /deep/ .right{
+            height: 300px;
+        }
+    }
+};
+@mixin roleManage-md() {
+    .roleAdd{
+        /deep/ .right{
+            height: 250px;
+        }
+    }
+    .roleEditor{
+        /deep/ .right{
+            height: 250px;
+        }
+    }
+};
+@mixin roleManage-sm() {
+    .roleAdd{
+        /deep/ .right{
+            height: 200px;
+        }
+    }
+    .roleEditor{
+        /deep/ .right{
+            height: 200px;
+        }
+    }
+    
+}

@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :visible.sync="roleEditor" class="dialog" center @close="closeDialog">
+    <el-dialog :visible.sync="roleEditor" class="roleEditor" center @close="closeDialog">
         <div slot="title" class="tit">
             <div class="line"></div>
             <p>编辑角色</p>
@@ -212,7 +212,7 @@ export default {
 
 
 <style lang="scss" scoped>
-.dialog {
+.roleEditor {
     .tit {
         display: flex;
         align-items: center;
@@ -236,12 +236,12 @@ export default {
             margin-left: 2.5%;
             background: #ebf1fd;
             width: 75%;
-            height: 312px;
+            // height: 312px;
             overflow: auto;
         }
     }
 }
-// .dialog >>> .el-dialog {
+// .roleEditor >>> .el-dialog {
 //     margin-top: 0 !important;
 //     position: absolute;
 //     left: 38%;
@@ -252,7 +252,7 @@ export default {
 //     border: 1px solid #ebeef5;
 // }
 
-.dialog >>> .el-dialog {
+.roleEditor >>> .el-dialog {
     display: flex;
     flex-direction: column;
     margin: 0 !important;
@@ -263,12 +263,12 @@ export default {
     width: 34%;
 }
 
-.dialog >>> .el-dialog .el-dialog__body {
+.roleEditor >>> .el-dialog .el-dialog__body {
     flex: 1;
     overflow: auto;
 }
 //输入框的背景颜色
-.dialog >>> .el-input__inner {
+.roleEditor >>> .el-input__inner {
     background: #ebf1fd;
 }
 </style>
