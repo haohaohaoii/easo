@@ -14,12 +14,12 @@
             >
                 <el-table-column align="center" prop="userName" label="用户名"></el-table-column>
                 <el-table-column align="center" prop="realName" label="真实姓名"></el-table-column>
-                <el-table-column align="center" prop="linkPhone" label="联系电话"></el-table-column>
-                <el-table-column align="center" prop="userMail" label="邮箱"></el-table-column>
-                <el-table-column align="center" prop="userSection" label="所属部门"></el-table-column>
-                <el-table-column align="center" prop="userPart" label="用户角色"></el-table-column>
-                <el-table-column align="center" prop="turnTime" label="更新时间"></el-table-column>
-                <el-table-column label="操作" align="center" width="180">
+                <el-table-column align="center" prop="linkPhone" min-width="120px" label="联系电话"></el-table-column>
+                <el-table-column align="center" prop="userMail" min-width="160px" label="邮箱"></el-table-column>
+                <el-table-column align="center" prop="userSection" min-width="140px" label="所属部门"></el-table-column>
+                <el-table-column align="center" prop="userPart" min-width="160px" label="用户角色"></el-table-column>
+                <el-table-column align="center" prop="turnTime" min-width="160px" label="更新时间"></el-table-column>
+                <el-table-column label="操作" align="center" width="180" fixed="right">
                     <template slot-scope="scope">
                         <el-button
                             size="mini"

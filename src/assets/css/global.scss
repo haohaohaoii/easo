@@ -17,6 +17,7 @@
 @import './opeopleDep.scss'; //运维管理下 -运维人员管理
 @import './addTwo.scss'; //运维管理下 - 运维部门添加
 @import './operaDep.scss'; //运维管理下 - 运维部门管理
+@import './userManage.scss'; //权限管理下 - 用户管理
 
 @media (min-width: 1900px) {
     @include header-xl();
@@ -36,6 +37,7 @@
     @include opeopleDep-xl();
     @include addTwo-xl();
     @include operaDep-xl();
+    @include userManage-xl();
 }
 @media (min-width: 1600px) and (max-width: 1899px) {
     @include header-lg();
@@ -55,6 +57,7 @@
     @include opeopleDep-lg();
     @include addTwo-lg();
     @include operaDep-lg();
+    @include userManage-lg();
 };
 @media (min-width: 1400px) and (max-width: 1599px) {
     @include header-md();
@@ -74,6 +77,7 @@
     @include opeopleDep-md();
     @include addTwo-md();
     @include operaDep-md();
+    @include userManage-md();
 }
 @media (min-width: 1200px) and (max-width: 1399px) {
     @include header-sm();
@@ -93,4 +97,5 @@
     @include opeopleDep-sm();
     @include addTwo-sm();
     @include operaDep-sm();
+    @include userManage-sm();
 }

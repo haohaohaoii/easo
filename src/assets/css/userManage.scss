@@ -1,0 +1,116 @@
+/*首页*/
+
+@charset "UTF-8";
+
+@mixin userManage-xl() {
+    .userAdd{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 30%;
+           
+        }
+    }
+    .userEditor{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 30%;
+         
+        }
+    }
+};
+@mixin userManage-lg() {
+    .userAdd{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 32%;
+           
+        }
+    }
+    .userEditor{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 32%;
+         
+        }
+    }
+};
+@mixin userManage-md() {
+    .userAdd{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 32%;
+            height: 62%;
+        }
+    }
+    .userEditor{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 32%;
+            height: 62%;
+        }
+    }
+};
+@mixin userManage-sm() {
+    .userAdd{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 32%;
+            height: 65%;
+        }
+    }
+    .userEditor{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+            width: 32%;
+            height: 65%;
+        }
+    } 
+}

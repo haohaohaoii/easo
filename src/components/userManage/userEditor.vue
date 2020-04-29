@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :visible.sync="userEditor" class="dialog" center @close="closeDialog">
+    <el-dialog :visible.sync="userEditor" class="userEditor" center @close="closeDialog">
         <div slot="title" class="tit">
             <div class="line"></div>
             <p>编辑用户信息</p>
@@ -196,7 +196,7 @@ export default {
 
 
 <style lang="scss" scoped>
-.dialog {
+.userEditor {
     .tit {
         display: flex;
         align-items: center;
@@ -212,7 +212,7 @@ export default {
         }
     }
 }
-// .dialog >>> .el-dialog {
+// .userEditor >>> .el-dialog {
 //     margin-top: 0 !important;
 //     position: relative;
 //     margin: 0 auto;
@@ -222,18 +222,18 @@ export default {
 //     transform: translateY(-50%);
 //     border: 1px solid #ebeef5;
 // }
-.dialog >>> .el-dialog {
-    display: flex;
-    flex-direction: column;
-    margin: 0 !important;
-    position: absolute;
-    top: 50%;
-    left: calc(50% + 120px);
-    transform: translate(-50%, -50%);
-    width: 30%;
-}
+// .userEditor >>> .el-dialog {
+//     display: flex;
+//     flex-direction: column;
+//     margin: 0 !important;
+//     position: absolute;
+//     top: 50%;
+//     left: calc(50% + 120px);
+//     transform: translate(-50%, -50%);
+//     width: 30%;
+// }
 
-.dialog >>> .el-dialog .el-dialog__body {
+.userEditor >>> .el-dialog .el-dialog__body {
     flex: 1;
     overflow: auto;
 }
