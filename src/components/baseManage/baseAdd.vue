@@ -551,7 +551,7 @@ export default {
                
             }else{
                 this.$message({
-                    type: "warning",
+                    type: "error",
                     message: "请将必填项填写完毕后再提交"
                 });
             }

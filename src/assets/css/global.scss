@@ -19,8 +19,10 @@
 @import './operaDep.scss'; //运维管理下 - 运维部门管理
 @import './userManage.scss'; //权限管理下 - 用户管理
 @import './roleManage.scss'; //权限管理下 - 角色管理
+@import './element.scss';   //elment-ui     全局scss
 
 @media (min-width: 1900px) {
+   
     @include header-xl();
     @include homeLeft-xl();
     @include fpage-xl();
@@ -40,6 +42,7 @@
     @include operaDep-xl();
     @include userManage-xl();
     @include roleManage-xl();
+    @include element-xl();
 }
 @media (min-width: 1600px) and (max-width: 1899px) {
     @include header-lg();
@@ -61,6 +64,7 @@
     @include operaDep-lg();
     @include userManage-lg();
     @include roleManage-lg();
+    @include element-lg();
 };
 @media (min-width: 1400px) and (max-width: 1599px) {
     @include header-md();
@@ -82,6 +86,7 @@
     @include operaDep-md();
     @include userManage-md();
     @include roleManage-md();
+    @include element-md();
 }
 @media (min-width: 1200px) and (max-width: 1399px) {
     @include header-sm();
@@ -103,4 +108,5 @@
     @include operaDep-sm();
     @include userManage-sm();
     @include roleManage-sm();
+    @include element-sm();
 }

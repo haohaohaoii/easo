@@ -1,0 +1,34 @@
+
+@charset "UTF-8";
+@mixin element-xl() {
+    html{
+        /deep/ .el-message {
+            min-width: 230px;
+            left: calc(50% + 120px) !important;
+        }
+    } 
+};
+@mixin element-lg() {
+    html{
+        /deep/ .el-message {
+            min-width: 230px;
+            left: calc(50% + 120px) !important;
+        }
+    } 
+};
+@mixin element-md() {
+    html{
+        /deep/ .el-message {
+            min-width: 230px;
+            left: calc(50% + 120px) !important;
+        }
+    } 
+};
+@mixin element-sm() {
+    html{
+        min-width: 230px;
+        /deep/ .el-message {
+            left: calc(50% + 120px) !important;
+        }
+    } 
+}

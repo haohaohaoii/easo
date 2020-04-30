@@ -170,6 +170,11 @@ export default {
                                 } else {
                                     //正常登陆的
                                     this.$router.push("/");
+                                    this.$message({
+                                        message: `登陆成功,欢迎${this.userName}`,
+                                        type: 'success',
+                                        duration:10000
+                                    });
                                 }
                             }
                         })
