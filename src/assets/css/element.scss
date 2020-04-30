@@ -6,6 +6,12 @@
             min-width: 230px;
             left: calc(50% + 120px) !important;
         }
+        /deep/ .el-pagination{
+            height: 30px;
+            padding: 0;
+            line-height: 30px;
+            padding-top: 15px;
+        }
     } 
 };
 @mixin element-lg() {
@@ -13,6 +19,12 @@
         /deep/ .el-message {
             min-width: 230px;
             left: calc(50% + 120px) !important;
+        }
+        /deep/ .el-pagination{
+            height: 30px;
+            padding: 0;
+            line-height: 30px;
+            padding-top: 15px;
         }
     } 
 };
@@ -22,6 +34,12 @@
             min-width: 230px;
             left: calc(50% + 120px) !important;
         }
+        /deep/ .el-pagination{
+            height: 30px;
+            padding: 0;
+            line-height: 30px;
+            padding-top: 15px;
+        }
     } 
 };
 @mixin element-sm() {
@@ -30,5 +48,11 @@
         /deep/ .el-message {
             left: calc(50% + 120px) !important;
         }
-    } 
+    }
+    /deep/ .el-pagination{
+        height: 30px;
+        padding: 0;
+        line-height: 30px;
+        padding-top: 15px;
+    }
 }

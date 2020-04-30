@@ -91,7 +91,7 @@ export default {
     },
     data() {
         return {
-            tableHeight:window.innerHeight -268
+            tableHeight:window.innerHeight -275
         };
     },
     computed:{
@@ -199,7 +199,14 @@ export default {
 
 <style lang="scss" scoped>
 .listData {
+    height: calc(100% - 85px);
+
     .tabE {
+        height: 100%;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         padding-top: 15px;
     }
 }
