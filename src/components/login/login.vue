@@ -212,6 +212,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.login >>> .el-input__suffix {
+    display: flex;
+    align-items: center;
+}
 .login {
     background: url("../../assets/images/loginbac.png") no-repeat;
 
@@ -252,26 +256,37 @@ export default {
             justify-content: space-around;
             align-items: center;
             .tit {
+                position: relative;
                 p {
                     // font-size: 54px;
-                    font-family: "MFLiHei";
+                    // font-family: "MFLiHei";
+                    // font-weight: 400;
+                    // color: rgba(255, 255, 255, 1);
+                    // font-size: 54px;
+                    font-family: SimHei;
                     font-weight: 400;
                     color: rgba(255, 255, 255, 1);
                 }
                 div {
-                    width: 8%;
-                    height: 0.5%;
-                    position: absolute;
-                    left: 71%;
+                    // width: 8%;
+                    // height: 0.5%;
+                    // position: absolute;
+                    // left: 71%;
                     // top: 23%;
+                    // background: #fff;
+                    width: 14%;
+                    height: 2px;
+                    position: absolute;
+                    left: 43%;
                     background: #fff;
+                    top: 106%;
                 }
             }
             /**登陆框中间部分 */
             .loginFill {
                 width: 80%;
                 height: 30%;
-                margin-top: -10%;
+                // margin-top: -10%;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-around;
@@ -281,10 +296,22 @@ export default {
             }
             /**登陆框按钮 */
             .btn {
-                width: 40%;
-                height: 8%;
-                margin-top: -15%;
-                line-height: 8%;
+                // width: 274px;
+                // height: 56px;
+                background: rgba(255, 255, 255, 1);
+                // border-radius: 8px;
+                // font-size: 28px;
+                font-family: Adobe Heiti Std;
+                font-weight: normal;
+                color: rgba(51, 51, 51, 1);
+                position: relative;
+                /deep/ span {
+                    display: inline-block;
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                }
             }
         }
         //记住密码的时候改变字体颜色

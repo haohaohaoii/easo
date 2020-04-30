@@ -171,12 +171,12 @@ export default {
                         required: true,
                         message: "请输入链接地址",
                         trigger: "blur"
-                    },
-                     {
-                        pattern: /^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/,
-                        message: "请填写正确的外部链接地址",
-                        trigger: "change"
                     }
+                    //  {
+                    //     pattern: /^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/,
+                    //     message: "请填写正确的外部链接地址",
+                    //     trigger: "change"
+                    // }
                 ],
                 upload: [
                     {required:true, validator: valiIcon, trigger: 'change' } 

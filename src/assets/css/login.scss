@@ -14,6 +14,13 @@
             height: 42px !important;
             line-height: 42px !important;
         }
+        /deep/ .btn{
+          width:274px;
+          height:56px;
+          font-size:26px;
+          border-radius: 8px;
+          font-size:28px;
+        }
     }
 };
 @mixin login-lg() {
@@ -30,21 +37,32 @@
             height: 38px !important;
             line-height: 38px !important;
         }
+        /deep/ .btn{
+          width:257px;
+          height:53px;
+          font-size:26px;
+          border-radius: 8px;
+        }
     }
 };
 @mixin login-md() {
     .login{
         /deep/ .tit{
+         
             p{
               font-size: 40px;
-            }
-            div{
-              top: 23%;
             }
         }
         /deep/ .el-input__inner{
             height: 35px !important;
             line-height: 35px !important;
+        }
+
+        /deep/ .btn{
+          width:200px;
+          height:41px;
+          font-size:20px;
+          border-radius: 6px;
         }
     }
 };
@@ -54,13 +72,17 @@
             p{
               font-size: 36px;
             }
-            div{
-              top: 25%;
-            }
         }
         /deep/ .el-input__inner{
             height: 30px !important;
             line-height: 30px !important;
+        }
+
+        /deep/ .btn{
+          width:183px;
+          height:37px;
+          font-size:19px;
+          border-radius: 5px;
         }
     }
 }
