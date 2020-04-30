@@ -522,7 +522,7 @@ export default {
 
                     // })
                 }else{
-                    this.$message.error("请选择因子、并填写运维类型和运维详情!");
+                    this.$message.error("请选择因子、并填写设备型号和安装时间!");
                 }
             }else{
                 this.$message({

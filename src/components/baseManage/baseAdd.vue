@@ -462,11 +462,10 @@ export default {
             let mn = this.form.mn  //mn号
             let factors = this.form.factors
             if(siteName && this.stateType && mn){
-           
                 if((this.form.codIsC&&this.form.codTypes &&this.form.codDesc) || 
                 (this.form.zlIsC &&this.form.zlTypes &&this.form.zlDesc) || 
                 (this.form.anIsC &&　this.form.anTypes && this.form.anDesc) || 
-                (this.form.zdIsC || this.form.zdTypes || this.form.zdDesc) || 
+                (this.form.zdIsC && this.form.zdTypes && this.form.zdDesc) || 
                 (this.form.llIsC && this.form.llTypes && this.form.llDesc)){
                     let factorCode = ''
                     let actionType = ''
@@ -547,7 +546,7 @@ export default {
 
                     // })
                 }else{
-                    this.$message.error("请选择因子、并填写运维类型和运维详情!");
+                    this.$message.error("请选择因子、并填写设备型号和安装时间!");
                 }
                
             }else{

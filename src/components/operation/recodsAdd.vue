@@ -413,7 +413,7 @@ export default {
                     if((this.ruleForm.anIsC&&this.ruleForm.codTypes &&this.ruleForm.codDesc) || 
                     (this.ruleForm.zlIsC &&this.ruleForm.zlTypes &&this.ruleForm.zlDesc) || 
                     (this.ruleForm.anIsC &&　this.ruleForm.anTypes && this.ruleForm.anDesc) || 
-                    (this.ruleForm.zdIsC || this.ruleForm.zdTypes || this.ruleForm.zdDesc) || 
+                    (this.ruleForm.zdIsC && this.ruleForm.zdTypes && this.ruleForm.zdDesc) || 
                     (this.ruleForm.llIsC && this.ruleForm.llTypes && this.ruleForm.llDesc)){
                         let factorCode = ''
                         let actionType = ''
