@@ -146,6 +146,10 @@ export default {
     box-sizing: border-box;
     padding: 15px;
     .baseTop {
+        height: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         .markMsg {
             display: flex;
             position: relative;

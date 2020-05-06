@@ -219,7 +219,7 @@ export default {
     data() {
         return {
             id:'',
-            tableHeight:window.innerHeight -260,
+            tableHeight:window.innerHeight -275,
             addPeodilaog:false,   //添加框
             ediPeodilaog:false,  //编辑框
             detailPeodilaog:false,  //详情框
@@ -619,8 +619,14 @@ export default {
             }
         }
     }
+
     .tabE {
-        margin-top: 15px;
+        height: calc(100% - 85px);
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-top: 15px;
     }
     .tabPage {
         text-align: center;

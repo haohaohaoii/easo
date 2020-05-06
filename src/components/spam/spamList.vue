@@ -7,7 +7,10 @@
                 stripe
                 style="width: 100%"
                 :height="tableHeight"
-                :header-cell-style="{background: 'rgba(237,237,237,1)'}"
+                :row-style="iRowStyle"
+                :cell-style="iCellStyle"
+                :header-row-style="iHeaderRowStyle"
+                :header-cell-style="iHeaderCellStyle"
                 class="tab"
             >
                 <el-table-column align="center" prop="spamTitle" label="留言标题"></el-table-column>
@@ -60,6 +63,18 @@ export default {
         };
     },
     computed:{
+          iRowStyle:function ({row, rowIndex}) {
+            return {height:'62px'};
+        },
+        iHeaderRowStyle:function ({row, rowIndex}) {
+            return {height:'62px'};
+        },
+        iCellStyle:function ({row, column, rowIndex, columnIndex}) {
+            return {padding:'0'};
+        },
+        iHeaderCellStyle:function ({row, column, rowIndex, columnIndex}) {
+            return {padding:'0px',background:'rgba(237,237,237,1)'}
+        },
         tableData(){
             if(this.spamAll && this.spamAll.length>0){
                 let spamList = [];
@@ -137,11 +152,14 @@ export default {
 
 <style lang="scss" scoped>
 .spamList {
+    height: calc(100% - 40px);
     .tabE {
+        height: 100%;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         padding-top: 15px;
-    }
-    .tabPage {
-        text-align: center;
     }
 }
 .spamList >>> .el-table::before {

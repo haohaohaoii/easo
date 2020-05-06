@@ -55,10 +55,10 @@ export default {
     },
     computed: {
         iRowStyle:function ({row, rowIndex}) {
-            return {height:'58px'};
+            return {height:'62px'};
         },
         iHeaderRowStyle:function ({row, rowIndex}) {
-            return {height:'58px'};
+            return {height:'62px'};
         },
         iCellStyle:function ({row, column, rowIndex, columnIndex}) {
             return {padding:'0'};
@@ -135,7 +135,13 @@ export default {
 
 <style lang="scss" scoped>
 .roleList {
+    height: calc(100% - 40px);
     .tabE {
+        height: 100%;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         padding-top: 15px;
     }
 }

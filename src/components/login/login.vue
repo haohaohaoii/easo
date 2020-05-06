@@ -173,7 +173,7 @@ export default {
                                     this.$message({
                                         message: `登陆成功,欢迎${this.userName}`,
                                         type: 'success',
-                                        duration:10000
+                                        duration:60000
                                     });
                                 }
                             }

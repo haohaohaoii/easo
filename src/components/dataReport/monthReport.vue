@@ -522,7 +522,12 @@ export default {
         }
     }
     .tabE {
-        margin-top: 15px;
+        height: calc(100% - 85px);
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-top: 15px;
     }
     .tabPage {
         text-align: center;

@@ -168,7 +168,7 @@ export default {
     data() {
         return {
             id:'', //运维人员行id
-            tableHeight:window.innerHeight -260,
+            tableHeight:window.innerHeight -275,
             addPeodilaog:false,   //添加运维人员dialog弹窗状态
             ediDilog:false,       //编辑运维人员dialog弹窗状态
             detailPeodilaog:false,  //详情 dialog状态
@@ -535,7 +535,12 @@ export default {
         }
     }
     .tabE {
-        margin-top: 15px;
+        height: calc(100% - 85px);
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-top: 15px;
     }
     .tabPage {
         text-align: center;

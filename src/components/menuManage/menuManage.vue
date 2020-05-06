@@ -112,9 +112,10 @@ export default {
     box-sizing: border-box;
     padding: 15px;
     .menuTop {
+        height: 40px;
         display: flex;
         flex-direction: column;
-        justify-content: space-around;
+        justify-content: center;
         .markMsg {
             display: flex;
             position: relative;
@@ -136,6 +137,9 @@ export default {
                 right: 4%;
             }
         }
+    }
+    .tabPage {
+        text-align: center;
     }
 }
 </style>

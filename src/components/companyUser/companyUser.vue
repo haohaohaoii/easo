@@ -118,11 +118,10 @@ export default {
     box-sizing: border-box;
     padding: 15px;
     .enmationTop {
-        // margin-top: 1%;
-        // margin-bottom: 2%;
+        height: 40px;
         display: flex;
         flex-direction: column;
-        justify-content: space-around;
+        justify-content: center;
         .markMsg {
             display: flex;
             position: relative;
@@ -144,6 +143,9 @@ export default {
                 right: 4%;
             }
         }
+    }
+    .tabPage {
+        text-align: center;
     }
 }
 </style>

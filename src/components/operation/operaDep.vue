@@ -105,10 +105,10 @@ export default {
     },
     computed:{
         iRowStyle:function ({row, rowIndex}) {
-            return {height:'58px'};
+            return {height:'62px'};
         },
         iHeaderRowStyle:function ({row, rowIndex}) {
-            return {height:'58px'};
+            return {height:'62px'};
         },
         iCellStyle:function ({row, column, rowIndex, columnIndex}) {
             return {padding:'0'};
@@ -225,11 +225,10 @@ export default {
     box-sizing: border-box;
     padding: 15px;
     .enmationTop {
-        // margin-top: 1%;
-        // margin-bottom: 2%;
+        height: 40px;
         display: flex;
         flex-direction: column;
-        justify-content: space-around;
+        justify-content: center;
         .markMsg {
             display: flex;
             position: relative;
@@ -253,7 +252,12 @@ export default {
         }
     }
     .tabE {
-        margin-top: 15px;
+        height: calc(100% - 40px);
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-top: 15px;
     }
     .tabPage {
         text-align: center;
