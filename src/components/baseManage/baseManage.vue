@@ -18,7 +18,7 @@
                 >添加基站</el-button>
             </div>
         </div>
-        <base-list :baseAll="baseArr">
+        <base-list :baseAll="baseArr" v-if="baseArr && baseArr.length>0">
             <div class="tabPage">
                 <el-pagination
                     background
@@ -30,6 +30,7 @@
                 ></el-pagination>
             </div>
         </base-list>
+        <no-data v-else></no-data>
     </div>
 </template>
 
@@ -40,13 +41,15 @@ import baseDetail from './baseDetail'
 import baseEditor from './baseEditor';
 import baseList from './baseList';
 import {mapMutations} from 'vuex';
+import noData from '../common/noData';
 export default {
     components:{
         baseList,
         baseAdd,
         baseEditor,
         baseDetail,
-        baseAudit
+        baseAudit,
+        noData
     },
     data() {
         return {

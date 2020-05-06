@@ -16,7 +16,7 @@
                 >添加用户</el-button>
             </div>
         </div>
-        <user-list :userarr="userArr" @delSuccess="delT">
+        <user-list :userarr="userArr" @delSuccess="delT" v-if="userArr && userArr.length>0">
             <div class="tabPage">
                 <el-pagination
                     background
@@ -28,18 +28,21 @@
                 ></el-pagination>
             </div>
         </user-list>
+        <no-data v-else></no-data>
     </div>
 </template>
 
 <script>
-import userList from './userList'
-import userAdd from './userAdd'
+import userList from './userList';
+import userAdd from './userAdd';
 import userEditor from "./userEditor";
+import noData from '../common/noData';
 export default {
     components:{
         userList,
         userAdd,
-        userEditor
+        userEditor,
+        noData
     },
     data() {
         return {

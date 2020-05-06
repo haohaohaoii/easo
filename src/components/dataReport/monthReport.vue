@@ -144,7 +144,7 @@ export default {
     data() {
         return {
             id:'',
-            tableHeight:window.innerHeight -270,
+            tableHeight:window.innerHeight -275,
             siteStateVal:'', //选中的站点
             dayList:[],   //数据数组
             startTime:'', //开始时间

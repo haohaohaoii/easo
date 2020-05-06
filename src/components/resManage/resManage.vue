@@ -14,7 +14,7 @@
                 >上传文件</el-button>
             </div>
         </div>
-        <res-list :newsList="resArr" @delSuccess="delSuccess">
+        <res-list :newsList="resArr" @delSuccess="delSuccess" v-if="resArr &&resArr.length>0">
             <div class="tabPage">
                 <el-pagination
                     background
@@ -26,16 +26,16 @@
                 ></el-pagination>
             </div>
         </res-list>
+        <no-data v-else></no-data>
         <res-add :isShow="isAddshow" @close="closeAdd" @refres="refQq"></res-add>
     </div>
 </template>
 
 <script>
-import {mapMutations, mapState} from 'vuex'
-import resList from './resList'
-import resAdd from './resAdd'
-
-
+import {mapMutations, mapState} from 'vuex';
+import resList from './resList';
+import resAdd from './resAdd';
+import noData from '../common/noData';
 export default {
    
     data() {
@@ -50,8 +50,7 @@ export default {
     components:{
         resList,
         resAdd,
-
-        // newsEditor
+        noData
     },
     computed:{
         ...mapState(['resIsEditSuccess'])

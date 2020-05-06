@@ -16,7 +16,7 @@
                 >添加菜单</el-button>
             </div>
         </div>
-        <menu-list :munuList="menuArr" @delSuccess="delT">
+        <menu-list :munuList="menuArr" @delSuccess="delT" v-if="menuArr && menuArr.length>0">
             <div class="tabPage">
                 <el-pagination
                     background
@@ -28,6 +28,7 @@
                 ></el-pagination>
             </div>
         </menu-list>
+        <no-data v-else></no-data>
     </div>
 </template>
 
@@ -35,11 +36,13 @@
 import menuList from './menuList'
 import menuAdd from './menuAdd'
 import menuEditor from './menEditor'
+import noData from '../common/noData'
 export default {
     components:{
         menuList,
         menuAdd,
-         menuEditor
+        menuEditor,
+        noData
     },
     data() {
          return {

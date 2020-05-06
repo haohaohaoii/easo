@@ -16,7 +16,11 @@
                 >添加部门</el-button>
             </div>
         </div>
-        <div-list :divManas="divManaArr" @delSuccess="delT">
+        <div-list
+            :divManas="divManaArr"
+            @delSuccess="delT"
+            v-if="divManaArr && divManaArr.length>0"
+        >
             <div class="tabPage">
                 <el-pagination
                     background
@@ -28,6 +32,7 @@
                 ></el-pagination>
             </div>
         </div-list>
+        <no-data v-else></no-data>
     </div>
 </template>
 
@@ -36,11 +41,13 @@ import divList from './divList'
 import divEditor from './divEditor';
 import {mapMutations} from 'vuex'
 import divAdd from './divAdd'
+import noData from '../common/noData'
 export default {
     components:{
         divList,
         divAdd,
-        divEditor
+        divEditor,
+        noData
     },
     data() {
         return {

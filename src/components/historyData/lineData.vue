@@ -153,7 +153,6 @@ export default {
         //折线图方法
         getZx() {
             let myCharts = this.$echarts.init(this.$refs.myCharts);
-            myCharts.showLoading(); //加载动画
             this.options.xAxis[0].data = this.hisDataall.xData; //设置x轴坐标
             let dataArr = this.options.series;
             if(dataArr && dataArr.length>0){
@@ -173,9 +172,6 @@ export default {
                     }
                 }
             }
-            setTimeout(function() {
-                myCharts.hideLoading(); //隐藏加载动画
-            }, 2000);
             myCharts.setOption(this.options);
         },
         //点击COD
@@ -476,6 +472,9 @@ export default {
                     height: 11px;
                     background: rgba(255, 0, 0, 1);
                 }
+                p {
+                    padding-left: 8px;
+                }
             }
             .andan {
                 display: flex;
@@ -484,6 +483,9 @@ export default {
                     width: 19px;
                     height: 11px;
                     background: rgba(241, 225, 0, 1);
+                }
+                p {
+                    padding-left: 8px;
                 }
             }
             .zolin {
@@ -494,6 +496,9 @@ export default {
                     height: 11px;
                     background: rgba(113, 209, 75, 1);
                 }
+                p {
+                    padding-left: 8px;
+                }
             }
             .zodan {
                 display: flex;
@@ -502,6 +507,9 @@ export default {
                     width: 19px;
                     height: 11px;
                     background: rgba(0, 0, 255, 1);
+                }
+                p {
+                    padding-left: 8px;
                 }
             }
             .ph {
@@ -512,6 +520,9 @@ export default {
                     height: 11px;
                     background: rgba(255, 1, 255, 1);
                 }
+                p {
+                    padding-left: 8px;
+                }
             }
             .liuliang {
                 display: flex;
@@ -521,6 +532,9 @@ export default {
                     height: 11px;
                     background: rgba(228, 139, 0, 1);
                 }
+            }
+            p {
+                padding-left: 8px;
             }
         }
     }

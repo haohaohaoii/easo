@@ -95,7 +95,6 @@
 import listData from "./listData"; //引入列表组件
 import lineData from "./lineData"; //引入折线组件
 import barData from "./barData";
-import commonJs from "../common/common.js"; //引入全局公共方法
 import { mapState, mapMutations } from "vuex";
 export default {
     components: {
@@ -206,19 +205,6 @@ export default {
                 this.sendAxios(pageNum);
             }
             
-        },
-        //得到小时数
-        oldData() {
-            let _this = this;
-            commonJs
-                .getHours(this.startTime, this.endTime)
-                .then(function(hoursArr) {
-                    if (hoursArr.length == 0) {
-                        alert("查询条件有误");
-                    } else {
-                        _this.$store.commit("getHours", hoursArr);
-                    }
-                });
         },
         //得到总条数数据
         getAlldata(){

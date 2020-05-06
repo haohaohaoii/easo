@@ -14,7 +14,7 @@
                 >添加新闻</el-button>
             </div>
         </div>
-        <news-list :newsList="newsArr" @delSuccess="delSuccess">
+        <news-list :newsList="newsArr" @delSuccess="delSuccess" v-if="newsArr && newsArr.length>0">
             <div class="tabPage">
                 <el-pagination
                     background
@@ -26,6 +26,7 @@
                 ></el-pagination>
             </div>
         </news-list>
+        <no-data v-else></no-data>
         <news-add :isShow="isAddshow" @close="closeAdd" @refres="refQq"></news-add>
         <news-editor @refres="refQq"></news-editor>
     </div>
@@ -36,8 +37,8 @@ import {mapMutations} from 'vuex'
 import newsList from './newsList'
 import newsAdd from './newsAdd'
 import newsEditor from './newsEditor'
+import noData from '../common/noData'
 export default {
-   
     data() {
         return {
             totalLength: 0, //总共多少条数据
@@ -50,7 +51,8 @@ export default {
     components:{
         newsList,
         newsAdd,
-        newsEditor
+        newsEditor,
+        noData
     },
      created(){
         let pageNum = this.currentPage;

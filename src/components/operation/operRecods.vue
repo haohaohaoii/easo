@@ -204,9 +204,9 @@
 
 <script>
 import noData from "../common/noData";
-import recodesAdd from './recodsAdd'
-import recodsEditor from './recodsEditor'
-import recodsDetail from './recodsDetail'
+import recodesAdd from './recodsAdd';
+import recodsEditor from './recodsEditor';
+import recodsDetail from './recodsDetail';
 import { mapState, mapMutations } from "vuex";
 export default {
     components: {
@@ -573,6 +573,10 @@ export default {
     left: 0;
     bottom: 0;
     width: 100%;
+    height: 0;
+}
+.opetract >>> .el-table__fixed-right::before,
+.opetract >>> .el-table__fixed::before {
     height: 0;
 }
 .opetract {

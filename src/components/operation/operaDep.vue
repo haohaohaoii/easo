@@ -15,7 +15,7 @@
             </div>
         </div>
 
-        <div class="tabE">
+        <div class="tabE" v-if="depArr && depArr.length>0">
             <el-table
                 :height="tableHeight"
                 :data="depArr"
@@ -66,6 +66,7 @@
                 ></el-pagination>
             </div>
         </div>
+        <no-data v-else></no-data>
         <oper-add :isShow="addIsShow" @changeAddDialog="changeA" @addSuccess="addT"></oper-add>
         <oper-editor
             :isShow="ediIsShow"
@@ -79,11 +80,11 @@
 <script>
 import operAdd from "./operAdd";
 import operEditor from './operEditor'
-
+import noData from "../common/noData";
 import {mapMutations} from 'vuex'
 export default {
     components: {
-      
+        noData,
         operAdd,
         operEditor
     },

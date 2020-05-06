@@ -16,7 +16,11 @@
                 >添加企业用户</el-button>
             </div>
         </div>
-        <user-list :companyList="companyArr" @delSuccess="delT">
+        <user-list
+            :companyList="companyArr"
+            @delSuccess="delT"
+            v-if="companyArr &&　companyArr.length>0"
+        >
             <div class="tabPage">
                 <el-pagination
                     background
@@ -28,19 +32,22 @@
                 ></el-pagination>
             </div>
         </user-list>
+        <no-data v-else></no-data>
     </div>
 </template>
 
 <script>
-import userAdd from './userAdd'
-import userEditor from './userEditor'
+import userAdd from './userAdd';
+import userEditor from './userEditor';
 import userList from "./userList";
-import {mapMutations} from 'vuex'
+import {mapMutations} from 'vuex';
+import noData from '../common/noData';
 export default {
     components: {
         userList,
         userAdd,
-        userEditor
+        userEditor,
+        noData
     },
     data() {
         return {
@@ -52,7 +59,7 @@ export default {
     },
      created(){
         let pageNum = this.currentPage;
-        this.getUserlist(pageNum)
+        this.getUserlist(pageNum);
     },
     methods:{
         //企业用户添加成功

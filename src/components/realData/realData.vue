@@ -43,7 +43,7 @@
         </div>
         <!--有列表数据-->
 
-        <real-list :datalist="dataList">
+        <real-list :datalist="dataList" v-if="dataList && dataList.length>0">
             <div class="tabPage">
                 <p class="indic">注：红色字体代表超标数据，橙色字体代表异常数据。</p>
                 <el-pagination
@@ -56,15 +56,18 @@
                 ></el-pagination>
             </div>
         </real-list>
+        <no-data v-else></no-data>
     </div>
 </template>
 
 <script>
 import realList from "./realList"; //引入子组件
 import axios from "axios";
+import noData from '../common/noData';
 export default {
     components: {
-        realList
+        realList,
+        noData
     },
     data() {
         return {

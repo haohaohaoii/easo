@@ -18,7 +18,7 @@
                 >添加企业</el-button>
             </div>
         </div>
-        <enter-list :companyList="companyArr">
+        <enter-list :companyList="companyArr" v-if="companyArr &&　companyArr.length>0">
             <div class="tabPage">
                 <el-pagination
                     background
@@ -30,6 +30,7 @@
                 ></el-pagination>
             </div>
         </enter-list>
+        <no-data v-else></no-data>
     </div>
 </template>
 
@@ -37,16 +38,18 @@
 import ediDialog from "./ediDialog";
 import enterAudit from './enterAudit';
 import enterList from "./enterList";
-import {mapMutations} from 'vuex'
-import enterAdd from './enterAdd'
-import enterDialog from './enterDialog'
+import {mapMutations} from 'vuex';
+import enterAdd from './enterAdd';
+import enterDialog from './enterDialog';
+import noData from '../common/noData';
 export default {
     components: {
         enterList,
         enterDialog,
         enterAdd,
         ediDialog,
-        enterAudit
+        enterAudit,
+        noData
     },
     data() {
         return {

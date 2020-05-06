@@ -6,7 +6,7 @@
                 <p>留言管理</p>
             </div>
         </div>
-        <spam-list :spamAll="spamArr" @delSuccess="delT">
+        <spam-list :spamAll="spamArr" @delSuccess="delT" v-if="spamArr && spamArr.length>0">
             <div class="tabPage">
                 <el-pagination
                     background
@@ -18,13 +18,16 @@
                 ></el-pagination>
             </div>
         </spam-list>
+        <no-data v-else></no-data>
     </div>
 </template>
 <script>
-import spamList from './spamList'
+import spamList from './spamList';
+import noData from '../common/noData';
 export default {
     components:{
-        spamList
+        spamList,
+        noData
     },  
 
     data() {
