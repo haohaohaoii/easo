@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '../store/index'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 
 
 Vue.use(Router)
@@ -124,10 +126,13 @@ let router = new Router({
 // ]
 
 router.beforeEach((to, from, next) => {
+    NProgress.start()
     if (store.state.token && store.state.adminId) {  //用户已经登陆
         if (to.path == '/login') {
+
             next('/')
         } else {
+
             let defaultVal = to.path.substr(1)
             store.commit('getBreadlist', to)
             store.commit('changeDefaultmenu', defaultVal)
@@ -136,11 +141,13 @@ router.beforeEach((to, from, next) => {
         }
     } else {   //用户未登陆
         if (to.path == '/login') {
+
             next()
         } else {
             if (localStorage.getItem('token') && localStorage.getItem('adminId')) {
                 let adminId = localStorage.getItem('adminId')
                 store.dispatch('getRole', adminId).then(res => {
+
                     store.commit("getToken", localStorage.getItem('token'));
                     store.commit("getAdminid", adminId);
                     let menuRoutes = store.state.rolesRoutes
@@ -155,11 +162,15 @@ router.beforeEach((to, from, next) => {
                 })
 
             } else {
+
                 next('/login');
             }
 
         }
     }
+})
+router.afterEach(() => {
+    NProgress.done()
 })
 
 export default router

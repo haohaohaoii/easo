@@ -100,7 +100,7 @@ export default {
         handleCurrentChange(currentPage) {
             this.currentPage = currentPage;
             let pageNum = this.currentPage;
-            this.getUserlist(pageNum)
+            this.getNewslist(pageNum)
         }
         
     }

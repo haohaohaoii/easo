@@ -6,7 +6,9 @@ import axios from 'axios';
 import router from '../router';
 import store from '../store/index';
 import { Message, MessageBox } from 'element-ui';
-import { showLoading, hideLoading } from './loading'
+import { showLoading, hideLoading } from './loading';
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 
 
 // 创建axios实例
@@ -72,7 +74,9 @@ const errorHandle = (status, message) => {
 instance.interceptors.request.use(
 
     config => {
-        showLoading()
+        NProgress.configure({ showSpinner: false });
+        showLoading();
+        NProgress.start();
         // 登录流程控制中，根据本地是否存在token判断用户的登录情况        
         // 但是即使token存在，也有可能token是过期的，所以在每次的请求头中携带token  
         const token = localStorage.getItem('token')
@@ -87,7 +91,8 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
     // //请求成功
     function (res) {
-        hideLoading()
+        hideLoading();
+        NProgress.done();
         if (res.status == 200) {
             if (res.data.code == -1) {   //token校验错误
                 errorHandle(res.data.code, res.data.message);
@@ -103,7 +108,8 @@ instance.interceptors.response.use(
     // res => res.status === 200 ? Promise.resolve(res) : Promise.reject(res),    
     // 请求失败
     error => {
-        hideLoading()
+        hideLoading();
+        NProgress.done();
         const { response } = error;
         if (response) {
             // 请求已发出，但是不在2xx的范围 
