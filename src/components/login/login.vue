@@ -35,7 +35,7 @@ export default {
         };
     },
     computed: {
-        ...mapState(["rolesRoutes", "menulist"]),
+        ...mapState(["rolesRoutes", "menulist","directName"]),
         ...mapGetters(["getRoles"])
     },
     mounted() {
@@ -160,7 +160,7 @@ export default {
                         this.$store.dispatch("getRole", adminId).then(res => {
                             //跳转路由页面
                             if (this.getRoles.length > 0) {
-
+                                // this.$router.options.routes[1].redirect = this.directName
                                 this.$router.addRoutes(this.getRoles);
                                 if (this.$route.query.redirect) {
                                     //重定向过来的
@@ -169,7 +169,7 @@ export default {
                                     );
                                 } else {
                                     //正常登陆的
-                                    this.$router.push("/");
+                                    this.$router.push("/"+this.directName);
                                     this.$message({
                                         message: `登陆成功,欢迎${this.userName}`,
                                         type: 'success',

@@ -7,6 +7,10 @@ export default ({
 
         let menuArr = state.menulist;
         let arr = [];
+        let objK = {
+            name: '',
+            path: ''
+        }
         let objF = {
             name: '',
             path: ''
@@ -30,13 +34,27 @@ export default ({
                 }
             }
         }
+
         console.log(objF)
+        if (objN.name == '日报表详情') {
+            objF.name = '日报表'
+            objK.name = '数据报表'
+            arr.push(objK)
+        }
+        if (objN.name == '月报表详情') {
+            objF.name = '月报表'
+            objK.name = '数据报表'
+            arr.push(objK)
+        }
         if (objF.name) {
+
             arr.push(objF)
             arr.push(objN)
         } else {
+
             arr.push(objN)
         }
+
 
         state.breadArr = arr
         localStorage.breadArr = JSON.stringify(arr)
@@ -253,7 +271,12 @@ export default ({
     },
     //更改默认选中的菜单
     changeDefaultmenu(state, menuMsg) {
-
+        if (menuMsg == 'dayDetail') {
+            menuMsg = 'dayReport'
+        }
+        if (menuMsg == 'monthDetail') {
+            menuMsg = 'monthReport'
+        }
         state.defaultMenu = menuMsg
     },
     //获取登陆成功后的token
@@ -311,21 +334,18 @@ export default ({
                     if (metaArr.length > 0 && item.meta.btnPress && item.meta.btnPress.length > 0) {
                         routeItem.meta = item.meta
                     }
-
                     res.push(routeItem)
-                } else {
-                    if (routeItem.name == '消息') {
-                        res.push(routeItem)
-                    } else if (routeItem.name == '首页') {
-                        res.push(routeItem)
-                    } else if (routeItem.name == '日报表详情') {
-                        res.push(routeItem)
-                    } else if (routeItem.name == '月报表详情') {
-
-                        res.push(routeItem)
-                    }
                 }
             })
+            if (routeItem.name == '消息') {
+                res.push(routeItem)
+            }
+            if (routeItem.name == '日报表详情') {
+                res.push(routeItem)
+            }
+            if (routeItem.name == '月报表详情') {
+                res.push(routeItem)
+            }
         })
         console.log(res)
         state.rolesRoutes = res
@@ -352,14 +372,39 @@ export default ({
                         }
                     }
                 } else {
-                    if (asyncRoutes[i].name == menuTree[k].subMenus.menuName) { //说明是一级菜单
-                        menuTree[k].subMenus.path = asyncRoutes[i].path;
+                    if (asyncRoutes[i].name == menuTree[k].menuName) { //说明是一级菜单
+                        menuTree[k].path = asyncRoutes[i].path;
                     }
                 }
             }
         }
         console.log(menuTree)
 
+        if (menuTree && menuTree.length > 0) {
+            let opt = ''
+            let flag = false
+            for (let t = 0; t < menuTree.length; t++) {
+                if (menuTree[t].path == 'firstPage') {
+                    flag = true
+                    opt = menuTree[t]
+                    state.directName = opt.path
+                    // opt.redirect = opt.path
+                    menuTree.splice(t, 1)
+                    menuTree.unshift(opt)
+                    break
+                } else {
+                    if (t == menuTree.length - 1 && !flag) {
+                        let arr = menuTree[0]
+                        if (arr.subMenus.length > 0) {
+                            state.directName = arr.subMenus[0].path
+                        } else if (arr.subMenus.length == 0 && arr.path != '') {
+                            state.directName = arr.path
+                        }
+                    }
+                }
+            }
+
+        }
         state.menulist = menuTree
     },
 

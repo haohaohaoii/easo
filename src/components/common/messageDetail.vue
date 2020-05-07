@@ -15,10 +15,6 @@
                 <span>{{messageContent}}</span>
             </div>
         </div>
-        <!-- <div slot="footer" class="footer">
-            <el-button type="primary" size="mini" @click="sure">确定</el-button>
-            <el-button size="mini" @click="cancel">取消</el-button>
-        </div>-->
     </el-dialog>
 </template>
 
@@ -43,19 +39,12 @@ export default {
         }
     },
     methods: {
-    //    sure() {
-           
-    //     },
         //清除表单内容
         clearForm(){
             this.title = ''
             this.messageContent = ''
             this.$store.commit("messageDe", false); //关闭dialog
         },
-        // //取消
-        // cancel() {
-        //     this.clearForm()
-        // },
         //点击x号关闭
         closeDialog() {
             this.clearForm()
@@ -65,11 +54,11 @@ export default {
         msgRowDetail(val){
         
             if(val.type == 0){
-                this.title = "预警"
-            }else if(val.type == 1){
                 this.title = "超标"
-            }else if(val.type == 2){
+            }else if(val.type == 1){
                 this.title = "异常"
+            }else if(val.type == 2){
+                this.title = "预警"
             }
             this.messageContent = val.content
         }

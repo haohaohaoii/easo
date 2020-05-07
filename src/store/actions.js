@@ -5,8 +5,7 @@ export default ({
         return new Promise((resolve, reject) => {
             api.menu.getMenu(adminId).then(res => {
                 if (res && res.data.code == 0) { //获取路由表
-
-                    let roles = res.data.data
+                    let roles = res.data.data.reverse()
                     console.log(roles)
                     sessionStorage.setItem('opt', JSON.stringify(roles))
                     context.commit('filters', roles)

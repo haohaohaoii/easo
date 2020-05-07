@@ -60,10 +60,11 @@ export default ({
     roleName: '',    //角色名称
     roleId: '',       //角色id
     spamIsshow: false,
+    directName: '',  //永远选择第一个菜单中的第一个,如果有首页，首页永远放在第一位
     dayDatadetail: [],  //日报表行详情
     wdly: localStorage.wdly ? localStorage.wdly : '',
     menulist: [],  //由角色权限和本地完整路由结合生成的实际菜单表
-    defaultMenu: 'hisData',  //默认选中的是历史数据
+    defaultMenu: '',  //默认选中的是历史数据
     rolesRoutes: [],  //由角色权限和本地完整路由结合生成的实际角色路由
     asyncRoutes: [   //异步路由，本地完整路由
         {

@@ -8,65 +8,77 @@
             mode="horizontal"
             @select="handleSelect"
         >
-            <el-menu-item index="firstPage">
-                <!-- <span class="iconfont" style="font-size:26px">&#xe723;</span> -->
-                <span class="iconfont sy">&#xe723;</span>
-                <span slot="title">首页</span>
-            </el-menu-item>
-
-            <el-submenu
-                v-if="item.subMenus && item.subMenus.length>=1"
-                v-for="(item,index) of menuList"
-                :key="index"
-                class="upopt"
-                :index="item.createTime"
-            >
-                <template slot="title" v-if="item.menuType==0 && item.menuName=='数据查看'">
-                    <!-- <span class="iconfont sjck" style="font-size:26px">&#xe6b8;</span> -->
-                    <span class="iconfont sjck">&#xe6b8;</span>
-                    {{item.menuName}}
-                    <span class="iconfont">&#xe648;</span>
+            <template v-for="(item,index) of menulist">
+                <template v-if="item.subMenus && item.subMenus.length==0">
+                    <el-menu-item :index="item.path" :key="item.path">
+                        <template v-if="item.menuType==0 && item.menuName=='首页'">
+                            <span class="iconfont sy">&#xe723;</span>
+                            <span slot="title">{{item.menuName}}</span>
+                        </template>
+                    </el-menu-item>
                 </template>
-                <template slot="title" v-else-if="item.menuType==0 && item.menuName=='企业管理'">
-                    <span class="iconfont qygl">&#xe626;</span>
-                    <span>{{item.menuName}}</span>
-                    <span class="iconfont">&#xe648;</span>
+                <template v-if="item.subMenus && item.subMenus.length>=1">
+                    <el-submenu :key="index" class="upopt" :index="item.createTime">
+                        <template slot="title" v-if="item.menuType==0 && item.menuName=='数据查看'">
+                            <!-- <span class="iconfont sjck" style="font-size:26px">&#xe6b8;</span> -->
+                            <span class="iconfont sjck">&#xe6b8;</span>
+                            {{item.menuName}}
+                            <span
+                                class="iconfont"
+                            >&#xe648;</span>
+                        </template>
+                        <template slot="title" v-else-if="item && item.menuName=='企业管理'">
+                            <span class="iconfont qygl">&#xe626;</span>
+                            <span>{{item.menuName}}</span>
+                            <span class="iconfont">&#xe648;</span>
+                        </template>
+                        <template slot="title" v-else-if="item && item.menuName=='权限管理'">
+                            <!-- <span class="iconfont qxgl" style="font-size:26px">&#xe63b;</span> -->
+                            <span class="iconfont qxgl">&#xe63b;</span>
+                            {{item.menuName}}
+                            <span
+                                class="iconfont"
+                            >&#xe648;</span>
+                        </template>
+                        <template slot="title" v-else-if="item && item.menuName=='内容管理'">
+                            <!-- <span class="iconfont nrgl" style="font-size:22px">&#xe646;</span> -->
+                            <span class="iconfont nrgl">&#xe646;</span>
+                            {{item.menuName}}
+                            <span
+                                class="iconfont"
+                            >&#xe648;</span>
+                        </template>
+                        <template slot="title" v-else-if="item && item.menuName=='运维管理'">
+                            <!-- <span class="iconfont ywgl" style="font-size:20px">&#xe604;</span> -->
+                            <span class="iconfont ywgl">&#xe604;</span>
+                            {{item.menuName}}
+                            <span
+                                class="iconfont"
+                            >&#xe648;</span>
+                        </template>
+                        <template slot="title" v-else-if="item && item.menuName=='数据报表'">
+                            <span class="iconfont sjbb">&#xe707;</span>
+                            {{item.menuName}}
+                            <span
+                                class="iconfont"
+                            >&#xe648;</span>
+                        </template>
+                        <template slot="title" v-else-if="item && item.menuName=='设置'">
+                            <span class="iconfont sz">&#xe615;</span>
+                            {{item.menuName}}
+                            <span
+                                class="iconfont"
+                            >&#xe648;</span>
+                        </template>
+                        <el-menu-item
+                            v-for="seciem of item.subMenus"
+                            :key="seciem.path"
+                            class="opt"
+                            :index="seciem.path"
+                        >{{seciem.menuName}}</el-menu-item>
+                    </el-submenu>
                 </template>
-                <template slot="title" v-else-if="item.menuType==0 && item.menuName=='权限管理'">
-                    <!-- <span class="iconfont qxgl" style="font-size:26px">&#xe63b;</span> -->
-                    <span class="iconfont qxgl">&#xe63b;</span>
-                    {{item.menuName}}
-                    <span class="iconfont">&#xe648;</span>
-                </template>
-                <template slot="title" v-else-if="item.menuType==0 && item.menuName=='内容管理'">
-                    <!-- <span class="iconfont nrgl" style="font-size:22px">&#xe646;</span> -->
-                    <span class="iconfont nrgl">&#xe646;</span>
-                    {{item.menuName}}
-                    <span class="iconfont">&#xe648;</span>
-                </template>
-                <template slot="title" v-else-if="item.menuType==0 && item.menuName=='运维管理'">
-                    <!-- <span class="iconfont ywgl" style="font-size:20px">&#xe604;</span> -->
-                    <span class="iconfont ywgl">&#xe604;</span>
-                    {{item.menuName}}
-                    <span class="iconfont">&#xe648;</span>
-                </template>
-                <template slot="title" v-else-if="item.menuType==0 && item.menuName=='数据报表'">
-                    <span class="iconfont sjbb">&#xe707;</span>
-                    {{item.menuName}}
-                    <span class="iconfont">&#xe648;</span>
-                </template>
-                <template slot="title" v-else-if="item.menuType==0 && item.menuName=='设置'">
-                    <span class="iconfont sz">&#xe615;</span>
-                    {{item.menuName}}
-                    <span class="iconfont">&#xe648;</span>
-                </template>
-                <el-menu-item
-                    v-for="seciem of item.subMenus"
-                    :key="seciem.path"
-                    class="opt"
-                    :index="seciem.path"
-                >{{seciem.menuName}}</el-menu-item>
-            </el-submenu>
+            </template>
         </el-menu>
         <div class="tubiao">
             <theme-picker></theme-picker>
@@ -141,38 +153,48 @@ export default {
     },
     computed: {
         ...mapState(["menulist", "defaultMenu","wdly"]),
-        menuList(){
-            
-            let arr= []
-            if(this.menulist && this.menulist.length>0){
+        // menuList(){
+        //      debugger
+        //     let arr= []
+        //     if(this.menulist && this.menulist.length>0){
                 
-                for(let k=0; k<this.menulist.length;k++){
-                    if(this.menulist[k].menuName == '企业管理'){
-                        arr[0] = this.menulist[k]
-                    }else if(this.menulist[k].menuName == '数据查看'){
-                        arr[1] = this.menulist[k]
-                    }else if(this.menulist[k].menuName == '数据报表'){
-                        arr[2]=this.menulist[k]
-                    }else if(this.menulist[k].menuName == '内容管理'){
-                        arr[3]=this.menulist[k]
-                    }else if(this.menulist[k].menuName == '运维管理'){
-                        arr[4]=this.menulist[k]
-                    }else if(this.menulist[k].menuName == '权限管理'){
-                        arr[5]=this.menulist[k]
-                    }else if(this.menulist[k].menuName == '设置'){
-                        arr[6]=this.menulist[k]
-                    }
-                }
+        //         for(let k=0; k<this.menulist.length;k++){
+        //             if(this.menulist[k].menuName == '企业管理'){
+        //                 arr[0] = this.menulist[k]
+        //             }
+        //             if(this.menulist[k].menuName == '数据查看'){
+        //                 arr[1] = this.menulist[k]
+        //             }
+        //             if(this.menulist[k].menuName == '数据报表'){
+        //                 arr[2]=this.menulist[k]
+        //             }
+        //             if(this.menulist[k].menuName == '内容管理'){
+        //                 arr[3]=this.menulist[k]
+        //             }
+        //             if(this.menulist[k].menuName == '运维管理'){
+        //                 arr[4]=this.menulist[k]
+        //             }
+        //             if(this.menulist[k].menuName == '权限管理'){
+        //                 arr[5]=this.menulist[k]
+        //             }
+        //             if(this.menulist[k].menuName == '设置'){
+        //                 arr[6]=this.menulist[k]
+        //             }
+        //         }
           
                
-            }
-             return arr
-        }
+        //     }
+           
+        //      return arr
+        // }
+        // menuList(){
+        //     if(this.menulist && this.menulist.length>0){
+        //         return this.menulist.reverse()
+        //     }
+        // }
     },
     methods: {
         handleSelect(key, keyPath) {
-         
-            
             this.$store.commit("changeDefaultmenu", key);
             this.$router.push({ path: "/" + key });
         },

@@ -18,7 +18,8 @@ let router = new Router({
         {
             path: '/',
             name: 'home',
-            redirect: 'firstPage',
+            // redirect: store.state.directName,
+            // redirect: 'firstPage',
             component: resolve => (require(["@/components/home/home"], resolve)),
             children: []
         }
@@ -132,7 +133,7 @@ router.beforeEach((to, from, next) => {
 
             next('/')
         } else {
-
+            console.log(router.options.routes)
             let defaultVal = to.path.substr(1)
             store.commit('getBreadlist', to)
             store.commit('changeDefaultmenu', defaultVal)
@@ -141,7 +142,6 @@ router.beforeEach((to, from, next) => {
         }
     } else {   //用户未登陆
         if (to.path == '/login') {
-
             next()
         } else {
             if (localStorage.getItem('token') && localStorage.getItem('adminId')) {
@@ -151,6 +151,7 @@ router.beforeEach((to, from, next) => {
                     store.commit("getToken", localStorage.getItem('token'));
                     store.commit("getAdminid", adminId);
                     let menuRoutes = store.state.rolesRoutes
+                    console.log(router.options.routes)
                     menuRoutes.forEach(route => {
                         router.options.routes[1].children.push(
                             route

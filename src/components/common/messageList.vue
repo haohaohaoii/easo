@@ -15,9 +15,9 @@
                 <el-table-column align="center" prop="erpName" label="企业名称" width="260"></el-table-column>
                 <el-table-column align="center" prop="messageType" label="消息类型">
                     <template slot-scope="scope">
-                        <span v-if="scope.row.messageType==0">预警</span>
-                        <span v-else-if="scope.row.messageType==1">超标</span>
-                        <span v-else-if="scope.row.messageType==2">异常</span>
+                        <span v-if="scope.row.messageType==2">预警</span>
+                        <span v-else-if="scope.row.messageType==0">超标</span>
+                        <span v-else-if="scope.row.messageType==1">异常</span>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="messageCon" label="消息内容">

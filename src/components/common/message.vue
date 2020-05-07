@@ -146,8 +146,11 @@ export default {
 
         },
         //点击页码的时候
-        handleCurrentChange(){
-
+        handleCurrentChange(currentPage){
+            //重新赋值，重新请求
+            this.currentPage = currentPage;
+            let pageNum = this.currentPage;
+            this.getUserlist(pageNum);
         }
     }
 };
