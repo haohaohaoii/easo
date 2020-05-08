@@ -286,7 +286,6 @@ export default {
             this.$refs["ruleForm"].validate(valid => {
        
                 if (valid) {
-                    debugger
                     // 表单验证通过之后的操作
     
                     let formData = new FormData()
