@@ -144,6 +144,7 @@ router.beforeEach((to, from, next) => {
         if (to.path == '/login') {
             next()
         } else {
+            debugger
             if (localStorage.getItem('token') && localStorage.getItem('adminId')) {
                 let adminId = localStorage.getItem('adminId')
                 store.dispatch('getRole', adminId).then(res => {
@@ -173,5 +174,9 @@ router.beforeEach((to, from, next) => {
 router.afterEach(() => {
     NProgress.done()
 })
+router.selfaddRoutes = function (params) {
 
+    router.matcher = new Router().matcher;
+    router.addRoutes(params)
+}
 export default router

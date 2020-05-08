@@ -15,6 +15,7 @@ export default ({
     //根据token和adminId获取角色权限
     getRoles(state) {
         let menuRoutes = state.rolesRoutes
+        router.options.routes[1].children = []
         menuRoutes.forEach(route => {
             router.options.routes[1].children.push(
                 route

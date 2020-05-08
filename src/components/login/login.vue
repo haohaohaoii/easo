@@ -23,8 +23,7 @@
 
 <script>
 import { mapMutations, mapActions, mapState, getters, mapGetters } from "vuex";
-import filterRoutes from "../../utils/filterRoutes";
-import asyncRoutes from "../../utils/asyncRoutes.js";
+
 const Base64 = require("js-base64").Base64;
 export default {
     data() {
@@ -39,11 +38,10 @@ export default {
         ...mapGetters(["getRoles"])
     },
     mounted() {
-        
         //判断用户上一次操作是否是记住密码
         this.getPaw();
         //绑定事件
-     window.addEventListener('keydown',this.keyDown);
+        window.addEventListener('keydown',this.keyDown);
     },
     destroyed(){
         window.removeEventListener('keydown',this.keyDown,false);
@@ -56,7 +54,6 @@ export default {
                 this.login();
             }
         },
-
         login() {
             if (this.userName && this.userPaw) {
                 //调用登陆接口
@@ -133,7 +130,7 @@ export default {
         //             console.log(error);
         //         });
         // },
-
+ 
         //调用登陆接口获取adminId
         getAdminid() {
             let params = { username: this.userName, password: this.userPaw }; //获取参数
@@ -145,7 +142,6 @@ export default {
                         //登陆成功
                         if (this.remenbVal) {
                             //记住密码
-                           
                             localStorage.setItem(
                                 "userPaw",
                                 Base64.encode(this.userPaw)
@@ -160,8 +156,9 @@ export default {
                         this.$store.dispatch("getRole", adminId).then(res => {
                             //跳转路由页面
                             if (this.getRoles.length > 0) {
-                                // this.$router.options.routes[1].redirect = this.directName
-                                this.$router.addRoutes(this.getRoles);
+                                // this.$router.matcher = new VueRouter({mode: 'history',routes: []}).matcher;
+                                this.$router.selfaddRoutes(this.getRoles)
+                                // this.$router.addRoutes(this.getRoles);
                                 if (this.$route.query.redirect) {
                                     //重定向过来的
                                     this.$router.push(

@@ -1,5 +1,6 @@
 
 import api from '../api' // 导入api接口
+
 export default ({
     getRole(context, adminId) {   //获取角色权限
         return new Promise((resolve, reject) => {

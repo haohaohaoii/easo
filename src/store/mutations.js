@@ -301,7 +301,7 @@ export default ({
     },
     //根据返回的角色权限，生成路由表
     filters(state, roles) {
-
+        state.rolesRoutes = []
         let menuTree = roles  //角色权限
         let asyncRoutes = state.asyncRoutes //本地完整路由
         let res = []
