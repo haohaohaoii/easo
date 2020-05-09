@@ -53,7 +53,7 @@ export default {
         return {
             totalLength: 0, //总共多少条数据
             currentPage: 1, //初始页码
-            pagesize: 10, //一页多少条数据
+            pagesize: 1, //一页多少条数据
             companyArr: [], //所有角色数组
         };
     },
@@ -78,6 +78,7 @@ export default {
         },
         //删除成功
         delT(val){
+
             if(val){
                 let pageNum = this.currentPage;
                 this.getUserlist(pageNum)
@@ -114,6 +115,16 @@ export default {
             this.getUserlist(pageNum)
         }
         
+    },
+    watch:{
+        //删除页面最后一条数据时，currentPage没有减一，页面列表为空
+        totalLength(){
+      
+            if(this.totalLength==(this.currentPage-1)*this.pagesize&& this.totalLength!=0){
+            this.currentPage-=1;
+            this.getUserlist(this.currentPage)
+            }
+        }
     }
 };
 </script>

@@ -83,7 +83,7 @@
             <el-button type="primary" @click="sureEditor" size="mini">保存</el-button>
             <el-button @click="cancelEditor" size="mini">取消</el-button>
         </div>
-        <el-dialog append-to-body :visible.sync="dialogVisible" width="28%">
+        <el-dialog append-to-body :visible.sync="dialogVisible" class="fdDialog">
             <img width="100%" :src="dialogImageUrl" alt />
         </el-dialog>
     </el-dialog>
@@ -591,7 +591,9 @@ export default {
 //     height: 55%;
 //     width: 34%;
 // }
-
+.fdDialog >>> .el-dialog {
+    width: 38%;
+}
 .enterEditor >>> .el-dialog .el-dialog__body {
     flex: 1;
     overflow: auto;

@@ -19,15 +19,18 @@
             </div>
         </spam-list>
         <no-data v-else></no-data>
+        <spam-reply @closeD="closeDs"></spam-reply>
     </div>
 </template>
 <script>
 import spamList from './spamList';
 import noData from '../common/noData';
+import spamReply from './spamReply'
 export default {
     components:{
         spamList,
-        noData
+        noData,
+        spamReply
     },  
 
     data() {
@@ -45,6 +48,11 @@ export default {
     methods:{
         //删除成功
         delT(val){
+            let pageNum = this.currentPage;
+            this.getSpam(pageNum)
+        },
+        //详情窗口关闭 --因为有三个状态需要实时更新
+        closeDs(){
             let pageNum = this.currentPage;
             this.getSpam(pageNum)
         },
@@ -73,6 +81,15 @@ export default {
             this.getSpam(pageNum)
         }
         
+    },
+    watch:{
+        //删除页面最后一条数据时，currentPage没有减一，页面列表为空
+        totalLength(){
+            if(this.totalLength==(this.currentPage-1)*this.pagesize&& this.totalLength!=0){
+            this.currentPage-=1;
+            this.getSpam(this.currentPage)
+            }
+        }
     }
 };
 </script>

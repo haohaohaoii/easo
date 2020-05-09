@@ -16,6 +16,14 @@
                     @click="baseAdd"
                     v-has="'添加基站'"
                 >添加基站</el-button>
+                <el-button
+                    type="danger"
+                    class="backbase"
+                    @click="backbase"
+                    icon="el-icon-back"
+                    v-show="isShowback"
+                    size="mini"
+                >查看所有基站</el-button>
             </div>
         </div>
         <base-list :baseAll="baseArr" v-if="baseArr && baseArr.length>0">
@@ -57,6 +65,7 @@ export default {
             currentPage: 1, //初始页码
             pagesize: 10, //一页多少条数据
             baseArr: [], //所有基站数组
+            isShowback:false,  //返回基站列表按钮是否显示
         };
     },
    mounted(){
@@ -81,13 +90,21 @@ export default {
                 this.fromWitch()
             }
         },
+        //返回基站列表页面
+        backbase(){
+            this.$router.push({path:'/baseManage'});
+            this.fromWitch()
+        },
+        //当前页面是从哪进入的
         fromWitch(){
             if(this.$route.query.companyId && this.$route.query.companyName){  //说明是从企业信息过来的
                 let companyId = this.$route.query.companyId
                 let pageNum = this.currentPage;
                 let pagesize = this.pagesize;
                 this.getCombase(companyId,pageNum,pagesize)
+                this.isShowback = true
             }else{    
+                 this.isShowback = false
                 let pageNum = this.currentPage;
                 this.getBaselist(pageNum)
             }
@@ -171,7 +188,11 @@ export default {
             }
             .add {
                 position: absolute;
-                right: 4%;
+                right: 0;
+            }
+            .backbase {
+                position: absolute;
+                right: 10%;
             }
         }
     }

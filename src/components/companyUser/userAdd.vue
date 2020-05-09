@@ -78,19 +78,19 @@ export default {
                     {
                         pattern: "^[1][3,4,5,7,8][0-9]{9}$",
                         message: "请填写正确的手机号",
-                        trigger: "change"
+                        trigger: "blur"
                     }
                 ],
                 userName: [
                     {
                         required: true,
                         message: "请输入用户名",
-                        trigger: "change"
+                        trigger: "blur"
                     },
                     {
                         pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/,
                         message: "用户名长度要大于6位，由数字和字母组成",
-                        trigger: "change"
+                        trigger: "blur"
                     }
                 ],
                 password: [
@@ -98,12 +98,12 @@ export default {
                     {
                         required: true,
                         message: "请输入密码",
-                        trigger: "change"
+                        trigger: "blur"
                     },
                     {
                         pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/,
                         message: "密码长度要大于6位，由数字和字母组成",
-                        trigger: "change"
+                        trigger: "blur"
                     }
                 ],
                 firmType: [

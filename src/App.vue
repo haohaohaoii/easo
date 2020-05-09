@@ -22,5 +22,6 @@ html,
 body,
 #app {
     height: 100%;
+    cursor: pointer;
 }
 </style>

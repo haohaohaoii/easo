@@ -30,12 +30,12 @@
                     <div class="left neir" v-for="item of hisReplymsg " :key="item.id">
                         <div v-if="item.type ==1" class="f">
                             企业回复：
-                            {{item.content}}
+                            <p class="hfc">{{item.content}}</p>
                             <p class="rep">--{{item.createTime}}</p>
                         </div>
                         <div v-else-if="item.type ==0" class="f">
                             我的回复：
-                            {{item.content}}
+                            <p class="hfc">{{item.content}}</p>
                             <p class="rep">--{{item.createTime}}</p>
                         </div>
                     </div>
@@ -114,6 +114,7 @@ export default {
             this.spamReplymsg = '',
             this.id = ''
             this.$store.commit("spamReplys", false); //关闭dialog
+            this.$emit('closeD')
         },
         //取消
         // cancel() {
@@ -180,6 +181,10 @@ export default {
                 right: 0;
                 font-size: 12px;
                 color: #ccc;
+            }
+            .hfc {
+                width: 70%;
+                margin-left: 8%;
             }
         }
     }

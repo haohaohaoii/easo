@@ -1,6 +1,5 @@
 <template>
-    <div class="spamList" v-if="tableData">
-        <spam-reply></spam-reply>
+    <div class="spamList">
         <div class="tabE">
             <el-table
                 :data="tableData"
@@ -16,7 +15,22 @@
                 <el-table-column align="center" prop="spamTitle" label="留言标题"></el-table-column>
                 <el-table-column align="center" prop="firmName" label="企业名称"></el-table-column>
                 <el-table-column align="center" prop="spamDate" label="留言时间"></el-table-column>
-                <el-table-column align="center" prop="spamStatus" label="留言状态"></el-table-column>
+                <el-table-column align="center" prop="spamStatus" label="留言状态">
+                    <template slot-scope="scope">
+                        <span
+                            v-if="scope.row.spamStatus=='已回复'"
+                            style="color: rgb(133,206,97);fontWeight:bolder"
+                        >{{ scope.row.spamStatus }}</span>
+                        <span
+                            v-else-if="scope.row.spamStatus=='未读'"
+                            style="color:rgb(245,108,108);fontWeight:bolder"
+                        >{{ scope.row.spamStatus }}</span>
+                        <span
+                            v-else
+                            style="color:rgb(149,152,157);fontWeight:bolder"
+                        >{{ scope.row.spamStatus}}</span>
+                    </template>
+                </el-table-column>
                 <el-table-column label="操作" align="center">
                     <template slot-scope="scope">
                         <el-button
@@ -37,18 +51,11 @@
             <slot></slot>
         </div>
     </div>
-    <no-data v-else></no-data>
 </template>
 
 <script>
 import { mapMutations } from "vuex";
-import spamReply from './spamReply'
-import noData from "../common/noData"
 export default {
-    components:{
-        spamReply,
-        noData
-    },
     props:{
         spamAll:{
             type:Array,

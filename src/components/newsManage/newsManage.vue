@@ -103,8 +103,16 @@ export default {
             this.currentPage = currentPage;
             let pageNum = this.currentPage;
             this.getNewslist(pageNum)
+        }  
+    },
+    watch:{
+        //删除页面最后一条数据时，currentPage没有减一，页面列表为空
+        totalLength(){
+            if(this.totalLength==(this.currentPage-1)*this.pagesize&& this.totalLength!=0){
+            this.currentPage-=1;
+            this.getNewslist(this.currentPage)
+            }
         }
-        
     }
 };
 </script>

@@ -166,6 +166,7 @@ export default {
     .roleTop {
         // margin-top: 0.5%;
         // margin-bottom: 2%;
+        height: 85px;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
