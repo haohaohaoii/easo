@@ -144,7 +144,7 @@ router.beforeEach((to, from, next) => {
         if (to.path == '/login') {
             next()
         } else {
-            debugger
+
             if (localStorage.getItem('token') && localStorage.getItem('adminId')) {
                 let adminId = localStorage.getItem('adminId')
                 store.dispatch('getRole', adminId).then(res => {
@@ -158,8 +158,8 @@ router.beforeEach((to, from, next) => {
                             route
                         );
                     });
-                    router.matcher = new Router({ mode: 'history' }).matcher;
-                    router.addRoutes(router.options.routes)
+
+                    router.selfaddRoutes(router.options.routes)
                     next({ ...to, replace: true })
                 })
 
@@ -175,7 +175,13 @@ router.afterEach(() => {
     NProgress.done()
 })
 router.selfaddRoutes = function (params) {
-
+    params[1].children.push(
+        {
+            path: '*',
+            name: "404页面",
+            component: (resolve) => require(['@/components/common/error'], resolve)
+        }
+    )
     router.matcher = new Router().matcher;
     router.addRoutes(params)
 }

@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "305376",
+      "name": "404",
+      "font_class": "404",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "11174868",
+      "name": "404 (1)",
+      "font_class": "icon-test",
+      "unicode": "e701",
+      "unicode_decimal": 59137
+    },
+    {
       "icon_id": "9710301",
       "name": "设置",
       "font_class": "shezhi1",
