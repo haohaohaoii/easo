@@ -1,7 +1,7 @@
 <template>
     <div class="bread">
         <el-breadcrumb separator-class="el-icon-arrow-right">
-            <el-breadcrumb-item to="/">当前位置</el-breadcrumb-item>
+            <el-breadcrumb-item style="fontWeight:bolder">当前位置</el-breadcrumb-item>
             <el-breadcrumb-item v-for="(item,index) in breadArr" :key="index">{{item.name}}</el-breadcrumb-item>
         </el-breadcrumb>
     </div>
