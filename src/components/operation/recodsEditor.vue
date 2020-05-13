@@ -255,13 +255,13 @@
                             v-model="ruleForm.phTypes"
                             :disabled="!ruleForm.phIsC"
                             @focus="getypes"
-                            placeholder="设备型号"
+                            placeholder="运维类型"
                             filterable
                         >
                             <el-option
                                 v-for="item in types"
                                 :key="item.value"
-                                :label="item.name"
+                                :label="item.label"
                                 :value="item.value"
                             ></el-option>
                         </el-select>
@@ -494,8 +494,8 @@ export default {
                             flag = true
                             let obj={
                                 factorCode:'011',
-                                deviceType:_this.ruleForm.codTypes,
-                                createTime:_this.ruleForm.codDesc
+                                actionType:_this.ruleForm.codTypes,
+                                actionDesc:_this.ruleForm.codDesc
                             }
                             arr.push(obj)
                         }
@@ -503,8 +503,8 @@ export default {
                             flag = true
                             let obj = {
                                 factorCode:'060',
-                                deviceType:_this.ruleForm.anTypes,
-                                createTime:_this.ruleForm.anDesc
+                                actionType:_this.ruleForm.anTypes,
+                                actionDesc:_this.ruleForm.anDesc
                             }
                             arr.push(obj)
                         }
@@ -512,8 +512,8 @@ export default {
                             flag = true
                             let obj = {
                                 factorCode:'101',
-                                deviceType:_this.ruleForm.zlTypes,
-                                createTime:_this.ruleForm.zlDesc
+                                actionType:_this.ruleForm.zlTypes,
+                                actionDesc:_this.ruleForm.zlDesc
                             }
                             arr.push(obj)
                         }
@@ -521,8 +521,8 @@ export default {
                             flag = true
                             let obj = {
                                 factorCode:'065',
-                                deviceType:_this.ruleForm.zdTypes,
-                                createTime:_this.ruleForm.zdDesc
+                                actionType:_this.ruleForm.zdTypes,
+                                actionDesc:_this.ruleForm.zdDesc
                             }
                             arr.push(obj)
                         }
@@ -530,8 +530,8 @@ export default {
                             flag = true
                             let obj = {
                                 factorCode:'B01',
-                                deviceType:_this.ruleForm.llTypes,
-                                createTime:_this.ruleForm.llDesc
+                                actionType:_this.ruleForm.llTypes,
+                                actionDesc:_this.ruleForm.llDesc
                             }
                             arr.push(obj)
                         }
@@ -539,8 +539,8 @@ export default {
                             flag = true
                             let obj = {
                                 factorCode:'001',
-                                deviceType:_this.ruleForm.phTypes,
-                                createTime:_this.ruleForm.phDesc
+                                actionType:_this.ruleForm.phTypes,
+                                actionDesc:_this.ruleForm.phDesc
                             }
                             arr.push(obj)
                         }
@@ -630,6 +630,7 @@ export default {
         //获取类型
         Getypes(){
             return new Promise(resolve=>{
+
                 this.$api.recodes.getTypes().then(res=>{
            
                     if(res.data.code ==0){
@@ -699,9 +700,10 @@ export default {
                                 this.ruleForm.llDesc=arrYZ[i].actionDesc 
                             }
                             if(arrYZ[i].factorCode == '001'){  //Ph
+
                                 this.ruleForm.phIsC=true
                                 this.ruleForm.phTypes=JSON.stringify(arrYZ[i].actionType)
-                                this.ruleForm.phDesc=arrYZ[i].actionDesc 
+                                this.ruleForm.phDesc=arrYZ[i].actionDesc
                             }          
                         }
                     }
