@@ -135,6 +135,20 @@ export default ({
 
         })
     },
+    //点击查看
+    getNewsDetail(context, id) {
+        api.news.getNewsI(id).then(res => {  //获取角色对应的菜单
+
+            console.log(res)
+            if (res.data.code == 0) {
+                let itemObj = res.data.data[0]
+                context.commit('changeNewsD', true)  //编辑对应的dialog状态
+                context.commit("getNewsD", itemObj); //存储对应id的部门信息
+            }
+        }).catch(error => {
+
+        })
+    },
     //右下留言过来的
     spamDetail(context, id) {
         api.spam.getSpamitem(id).then(res => {  //获取角色对应的菜单

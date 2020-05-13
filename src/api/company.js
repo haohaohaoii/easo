@@ -47,6 +47,10 @@ const company = {
     companyWAll() {   //所有企业信息接口(不分页)
         return axios.get(`${base.localUrl}/admin/company/listErp`)
     },
+    //删除企业信息
+    deleteCompany(erpId) {
+        return axios.delete(`${base.localUrl}/admin/company/${erpId}`)
+    }
 }
 
 

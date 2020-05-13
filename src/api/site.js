@@ -43,6 +43,9 @@ const site = {
         let type = 'device_type'
         return axios.get(`${base.localUrl}/admin/sys/${type}`)
     },
+    deleteSite(mn) {
+        return axios.delete(`${base.localUrl}/admin/site/${mn}`)
+    }
 }
 
 export default site

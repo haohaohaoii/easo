@@ -242,6 +242,41 @@
                     </el-form-item>
                 </el-col>
             </el-form-item>
+            <!--ph-->
+            <el-form-item>
+                <el-col slot="label">
+                    <el-form-item prop="phIsC">
+                        <el-checkbox v-model="ruleForm.phIsC" @change="changeph">P&nbsp;&nbsp;H</el-checkbox>
+                    </el-form-item>
+                </el-col>
+                <el-col :lg="10" :xl="10">
+                    <el-form-item prop="phType">
+                        <el-select
+                            v-model="ruleForm.phTypes"
+                            :disabled="!ruleForm.phIsC"
+                            @focus="getypes"
+                            placeholder="设备型号"
+                            filterable
+                        >
+                            <el-option
+                                v-for="item in types"
+                                :key="item.value"
+                                :label="item.name"
+                                :value="item.value"
+                            ></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :lg="12" :xl="12" :offset="2">
+                    <el-form-item prop="phDesc">
+                        <el-input
+                            :disabled="!ruleForm.phIsC"
+                            placeholder="请输入运维详情"
+                            v-model="ruleForm.phDesc"
+                        ></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-form-item>
         </el-form>
         <div slot="footer" class="foot">
             <el-button type="primary" @click="sureEditor" size="mini">保存</el-button>
@@ -286,7 +321,11 @@ export default {
 
                 llIsC:false, //流量是否选中
                 llTypes:'',//流量类型
-                llDesc:'' //流量详情
+                llDesc:'', //流量详情
+
+                phIsC:false, //ph是否选中
+                phTypes:'',//ph类型
+                phDesc:'' //ph详情
             },
             
             rules: {
@@ -354,6 +393,12 @@ export default {
                 this.ruleForm.llDesc=''
             }
         },
+        changeph(val){  //当复选框为false时
+            if(!val){
+                this.ruleForm.phTypes='',
+                this.ruleForm.phDesc=''
+            }
+        },
         //获取类型
         getypes(){
             this.$api.recodes.getTypes().then(res=>{
@@ -412,6 +457,26 @@ export default {
         //关闭外层dialog
         closeDialog() {
             this.$refs.ruleForm.resetFields();  //重置from和rules
+            this.ruleForm.codIsC=false
+            this.ruleForm.anIsC = false
+            this.ruleForm.zlIsC = false
+            this.ruleForm.zdIsC=false
+            this.ruleForm.llIsC=false 
+            this.ruleForm.phIsC=false
+
+            this.ruleForm.codDesc=''
+            this.ruleForm.anDesc = ''
+            this.ruleForm.zlDesc = ''
+            this.ruleForm.zdDesc=''
+            this.ruleForm.llDesc=''
+            this.ruleForm.phDesc=''
+
+            this.ruleForm.codTypes=''
+            this.ruleForm.anTypes=''
+            this.ruleForm.zlTypes=''
+            this.ruleForm.zdTypes=''
+            this.ruleForm.llTypes=''
+            this.ruleForm.phTypes=''
             this.$emit('changeEdiDialog',false)
         },
         //确定编辑  --关闭dialog
@@ -420,82 +485,93 @@ export default {
             this.$refs["ruleForm"].validate(valid => { 
                     
                 if (valid) {
-                    if(
-                        (this.ruleForm.anIsC&&this.ruleForm.codTypes &&this.ruleForm.codDesc) || 
-                    (this.ruleForm.zlIsC &&this.ruleForm.zlTypes &&this.ruleForm.zlDesc) || 
-                    (this.ruleForm.anIsC &&　this.ruleForm.anTypes && this.ruleForm.anDesc) || 
-                    (this.ruleForm.zdIsC && this.ruleForm.zdTypes && this.ruleForm.zdDesc) || 
-                    (this.ruleForm.llIsC && this.ruleForm.llTypes && this.ruleForm.llDesc)
-                    ){
+                        let flag = false
                         let factorCode = ''
                         let actionType = ''
                         let actionDesc = ''
                         let arr=[]
-                        if(this.ruleForm.codIsC){  //选中的是cod
+                        if(_this.ruleForm.codIsC && _this.ruleForm.codTypes && _this.ruleForm.codDesc){  //选中的是cod
+                            flag = true
                             let obj={
                                 factorCode:'011',
-                                actionType:this.ruleForm.codTypes,
-                                actionDesc:this.ruleForm.codDesc
+                                deviceType:_this.ruleForm.codTypes,
+                                createTime:_this.ruleForm.codDesc
                             }
                             arr.push(obj)
                         }
-                        if(this.ruleForm.anIsC){  //选中的是氨氮
-                            let obj = {
-                                factorCode:'101',
-                                actionType:this.ruleForm.anTypes,
-                                actionDesc:this.ruleForm.anDesc
-                            }
-                            arr.push(obj)
-                        }
-                        if(this.ruleForm.zlIsC){  //选中的是总磷
+                        if(_this.ruleForm.anIsC && _this.ruleForm.anTypes && _this.ruleForm.anDesc){  //选中的是氨氮
+                            flag = true
                             let obj = {
                                 factorCode:'060',
-                                actionType:this.ruleForm.zlTypes,
-                                actionDesc:this.ruleForm.zlDesc
+                                deviceType:_this.ruleForm.anTypes,
+                                createTime:_this.ruleForm.anDesc
                             }
                             arr.push(obj)
                         }
-                        if(this.ruleForm.zdIsC){  //选中的是总氮
+                        if(_this.ruleForm.zlIsC && _this.ruleForm.zlTypes && _this.ruleForm.zlDesc){  //选中的是总磷
+                            flag = true
+                            let obj = {
+                                factorCode:'101',
+                                deviceType:_this.ruleForm.zlTypes,
+                                createTime:_this.ruleForm.zlDesc
+                            }
+                            arr.push(obj)
+                        }
+                        if(_this.ruleForm.zdIsC && _this.ruleForm.zdTypes && _this.ruleForm.zdDesc){  //选中的是总氮
+                            flag = true
                             let obj = {
                                 factorCode:'065',
-                                actionType:this.ruleForm.zdTypes,
-                                actionDesc:this.ruleForm.zdDesc
+                                deviceType:_this.ruleForm.zdTypes,
+                                createTime:_this.ruleForm.zdDesc
                             }
                             arr.push(obj)
                         }
-                        if(this.ruleForm.llIsC){  //选中的是流量
+                        if(_this.ruleForm.llIsC && _this.ruleForm.llTypes && _this.ruleForm.llDesc){  //选中的是流量
+                            flag = true
                             let obj = {
                                 factorCode:'B01',
-                                actionType:this.ruleForm.llTypes,
-                                actionDesc:this.ruleForm.llDesc
+                                deviceType:_this.ruleForm.llTypes,
+                                createTime:_this.ruleForm.llDesc
                             }
                             arr.push(obj)
                         }
-                        let id = this.id
-                        let params={
-                            mn:_this.ruleForm.siteVal, //站点mn
-                            mtUserId:_this.ruleForm.ywPeople,  //运维人员
-                            mtTime: _this.ruleForm.ywTime, //运维时间
-                            mtCode:_this.ruleForm.ywNum, //运维单号
-                            recordDetails:arr
-
-                        }
-                        _this.$axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-                        _this.$axios.put(`${base.localUrl}/admin/mtRecord/${id}`,params,{
-                            'Content-Type':'application/json'
-                        }).then(res=>{
-                            if(res.data.code == 0){
-                                _this.$message({
-                                    message: '运维记录编辑成功',
-                                    type: 'success'
-                                });
-                                _this.$emit('ediSuccess',true)
-                                _this.closeDialog()
+                        if(_this.ruleForm.phIsC && _this.ruleForm.phTypes && _this.ruleForm.phDesc){  //选中的是ph
+                            flag = true
+                            let obj = {
+                                factorCode:'001',
+                                deviceType:_this.ruleForm.phTypes,
+                                createTime:_this.ruleForm.phDesc
                             }
-                        })
-                    }else{
-                        this.$message.error("请选择因子、并填写运维类型和运维详情!");
-                    }
+                            arr.push(obj)
+                        }
+                        if(flag){
+                            let id = this.id
+                            let params={
+                                mn:_this.ruleForm.siteVal, //站点mn
+                                mtUserId:_this.ruleForm.ywPeople,  //运维人员
+                                mtTime: _this.ruleForm.ywTime, //运维时间
+                                mtCode:_this.ruleForm.ywNum, //运维单号
+                                recordDetails:arr
+
+                            }
+                            _this.$axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+                            _this.$axios.put(`${base.localUrl}/admin/mtRecord/${id}`,params,{
+                                'Content-Type':'application/json'
+                            }).then(res=>{
+                                if(res.data.code == 0){
+                                    _this.$message({
+                                        message: '运维记录编辑成功',
+                                        type: 'success'
+                                    });
+                                    _this.$emit('ediSuccess',true)
+                                    _this.closeDialog()
+                                }
+                            })
+                        }else{
+                            _this.$message.error("请选择因子、并填写设备型号和安装时间!");
+                        }
+                        
+
                   
                 } else {
                     this.$message.error("请按规则填写后再提交!");
@@ -617,11 +693,16 @@ export default {
                                 this.ruleForm.zdTypes= JSON.stringify(arrYZ[i].actionType)
                                 this.ruleForm.zdDesc=arrYZ[i].actionDesc 
                             }
-                             if(arrYZ[i].factorCode == 'B01'){  //流量
+                            if(arrYZ[i].factorCode == 'B01'){  //流量
                                 this.ruleForm.llIsC=true
                                 this.ruleForm.llTypes=JSON.stringify(arrYZ[i].actionType)
                                 this.ruleForm.llDesc=arrYZ[i].actionDesc 
-                            }         
+                            }
+                            if(arrYZ[i].factorCode == '001'){  //Ph
+                                this.ruleForm.phIsC=true
+                                this.ruleForm.phTypes=JSON.stringify(arrYZ[i].actionType)
+                                this.ruleForm.phDesc=arrYZ[i].actionDesc 
+                            }          
                         }
                     }
                 }

@@ -39,13 +39,29 @@ export default {
             currentPage: 1, //初始页码
             pagesize: 10, //一页多少条数据
             spamArr: [], //所有角色数组
+            state:'', //留言状态
         };
     },
-    created(){
-        let pageNum = this.currentPage;
-        this.getSpam(pageNum)
+ 
+    mounted(){
+       this.fromWitch()
     },
     methods:{
+        //从哪进入到这个页面的
+        fromWitch(){
+            if(this.$route.query.state == '2'){  //首页最新回复
+                let pageNum = this.currentPage;
+                this.state = 2
+                this.getSpam(pageNum)
+            }else if(this.$route.query.state == '0'){ //首页未读留言
+                let pageNum = this.currentPage;
+                this.state = 0
+                this.getSpam(pageNum)
+            }else{    
+                let pageNum = this.currentPage;
+                this.getSpam(pageNum)
+            }
+        },
         //删除成功
         delT(val){
             let pageNum = this.currentPage;
@@ -63,6 +79,7 @@ export default {
                     params: {
                         pageNum: pageNum,
                         pageSize: pageSize,
+                        state:this.state
                     }
                 })
                 .then(res => {

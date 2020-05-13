@@ -26,7 +26,7 @@
                 >查看所有基站</el-button>
             </div>
         </div>
-        <base-list :baseAll="baseArr" v-if="baseArr && baseArr.length>0">
+        <base-list :baseAll="baseArr" v-if="baseArr && baseArr.length>0" @delSuccess="delS">
             <div class="tabPage">
                 <el-pagination
                     background
@@ -66,6 +66,7 @@ export default {
             pagesize: 10, //一页多少条数据
             baseArr: [], //所有基站数组
             isShowback:false,  //返回基站列表按钮是否显示
+            state:'' //基站的状态
         };
     },
    mounted(){
@@ -90,6 +91,12 @@ export default {
                 this.fromWitch()
             }
         },
+        //删除成功,重新请求页面
+        delS(val){
+            if(val){
+                this.fromWitch()
+            }
+        },
         //返回基站列表页面
         backbase(){
             this.$router.push({path:'/baseManage'});
@@ -103,8 +110,18 @@ export default {
                 let pagesize = this.pagesize;
                 this.getCombase(companyId,pageNum,pagesize)
                 this.isShowback = true
+            }else if(this.$route.query.state == '1'){   //说明是从首页在线过来的
+                this.isShowback = false
+                let pageNum = this.currentPage;
+                this.state = 1
+                this.getBaselist(pageNum)
+            }else if(this.$route.query.state == '2'){
+                this.isShowback = false
+                let pageNum = this.currentPage;
+                this.state = 2
+                this.getBaselist(pageNum)
             }else{    
-                 this.isShowback = false
+                this.isShowback = false
                 let pageNum = this.currentPage;
                 this.getBaselist(pageNum)
             }
@@ -131,6 +148,7 @@ export default {
                     params: {
                         pageNum: pageNum,
                         pageSize: pageSize,
+                        state:this.state
                     }
                 })
                 .then(res => {

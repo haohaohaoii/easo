@@ -295,9 +295,16 @@ export default ({
     changeNewsE(state, status) {
         state.newsEstatus = status
     },
+    changeNewsD(state, status) {
+        state.newsDstatus = status
+    },
     //获取新闻编辑下的行信息
     getNewsE(state, item) {
         state.newsErow = item
+    },
+    //详情下获取行信息
+    getNewsD(state, item) {
+        state.newsDrow = item
     },
     //根据返回的角色权限，生成路由表
     filters(state, roles) {

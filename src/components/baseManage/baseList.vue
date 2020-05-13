@@ -33,14 +33,20 @@
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="updateTime" label="更新时间"></el-table-column>
-                <el-table-column label="操作" align="center" width="220">
+                <el-table-column label="操作" align="center" width="300">
                     <template slot-scope="scope">
                         <el-button
                             size="mini"
                             @click="audit(scope.$index, scope.row)"
                             :disabled="!scope.row.siteState==0"
+                            type="info"
                             v-has="'审核'"
                         >审核</el-button>
+                        <el-button
+                            size="mini"
+                            @click="handleDetail(scope.$index, scope.row)"
+                            v-has="'详情'"
+                        >详情</el-button>
                         <el-button
                             size="mini"
                             type="primary"
@@ -50,9 +56,8 @@
                         <el-button
                             size="mini"
                             type="danger"
-                            @click="handleDetail(scope.$index, scope.row)"
-                            v-has="'详情'"
-                        >详情</el-button>
+                            @click="siteDelete(scope.$index, scope.row)"
+                        >删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -115,6 +120,8 @@ export default {
                                 yinZarr[k].factorName = '总磷'
                             }else if(yinZarr[k].factorName == 'FLOW'){
                                 yinZarr[k].factorName = '流量'
+                            }else if(yinZarr[k].factorName == 'PH'){
+                                yinZarr[k].factorName = 'PH'
                             }
                             if(yinZ == ''){
                                 yinZ = yinZarr[k].factorName
@@ -153,20 +160,21 @@ export default {
     },
     methods: {
         //点击删除
-        roleDelete(index, row) {
-            let id = row.id
-            this.$confirm("此操作将永久删除该条角色, 是否继续?", "提示", {
+        siteDelete(index, row) {
+            let mn = row.mn
+            this.$confirm("此操作将删除该基站, 是否继续?", "提示", {
                 confirmButtonText: "确定",
                 cancelButtonText: "取消",
                 type: "warning"
             })
                 .then(() => {
-                    this.delete(id).then(res=>{
+                    this.delete(mn).then(res=>{
                         if(res =='success'){
                             this.$message({
                                 type: "success",
                                 message: "删除成功!"
                             });
+                            this.$emit('delSuccess',true)
                         }
                     })
                    
@@ -178,9 +186,9 @@ export default {
                     });
                 });
         },
-        delete(roleId){
+        delete(mn){
             return new Promise((resolve,reject)=>{
-                this.$api.user.deleteUseritem(roleId).then(res=>{           
+                this.$api.site.deleteSite(mn).then(res=>{           
                     if(res.data.code == 0){
                         resolve('success')
                     }

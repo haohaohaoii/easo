@@ -27,7 +27,11 @@
                 </div>
             </div>
         </div>
-        <message-list :messageArr="messageL" @delSuccess="delT">
+        <message-list
+            v-if="messageL && messageL.length>0"
+            :messageArr="messageL"
+            @delSuccess="delT"
+        >
             <div class="tabPage">
                 <el-pagination
                     background
@@ -39,46 +43,68 @@
                 ></el-pagination>
             </div>
         </message-list>
+        <no-data v-else></no-data>
     </div>
 </template>
 
 <script>
+import noData from './noData';
 import messageList from "./messageList"
 import { mapMutations } from "vuex";
 export default {
      components: {
-        messageList
+        messageList,
+        noData
     },
     data() {
-       return{
-           startTime:'',  //选中的开始时间value
-           endTime:'',  //选中的结束时间value
-           totalLength: 0, //总共多少条数据
+        return{
+            startTime:'',  //选中的开始时间value
+            endTime:'',  //选中的结束时间value
+            totalLength: 0, //总共多少条数据
             currentPage: 1, //初始页码
             pagesize: 10, //一页多少条数据
             messageL: [], //所有留言的数组
-       }
+            state:''   //留言状态
+        }
     },
     mounted(){
-        this.getNowTime();
-        this.getCurrentMonthFirst();
-        let pageNum = this.currentPage;
-        this.getUserlist(pageNum);
+        this.fromWitch()
     },
     methods: {
-            //点击查询
-            delT(val){
-                if(val){
-                    let pageNum = this.currentPage;
-                    this.getUserlist(pageNum);
-                }
-            },
-            cx(){
-                this.currentPage = 1;
+        //从哪进入到这个页面的
+        fromWitch(){
+            if(this.$route.query.state == '0'){  //首页超标消息
+                this.state = 0
                 let pageNum = this.currentPage;
                 this.getUserlist(pageNum);
-            },
-          getNowTime() {
+            }else if(this.$route.query.state == '1'){ //首页异常消息
+                this.state = 1
+                let pageNum = this.currentPage;
+                this.getUserlist(pageNum);
+            }else if(this.$route.query.state == '2'){  //首页预警消息
+                this.state = 2
+                let pageNum = this.currentPage;
+                this.getUserlist(pageNum);
+            }else{    
+                this.getNowTime();
+                this.getCurrentMonthFirst();
+                let pageNum = this.currentPage;
+                this.getUserlist(pageNum);
+            }
+        },
+        //点击查询
+        delT(val){
+            if(val){
+                let pageNum = this.currentPage;
+                this.getUserlist(pageNum);
+            }
+        },
+        cx(){
+            this.currentPage = 1;
+            let pageNum = this.currentPage;
+            this.getUserlist(pageNum);
+        },
+        getNowTime() {
             let now = new Date();
             let year = now.getFullYear(); //得到年份
             let month = now.getMonth(); //得到月份
@@ -108,7 +134,7 @@ export default {
         },
         //获取留言列表数据
         getUserlist(pageNum){
-            if (this.startTime != "" && this.endTime != "") {
+       
                 let startTime = this.startTime;
                 let endTime = this.endTime;
                 let pageSize = this.pagesize;
@@ -118,7 +144,8 @@ export default {
                             pageNum: pageNum,
                             pageSize: pageSize,
                             start: startTime,
-                            end: endTime
+                            end: endTime,
+                            state:this.state
                         }
                     })
                     .then(res => {
@@ -135,9 +162,7 @@ export default {
                         }
                     })
                     .catch(error => {});
-            } else {
-                this.$message.error("注意：开始时间和结束时间为必选项");
-            }
+            
         },
         search(){  //点击查询
 

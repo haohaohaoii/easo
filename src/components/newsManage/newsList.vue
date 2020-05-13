@@ -1,5 +1,6 @@
 <template>
     <div class="userList" v-if="tableData && tableData.length>0">
+        <news-detail></news-detail>
         <div class="tabE">
             <el-table
                 :height="tableHeight"
@@ -29,8 +30,9 @@
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="createTime" label="发布时间" width="160px"></el-table-column>
-                <el-table-column label="操作" align="center" width="180px">
+                <el-table-column label="操作" align="center" min-width="100px">
                     <template slot-scope="scope">
+                        <el-button size="mini" @click="detail(scope.$index, scope.row)">详情</el-button>
                         <el-button
                             size="mini"
                             type="primary"
@@ -54,6 +56,7 @@
 </template>
 
 <script>
+import newsDetail from './newsDetail'
 import { mapMutations } from "vuex";
 import noData from "../common/noData"
 export default {
@@ -66,7 +69,8 @@ export default {
         }
     },
     components:{
-        noData
+        noData,
+        newsDetail
     },
     data() {
         return {
@@ -109,6 +113,12 @@ export default {
         }
     },
     methods: {
+        //点击查看详情
+        detail(index,row){
+            console.log(index, row);
+            let newsId = row.id;
+            this.$store.dispatch("getNewsDetail", newsId);
+        },
         //点击编辑--跳转编辑dialog
         handleEdit(index, row) {
             console.log(index, row);

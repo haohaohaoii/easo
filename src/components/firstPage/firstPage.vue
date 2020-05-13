@@ -46,38 +46,44 @@
         </div>
         <div class="contentRight">
             <div class="rigSpam">
-                <el-card class="box-card">
+                <el-card class="box-card" shadow="hover">
                     <div slot="header" class="titRU">
                         <img src="../../assets/images/lyxxicon.png" alt />
                         <p>留言消息</p>
                     </div>
                     <div class="contentR">
                         <div class="itemR">
-                            <div class="itemRi">
+                            <div class="itemRi" @click="lyAll">
                                 <p class="t">全部留言</p>
                                 <p class="nu">{{qbly}}</p>
+                                <p class="det">点击查看</p>
                             </div>
-                            <div class="itemRi">
+                            <div class="itemRi" @click="lyhf">
                                 <p class="t">最新回复</p>
                                 <p class="nu">{{zxhf}}</p>
+                                <p class="det">点击查看</p>
                             </div>
-                            <div class="itemRi">
+                            <div class="itemRi" @click="lywd">
                                 <p class="t">未读留言</p>
                                 <p class="nu">{{wdly}}</p>
+                                <p class="det">点击查看</p>
                             </div>
                         </div>
                         <div class="itemR">
-                            <div class="itemRi">
+                            <div class="itemRi" @click="cbxx">
                                 <p class="t">超标消息</p>
                                 <p class="nu">{{cbxc}}</p>
+                                <p class="det">点击查看</p>
                             </div>
-                            <div class="itemRi">
+                            <div class="itemRi" @click="ycxx">
                                 <p class="t">异常消息</p>
                                 <p class="nu">{{ycxc}}</p>
+                                <p class="det">点击查看</p>
                             </div>
-                            <div class="itemRi">
+                            <div class="itemRi" @click="xxyj">
                                 <p class="t">预警消息</p>
                                 <p class="nu">{{yjxx}}</p>
+                                <p class="det">点击查看</p>
                             </div>
                         </div>
                     </div>
@@ -94,6 +100,7 @@
                         </p>
 
                         <span style="color:rgba(109,153,249,1)">{{zxzd}}个</span>
+                        <span class="ck" @click="zxck">点击查看</span>
                     </div>
                     <div class="smItem">
                         <p>
@@ -101,6 +108,7 @@
                             离线
                         </p>
                         <span style="color:rgba(109,153,249,1);">{{lxzd}}个</span>
+                        <span class="ck" @click="lxck">点击查看</span>
                     </div>
                 </div>
             </div>
@@ -175,6 +183,38 @@ export default {
                     type: "success"
                 });
             }
+        },
+        //点击查看全部留言
+        lyAll(){
+            this.$router.push('/spam')
+        },
+        //点击查看留言已回复
+        lyhf(){
+            this.$router.push({path:'/spam',query:{state:'2'}})
+        },
+        //点击查看未读的留言
+        lywd(){
+            this.$router.push({path:'/spam',query:{state:'0'}})
+        },
+        //查看超标消息
+        cbxx(){
+            this.$router.push({path:'/message',query:{state:'0'}})
+        },
+        //查看异常消息
+        ycxx(){
+            this.$router.push({path:'/message',query:{state:'1'}})
+        },
+        //查看预警消息
+        xxyj(){
+            this.$router.push({path:'/message',query:{state:'2'}})
+        },
+        //查看在线站点
+        zxck(){
+            this.$router.push({path:'/baseManage',query:{state:'1'}})
+        },
+        //查看离线站点
+        lxck(){
+            this.$router.push({path:'/baseManage',query:{state:'2'}})
         },
         //首页接口
         sendAxios(){
@@ -333,7 +373,7 @@ export default {
 // .sT {
 //     width: 145px !important;
 // }
-.firstPage >>> .el-date-editor.el-input,
+.active .firstPage >>> .el-date-editor.el-input,
 .el-date-editor.el-input__inner {
     width: 180px;
 }
@@ -438,6 +478,11 @@ export default {
                                 color: rgba(51, 51, 51, 1);
                                 opacity: 0.8;
                             }
+                            .det {
+                                color: rgba(109, 153, 249, 1);
+
+                                font-size: 14px;
+                            }
                         }
                     }
                 }
@@ -452,10 +497,12 @@ export default {
             margin-top: 15px;
             .sm {
                 height: 35px;
+                width: 90%;
+                margin: 0 auto;
                 display: flex;
-                justify-content: space-around;
+                justify-content: space-between;
                 .smItem {
-                    width: 150px;
+                    width: 200px;
                     display: flex;
                     justify-content: space-around;
                     align-items: center;
@@ -463,6 +510,10 @@ export default {
                         display: flex;
                         width: 70px;
                         justify-content: space-around;
+                    }
+                    .ck {
+                        color: rgba(109, 153, 249, 1);
+                        font-size: 14px;
                     }
                 }
             }

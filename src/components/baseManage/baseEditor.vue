@@ -256,6 +256,46 @@
                     </el-form-item>
                 </el-col>
             </el-form-item>
+            <!--ph-->
+            <el-form-item>
+                <el-col slot="label">
+                    <el-form-item prop="phIsC">
+                        <el-checkbox v-model="form.phIsC" @change="changeph">P&nbsp;&nbsp;H</el-checkbox>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                    <el-form-item prop="phType">
+                        <el-select
+                            v-model="form.phTypes"
+                            :disabled="!form.phIsC"
+                            @focus="getypes"
+                            placeholder="设备型号"
+                            filterable
+                        >
+                            <el-option
+                                v-for="item in types"
+                                :key="item.value"
+                                :label="item.name"
+                                :value="item.value"
+                            ></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="16" :offset="2">
+                    <el-form-item prop="phDesc">
+                        <el-date-picker
+                            :disabled="!form.phIsC"
+                            format="yyyy-MM-dd HH:mm:ss"
+                            value-format="yyyy-MM-dd HH:mm:ss"
+                            size="small"
+                            type="datetime"
+                            v-model="form.phDesc"
+                            placeholder="安装时间"
+                            time-arrow-control
+                        ></el-date-picker>
+                    </el-form-item>
+                </el-col>
+            </el-form-item>
         </el-form>
         <div slot="footer" class="footer">
             <el-button type="primary" size="mini" @click="addBase">保存</el-button>
@@ -309,7 +349,11 @@ export default {
 
                 llIsC:false, //流量是否选中
                 llTypes:'',//流量类型
-                llDesc:'' //流量详情
+                llDesc:'', //流量详情
+
+                phIsC:false, //ph是否选中
+                phTypes:'',//ph类型
+                phDesc:'' //ph详情
             },
              rules: {
                 siteName: [
@@ -410,6 +454,12 @@ export default {
                 this.form.llDesc=''
             }
         },
+        changeph(val){  //当复选框为false时
+            if(!val){
+                this.form.phTypes='',
+                this.form.phDesc=''
+            }
+        },
         //获取设备类型
         getypes(){
             this.$api.site.getTypes().then(res=>{
@@ -435,17 +485,13 @@ export default {
             let mn = this.form.mn  //mn号
             let factors = this.form.factors
             if(siteName && this.stateType && mn){
-            
-                if((this.form.codIsC&&this.form.codTypes &&this.form.codDesc) || 
-                (this.form.zlIsC &&this.form.zlTypes &&this.form.zlDesc) || 
-                (this.form.anIsC &&　this.form.anTypes && this.form.anDesc) || 
-                (this.form.zdIsC && this.form.zdTypes && this.form.zdDesc) || 
-                (this.form.llIsC && this.form.llTypes && this.form.llDesc)){
+                    let flag = false
                     let factorCode = ''
                     let actionType = ''
                     let actionDesc = ''
                     let arr=[]
-                    if(this.form.codIsC){  //选中的是cod
+                    if(this.form.codIsC&&this.form.codTypes &&this.form.codDesc){  //选中的是cod
+                        flag = true
                         let obj={
                             factorCode:'011',
                             deviceType:this.form.codTypes,
@@ -453,7 +499,8 @@ export default {
                         }
                         arr.push(obj)
                     }
-                    if(this.form.anIsC){  //选中的是氨氮
+                    if(this.form.anIsC &&　this.form.anTypes && this.form.anDesc){  //选中的是氨氮
+                        flag = true
                         let obj = {
                             factorCode:'060',
                             deviceType:this.form.anTypes,
@@ -461,7 +508,8 @@ export default {
                         }
                         arr.push(obj)
                     }
-                    if(this.form.zlIsC){  //选中的是总磷
+                    if(this.form.zlIsC &&this.form.zlTypes &&this.form.zlDesc){  //选中的是总磷
+                        flag = true
                         let obj = {
                             factorCode:'101',
                             deviceType:this.form.zlTypes,
@@ -469,7 +517,8 @@ export default {
                         }
                         arr.push(obj)
                     }
-                    if(this.form.zdIsC){  //选中的是总氮
+                    if(this.form.zdIsC && this.form.zdTypes && this.form.zdDesc){  //选中的是总氮
+                        flag = true
                         let obj = {
                             factorCode:'065',
                             deviceType:this.form.zdTypes,
@@ -477,7 +526,8 @@ export default {
                         }
                         arr.push(obj)
                     }
-                    if(this.form.llIsC){  //选中的是流量
+                    if(this.form.llIsC && this.form.llTypes && this.form.llDesc){  //选中的是流量
+                        flag = true
                         let obj = {
                             factorCode:'B01',
                             deviceType:this.form.llTypes,
@@ -485,29 +535,43 @@ export default {
                         }
                         arr.push(obj)
                     }
-                    let params={
-                        siteName:siteName,
-                        ioType:ioType,
-                        mn:mn,
-                        siteDevices:arr,
-                        erpId:erpId,
-                        siteState:siteState
-                    }
-                    let _this = this
-                    this.$axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-                    this.$axios.put(`${base.localUrl}/admin/site/${mn}`,params,{
-                        'Content-Type':'application/json'
-                    }).then(res=>{
-                      
-                        if(res.data.code == 0){
-                            _this.$message({
-                                message: '基站编辑成功',
-                                type: 'success'
-                            });
-                            _this.$emit('ediSuccess',true)
-                            _this.clearForm()
+                    if(this.form.phIsC && this.form.phTypes && this.form.phDesc){  //选中的是ph
+                        flag = true
+                        let obj = {
+                            factorCode:'001',
+                            deviceType:this.form.phTypes,
+                            createTime:this.form.phDesc
                         }
-                    })
+                        arr.push(obj)
+                    }
+                    if(flag){
+                        let params={
+                            siteName:siteName,
+                            ioType:ioType,
+                            mn:mn,
+                            siteDevices:arr,
+                            erpId:erpId,
+                            siteState:siteState
+                        }
+                        let _this = this
+                        this.$axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+                        this.$axios.put(`${base.localUrl}/admin/site/${mn}`,params,{
+                            'Content-Type':'application/json'
+                        }).then(res=>{
+                        
+                            if(res.data.code == 0){
+                                _this.$message({
+                                    message: '基站编辑成功',
+                                    type: 'success'
+                                });
+                                _this.$emit('ediSuccess',true)
+                                _this.clearForm()
+                            }
+                        })
+                    }else{
+                        this.$message.error("请选择因子、并填写设备型号和安装时间!");
+                    }
+                    
                   
                     // this.$api.site.changeSitedetail(params,mn).then(res=>{
                     //     if(res.data.code == 0){
@@ -521,9 +585,7 @@ export default {
                     // }).catch(error=>{
 
                     // })
-                }else{
-                    this.$message.error("请选择因子、并填写设备型号和安装时间!");
-                }
+
             }else{
                 this.$message({
                     type: "warning",
@@ -540,19 +602,22 @@ export default {
             this.form.anIsC = false
             this.form.zlIsC = false
             this.form.zdIsC=false
-            this.form.llIsC=false
+            this.form.llIsC=false 
+            this.form.phIsC=false
 
             this.form.codDesc=''
             this.form.anDesc = ''
             this.form.zlDesc = ''
             this.form.zdDesc=''
             this.form.llDesc=''
+            this.form.phDesc=''
 
             this.form.codTypes=''
             this.form.anTypes=''
             this.form.zlTypes=''
             this.form.zdTypes=''
             this.form.llTypes=''
+            this.form.phTypes=''
             this.$store.commit("baseEditor", false); //关闭dialog
         },
         //取消
@@ -607,6 +672,11 @@ export default {
                             this.form.llIsC=true
                             this.form.llTypes=siteDevices[j].deviceType
                             this.form.llDesc=siteDevices[j].createTime
+                        }
+                        if(siteDevices[j].factorCode == '001'){  //ph
+                            this.form.phIsC=true
+                            this.form.phTypes=siteDevices[j].deviceType
+                            this.form.phDesc=siteDevices[j].createTime
                         }
                     }
                 }

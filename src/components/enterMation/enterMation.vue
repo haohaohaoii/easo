@@ -18,7 +18,11 @@
                 >添加企业</el-button>
             </div>
         </div>
-        <enter-list :companyList="companyArr" v-if="companyArr &&　companyArr.length>0">
+        <enter-list
+            :companyList="companyArr"
+            v-if="companyArr &&　companyArr.length>0"
+            @delSuccess="delS"
+        >
             <div class="tabPage">
                 <el-pagination
                     background
@@ -73,6 +77,13 @@ export default {
         },
         //编辑成功
         ediT(val){
+            if(val){
+                let pageNum = this.currentPage;
+                this.getUserlist(pageNum)
+            } 
+        },
+        //删除成功重新请求数据
+        delS(val){
             if(val){
                 let pageNum = this.currentPage;
                 this.getUserlist(pageNum)

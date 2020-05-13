@@ -23,33 +23,37 @@
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="turnTime" min-width="160px" label="注册时间"></el-table-column>
-                <el-table-column label="操作" align="center" width="300" fixed="right">
+                <el-table-column label="操作" align="center" width="360" fixed="right">
                     <template slot-scope="scope">
                         <el-button
                             size="mini"
-                            @click="base(scope.$index, scope.row)"
-                            style="background: rgba(54,182,243,1);color: white;"
-                            v-has="'基站'"
-                        >基站</el-button>
-                        <el-button
-                            size="mini"
                             @click="audit(scope.$index, scope.row)"
-                            v-if="scope.row.userSection==0"
-                            type="danger"
+                            :disabled="!scope.row.userSection==0"
+                            type="info"
                             v-has="'审核'"
                         >审核</el-button>
                         <el-button
                             size="mini"
+                            @click="handleDetail(scope.$index, scope.row)"
+                            v-has="'详情'"
+                        >详情</el-button>
+                        <el-button
+                            size="mini"
+                            @click="base(scope.$index, scope.row)"
                             type="primary"
+                            v-has="'基站'"
+                        >基站</el-button>
+                        <el-button
+                            size="mini"
+                            type="warning"
                             @click="handleEdit(scope.$index, scope.row)"
                             v-has="'编辑'"
                         >编辑</el-button>
                         <el-button
                             size="mini"
-                            type="warning"
-                            @click="handleDetail(scope.$index, scope.row)"
-                            v-has="'详情'"
-                        >详情</el-button>
+                            type="danger"
+                            @click="deleteEnter(scope.$index, scope.row)"
+                        >删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -122,6 +126,44 @@ export default {
           
             let erpId = row.id;
             this.$store.dispatch("getEnteritem", erpId);
+        },
+        //删除企业信息
+        deleteEnter(index,row){
+            let erpId = row.id
+            this.$confirm("此操作将删除该基站, 是否继续?", "提示", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning"
+            })
+                .then(() => {
+                    this.delete(erpId).then(res=>{
+                        if(res =='success'){
+                            this.$message({
+                                type: "success",
+                                message: "删除成功!"
+                            });
+                            this.$emit('delSuccess',true)
+                        }
+                    })
+                   
+                })
+                .catch(() => {
+                    this.$message({
+                        type: "info",
+                        message: "已取消删除"
+                    });
+                });
+        },
+        delete(erpId){
+            return new Promise((resolve,reject)=>{
+                this.$api.company.deleteCompany(erpId).then(res=>{           
+                    if(res.data.code == 0){
+                        resolve('success')
+                    }
+                }).catch(error=>{
+                    reject(error)
+                })
+            })
         },
         
         //跳转基站

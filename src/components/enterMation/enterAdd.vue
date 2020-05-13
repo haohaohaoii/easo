@@ -192,9 +192,9 @@ export default {
                 upload: [
                     {required:true, validator: valiIcon, trigger: 'change' } 
                 ],
-                upload2: [
-                    {required:true, validator: valiIcon2, trigger: 'change' } 
-                ]
+                // upload2: [
+                //     {required:true, validator: valiIcon2, trigger: 'change' } 
+                // ]
             }
         };
     },

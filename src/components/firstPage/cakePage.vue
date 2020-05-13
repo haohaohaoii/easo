@@ -142,6 +142,6 @@ export default {
 
 <style lang="scss" scoped>
 .tabE {
-    height: 100%;
+    height: 85%;
 }
 </style>
