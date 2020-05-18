@@ -23,7 +23,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="MN:" prop="mn">
-                <el-input v-model="form.mn" :readonly="true"></el-input>
+                <el-input v-model="form.mn"></el-input>
             </el-form-item>
             <el-form-item label="企业选择" prop="erpId" v-if="isFromcom">
                 <el-select v-model="form.erpId" clearable>
@@ -567,6 +567,8 @@ export default {
                                 _this.$emit('ediSuccess',true)
                                 _this.clearForm()
                             }
+                        }).catch(error=>{
+                            debugger
                         })
                     }else{
                         this.$message.error("请选择因子、并填写设备型号和安装时间!");
