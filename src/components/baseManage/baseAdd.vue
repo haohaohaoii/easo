@@ -517,7 +517,7 @@ export default {
                     let actionType = ''
                     let actionDesc = ''
                     let arr=[]
-                    if(this.form.codIsC&&this.form.codTypes &&this.form.codDesc){  //选中的是cod
+                    if(this.form.codIsC &&this.form.codDesc){  //选中的是cod
                         flag = true
                         let obj={
                             factorCode:'011',
@@ -526,7 +526,7 @@ export default {
                         }
                         arr.push(obj)
                     }
-                    if(this.form.anIsC &&　this.form.anTypes && this.form.anDesc){  //选中的是氨氮
+                    if(this.form.anIsC  && this.form.anDesc){  //选中的是氨氮
                         flag = true
                         let obj = {
                             factorCode:'060',
@@ -535,7 +535,7 @@ export default {
                         }
                         arr.push(obj)
                     }
-                    if(this.form.zlIsC &&this.form.zlTypes &&this.form.zlDesc){  //选中的是总磷
+                    if(this.form.zlIsC  &&this.form.zlDesc){  //选中的是总磷
                         flag = true
                         let obj = {
                             factorCode:'101',
@@ -544,7 +544,7 @@ export default {
                         }
                         arr.push(obj)
                     }
-                    if(this.form.zdIsC && this.form.zdTypes && this.form.zdDesc){  //选中的是总氮
+                    if(this.form.zdIsC  && this.form.zdDesc){  //选中的是总氮
                         flag = true
                         let obj = {
                             factorCode:'065',
@@ -553,7 +553,7 @@ export default {
                         }
                         arr.push(obj)
                     }
-                    if(this.form.llIsC && this.form.llTypes && this.form.llDesc){  //选中的是流量
+                    if(this.form.llIsC && this.form.llDesc){  //选中的是流量
                         flag = true
                         let obj = {
                             factorCode:'B01',
@@ -562,7 +562,7 @@ export default {
                         }
                         arr.push(obj)
                     }
-                    if(this.form.phIsC && this.form.phTypes && this.form.phDesc){  //选中的是ph
+                    if(this.form.phIsC  && this.form.phDesc){  //选中的是ph
                         flag = true
                         let obj = {
                             factorCode:'001',

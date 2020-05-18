@@ -101,7 +101,7 @@ export default {
                 for(let k=0; k<val.siteD.length; k++){
                     let obj = {
                         date:val.siteD[k].factorName,
-                        name:val.siteD[k].deviceType+'\xa0\xa0\xa0\xa0\xa0\xa0\xa0'+'安装时间:'+val.siteD[k].createTime
+                        name:'设备型号：'+val.siteD[k].deviceType+'\xa0\xa0\xa0\xa0\xa0\xa0\xa0'+'安装时间:'+val.siteD[k].createTime
                     }
                     this.tableData.push(obj)
                 }
