@@ -103,7 +103,14 @@
                 <el-table-column align="center" prop="email" min-width="165px" label="邮箱"></el-table-column>
                 <el-table-column align="center" prop="userName" min-width="100px" label="用户名"></el-table-column>
                 <el-table-column align="center" prop="ywbm" label="运维部门" min-width="100px"></el-table-column>
-                <el-table-column align="center" prop="ywzd" min-width="200px" label="运维站点"></el-table-column>
+                <el-table-column align="center" prop="ywzd" min-width="200px" label="运维站点">
+                    <template slot-scope="scope">
+                        <el-popover placement="top-start" title width="200" trigger="hover">
+                            <p>{{scope.row.ywzd}}</p>
+                            <p slot="reference">{{scope.row.ywzd.split(', ').slice(0,1).join(',')}}</p>
+                        </el-popover>
+                    </template>
+                </el-table-column>
                 <el-table-column align="center" prop="createTime" min-width="160px" label="添加时间"></el-table-column>
 
                 <el-table-column label="操作" align="center" width="220" fixed="right">
@@ -411,7 +418,7 @@ export default {
                                         if(i==0){
                                             name+=siteList[i].siteName
                                         }else{
-                                            name+=','+siteList[i].siteName
+                                            name+=', '+siteList[i].siteName
                                         }
                                     }
                                 }

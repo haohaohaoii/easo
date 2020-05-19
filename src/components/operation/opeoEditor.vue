@@ -120,7 +120,7 @@
                     <span
                         v-for="(item,index) of sitCheckName"
                         :key="index"
-                        style="width: 33.3%;display: inline-block;"
+                        style="padding-left:15px;display: inline-block;"
                     >{{item}}</span>
                 </el-form-item>
             </el-form>
@@ -278,7 +278,7 @@ export default {
         },
         getSiteName(types,List){
             return new Promise(resolve=>{
-          
+
                 let arrName = []
                 for(let k=0; k<types.length; k++){
                     for(let j=0;j<List.length; j++){
@@ -298,6 +298,7 @@ export default {
         closeDialog() {
             this.sitCheckName=[]
             this.sitCheckMN=[]
+
             this.$refs.ruleForm.resetFields();  //重置from和rules
             this.$emit('changeEdiDialog',false)
         },
@@ -345,6 +346,7 @@ export default {
         },
         //点击编辑弹出内层dialog 并获取到所有站点
         edi(){
+ 
             this.$api.site.getAlls().then(res=>{
               
                 if(res.data.code == 0){
@@ -358,8 +360,9 @@ export default {
                         list.push(obj)
                     }
                     this.siteList = []
-               
+
                     this.siteList = list
+            
                     this.innerVisible = true
                 }
             })
@@ -370,7 +373,8 @@ export default {
             this.addShow = val
         },
         item(val){
-
+            this.sitCheckName = []
+            this.form.type = []
             this.getDepPro().then(res=>{
                 if(res &&　res.length>0){
                     for(let i=0; i<res.length; i++){
