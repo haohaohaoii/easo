@@ -90,7 +90,7 @@ export default ({
     // },
     //获取搜索时间区间[yyyy-MM-dd HH:00:00 ...... yyyy-MM-dd HH:00:00]
     getWDLY(state, num) {
-        debugger
+
         if (num === 0) {
             num = null
         }

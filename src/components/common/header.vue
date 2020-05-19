@@ -88,7 +88,7 @@
                 @mouseleave="cusLeave"
                 :style="cusObj"
             ></i>-->
-            <el-badge :value="wdly" class="item">
+            <el-badge :value="wdly?null:wdly" class="item">
                 <i
                     class="el-icon-message-solid ic"
                     @mouseenter="msgEnter"
