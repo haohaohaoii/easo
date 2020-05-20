@@ -102,7 +102,7 @@ export default {
                         erpName: this.companyList[i].erpName, //企业名称
                         erpLinkMan: this.companyList[i].erpLinkMan, //联系人
                         erpLinkTel: this.companyList[i].erpLinkTel, //联系电话
-                        erpAddr: this.companyList[i].erpAddr, //企业地址
+                        erpAddr: this.companyList[i].province +this.companyList[i].city +this.companyList[i].county+ this.companyList[i].erpAddr, //企业地址
                         userSection: this.companyList[i].auditState, //审核状态
                         turnTime: this.companyList[i].createTime, //更新时间
                         id: this.companyList[i].id //企业id

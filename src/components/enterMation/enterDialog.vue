@@ -116,7 +116,7 @@ export default {
         comDetail(val){
            
             this.tableData[0].name = val.erpName;
-            this.tableData[1].name = val.erpAddr;
+            this.tableData[1].name = val.province+val.city+val.county+ val.erpAddr;
             this.tableData[2].name = val.erpLinkMan;
             this.tableData[3].name = val.erpLinkTel;
             this.tableData[4].name = val.erpMail;

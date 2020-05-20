@@ -2,7 +2,7 @@
 
 let filterRoutes = {
     //根据角色不同，得到不同的路由表
-    filters(asyncRoutes = [], menuTree= []) {
+    filters(asyncRoutes = [], menuTree = []) {
         return new Promise(function (resolve) {
             debugger
             let res = []
@@ -12,7 +12,7 @@ let filterRoutes = {
                     for (let j = 0; j < menuTree[i].two.length; j++) {
                         childrenName.push(menuTree[i].two[j])
                     }
-                }else{
+                } else {
                     childrenName.push(menuTree[i].one)
                 }
             }
@@ -29,7 +29,7 @@ let filterRoutes = {
         })
     },
     //根据角色不同，得到不同的菜单表
-    getMenus(asyncRoutes,menuTree){
+    getMenus(asyncRoutes, menuTree) {
         return new Promise(function (resolve) {
             debugger
             // let menuT = menuTree;
@@ -54,18 +54,18 @@ let filterRoutes = {
                     }
                 })
             })
-            for(let i=0; i<asyncRoutes.length; i++){
+            for (let i = 0; i < asyncRoutes.length; i++) {
                 // debugger
-                for(let k=0; k<menuTree.length;k++){
-                    if(menuTree[k].two && menuTree[k].two.length>=1){   //说明有二级菜单
-                        for(let j=0; j<menuTree[k].two.length; j++){
+                for (let k = 0; k < menuTree.length; k++) {
+                    if (menuTree[k].two && menuTree[k].two.length >= 1) {   //说明有二级菜单
+                        for (let j = 0; j < menuTree[k].two.length; j++) {
                             // debugger
-                            if(asyncRoutes[i].name == menuTree[k].two[j].menuName){
+                            if (asyncRoutes[i].name == menuTree[k].two[j].menuName) {
                                 menuTree[k].two[j].path = asyncRoutes[i].path;
                             }
                         }
-                    }else{
-                        if(asyncRoutes[i].name == menuTree[k].one.menuName){ //说明是一级菜单
+                    } else {
+                        if (asyncRoutes[i].name == menuTree[k].one.menuName) { //说明是一级菜单
                             menuTree[k].one.path = asyncRoutes[i].path;
                         }
                     }

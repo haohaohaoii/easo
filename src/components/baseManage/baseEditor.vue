@@ -654,14 +654,16 @@ export default {
                             this.form.codDesc=siteDevices[j].createTime //cod详情
                         } 
                         if(siteDevices[j].factorCode == '101'){  //氨氮
-                            this.form.anIsC=true
-                            this.form.anTypes=siteDevices[j].deviceType
-                            this.form.anDesc=siteDevices[j].createTime 
-                        }
-                        if(siteDevices[j].factorCode == '060'){  //总磷
+                         
                             this.form.zlIsC=true
                             this.form.zlTypes=siteDevices[j].deviceType
                             this.form.zlDesc=siteDevices[j].createTime
+                        }
+                        if(siteDevices[j].factorCode == '060'){  //总磷
+                               this.form.anIsC=true
+                            this.form.anTypes=siteDevices[j].deviceType
+                            this.form.anDesc=siteDevices[j].createTime 
+
                         }
                         if(siteDevices[j].factorCode == '065'){  //总氮
                             this.form.zdIsC=true

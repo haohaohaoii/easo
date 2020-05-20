@@ -111,9 +111,9 @@
                 :header-cell-style="iHeaderCellStyle"
                 class="tab"
             >
-                <el-table-column align="center" prop="tractNum" width="160px" label="合同编号"></el-table-column>
-                <el-table-column align="center" prop="tractName" label="合同名称"></el-table-column>
-                <el-table-column align="center" prop="priseName" width="200px" label="企业名称"></el-table-column>
+                <el-table-column align="center" prop="tractNum" width="200px" label="合同编号"></el-table-column>
+                <el-table-column align="center" prop="tractName" min-width="260px" label="合同名称"></el-table-column>
+                <el-table-column align="center" prop="priseName" min-width="220px" label="企业名称"></el-table-column>
                 <el-table-column align="center" prop="operations" width="100px" label="运维部门"></el-table-column>
                 <el-table-column align="center" prop="startTime" width="180px" label="开始日期"></el-table-column>
                 <el-table-column align="center" prop="endTime" width="180px" label="截止日期"></el-table-column>
@@ -274,6 +274,7 @@ export default {
         },
         //关闭编辑弹窗
         changeEdi(val){
+
             this.ediPeodilaog = val
         },
         //添加运维合同成功后，再次请求

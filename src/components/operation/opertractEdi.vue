@@ -225,6 +225,7 @@
             </el-form-item>
             <el-form-item prop="inputVal" label="合同文件">
                 <el-upload
+                    multiple
                     ref="pic"
                     action="#"
                     :on-change="getFile"
@@ -747,7 +748,7 @@ export default {
                 let params={
                     province:this.pCode2,
                     city:this.cCode2,
-                    county:this.aCode2,
+                    county:this.aCode2
                 }
                 this.$api.company.companyThird({params}).then(depList=>{
                     if(depList.data.code == 0){
@@ -770,13 +771,15 @@ export default {
         //关闭外层dialog
         closeDialog() {
             this.$refs.ruleForm.resetFields();  //重置from和rules
+            this.imageUrl= [], 
+            this.imageUrl2=[],
             this.$emit('changeEdiDialog',false)
         },
         //确定编辑  --关闭dialog
         sureEditor() {
             let _this =this
             this.$refs["ruleForm"].validate(valid => { 
-          
+                
                 if (valid) {
                     let urlArr = this.allPicnum;
                     let id = this.id
@@ -1059,6 +1062,7 @@ export default {
             this.addShow = val
         },
         item(val){     
+ 
             this.id =val.id
             this.pCode = val.mtDept.provinceId   //部门下的省code
             this.cCode = val.mtDept.cityId  //部门下城市code
@@ -1162,6 +1166,7 @@ export default {
             })
             //企业省市县
             this.ediGetPro2().then(pList=>{
+                
                 if(pList && pList.length>0){
                     for(let i=0; i<pList.length; i++){
                         console.log(i)

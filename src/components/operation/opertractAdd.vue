@@ -225,6 +225,7 @@
             </el-form-item>
             <el-form-item prop="inputVal" label="合同文件">
                 <el-upload
+                    multiple
                     ref="pic"
                     action="#"
                     :on-change="getFile"
@@ -762,6 +763,7 @@ export default {
         //关闭外层dialog
         closeDialog() {
             this.$refs.ruleForm.resetFields();  //重置from和rules
+            this.imageUrl = []
             this.$emit('changeAddDialog',false)
         },
         //确定编辑  --关闭dialog
@@ -769,6 +771,7 @@ export default {
             let _this =this
             this.$refs["ruleForm"].validate(valid => { 
                 if (valid) {
+                    
                     let params={
                         mtDeptId:_this.ruleForm.depCode, //运维部门
                         contractCode:_this.ruleForm.contractN,  //合同编码

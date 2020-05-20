@@ -31,7 +31,63 @@
                     ></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="企业地址:" prop="firmAddress">
+            <el-form-item label="选择地址:" required>
+                <el-col :span="8">
+                    <el-form-item prop="provinceCode" class="it">
+                        <el-select
+                            v-model="ruleForm.provinceCode"
+                            @change="changeProvince"
+                            @focus="getProvinces"
+                            placeholder="省份"
+                            filterable
+                        >
+                            <el-option
+                                v-for="item in provinceList"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.id"
+                            ></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item prop="cityCode" class="it">
+                        <el-select
+                            v-model="ruleForm.cityCode"
+                            @focus="getCities"
+                            @change="changeCity"
+                            placeholder="城市"
+                            filterable
+                        >
+                            <el-option
+                                v-for="item in cityList"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.id"
+                            ></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item prop="areaCode" class="it">
+                        <el-select
+                            v-model="ruleForm.areaCode"
+                            @change="changeArea"
+                            @focus="getAreas"
+                            placeholder="区/县"
+                            filterable
+                        >
+                            <el-option
+                                v-for="item in areaList"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.id"
+                            ></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+            </el-form-item>
+            <el-form-item label="企业地址:">
                 <el-input v-model="ruleForm.firmAddress"></el-input>
             </el-form-item>
             <el-form-item label="联系人:" prop="linkman">
@@ -110,6 +166,14 @@ export default {
             }
         };
         return {
+            pCode:'', //省份code，提交用
+            cCode:'', //城市code,提交用
+            aCode:'', //区域code,提交用
+
+            provinceList:[],  //省数组
+            cityList:[], //城市数据
+            areaList:[], //区县数组
+
             auditState:'',
             id: "",
             dialogImageUrl: '',
@@ -120,6 +184,10 @@ export default {
             localUrl2: [],
             types: [], //企业类型
             ruleForm: {
+                provinceCode:'',
+                cityCode:'', //选中的市
+                areaCode:'', //选中的区县
+                depCode:'', //选中的运维部门
                 firmName: "", //企业名称
                 firmAddress: "", //企业地址
                 linkman: "", //联系人
@@ -128,6 +196,30 @@ export default {
                 mail: "" //邮箱
             },
             rules: {
+                provinceCode:[
+                    {   
+                  
+                        required: true,
+                        message: "请选择省份",
+                        trigger: "change"
+                    }
+                ],
+                cityCode:[
+                    {   
+                 
+                        required: true,
+                        message: "请选择城市",
+                        trigger: "change"
+                    }
+                ],
+                areaCode:[
+                    {   
+                     
+                        required: true,
+                        message: "请选择区域",
+                        trigger: "change"
+                    }
+                ],
                 firmName: [
                     {
                         required: true,
@@ -137,13 +229,6 @@ export default {
                     {
                         pattern: "^[\u4E00-\u9FA5]+$",
                         message: "企业名称不能为特殊的字符串或数字",
-                        trigger: "change"
-                    }
-                ],
-                firmAddress: [
-                    {
-                        required: true,
-                        message: "请输入企业地址",
                         trigger: "change"
                     }
                 ],
@@ -232,6 +317,102 @@ export default {
 
     },
     methods: {
+        getProvinces(){ //获取全部省份
+            let id = 1
+            this.$api.oper.getArea(id).then(res=>{
+           
+                if(res.data.code == 0){
+                    let arr = res.data.data
+                    let proList = []
+                    for(let i=0; i<arr.length; i++){
+                        let obj={
+                            label:arr[i].name,
+                            value:arr[i].code,
+                            id:arr[i].id
+                        }
+                        proList.push(obj)
+                    }
+                    this.provinceList = proList
+                }
+            })
+        },
+        getCities(){  //根据省份id获取城市列表
+            let id = this.ruleForm.provinceCode;
+            if(id){
+                this.$api.oper.getArea(id).then(res=>{
+                    if(res.data.code == 0){
+                        let arr = res.data.data
+                        let proList = []
+                        for(let i=0; i<arr.length; i++){
+                            let obj={
+                                label:arr[i].name,
+                                value:arr[i].code,
+                                id:arr[i].id
+                            }
+                            proList.push(obj)
+                        }
+                        this.cityList = proList
+                    }
+                })
+            }else{
+                this.$message.error("请先选择对应省份!");
+            }
+        },
+        getAreas(){  //根据城市id获取区域列表
+            let id = this.ruleForm.cityCode;
+            if(id){
+                this.$api.oper.getArea(id).then(res=>{
+                    if(res.data.code == 0){
+                        let arr = res.data.data
+                        let proList = []
+                        for(let i=0; i<arr.length; i++){
+                            let obj={
+                                label:arr[i].name,
+                                value:arr[i].code,
+                                id:arr[i].id
+                            }
+                            proList.push(obj)
+                        }
+                        this.areaList = proList
+                    }
+                })
+            }else{
+                this.$message.error("请先选择对应城市!");
+            }
+        },
+        changeProvince(val){  //选择省份
+            this.ruleForm.cityCode = ''
+            this.cityList = []
+            let arr =   this.provinceList 
+            for(let i=0; i<arr.length;i++){
+                if(arr[i].id == val){
+                    this.pCode = arr[i].value
+                    break;
+                }
+            }
+        },
+        changeCity(val){   //选择城市
+            this.ruleForm.areaCode = ''
+            this.areaList = []
+            let arr =   this.cityList
+            for(let i=0; i<arr.length;i++){
+                if(arr[i].id == val){
+                    this.cCode = arr[i].value
+                    break;
+                }
+            }
+        },
+        changeArea(val){  //选择区县
+            this.ruleForm.depCode = ''  //清空上一次选中的运维部门
+            this.depList = []  //清空运维部门数组
+            let arr =   this.areaList 
+            for(let i=0; i<arr.length;i++){
+                if(arr[i].id == val){
+                    this.aCode = arr[i].value
+                    break;
+                }
+            }
+        },
        //营业执照
         handleChange(file, fileList) {
             let obj = { url: file.url };
@@ -442,6 +623,10 @@ export default {
                         }
             
                         let params = {
+                            provinceId:_this.pCode,  //省code
+                            cityId: _this.cCode, //城市code
+                            countyId:_this.aCode, //区域code
+
                             erpName: _this.ruleForm.firmName, //企业名称
                             erpAddr: _this.ruleForm.firmAddress, //企业地址
                             erpLinkMan: _this.ruleForm.linkman, //联系人
@@ -478,10 +663,82 @@ export default {
         //取消编辑  --关闭dialog
         cancelEditor() {
             this.closeDialog();
+        },
+        ediGetPro(){
+            return new Promise(resolve=>{
+                let id = 1
+                this.$api.oper.getArea(id).then(res=>{
+            
+                    if(res.data.code == 0){
+                        let arr = res.data.data
+                        let proList = []
+                        for(let i=0; i<arr.length; i++){
+                            let obj={
+                                label:arr[i].name,
+                                value:arr[i].code,
+                                id:arr[i].id
+                            }
+                            proList.push(obj)
+                        }
+                        this.provinceList = proList
+                        resolve(proList)
+                    }
+                })
+            })
+        },
+        //异步获取到市
+        ediGetCity(pId){
+            return new Promise(resolve=>{
+                let id =  pId
+                this.$api.oper.getArea(id).then(res=>{
+            
+                    if(res.data.code == 0){
+                        let arr = res.data.data
+                        let proList = []
+                        for(let i=0; i<arr.length; i++){
+                            let obj={
+                                label:arr[i].name,
+                                value:arr[i].code,
+                                id:arr[i].id
+                            }
+                            proList.push(obj)
+                        }
+                        this.cityList = proList
+                        resolve(proList)
+                    }
+                })
+            })
+        },
+        //异步获取到区域
+        ediGetArea(cId){
+            return new Promise(resolve=>{
+                let id =  cId
+                this.$api.oper.getArea(id).then(res=>{
+            
+                    if(res.data.code == 0){
+                        let arr = res.data.data
+                        let proList = []
+                        for(let i=0; i<arr.length; i++){
+                            let obj={
+                                label:arr[i].name,
+                                value:arr[i].code,
+                                id:arr[i].id
+                            }
+                            proList.push(obj)
+                        }
+                        this.areaList = proList
+                        resolve(proList)
+                    }
+                })
+            })
         }
     },
     watch: {
-        enterRow(val) {            
+        enterRow(val) {     
+            this.pCode = val.provinceId   //部门下的省code
+            this.cCode = val.cityId  //部门下城市code
+            this.aCode = val.countyId //部门地区code
+
             this.auditState = val.auditState;
             this.types = val.companyType;
             this.id = val.id;
@@ -492,6 +749,38 @@ export default {
             this.ruleForm.userName = ""; //没有这个参数，暂时写空值
             this.ruleForm.mail = val.erpMail; //邮箱
             let str = val.erpLicense;
+            //地址省市县
+            this.ediGetPro().then(pList=>{
+                if(pList && pList.length>0){
+                    for(let i=0; i<pList.length; i++){
+                        console.log(i)
+                        if(pList[i].value == this.pCode){
+                            this.ruleForm.provinceCode = pList[i].id
+                            this.ediGetCity( pList[i].id).then(cList=>{
+                                if(cList && cList.length>0){
+                                    for(let k=0; k<cList.length; k++){
+                                        if(cList[k].value == this.cCode){
+                                            this.ruleForm.cityCode = cList[k].id
+                                            this.ediGetArea(cList[k].id).then(aList=>{
+                                                if(aList && aList.length>0){
+                                                    for(let j=0; j<aList.length; j++){
+                                                        if(aList[j].value == this.aCode){
+                                                            this.ruleForm.areaCode = aList[j].id
+                                                            break
+                                                        }
+                                                    }
+                                                }
+                                            })
+                                            break
+                                        }
+                                    }
+                                }
+                            })
+                            break
+                        }
+                    }
+                }
+            })
             if(str){
                 str = str.substring(0, str.lastIndexOf(","));
                 let imgArr = str.split(",");

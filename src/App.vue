@@ -24,4 +24,7 @@ body,
     height: 100%;
     cursor: pointer;
 }
+.el-loading-spinner {
+    z-index: 2018;
+}
 </style>

@@ -38,7 +38,63 @@
                     ></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="企业地址:" prop="firmAddress">
+            <el-form-item label="选择地址:" required>
+                <el-col :span="8">
+                    <el-form-item prop="provinceCode" class="it">
+                        <el-select
+                            v-model="ruleForm.provinceCode"
+                            @change="changeProvince"
+                            @focus="getProvinces"
+                            placeholder="省份"
+                            filterable
+                        >
+                            <el-option
+                                v-for="item in provinceList"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.id"
+                            ></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item prop="cityCode" class="it">
+                        <el-select
+                            v-model="ruleForm.cityCode"
+                            @focus="getCities"
+                            @change="changeCity"
+                            placeholder="城市"
+                            filterable
+                        >
+                            <el-option
+                                v-for="item in cityList"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.id"
+                            ></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item prop="areaCode" class="it">
+                        <el-select
+                            v-model="ruleForm.areaCode"
+                            @change="changeArea"
+                            @focus="getAreas"
+                            placeholder="区/县"
+                            filterable
+                        >
+                            <el-option
+                                v-for="item in areaList"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.id"
+                            ></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+            </el-form-item>
+            <el-form-item label="详细地址:">
                 <el-input v-model="ruleForm.firmAddress"></el-input>
             </el-form-item>
             <el-form-item label="联系人:" prop="linkman">
@@ -109,6 +165,14 @@ export default {
             }
         }
         return {
+            pCode:'', //省份code，提交用
+            cCode:'', //城市code,提交用
+            aCode:'', //区域code,提交用
+
+            provinceList:[],  //省数组
+            cityList:[], //城市数据
+            areaList:[], //区县数组
+
             dialogImageUrl: '',
             dialogVisible: false,
             types:[],   //企业类型集合
@@ -120,10 +184,38 @@ export default {
                 linkman: "", //联系人
                 linkPhone: "", //联系电话
                 firmType: "", //企业类型
-                mail: ""//邮箱
+                mail: "",//邮箱
+                provinceCode:'',  //选中的省
+                cityCode:'', //选中的市
+                areaCode:'', //选中的区县
+                depCode:'', //选中的运维部门
             },
             
             rules: {
+                provinceCode:[
+                    {   
+                  
+                        required: true,
+                        message: "请选择省份",
+                        trigger: "change"
+                    }
+                ],
+                cityCode:[
+                    {   
+                 
+                        required: true,
+                        message: "请选择城市",
+                        trigger: "change"
+                    }
+                ],
+                areaCode:[
+                    {   
+                     
+                        required: true,
+                        message: "请选择区域",
+                        trigger: "change"
+                    }
+                ],
                 firmName: [
                     {
                         required: true,
@@ -136,13 +228,7 @@ export default {
                         trigger: "change"
                     }
                 ],
-                firmAddress: [
-                    {
-                        required: true,
-                        message: "请输入企业地址",
-                        trigger: "change"
-                    }
-                ],
+
                 linkman: [
                     
                     {
@@ -210,6 +296,102 @@ export default {
         }
     },
     methods: {
+        getProvinces(){ //获取全部省份
+            let id = 1
+            this.$api.oper.getArea(id).then(res=>{
+           
+                if(res.data.code == 0){
+                    let arr = res.data.data
+                    let proList = []
+                    for(let i=0; i<arr.length; i++){
+                        let obj={
+                            label:arr[i].name,
+                            value:arr[i].code,
+                            id:arr[i].id
+                        }
+                        proList.push(obj)
+                    }
+                    this.provinceList = proList
+                }
+            })
+        },
+        getCities(){  //根据省份id获取城市列表
+            let id = this.ruleForm.provinceCode;
+            if(id){
+                this.$api.oper.getArea(id).then(res=>{
+                    if(res.data.code == 0){
+                        let arr = res.data.data
+                        let proList = []
+                        for(let i=0; i<arr.length; i++){
+                            let obj={
+                                label:arr[i].name,
+                                value:arr[i].code,
+                                id:arr[i].id
+                            }
+                            proList.push(obj)
+                        }
+                        this.cityList = proList
+                    }
+                })
+            }else{
+                this.$message.error("请先选择对应省份!");
+            }
+        },
+        getAreas(){  //根据城市id获取区域列表
+            let id = this.ruleForm.cityCode;
+            if(id){
+                this.$api.oper.getArea(id).then(res=>{
+                    if(res.data.code == 0){
+                        let arr = res.data.data
+                        let proList = []
+                        for(let i=0; i<arr.length; i++){
+                            let obj={
+                                label:arr[i].name,
+                                value:arr[i].code,
+                                id:arr[i].id
+                            }
+                            proList.push(obj)
+                        }
+                        this.areaList = proList
+                    }
+                })
+            }else{
+                this.$message.error("请先选择对应城市!");
+            }
+        },
+        changeProvince(val){  //选择省份
+            this.ruleForm.cityCode = ''
+            this.cityList = []
+            let arr =   this.provinceList 
+            for(let i=0; i<arr.length;i++){
+                if(arr[i].id == val){
+                    this.pCode = arr[i].value
+                    break;
+                }
+            }
+        },
+        changeCity(val){   //选择城市
+            this.ruleForm.areaCode = ''
+            this.areaList = []
+            let arr =   this.cityList
+            for(let i=0; i<arr.length;i++){
+                if(arr[i].id == val){
+                    this.cCode = arr[i].value
+                    break;
+                }
+            }
+        },
+        changeArea(val){  //选择区县
+            this.ruleForm.depCode = ''  //清空上一次选中的运维部门
+            this.depList = []  //清空运维部门数组
+            let arr =   this.areaList 
+            for(let i=0; i<arr.length;i++){
+                if(arr[i].id == val){
+                    this.aCode = arr[i].value
+                    break;
+                }
+            }
+        },
         //获取企业类型
         getTypes(){
             this.types=[]  //每次都先清空
@@ -350,8 +532,13 @@ export default {
 
             this.$refs["ruleForm"].validate(valid => {
                 if (valid) {
+
                     // 表单验证通过之后的操作
                     let params={
+                        provinceId:this.pCode,  //省code
+                        cityId: this.cCode, //城市code
+                        countyId:this.aCode, //区域code
+
                         erpName:this.ruleForm.firmName,  //企业名称
                         erpAddr:this.ruleForm.firmAddress,  //企业地址
                         erpLinkMan:this.ruleForm.linkman,  //联系人
@@ -471,5 +658,8 @@ export default {
 }
 .enterAdd >>> .el-select {
     width: 100%;
+}
+.it {
+    margin-bottom: 0px !important;
 }
 </style>

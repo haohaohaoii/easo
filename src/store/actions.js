@@ -264,8 +264,10 @@ export default ({
                 //         siteDevarr.push(itemObj.siteDevices[i].factorCode)
                 //     }
                 // }
+
                 let obj = {
                     mn: itemObj.mn,
+                    createTime: itemObj.createTime,
                     siteName: itemObj.siteName,  //基站名称
                     ioType: itemObj.ioType,  // 进口/出口
                     erpId: itemObj.erpId,  //企业id
@@ -339,6 +341,7 @@ export default ({
                         }
                         rowObj.companyType.push(obj)
                     }
+
                     // context.commit('getCompanytypes', companyType)  //获取企业类型
                     context.commit("setEditordialog", true) //改变dialog状态
                     context.commit('getEnterrow', rowObj)  //获取行数据信息
@@ -426,6 +429,7 @@ export default ({
     getComdetail(context, erpId) {
 
         api.company.companyDetail(erpId).then(res => {
+
             console.log(res)
             if (res.data.code == 0) {
 
