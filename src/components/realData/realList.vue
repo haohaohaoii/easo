@@ -134,7 +134,7 @@ export default {
                     if(realData[i].dataInfoList && realData[i].dataInfoList.length){
                         for(let k=0; k<realData[i].dataInfoList.length; k++){
                             let flag = false
-                            if(realData[i].dataInfoList[k].factorCode == '001'){
+                            if(realData[i].dataInfoList[k].factorCode == '011'){
                                 flag = true
                                 obj.cod = realData[i].dataInfoList[k].factorValue
                                 obj.codOverflag = realData[i].dataInfoList[k].overFlag  //cod超标字段 0是正常  1是超标
