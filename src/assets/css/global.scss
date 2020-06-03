@@ -19,6 +19,7 @@
 @import './operaDep.scss'; //运维管理下 - 运维部门管理
 @import './userManage.scss'; //权限管理下 - 用户管理
 @import './roleManage.scss'; //权限管理下 - 角色管理
+@import './stopRep.scss';  //停运报告模板
 @import './element.scss';   //elment-ui     全局scss
 
 @media (min-width: 1900px) {
@@ -43,6 +44,7 @@
     @include userManage-xl();
     @include roleManage-xl();
     @include element-xl();
+    @include stopRep-xl();
 }
 @media (min-width: 1600px) and (max-width: 1899px) {
     @include header-lg();
@@ -65,6 +67,7 @@
     @include userManage-lg();
     @include roleManage-lg();
     @include element-lg();
+    @include stopRep-lg();
 };
 @media (min-width: 1400px) and (max-width: 1599px) {
     @include header-md();
@@ -87,6 +90,7 @@
     @include userManage-md();
     @include roleManage-md();
     @include element-md();
+    @include stopRep-md();
 }
 @media (min-width: 1200px) and (max-width: 1399px) {
     @include header-sm();
@@ -109,4 +113,5 @@
     @include userManage-sm();
     @include roleManage-sm();
     @include element-sm();
+    @include stopRep-sm();
 }

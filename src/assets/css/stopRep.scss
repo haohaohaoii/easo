@@ -1,0 +1,129 @@
+/*首页*/
+
+@charset "UTF-8";
+
+@mixin stopRep-xl() {
+
+    .stopRepAdd{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            width: 32% !important;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+
+        }
+        /deep/ .el-dialog--center .el-dialog__body {
+            padding: 15px 40px 10px 10px !important;
+        }
+    }
+    .stopRepDetail{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            width: 32% !important;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+
+        }
+    }
+};
+@mixin stopRep-lg() {
+    .stopRepAdd{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            width: 32% !important;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+
+        }
+        /deep/ .el-dialog--center .el-dialog__body {
+            padding: 15px 40px 10px 10px !important;
+        }
+    }
+    .stopRepDetail{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            width: 32% !important;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+
+        }
+    }
+};
+@mixin stopRep-md() {
+    .stopRepAdd{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            width: 32% !important;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+
+        }
+        /deep/ .el-dialog--center .el-dialog__body {
+            padding: 15px 40px 10px 10px !important;
+        }
+    }
+    .stopRepDetail{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            width: 32% !important;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+
+        }
+    }
+};
+@mixin stopRep-sm() {
+    .stopRepAdd{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            width: 32% !important;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+
+        }
+        /deep/ .el-dialog--center .el-dialog__body {
+            padding: 15px 40px 10px 10px !important;
+        }
+    }
+    .stopRepDetail{
+        /deep/ .el-dialog {
+            display: flex;
+            flex-direction: column;
+            margin: 0 !important;
+            position: absolute;
+            top: 50%;
+            width: 32% !important;
+            left: calc(50% + 120px);
+            transform: translate(-50%, -50%);
+
+        }
+    }
+}

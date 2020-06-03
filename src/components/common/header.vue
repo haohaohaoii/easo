@@ -15,6 +15,10 @@
                             <span class="iconfont sy">&#xe723;</span>
                             <span slot="title">{{item.menuName}}</span>
                         </template>
+                        <template v-if="item.menuType==0 && item.menuName=='停运报告模板'">
+                            <span class="iconfont tybg">&#xe62c;</span>
+                            <span slot="title">{{item.menuName}}</span>
+                        </template>
                     </el-menu-item>
                 </template>
                 <template v-if="item.subMenus && item.subMenus.length>=1">

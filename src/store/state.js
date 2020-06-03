@@ -194,6 +194,11 @@ export default ({
             path: 'appSetting',
             name: 'App更新',
             component: resolve => (require(["@/components/setting/appSetting"], resolve))
+        },
+        {
+            path: 'stopReptem',
+            name: '停运报告模板',
+            component: resolve => (require(["@/components/stopReptem/stopReptemplete"], resolve))
         }
         // {
         //     path: 'yearReport',     //年报表

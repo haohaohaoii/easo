@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "12803126",
+      "name": "DVLINK_报表模板",
+      "font_class": "DVLINK_baobiaomoban",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
       "icon_id": "305376",
       "name": "404",
       "font_class": "404",

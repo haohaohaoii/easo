@@ -20,6 +20,7 @@ import operp from '@/api/operp.js' //运维人员
 import contarct from '@/api/contarct.js' //运维合同
 import recodes from '@/api/recodes.js' //运维记录
 import dReport from '@/api/dataReport.js' //数据报表
+import storep from '@/api/storep.js' //停运报告模板
 export default {
     login,
     menu,
@@ -38,5 +39,6 @@ export default {
     operp,
     contarct,
     recodes,
-    dReport
+    dReport,
+    storep
 }

@@ -269,7 +269,7 @@ export default {
                             end: this.endTime 
                         }
                         this.$api.user.zdcb({params}).then(res=>{
-                     
+                  
                             if(res.data.code ==0){
                                 if(res.data.data && res.data.data.length>0){
                                   
@@ -321,7 +321,9 @@ export default {
         },
         getNowTime() {
             return new Promise(resolve=>{
+
                 let now = new Date();
+                now.setTime(now.getTime()+1*24 * 60 * 60 * 1000)
                 let year = now.getFullYear(); //得到年份
                 let month = now.getMonth(); //得到月份
                 let date = now.getDate(); //得到日期
@@ -336,8 +338,9 @@ export default {
         },
         getCurrentMonthFirst(){
             return new Promise(resolve=>{
+
                 let date = new Date();
-                date.setDate(1);
+                date.setTime(date.getTime()-15*24*60*60*1000)
                 let month = parseInt(date.getMonth()+1);
                 let day = date.getDate();
                 let hour = date.getHours();//得到小时
