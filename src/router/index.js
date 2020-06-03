@@ -179,6 +179,7 @@ router.selfaddRoutes = function (params) {
         {
             path: '*',
             name: "404页面",
+            redirect: store.state.directName,
             component: (resolve) => require(['@/components/common/error'], resolve)
         }
     )
