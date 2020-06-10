@@ -130,15 +130,15 @@ router.beforeEach((to, from, next) => {
     NProgress.start()
     if (store.state.token && store.state.adminId) {  //用户已经登陆
         if (to.path == '/login') {
-
             next('/')
+        } else if (to.name == 'home') {
+            next('/firstPage')
         } else {
             console.log(router.options.routes)
             let defaultVal = to.path.substr(1)
             store.commit('getBreadlist', to)
             store.commit('changeDefaultmenu', defaultVal)
             next()
-
         }
     } else {   //用户未登陆
         if (to.path == '/login') {
