@@ -13,7 +13,7 @@
                 :header-row-style="iHeaderRowStyle"
                 :header-cell-style="iHeaderCellStyle"
             >
-                <el-table-column align="center" prop="title" label="新闻标题" width="260"></el-table-column>
+                <el-table-column align="left" prop="title" label="新闻标题"></el-table-column>
                 <el-table-column align="center" prop="cateName" label="新闻分类"></el-table-column>
                 <el-table-column align="center" prop="imgUrl" label="封面图片">
                     <template slot-scope="scope">

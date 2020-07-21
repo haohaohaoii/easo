@@ -56,7 +56,7 @@
                 ></el-pagination>
             </div>
         </real-list>
-        <no-data v-else></no-data>
+        <!-- <no-data v-else></no-data> -->
     </div>
 </template>
 
@@ -72,7 +72,7 @@ export default {
     data() {
         return {
             currentPage: 1, //初始页
-            pagesize: 10, //每页显示多少条
+            pagesize: 12, //每页显示多少条
             totalLength: 0, //总共多少条数据
             isShow: false, //控制dataList有没有数据
             dataList: [], //实时数据

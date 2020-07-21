@@ -78,7 +78,7 @@
                 :header-cell-style="iHeaderCellStyle"
                 class="tab"
             >
-                <el-table-column align="center" prop="siteName" label="基站名"></el-table-column>
+                <el-table-column align="left" prop="siteName" label="基站名" width="220px"></el-table-column>
                 <el-table-column align="center" label="COD(mg/L)">
                     <el-table-column align="center" prop="cod" label="平均值"></el-table-column>
                     <el-table-column align="center" prop="pfl" label="排放量"></el-table-column>
@@ -153,16 +153,16 @@ export default {
             siteList:[],  //站点数组
             totalLength: 0, //总共多少条数据
             currentPage: 1, //初始页
-            pagesize: 10, //每页显示多少条
+            pagesize: 11, //每页显示多少条
       
         };
     },
     computed:{
         iRowStyle:function ({row, rowIndex}) {
-            return {height:'58px'};
+            return {height:'50px'};
         },
         iHeaderRowStyle:function ({row, rowIndex}) {
-            return {height:'58px'};
+            return {height:'50px'};
         },
         iCellStyle:function ({row, column, rowIndex, columnIndex}) {
             return {padding:'0'};

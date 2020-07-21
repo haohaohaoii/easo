@@ -112,8 +112,8 @@
                 class="tab"
             >
                 <el-table-column align="center" prop="tractNum" width="200px" label="合同编号"></el-table-column>
-                <el-table-column align="center" prop="tractName" min-width="260px" label="合同名称"></el-table-column>
-                <el-table-column align="center" prop="priseName" min-width="220px" label="企业名称"></el-table-column>
+                <el-table-column align="left" prop="tractName" min-width="260px" label="合同名称"></el-table-column>
+                <el-table-column align="left" prop="priseName" min-width="220px" label="企业名称"></el-table-column>
                 <el-table-column align="center" prop="operations" width="100px" label="运维部门"></el-table-column>
                 <el-table-column align="center" prop="startTime" width="180px" label="开始日期"></el-table-column>
                 <el-table-column align="center" prop="endTime" width="180px" label="截止日期"></el-table-column>
@@ -221,16 +221,16 @@ export default {
             ], 
             totalLength: 0, //总共多少条数据
             currentPage: 1, //初始页
-            pagesize: 10, //每页显示多少条
+            pagesize: 12, //每页显示多少条
       
         };
     },
     computed:{
         iRowStyle:function ({row, rowIndex}) {
-            return {height:'58px'};
+            return {height:'49px'};
         },
         iHeaderRowStyle:function ({row, rowIndex}) {
-            return {height:'58px'};
+            return {height:'49px'};
         },
         iCellStyle:function ({row, column, rowIndex, columnIndex}) {
             return {padding:'0'};

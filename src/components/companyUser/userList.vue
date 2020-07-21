@@ -14,7 +14,7 @@
             >
                 <el-table-column align="center" prop="userName" label="用户名" width="260"></el-table-column>
                 <el-table-column align="center" prop="phone" label="手机号"></el-table-column>
-                <el-table-column align="center" prop="comName" label="企业名称"></el-table-column>
+                <el-table-column align="left" prop="comName" label="企业名称"></el-table-column>
                 <el-table-column align="center" prop="creTime" label="注册时间"></el-table-column>
                 <el-table-column label="操作" align="center" width="220" fixed="right">
                     <template slot-scope="scope">
@@ -59,10 +59,10 @@ export default {
     },
     computed: {
         iRowStyle:function ({row, rowIndex}) {
-            return {height:'62px'};
+            return {height:'50px'};
         },
         iHeaderRowStyle:function ({row, rowIndex}) {
-            return {height:'62px'};
+            return {height:'50px'};
         },
         iCellStyle:function ({row, column, rowIndex, columnIndex}) {
             return {padding:'0'};

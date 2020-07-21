@@ -35,7 +35,7 @@
                         <p>{{scope.row.city}}{{scope.row.county}}</p>
                     </template>
                 </el-table-column>
-                <el-table-column align="center" prop="addressDetail" min-width="200px" label="地址"></el-table-column>
+                <el-table-column align="left" prop="addressDetail" min-width="200px" label="地址"></el-table-column>
                 <el-table-column align="center" prop="createTime" min-width="160px" label="添加时间"></el-table-column>
 
                 <el-table-column label="操作" align="center" width="200" fixed="right">
@@ -96,7 +96,7 @@ export default {
             operItem:'',  //行数据详情
             totalLength: 0, //总共多少条数据
             currentPage: 1, //初始页码
-            pagesize: 10, //一页多少条数据
+            pagesize: 13, //一页多少条数据
             depArr: [], //所有运维部门数组
         };
     },
@@ -106,10 +106,10 @@ export default {
     },
     computed:{
         iRowStyle:function ({row, rowIndex}) {
-            return {height:'62px'};
+            return {height:'50px'};
         },
         iHeaderRowStyle:function ({row, rowIndex}) {
-            return {height:'62px'};
+            return {height:'50px'};
         },
         iCellStyle:function ({row, column, rowIndex, columnIndex}) {
             return {padding:'0'};

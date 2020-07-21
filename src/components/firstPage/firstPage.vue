@@ -56,34 +56,34 @@
                             <div class="itemRi" @click="lyAll">
                                 <p class="t">全部留言</p>
                                 <p class="nu">{{qbly}}</p>
-                                <p class="det">点击查看</p>
+                                <p class="det" v-show="qbly!==0">点击查看</p>
                             </div>
                             <div class="itemRi" @click="lyhf">
                                 <p class="t">最新回复</p>
                                 <p class="nu">{{zxhf}}</p>
-                                <p class="det">点击查看</p>
+                                <p class="det" v-show="zxhf!=0">点击查看</p>
                             </div>
                             <div class="itemRi" @click="lywd">
                                 <p class="t">未读留言</p>
                                 <p class="nu">{{wdly}}</p>
-                                <p class="det">点击查看</p>
+                                <p class="det" v-show="wdly!=0">点击查看</p>
                             </div>
                         </div>
                         <div class="itemR">
                             <div class="itemRi" @click="cbxx">
                                 <p class="t">超标消息</p>
                                 <p class="nu">{{cbxc}}</p>
-                                <p class="det">点击查看</p>
+                                <p class="det" v-show="cbxc!=0">点击查看</p>
                             </div>
                             <div class="itemRi" @click="ycxx">
                                 <p class="t">异常消息</p>
                                 <p class="nu">{{ycxc}}</p>
-                                <p class="det">点击查看</p>
+                                <p class="det" v-show="ycxc!=0">点击查看</p>
                             </div>
                             <div class="itemRi" @click="xxyj">
                                 <p class="t">预警消息</p>
                                 <p class="nu">{{yjxx}}</p>
-                                <p class="det">点击查看</p>
+                                <p class="det" v-show="yjxx!=0">点击查看</p>
                             </div>
                         </div>
                     </div>

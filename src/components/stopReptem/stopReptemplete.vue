@@ -78,7 +78,7 @@
                 :header-cell-style="iHeaderCellStyle"
                 class="tab"
             >
-                <el-table-column align="center" min-width="100px" prop="tempName" label="名称"></el-table-column>
+                <el-table-column align="left" min-width="100px" prop="tempName" label="名称"></el-table-column>
                 <el-table-column align="center" prop="area" label="地区"></el-table-column>
                 <el-table-column align="center" prop="genre" label="类型">
                     <template slot-scope="scope">
@@ -152,16 +152,16 @@ export default {
 
             totalLength: 0, //总共多少条数据
             currentPage: 1, //初始页
-            pagesize: 10, //每页显示多少条
+            pagesize: 13, //每页显示多少条
       
         };
     },
     computed:{
         iRowStyle:function ({row, rowIndex}) {
-            return {height:'58px'};
+            return {height:'50px'};
         },
         iHeaderRowStyle:function ({row, rowIndex}) {
-            return {height:'58px'};
+            return {height:'50px'};
         },
         iCellStyle:function ({row, column, rowIndex, columnIndex}) {
             return {padding:'0'};

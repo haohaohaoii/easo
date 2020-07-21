@@ -15,7 +15,7 @@
                 <el-table-column align="center" prop="siteName" label="基站名称"></el-table-column>
                 <el-table-column align="center" prop="ioType" label="进口/出口"></el-table-column>
                 <el-table-column align="center" prop="mn" label="MN"></el-table-column>
-                <el-table-column align="center" prop="yinZ" label="因子">
+                <el-table-column align="left" prop="yinZ" label="因子">
                     <template slot-scope="scope">
                         <el-popover placement="top-start" title width="200" trigger="hover">
                             <p>{{scope.row.yinZ}}</p>
@@ -84,10 +84,10 @@ export default {
     }, 
    computed:{
         iRowStyle:function ({row, rowIndex}) {
-            return {height:'62px'};
+            return {height:'50px'};
         },
         iHeaderRowStyle:function ({row, rowIndex}) {
-            return {height:'62px'};
+            return {height:'50px'};
         },
         iCellStyle:function ({row, column, rowIndex, columnIndex}) {
             return {padding:'0'};

@@ -103,7 +103,7 @@
                 <el-table-column align="center" prop="email" min-width="165px" label="邮箱"></el-table-column>
                 <el-table-column align="center" prop="userName" min-width="100px" label="用户名"></el-table-column>
                 <el-table-column align="center" prop="ywbm" label="运维部门" min-width="100px"></el-table-column>
-                <el-table-column align="center" prop="ywzd" min-width="200px" label="运维站点">
+                <el-table-column align="left" prop="ywzd" min-width="200px" label="运维站点">
                     <template slot-scope="scope">
                         <el-popover placement="top-start" title width="200" trigger="hover">
                             <p>{{scope.row.ywzd}}</p>
@@ -196,16 +196,16 @@ export default {
             opeoDatalist: [], //运维人员数组
             totalLength: 0, //总共多少条数据
             currentPage: 1, //初始页
-            pagesize: 10, //每页显示多少条
+            pagesize: 12, //每页显示多少条
       
         };
     },
     computed:{
         iRowStyle:function ({row, rowIndex}) {
-            return {height:'58px'};
+            return {height:'50px'};
         },
         iHeaderRowStyle:function ({row, rowIndex}) {
-            return {height:'58px'};
+            return {height:'50px'};
         },
         iCellStyle:function ({row, column, rowIndex, columnIndex}) {
             return {padding:'0'};

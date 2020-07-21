@@ -277,7 +277,7 @@ export default {
 }
 .dialog >>> .el-form-item--mini.el-form-item,
 .el-form-item--small.el-form-item {
-    width: 78%;
+    width: 90%;
 }
 .dialog >>> .el-select {
     width: 100%;

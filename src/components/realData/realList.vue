@@ -12,8 +12,8 @@
                 :header-row-style="iHeaderRowStyle"
                 :header-cell-style="iHeaderCellStyle"
             >
-                <el-table-column align="center" prop="siteName" label="基站点"></el-table-column>
-                <el-table-column align="center" prop="erpName" width="180" label="企业名"></el-table-column>
+                <el-table-column align="left" prop="siteName" label="基站点"></el-table-column>
+                <el-table-column align="left" prop="erpName" width="180" label="企业名"></el-table-column>
                 <el-table-column align="center" prop="cod" label="COD(mg/L)">
                     <template slot-scope="scope">
                         <span v-if="scope.row.codOverflag==1" style="color: red">{{ scope.row.cod }}</span>
@@ -109,10 +109,10 @@ export default {
     },
     computed:{
          iRowStyle:function ({row, rowIndex}) {
-            return {height:'58px'};
+            return {height:'50px'};
         },
         iHeaderRowStyle:function ({row, rowIndex}) {
-            return {height:'58px'};
+            return {height:'50px'};
         },
         iCellStyle:function ({row, column, rowIndex, columnIndex}) {
             return {padding:'0'};

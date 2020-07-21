@@ -107,7 +107,7 @@ export default {
                     {
                         name: "(mg/L)", //坐标轴名称
                         type: "value", //数值轴
-                        max: 100 //坐标轴最大刻度
+                        max: 40 //坐标轴最大刻度
                     }
                 ],
                 series: [

@@ -11,10 +11,10 @@
                 :header-cell-style="iHeaderCellStyle"
                 class="tab"
             >
-                <el-table-column align="center" prop="erpName" label="企业名称" width="260"></el-table-column>
+                <el-table-column align="left" prop="erpName" label="企业名称" width="260"></el-table-column>
                 <el-table-column align="center" prop="erpLinkMan" label="联系人"></el-table-column>
                 <el-table-column align="center" prop="erpLinkTel" min-width="120px" label="联系电话"></el-table-column>
-                <el-table-column align="center" prop="erpAddr" min-width="200px" label="企业地址"></el-table-column>
+                <el-table-column align="left" prop="erpAddr" min-width="200px" label="企业地址"></el-table-column>
                 <el-table-column align="center" prop="userSection" label="审核状态">
                     <template slot-scope="scope">
                         <span v-if="scope.row.userSection==0">审核中</span>
@@ -83,10 +83,10 @@ export default {
     },
     computed: {
         iRowStyle:function ({row, rowIndex}) {
-            return {height:'62px'};
+            return {height:'50px'};
         },
         iHeaderRowStyle:function ({row, rowIndex}) {
-            return {height:'62px'};
+            return {height:'50px'};
         },
         iCellStyle:function ({row, column, rowIndex, columnIndex}) {
             return {padding:'0'};

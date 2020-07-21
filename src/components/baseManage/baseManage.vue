@@ -63,7 +63,7 @@ export default {
         return {
             totalLength: 0, //总共多少条数据
             currentPage: 1, //初始页码
-            pagesize: 10, //一页多少条数据
+            pagesize: 13, //一页多少条数据
             baseArr: [], //所有基站数组
             isShowback:false,  //返回基站列表按钮是否显示
             state:'' //基站的状态

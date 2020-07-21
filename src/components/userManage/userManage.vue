@@ -48,7 +48,7 @@ export default {
         return {
             totalLength: 0, //总共多少条数据
             currentPage: 1, //初始页码
-            pagesize: 10, //一页多少条数据
+            pagesize: 13, //一页多少条数据
             userArr: [], //所有角色数组
         };
     },

@@ -71,10 +71,10 @@ export default {
     },
     computed:{
           iRowStyle:function ({row, rowIndex}) {
-            return {height:'62px'};
+            return {height:'50px'};
         },
         iHeaderRowStyle:function ({row, rowIndex}) {
-            return {height:'62px'};
+            return {height:'50px'};
         },
         iCellStyle:function ({row, column, rowIndex, columnIndex}) {
             return {padding:'0'};
