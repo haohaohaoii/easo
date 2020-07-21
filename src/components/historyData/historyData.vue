@@ -63,7 +63,7 @@
                     >查询</el-button>
                 </div>
                 <div>
-                    <el-radio-group v-model="btnMsg" size="small">
+                    <el-radio-group v-model="btnMsg" size="small" @change="btnC">
                         <el-radio-button label="列表"></el-radio-button>
                         <el-radio-button label="折线"></el-radio-button>
                         <el-radio-button label="柱状"></el-radio-button>
@@ -86,8 +86,8 @@
             </div>
         </list-data>
 
-        <line-data v-if="btnMsg=='折线'" :datalist="hisDatalist"></line-data>
-        <bar-data v-if="btnMsg=='柱状'"></bar-data>
+        <line-data v-if="btnMsg=='折线'&& baseValue!=''" :datalist="hisDatalist"></line-data>
+        <bar-data v-if="btnMsg=='柱状'&& baseValue!=''"></bar-data>
     </div>
 </template>
 
@@ -126,6 +126,21 @@ export default {
         ...mapState(["searchHours"])
     },
     methods: {
+        btnC(value){
+             if(value == '折线' ||value == '柱状'){
+                if(this.baseValue!=''){
+                    this.getAlldata()
+                }else{
+                    this.btnMsg = '列表'
+                    this.$message.error("请选择基站后再操作");
+                }
+                
+            }else{
+                 this.currentPage = 1;
+                let pageNum = this.currentPage;
+                this.sendAxios(pageNum);
+            }
+        },
         ljpd(){
             if(this.$route.params.erpName && this.$route.params.siteName){   //说明是从实时数据过来的
                 this.getCompany().then(comP=>{
@@ -336,17 +351,24 @@ export default {
             
         }
     },
-    watch:{
-        btnMsg(val){
-            if(this.btnMsg == '折线' ||this.btnMsg == '柱状'){
-                this.getAlldata()
-            }else{
-                 this.currentPage = 1;
-                let pageNum = this.currentPage;
-                this.sendAxios(pageNum);
-            }
-        }
-    }
+    // watch:{
+    //     btnMsg(val){
+
+    //         if(this.btnMsg == '折线' ||this.btnMsg == '柱状'){
+    //             if(this.baseValue!=''){
+    //                 this.getAlldata()
+    //             }else{
+    //                 this.btnMsg = '列表'
+    //                 this.$message.error("请选择基站后再操作");
+    //             }
+                
+    //         }else{
+    //              this.currentPage = 1;
+    //             let pageNum = this.currentPage;
+    //             this.sendAxios(pageNum);
+    //         }
+    //     }
+    // }
 };
 </script>
 
