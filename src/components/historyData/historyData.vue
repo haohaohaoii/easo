@@ -87,7 +87,7 @@
         </list-data>
 
         <line-data v-if="btnMsg=='折线'&& baseValue!=''" :datalist="hisDatalist"></line-data>
-        <bar-data v-if="btnMsg=='柱状'&& baseValue!=''" :datalist="hisDatalist"></bar-data>
+        <bar-data v-if="btnMsg=='柱状'&& baseValue!=''"></bar-data>
     </div>
 </template>
 

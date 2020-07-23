@@ -67,17 +67,20 @@
                         <span v-else>{{ scope.row.ph}}</span>
                     </template>
                 </el-table-column>
-                <el-table-column align="center" prop="createTime" label="更新时间"></el-table-column>
+                <el-table-column align="center" prop="createTime" label="更新时间" width="160px"></el-table-column>
             </el-table>
             <slot></slot>
         </div>
     </div>
+    <!-- <no-data v-else></no-data> -->
 </template>
 
 <script>
-
+import noData from "../common/noData"
 export default {
-
+    components:{
+        noData
+    },
     props:{
         datalist:{  //校验历史数据
             type:Array,
